@@ -1,0 +1,29 @@
+@import '../../variables.scss';
+
+.article {
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+
+  padding: 2rem;
+
+  display: flex;
+
+  max-width: 75rem;
+
+  &__content {
+    // display: grid;
+    // grid-template-columns: min-content min-content;
+
+    margin-right: 5rem;
+  }
+
+  &__image {
+    max-width: 10rem;
+    max-height: 10rem;
+
+    border-radius: 8px;
+
+    // background-size: cover;
+    // background-position: center;
+  }
+}

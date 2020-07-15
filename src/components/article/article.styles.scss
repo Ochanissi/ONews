@@ -10,11 +10,22 @@
 
   max-width: 75rem;
 
+  &:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  &:last-child {
+    margin-bottom: 5rem;
+  }
+
   &__content {
     // display: grid;
     // grid-template-columns: min-content min-content;
 
     margin-right: 5rem;
+
+    display: flex;
+    flex-direction: column;
 
     &--title {
       text-decoration: none;
@@ -82,6 +93,8 @@
 
       font-weight: 500;
 
+      margin-top: auto;
+
       ion-icon {
         margin-right: 0.5rem;
         vertical-align: middle;
@@ -102,6 +115,27 @@
 
       background-size: cover;
       background-position: center;
+    }
+  }
+
+  &__additional {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    &--description {
+      height: 1.75rem;
+
+      text-decoration: none;
+      color: inherit;
+
+      font-size: 2rem;
+      font-weight: 500;
+
+      &:hover {
+        color: $color-primary;
+      }
     }
   }
 }

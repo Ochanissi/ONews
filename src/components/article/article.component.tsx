@@ -65,18 +65,29 @@ const Article = () => {
           View Full Coverage
         </a>
       </div>
-      <a
-        className='article__image-container'
-        href='# '
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        <img
-          className='article__image-container--image'
-          src='https://cacheimg.gsp.ro/autocrop/smp-images-production/gsp.ro/14072020/1594740828411.jpg?width=600&height=315'
-          alt='Article'
-        ></img>
-      </a>
+      <div className='article__additional'>
+        <a
+          className='article__image-container'
+          href='# '
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <img
+            className='article__image-container--image'
+            src='https://cacheimg.gsp.ro/autocrop/smp-images-production/gsp.ro/14072020/1594740828411.jpg?width=600&height=315'
+            alt='Article'
+          ></img>
+        </a>
+
+        <a
+          className='article__additional--description'
+          href='# '
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <ion-icon name='chevron-down-outline'></ion-icon>
+        </a>
+      </div>
     </article>
   );
 };

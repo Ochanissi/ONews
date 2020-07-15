@@ -15,15 +15,93 @@
     // grid-template-columns: min-content min-content;
 
     margin-right: 5rem;
+
+    &--title {
+      text-decoration: none;
+      color: $color-grey-dark-4;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &--text {
+        font-size: 1.75rem;
+      }
+    }
+
+    &--source {
+      font-size: 1.25rem;
+      color: $color-grey-dark-2;
+
+      display: flex;
+
+      margin-bottom: 1.5rem;
+
+      &--url {
+        text-decoration: none;
+        color: inherit;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &--date {
+        ion-icon {
+          vertical-align: middle;
+        }
+
+        &--save {
+          text-decoration: none;
+          color: inherit;
+
+          &:hover {
+            color: $color-grey-dark-4;
+          }
+        }
+
+        &--share {
+          text-decoration: none;
+          color: inherit;
+
+          margin-left: 0.5rem;
+
+          &:hover {
+            color: $color-grey-dark-4;
+          }
+        }
+      }
+    }
+
+    &--coverage {
+      font-size: 1.5rem;
+      color: $color-grey-dark-3;
+
+      text-decoration: none;
+      color: $color-primary;
+
+      font-weight: 500;
+
+      ion-icon {
+        margin-right: 0.5rem;
+        vertical-align: middle;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
-  &__image {
-    max-width: 10rem;
-    max-height: 10rem;
+  &__image-container {
+    &--image {
+      width: 10rem;
+      height: 10rem;
 
-    border-radius: 8px;
+      border-radius: 8px;
 
-    // background-size: cover;
-    // background-position: center;
+      background-size: cover;
+      background-position: center;
+    }
   }
 }

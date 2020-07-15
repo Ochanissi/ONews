@@ -22,10 +22,10 @@ class HomePage extends React.Component {
       <div className='homepage'>
         <div className='homepage__articles'>
           <Article />
-          {/* <Article />
           <Article />
           <Article />
-          <Article /> */}
+          <Article />
+          <Article />
         </div>
       </div>
     );

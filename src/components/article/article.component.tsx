@@ -55,6 +55,27 @@ const Article = () => {
             </a>
           </div>
         </div>
+        <div className='article__content--description'>
+          <input
+            type='checkbox'
+            className='article__content--description--state'
+            id='article-dropdown'
+          />
+          <p className='article__content--description--content'>
+            Nasopharyngeal swabs more effective than saliva samples for COVID-19
+            diagnostic testing according to current evidence. Nasopharyngeal
+            swabs more effective than saliva samples for COVID-19 diagnostic
+            testing according to current evidence.
+          </p>
+
+          <label
+            htmlFor='article-dropdown'
+            className='article__content--description--toggle'
+          >
+            <ion-icon name='chevron-down-outline'></ion-icon>
+          </label>
+        </div>
+
         <a
           className='article__content--coverage'
           href='# '
@@ -65,29 +86,18 @@ const Article = () => {
           View Full Coverage
         </a>
       </div>
-      <div className='article__additional'>
-        <a
-          className='article__image-container'
-          href='# '
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <img
-            className='article__image-container--image'
-            src='https://cacheimg.gsp.ro/autocrop/smp-images-production/gsp.ro/14072020/1594740828411.jpg?width=600&height=315'
-            alt='Article'
-          ></img>
-        </a>
-
-        <a
-          className='article__additional--description'
-          href='# '
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <ion-icon name='chevron-down-outline'></ion-icon>
-        </a>
-      </div>
+      <a
+        className='article__image-container'
+        href='# '
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <img
+          className='article__image-container--image'
+          src='https://cacheimg.gsp.ro/autocrop/smp-images-production/gsp.ro/14072020/1594740828411.jpg?width=600&height=315'
+          alt='Article'
+        ></img>
+      </a>
     </article>
   );
 };

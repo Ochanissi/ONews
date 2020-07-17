@@ -44,6 +44,9 @@ const Article = () => {
               rel='noopener noreferrer'
             >
               <ion-icon name='bookmark-outline'></ion-icon>
+              <span className='article__content--source--date--save--info'>
+                Save for later
+              </span>
             </a>
             <a
               className='article__content--source--date--share'
@@ -52,6 +55,9 @@ const Article = () => {
               rel='noopener noreferrer'
             >
               <ion-icon name='share-social-outline'></ion-icon>
+              <span className='article__content--source--date--share--info'>
+                Share
+              </span>
             </a>
           </div>
         </div>

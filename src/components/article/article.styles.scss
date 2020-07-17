@@ -64,8 +64,43 @@
           text-decoration: none;
           color: inherit;
 
+          padding: 0.35rem 0.5rem;
+
+          margin: 1px;
+
+          transition: 0.25 linear;
+
+          position: relative;
+
           &:hover {
-            color: $color-grey-dark-4;
+            // color: $color-grey-dark-4;
+
+            border: 1px solid $color-grey-light-3;
+            border-radius: 50%;
+            background-color: $color-grey-light-1;
+
+            margin: 0;
+
+            .article__content--source--date--save--info {
+              visibility: visible;
+              opacity: 1;
+            }
+          }
+
+          &--info {
+            position: absolute;
+            top: 3rem;
+            left: -3rem;
+            font-size: 1.25rem;
+            background-color: $color-grey-dark-2;
+            color: $color-white;
+            border-radius: 3px;
+            padding: 0.25rem 0.5rem;
+            width: max-content;
+            // display: none;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.25s linear;
           }
         }
 
@@ -73,10 +108,47 @@
           text-decoration: none;
           color: inherit;
 
-          margin-left: 0.5rem;
+          padding: 0.35rem 0.5rem;
+
+          margin: 1px;
+
+          transition: 0.25 linear;
+
+          margin-left: 0.6rem;
+
+          position: relative;
 
           &:hover {
-            color: $color-grey-dark-4;
+            // color: $color-grey-dark-4;
+
+            border: 1px solid $color-grey-light-3;
+            border-radius: 50%;
+            background-color: $color-grey-light-1;
+
+            margin: 0;
+
+            margin-left: 0.5rem;
+
+            .article__content--source--date--share--info {
+              visibility: visible;
+              opacity: 1;
+            }
+          }
+
+          &--info {
+            position: absolute;
+            top: 3rem;
+            left: -1rem;
+            font-size: 1.25rem;
+            background-color: $color-grey-dark-2;
+            color: $color-white;
+            border-radius: 3px;
+            padding: 0.25rem 0.5rem;
+            width: max-content;
+            // display: none;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.25s linear;
           }
         }
       }

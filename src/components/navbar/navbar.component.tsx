@@ -1,39 +1,43 @@
 import React from 'react';
 // import { connect } from 'react-redux';
-// import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import mainLogo from '../../assets/logo.png';
 import defaultLogo from '../../assets/default.png';
 
 import './navbar.styles.scss';
 
-class Navbar extends React.Component {
-  constructor() {
-    super();
+interface NavbarProps {
+  label: string;
+}
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+class Navbar extends React.Component<NavbarProps> {
+  // constructor() {
+  //   super();
 
-    this.state = {
-      searchValue: '',
-    };
-  }
+  //   this.handleSubmit = this.handleSubmit.bind(this);
 
-  handleSearch = (e) => {
-    this.setState({ searchValue: e.target.value });
-  };
+  //   this.state = {
+  //     searchValue: '',
+  //   };
+  // }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  // handleSearch = (e) => {
+  //   this.setState({ searchValue: e.target.value });
+  // };
 
-    this.props.history.push(`/search/${this.state.searchValue}`);
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
 
-    this.setState({ searchValue: '' });
+  //   this.props.history.push(`/search/${this.state.searchValue}`);
 
-    //   <Link
-    //   to={`/search/${this.state.searchValue}`}
-    //   className='navbar__main--btn-search'
-    // ></Link>
-  };
+  //   this.setState({ searchValue: '' });
+
+  //   //   <Link
+  //   //   to={`/search/${this.state.searchValue}`}
+  //   //   className='navbar__main--btn-search'
+  //   // ></Link>
+  // };
 
   render() {
     // const { currentUser } = this.props;
@@ -50,15 +54,15 @@ class Navbar extends React.Component {
           <div className='menu-button'></div>
         </label>
 
-        <form onSubmit={this.handleSubmit} className='navbar__main'>
+        <form onSubmit={} className='navbar__main'>
           <input
             id='searchBar'
             className='navbar__main--searchbar'
             type='text'
             placeholder='Search...'
             autoComplete='off'
-            onChange={this.handleSearch}
-            value={searchValue}
+            onChange={}
+            value={}
           />
           <button
             className='navbar__main--btn-search'
@@ -82,15 +86,15 @@ class Navbar extends React.Component {
           </li>
           <li>
             <Link to='/profile' label='Profile'>
-              {currentUser ? (
+              {/* {currentUser ? (
                 <img
                   src={defaultLogo}
                   alt='User Profile'
                   className='navbar__secondary--logo'
                 />
-              ) : (
-                <ion-icon name='person-circle'></ion-icon>
-              )}
+              ) : ( */}
+              <ion-icon name='person-circle'></ion-icon>
+              {/* )} */}
             </Link>
           </li>
         </ul>

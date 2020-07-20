@@ -8,20 +8,53 @@
   top: 0;
   right: 0;
   width: 100%;
-  height: 5.5rem;
-  background-color: rgba($color-grey-dark-3, 0.75);
+  height: 6.5rem;
+  // background-color: rgba($color-grey-dark-3, 0.75);
 
-  box-shadow: 0 2px 2px $color-primary;
+  // box-shadow: 0 2px 2px $color-primary;
+
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2);
+
   z-index: 9999;
+
+  &__menu {
+    position: absolute;
+    left: 1rem;
+    top: 2rem;
+    margin-left: 2rem;
+    z-index: 9999;
+    color: $color-grey-dark-4;
+
+    // padding: 1rem 2rem;
+
+    transition: all 0.25s linear;
+
+    ion-icon {
+      transform: scale(2);
+    }
+
+    &--icon:link,
+    &--icon:visited {
+      text-decoration: none;
+    }
+
+    &:hover {
+      // border: 1px solid $color-grey-light-3;
+      // border-radius: 50%;
+      // background-color: $color-grey-light-1;
+      color: $color-primary;
+    }
+  }
 
   &__logo {
     position: absolute;
-    left: 0;
-    top: 1rem;
+    left: 4rem;
+    top: -2rem;
     margin-left: 2rem;
     z-index: 9999;
 
-    width: 5rem;
+    width: 10rem;
 
     transition: all 0.25s linear;
 
@@ -36,19 +69,21 @@
   }
 
   &__main {
-    color: $color-white;
+    color: $color-grey-dark-4;
     display: flex;
     justify-content: center;
 
-    @media only screen and (max-width: $bp-phone) {
-      margin-right: 7rem;
-    }
+    margin-top: 0.5rem;
+
+    // @media only screen and (max-width: $bp-phone) {
+    //   margin-right: 7rem;
+    // }
 
     &--searchbar {
       float: right;
       background-color: rgba($color-grey-dark-3, 0);
       // background-color: #d03237;
-      color: $color-white;
+      color: $color-grey-dark-4;
       padding: 0.25rem 1rem;
       width: 20rem;
       border: none;
@@ -56,20 +91,20 @@
       margin-right: 0.8rem;
 
       font-size: 1.75rem;
-      border-bottom: $color-white solid 2px;
+      border-bottom: $color-grey-dark-4 solid 2px;
       transition: 0.3s;
 
-      @media only screen and (max-width: $bp-small) {
-        width: 15rem;
-      }
+      // @media only screen and (max-width: $bp-small) {
+      //   width: 15rem;
+      // }
 
-      @media only screen and (max-width: $bp-smallest) {
-        width: 10rem;
-      }
+      // @media only screen and (max-width: $bp-smallest) {
+      //   width: 10rem;
+      // }
     }
 
     &--searchbar::placeholder {
-      color: $color-white;
+      color: $color-grey-dark-4;
       opacity: 1;
       /* transition: 0.2s; */
     }
@@ -78,25 +113,25 @@
       width: 40rem;
       transition: 0.3s;
       /* Stops the input box from inheriting the styling from the inputs on the request form */
-      border-bottom: $color-white solid 2px;
+      border-bottom: $color-grey-dark-4 solid 2px;
       outline: none;
 
-      @media only screen and (max-width: $bp-small) {
-        width: 30rem;
-      }
+      // @media only screen and (max-width: $bp-small) {
+      //   width: 30rem;
+      // }
 
-      @media only screen and (max-width: $bp-smallest) {
-        width: 20rem;
-      }
+      // @media only screen and (max-width: $bp-smallest) {
+      //   width: 20rem;
+      // }
 
-      @media only screen and (max-width: $bp-phone) {
-        width: 15rem;
-      }
+      // @media only screen and (max-width: $bp-phone) {
+      //   width: 15rem;
+      // }
     }
 
     &--btn-search {
       cursor: pointer;
-      color: $color-white;
+      color: $color-grey-dark-4;
       text-decoration: none !important;
       font-size: 2.25rem;
       margin-top: 1.5rem;
@@ -107,20 +142,20 @@
   }
 
   &__secondary {
-    color: $color-white;
+    color: $color-grey-dark-4;
     display: flex;
     justify-content: center;
 
     position: absolute;
     right: 2rem;
-    top: 1.25rem;
+    top: 1.75rem;
     margin-left: 2rem;
     z-index: 9999;
     list-style: none;
 
     ion-icon {
       font-size: 3rem;
-      color: $color-white;
+      color: $color-grey-dark-4;
       transition: all 0.25s linear;
 
       &:hover {
@@ -135,7 +170,7 @@
     }
 
     &--img {
-      color: white;
+      color: $color-grey-dark-4;
       font-size: 7.5rem;
       background-color: $color-primary;
       background-size: 10rem;
@@ -180,7 +215,7 @@
     &--logo {
       width: 3rem;
 
-      border: 1px solid $color-white;
+      border: 1px solid $color-grey-dark-4;
       transition: all 0.5s linear;
 
       &:hover {
@@ -239,7 +274,7 @@
   .menu-button::before,
   .menu-button::after {
     display: block;
-    background-color: #fff;
+    background-color: $color-grey-dark-4;
     position: absolute;
     height: 4px;
     width: 30px;

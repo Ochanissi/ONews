@@ -1,51 +1,58 @@
 import React from 'react';
 // import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import mainLogo from '../../assets/logo.png';
-import defaultLogo from '../../assets/default.png';
+// import defaultLogo from '../../assets/default.png';
 
 import './navbar.styles.scss';
 
-interface NavbarProps {
-  label: string;
+interface NavbarProps extends RouteComponentProps<any> {
+  // handleSearch(event: React.SyntheticEvent<HTMLInputElement>): void;
 }
 
-class Navbar extends React.Component<NavbarProps> {
-  // constructor() {
-  //   super();
+interface NavbarState {
+  searchValue: string;
+}
 
-  //   this.handleSubmit = this.handleSubmit.bind(this);
+class Navbar extends React.Component<NavbarProps, NavbarState> {
+  constructor(props: NavbarProps) {
+    super(props);
 
-  //   this.state = {
-  //     searchValue: '',
-  //   };
-  // }
+    this.handleSubmit = this.handleSubmit.bind(this);
 
-  // handleSearch = (e) => {
-  //   this.setState({ searchValue: e.target.value });
-  // };
+    this.state = {
+      searchValue: '',
+    };
+  }
 
-  // handleSubmit = (e) => {
-  //   e.preventDefault();
+  handleSearch = (event: React.SyntheticEvent<HTMLInputElement>): void => {
+    this.setState({ searchValue: event.currentTarget.value });
+  };
 
-  //   this.props.history.push(`/search/${this.state.searchValue}`);
+  handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>): void => {
+    event.preventDefault();
 
-  //   this.setState({ searchValue: '' });
+    // this.props.history.push(`/search/${this.state.searchValue}`);
 
-  //   //   <Link
-  //   //   to={`/search/${this.state.searchValue}`}
-  //   //   className='navbar__main--btn-search'
-  //   // ></Link>
-  // };
+    this.setState({ searchValue: '' });
 
-  render() {
+    //   <Link
+    //   to={`/search/${this.state.searchValue}`}
+    //   className='navbar__main--btn-search'
+    // ></Link>
+  };
+
+  render(): JSX.Element {
     // const { currentUser } = this.props;
-    // const { searchValue } = this.state;
+    const { searchValue } = this.state;
 
     return (
       <nav className='navbar'>
-        <Link to='/' label='Home' alt='Logo'>
+        <Link to='/'>
+          <span className='navbar__menu'>
+            <ion-icon name='menu-sharp'></ion-icon>
+          </span>
           <img src={mainLogo} alt='App Logo' className='navbar__logo' />
         </Link>
 
@@ -54,15 +61,15 @@ class Navbar extends React.Component<NavbarProps> {
           <div className='menu-button'></div>
         </label>
 
-        <form onSubmit={} className='navbar__main'>
+        <form onSubmit={this.handleSubmit} className='navbar__main'>
           <input
             id='searchBar'
             className='navbar__main--searchbar'
             type='text'
             placeholder='Search...'
             autoComplete='off'
-            onChange={}
-            value={}
+            onChange={this.handleSearch}
+            value={searchValue}
           />
           <button
             className='navbar__main--btn-search'
@@ -75,24 +82,24 @@ class Navbar extends React.Component<NavbarProps> {
 
         <ul className='navbar__secondary'>
           <li>
-            <Link to='/' label='Home'>
+            <Link to='/'>
               <ion-icon name='home'></ion-icon>
             </Link>
           </li>
           <li>
-            <Link to='/discover' label='Discover'>
+            <Link to='/discover'>
               <ion-icon name='compass'></ion-icon>
             </Link>
           </li>
           <li>
-            <Link to='/profile' label='Profile'>
+            <Link to='/profile'>
               {/* {currentUser ? (
-                <img
-                  src={defaultLogo}
-                  alt='User Profile'
-                  className='navbar__secondary--logo'
-                />
-              ) : ( */}
+          <img
+            src={defaultLogo}
+            alt='User Profile'
+            className='navbar__secondary--logo'
+          />
+        ) : ( */}
               <ion-icon name='person-circle'></ion-icon>
               {/* )} */}
             </Link>
@@ -103,8 +110,9 @@ class Navbar extends React.Component<NavbarProps> {
   }
 }
 
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-});
+// const mapStateToProps = (state) => ({
+//   currentUser: state.user.currentUser,
+// });
 
-export default withRouter(connect(mapStateToProps)(Navbar));
+// export default withRouter(connect(mapStateToProps)(Navbar));
+export default withRouter(Navbar);

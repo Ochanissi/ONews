@@ -48,11 +48,11 @@ class Navbar extends React.Component<NavbarProps, NavbarState> {
     const { searchValue } = this.state;
 
     return (
-      <nav className='navbar'>
+      <nav role='navigation' className='navbar'>
         <Link to='/'>
-          <span className='navbar__menu'>
+          {/* <span className='navbar__menu'>
             <ion-icon name='menu-sharp'></ion-icon>
-          </span>
+          </span> */}
           <img src={mainLogo} alt='App Logo' className='navbar__logo' />
         </Link>
 

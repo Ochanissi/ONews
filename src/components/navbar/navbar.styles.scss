@@ -58,6 +58,8 @@
 
     transition: all 0.25s linear;
 
+    z-index: 999999;
+
     &--icon:link,
     &--icon:visited {
       text-decoration: none;

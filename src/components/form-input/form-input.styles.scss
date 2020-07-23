@@ -1,0 +1,84 @@
+@import '../../variables.scss';
+
+.form-input {
+  color: $color-grey-dark-4;
+
+  &__input {
+    display: block;
+    font-family: inherit;
+    font-size: 1.5rem;
+    color: $color-black;
+    padding: 1.25rem 1.75rem;
+    border: 2px solid $color-grey-light-3;
+    width: 100%;
+    background-color: $color-white;
+    // border-top: 3px solid transparent;
+    // border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+    // border-radius: 4px;
+    box-sizing: border-box;
+    /* Pseudo element (a visible thing that isn't really in the DOM).
+    Also needs -ms- */
+    &:focus:invalid {
+      border-bottom: 2px solid $color-primary;
+    }
+    &:focus {
+      outline: none;
+      border-bottom: 2px solid $color-button-2;
+    }
+
+    &::-webkit-input-placeholder {
+      color: $color-grey-dark-1;
+    }
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 2.5rem;
+  }
+
+  &__label {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  &__photo {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 5rem;
+
+    &--image {
+      width: 6rem;
+
+      // border-radius: 50%;
+      border: 1px solid $color-white;
+    }
+
+    &--text {
+      display: none;
+    }
+  }
+}
+
+#form-input__photo--btn {
+  color: $color-primary;
+
+  background-color: transparent;
+
+  margin-left: 3rem;
+
+  &:hover {
+    background-color: $color-primary;
+
+    border: 2px solid $color-primary-darker;
+    color: $color-white;
+
+    margin-left: 3rem;
+  }
+}

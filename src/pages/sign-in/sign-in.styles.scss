@@ -1,0 +1,154 @@
+@import '../../variables.scss';
+
+.sign-in {
+  // background-color: yellowgreen;
+  // background-color: $color-primary-darker;
+  background-color: white;
+
+  height: 100vh;
+
+  // grid-column: full-start / full-end;
+
+  // padding: 10rem;
+
+  display: grid;
+
+  grid-gap: 3rem;
+
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+
+  position: relative;
+
+  color: $color-grey-dark-4;
+
+  @media only screen and (max-width: $bp-largest) {
+    padding: 20rem 0 10rem 0;
+
+    height: min-content;
+  }
+
+  @media only screen and (max-width: $bp-smallest) {
+    padding: 15rem 0 10rem 0;
+  }
+
+  @media only screen and (max-width: $bp-phone) {
+    padding: 15rem 0 5rem 0;
+  }
+
+  &__background {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: block;
+    background-image: url('../../assets/sign-in-background.png');
+    background-size: cover;
+    background-position: center;
+    width: 105%;
+    height: 105%;
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+
+    margin: -10px -10px 0px -10px;
+    overflow: hidden;
+  }
+
+  &__content {
+    z-index: 99;
+
+    position: relative;
+
+    opacity: 0.9;
+
+    &--logo {
+      position: absolute;
+      // top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+
+      width: 15rem;
+    }
+
+    &--form {
+      box-shadow: 0 0 30px 20px rgba(0, 0, 0, 0.3);
+
+      padding: 7.5rem;
+
+      min-width: 50rem;
+
+      // padding-top: 10rem;
+
+      background-color: $color-grey-light-1;
+
+      @media only screen and (max-width: $bp-smallest) {
+        min-width: 40rem;
+
+        padding: 5rem;
+      }
+
+      @media only screen and (max-width: $bp-phone) {
+        min-width: 35rem;
+
+        padding: 5rem;
+      }
+
+      &--header {
+        font-weight: 00;
+        font-size: 3rem;
+        text-transform: uppercase;
+        letter-spacing: 0.25rem;
+
+        margin-bottom: 3rem;
+
+        text-align: center;
+
+        position: relative;
+
+        &::after {
+          display: block;
+          content: '';
+          width: 15rem;
+          height: 2px;
+          background: $color-grey-dark-4;
+          position: absolute;
+          bottom: 0;
+          left: 10rem;
+
+          z-index: 999;
+
+          @media only screen and (max-width: $bp-smallest) {
+            left: 8rem;
+            width: 14rem;
+          }
+
+          @media only screen and (max-width: $bp-phone) {
+            left: 5.5rem;
+          }
+        }
+      }
+
+      &--btns {
+        display: flex;
+        justify-content: space-around;
+
+        margin-top: 5rem;
+
+        @media only screen and (max-width: $bp-smallest) {
+          flex-direction: column;
+
+          // align-items: center;
+
+          button {
+            margin-bottom: 2rem;
+          }
+        }
+      }
+    }
+  }
+}

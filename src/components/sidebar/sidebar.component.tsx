@@ -7,7 +7,7 @@ export const Sidebar = () => {
     <nav role='navigation' className='sidebar'>
       <div id='menuToggle'>
         {/* A fake / hidden checkbox is used as click reciever, so you can use the :checked selector on it. */}
-        <input type='checkbox' checked />
+        <input type='checkbox' />
 
         {/* Some spans to act as a hamburger. They are acting like a real hamburger, not that McDonalds stuff. */}
         <span></span>

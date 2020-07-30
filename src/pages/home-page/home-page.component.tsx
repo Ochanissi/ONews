@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 
 import Article from '../../components/article/article.component';
 
@@ -11,10 +11,10 @@ if (process.env.NODE_ENV !== 'production') {
 
 class HomePage extends React.Component {
   componentDidMount() {
-    axios({
-      method: 'GET',
-      url: `https://newsapi.org/v2/top-headlines?country=ro&apiKey=${process.env.REACT_APP_NEWSAPI_KEY}`,
-    }).then((res) => console.log(res.data.articles[0].content));
+    // axios({
+    //   method: 'GET',
+    //   url: `https://newsapi.org/v2/top-headlines?country=ro&apiKey=${process.env.REACT_APP_NEWSAPI_KEY}`,
+    // }).then((res) => console.log(res.data.articles[0].content));
   }
 
   render() {

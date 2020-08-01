@@ -1,13 +1,23 @@
-import { NewsActionTypes } from './news.types';
+import { News, NewsActionTypes } from './news.types';
+import { NewsActionTypesT } from './news.actions';
 
-const INITIAL_STATE = {
+interface NewsState {
+  isNewsFetching: boolean;
+  news: string | News | null | [];
+  errorMessage: string | News | null;
+}
+
+const INITIAL_STATE: NewsState = {
   isNewsFetching: false,
   news: [],
 
   errorMessage: null,
 };
 
-const newsReducer = (state = INITIAL_STATE, action) => {
+const newsReducer = (
+  state = INITIAL_STATE,
+  action: NewsActionTypesT
+): NewsState => {
   switch (action.type) {
     case NewsActionTypes.FETCH_NEWS_START:
       return {
@@ -28,5 +38,10 @@ const newsReducer = (state = INITIAL_STATE, action) => {
         isNewsFetching: false,
         errorMessage: action.payload,
       };
+
+    default:
+      return state;
   }
 };
+
+export default newsReducer;

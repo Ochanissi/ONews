@@ -1,6 +1,11 @@
 import React from 'react';
 
+// import { connect } from 'react-redux';
+
+// import { fetchNewsStartAsync, AppActions } from '../../redux/news/news.actions';
+
 import './article.styles.scss';
+import { ThunkDispatch } from 'redux-thunk';
 
 declare global {
   namespace JSX {
@@ -107,5 +112,7 @@ const Article = () => {
     </article>
   );
 };
+
+// const mapStateToProps = (state) => ({});
 
 export default Article;

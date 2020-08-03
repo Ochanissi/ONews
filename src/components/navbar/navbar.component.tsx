@@ -26,11 +26,11 @@ class Navbar extends React.Component<NavbarProps, NavbarState> {
     };
   }
 
-  handleSearch = (event: React.SyntheticEvent<HTMLInputElement>): void => {
+  handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({ searchValue: event.currentTarget.value });
   };
 
-  handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>): void => {
+  handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     // this.props.history.push(`/search/${this.state.searchValue}`);

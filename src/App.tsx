@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
 
-import { fetchNewsStartAsync, AppActions } from './redux/news/news.actions';
+import { fetchNewsStartAsync } from './redux/news/news.actions';
+import { AppActions } from './redux/store';
 
 import { ThunkDispatch } from 'redux-thunk';
 

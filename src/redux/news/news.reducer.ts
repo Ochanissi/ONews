@@ -1,38 +1,40 @@
-import { News, NewsActionTypes } from './news.types';
-import { NewsActionTypesT } from './news.actions';
+import {
+  News,
+  FETCH_NEWS_START,
+  FETCH_NEWS_SUCCESS,
+  FETCH_NEWS_FAILURE,
+} from './news.types';
+import { NewsActionTYPES } from './news.types';
 
 interface NewsState {
   isNewsFetching: boolean;
-  news: string | News | null | [];
-  errorMessage: string | News | null;
+  news?: News;
+  errorMessage?: any;
 }
 
 const INITIAL_STATE: NewsState = {
   isNewsFetching: false,
-  news: [],
-
-  errorMessage: null,
 };
 
 const newsReducer = (
-  state = INITIAL_STATE,
-  action: NewsActionTypesT
+  state: NewsState = INITIAL_STATE,
+  action: NewsActionTYPES
 ): NewsState => {
   switch (action.type) {
-    case NewsActionTypes.FETCH_NEWS_START:
+    case FETCH_NEWS_START:
       return {
         ...state,
         isNewsFetching: true,
       };
 
-    case NewsActionTypes.FETCH_NEWS_SUCCESS:
+    case FETCH_NEWS_SUCCESS:
       return {
         ...state,
         isNewsFetching: false,
         news: action.payload,
       };
 
-    case NewsActionTypes.FETCH_NEWS_FAILURE:
+    case FETCH_NEWS_FAILURE:
       return {
         ...state,
         isNewsFetching: false,

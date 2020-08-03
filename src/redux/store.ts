@@ -4,7 +4,9 @@ import thunk, { ThunkMiddleware } from 'redux-thunk';
 
 import { rootReducer, AppState } from './root-reducer';
 
-import { AppActions } from './news/news.actions';
+import { NewsActionTYPES } from './news/news.types';
+
+export type AppActions = NewsActionTYPES;
 
 const middlewares = [thunk as ThunkMiddleware<AppState, AppActions>];
 

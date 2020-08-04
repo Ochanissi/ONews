@@ -14,6 +14,7 @@ interface NewsState {
 
 const INITIAL_STATE: NewsState = {
   isNewsFetching: false,
+  // news: [],
 };
 
 const newsReducer = (

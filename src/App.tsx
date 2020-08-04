@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { createStructuredSelector } from 'reselect';
+import { selectNewsArticles } from './redux/news/news.selectors';
 
 import { fetchNewsStartAsync } from './redux/news/news.actions';
 import { AppActions } from './redux/store';
@@ -14,9 +15,16 @@ import './App.scss';
 import HomePage from './pages/home-page/home-page.component';
 import NavBar from './components/navbar/navbar.component';
 import Sidebar from './components/sidebar/sidebar.component';
-import { setCurrentUser } from './redux/user/user.actions';
+import { News } from './redux/news/news.types';
+// import { setCurrentUser } from './redux/user/user.actions';
 
-class App extends React.Component<any> {
+interface AppProps {}
+
+interface AppState {}
+
+type Props = AppProps & LinkDispatchProps & LinkStateProps;
+
+class App extends React.Component<Props, AppState> {
   componentDidMount() {
     const { fetchNewsStartAsync } = this.props;
 
@@ -24,6 +32,10 @@ class App extends React.Component<any> {
   }
 
   render() {
+    const { newsArticles } = this.props;
+
+    console.log(newsArticles);
+
     return (
       <div className='App'>
         <NavBar />
@@ -36,17 +48,27 @@ class App extends React.Component<any> {
   }
 }
 
-// const mapStateToProps = createStructuredSelector({
-//   currentUser: user.currentUser,
-// });
+export interface LinkStateProps {
+  newsArticles: News;
+}
+
+interface LinkDispatchProps {
+  fetchNewsStartAsync: () => void;
+}
+
+const mapStateToProps = createStructuredSelector({
+  newsArticles: selectNewsArticles,
+});
 
 // const mapDispatchToProps = (dispatch) => ({
 //   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 // });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppActions>) => ({
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<any, any, AppActions>
+): LinkDispatchProps => ({
   fetchNewsStartAsync: () => dispatch(fetchNewsStartAsync()),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 // export default App;

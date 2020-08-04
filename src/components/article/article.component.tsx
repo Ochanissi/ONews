@@ -5,7 +5,7 @@ import React from 'react';
 // import { fetchNewsStartAsync, AppActions } from '../../redux/news/news.actions';
 
 import './article.styles.scss';
-import { ThunkDispatch } from 'redux-thunk';
+// import { ThunkDispatch } from 'redux-thunk';
 
 declare global {
   namespace JSX {

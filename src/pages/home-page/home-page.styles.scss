@@ -9,11 +9,11 @@
     )
     [center-end] minmax(6rem, 1fr) [full-end];
 
-  &__articles {
+  &__content {
     grid-column: center-start / center-end;
 
     justify-self: center;
 
-    margin-top: 15rem;
+    margin-top: 10rem;
   }
 }

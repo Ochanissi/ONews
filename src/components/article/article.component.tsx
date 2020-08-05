@@ -15,7 +15,10 @@ declare global {
   }
 }
 
-const Article = () => {
+const Article = (props: any, id: number) => {
+  // console.log(props);
+  // console.log(props.id);
+
   return (
     <article className='article'>
       <div className='article__content'>
@@ -25,10 +28,7 @@ const Article = () => {
           target='_blank'
           rel='noopener noreferrer'
         >
-          <h3 className='article__content--title--text'>
-            Bucharest Police fine subway travelers not complying with Covid-19
-            prevention measures
-          </h3>
+          <h3 className='article__content--title--text'>{props.title}</h3>
         </a>
 
         <div className='article__content--source'>
@@ -70,17 +70,14 @@ const Article = () => {
           <input
             type='checkbox'
             className='article__content--description--state'
-            id='article-dropdown'
+            id={`article-dropdown-${props.id}`}
           />
           <p className='article__content--description--content'>
-            Nasopharyngeal swabs more effective than saliva samples for COVID-19
-            diagnostic testing according to current evidence. Nasopharyngeal
-            swabs more effective than saliva samples for COVID-19 diagnostic
-            testing according to current evidence.
+            {props.description}
           </p>
 
           <label
-            htmlFor='article-dropdown'
+            htmlFor={`article-dropdown-${props.id}`}
             className='article__content--description--toggle'
           >
             <ion-icon name='chevron-down-outline'></ion-icon>
@@ -105,7 +102,7 @@ const Article = () => {
       >
         <img
           className='article__image-container--image'
-          src='https://cacheimg.gsp.ro/autocrop/smp-images-production/gsp.ro/14072020/1594740828411.jpg?width=600&height=315'
+          src={props.urlToImage}
           alt='Article'
         ></img>
       </a>

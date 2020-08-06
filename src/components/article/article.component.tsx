@@ -4,6 +4,8 @@ import React from 'react';
 
 // import { fetchNewsStartAsync, AppActions } from '../../redux/news/news.actions';
 
+import { News } from '../../redux/news/news.types';
+
 import './article.styles.scss';
 // import { ThunkDispatch } from 'redux-thunk';
 
@@ -15,33 +17,49 @@ declare global {
   }
 }
 
-const Article = (props: any, id: number) => {
-  // console.log(props);
-  // console.log(props.id);
+const Article = ({
+  title,
+  description,
+  urlToImage,
+  publishedAt,
+  url,
+  source: { name },
+}: News) => {
+  // console.log(data);
+  // console.log(id);
+
+  // { title, description, urlToImage }: News
+  // props: News, id: number
+
+  // const { title, description, urlToImage } = props;
+
+  const dateFormat = Math.round(
+    (Date.now() - Date.parse(publishedAt)) / 3600000
+  );
 
   return (
     <article className='article'>
       <div className='article__content'>
         <a
           className='article__content--title'
-          href='# '
+          href='https://www.idevice.ro/2020/08/06/windows-10-congestii-428813/'
           target='_blank'
           rel='noopener noreferrer'
         >
-          <h3 className='article__content--title--text'>{props.title}</h3>
+          <h3 className='article__content--title--text'>{title}</h3>
         </a>
 
         <div className='article__content--source'>
           <a
             className='article__content--source--url'
-            href='# '
+            href='https://www.idevice.ro/2020/08/06/windows-10-congestii-428813/'
             target='_blank'
             rel='noopener noreferrer'
           >
-            Romania Insider
+            {name}
           </a>
           <div className='article__content--source--date'>
-            &nbsp; &middot; 12 hours ago &nbsp; &middot; &nbsp;
+            &nbsp; &middot; {dateFormat} hours ago &nbsp; &middot; &nbsp;
             <a
               className='article__content--source--date--save'
               href='# '
@@ -70,14 +88,14 @@ const Article = (props: any, id: number) => {
           <input
             type='checkbox'
             className='article__content--description--state'
-            id={`article-dropdown-${props.id}`}
+            id={`article-dropdown-a`}
           />
           <p className='article__content--description--content'>
-            {props.description}
+            {description}
           </p>
 
           <label
-            htmlFor={`article-dropdown-${props.id}`}
+            htmlFor={`article-dropdown-a`}
             className='article__content--description--toggle'
           >
             <ion-icon name='chevron-down-outline'></ion-icon>
@@ -86,7 +104,7 @@ const Article = (props: any, id: number) => {
 
         <a
           className='article__content--coverage'
-          href='# '
+          href='https://www.idevice.ro/2020/08/06/windows-10-congestii-428813/'
           target='_blank'
           rel='noopener noreferrer'
         >
@@ -96,13 +114,13 @@ const Article = (props: any, id: number) => {
       </div>
       <a
         className='article__image-container'
-        href='# '
+        href='https://www.idevice.ro/2020/08/06/windows-10-congestii-428813/'
         target='_blank'
         rel='noopener noreferrer'
       >
         <img
           className='article__image-container--image'
-          src={props.urlToImage}
+          src={urlToImage}
           alt='Article'
         ></img>
       </a>

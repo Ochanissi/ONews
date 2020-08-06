@@ -29,9 +29,9 @@ class ArticlesContainer extends React.Component<Props, ArticlesContainerState> {
   }
 
   render() {
-    const { newsArticles = [] } = this.props;
+    const { newsArticles } = this.props;
 
-    console.log(newsArticles);
+    // console.log(newsArticles);
 
     return (
       <div className='articles-container'>

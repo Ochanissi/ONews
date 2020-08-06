@@ -8,13 +8,13 @@ import { NewsActionTYPES } from './news.types';
 
 interface NewsState {
   isNewsFetching: boolean;
-  news?: News;
+  news: News[];
   errorMessage?: any;
 }
 
 const INITIAL_STATE: NewsState = {
   isNewsFetching: false,
-  // news: [],
+  news: [],
 };
 
 const newsReducer = (

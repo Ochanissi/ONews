@@ -18,7 +18,7 @@ export const fetchNewsStart = (): NewsActionTYPES => ({
   type: FETCH_NEWS_START,
 });
 
-export const fetchNewsSuccess = (news: News): NewsActionTYPES => ({
+export const fetchNewsSuccess = (news: News[]): NewsActionTYPES => ({
   type: FETCH_NEWS_SUCCESS,
   payload: news,
 });

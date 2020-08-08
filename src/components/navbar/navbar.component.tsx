@@ -2,7 +2,7 @@ import React from 'react';
 // import { connect } from 'react-redux';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
-import mainLogo from '../../assets/logo.png';
+// import mainLogo from '../../assets/logo.png';
 // import defaultLogo from '../../assets/default.png';
 
 import './navbar.styles.scss';
@@ -49,12 +49,9 @@ class Navbar extends React.Component<NavbarProps, NavbarState> {
 
     return (
       <nav role='navigation' className='navbar'>
-        <Link to='/'>
-          {/* <span className='navbar__menu'>
-            <ion-icon name='menu-sharp'></ion-icon>
-          </span> */}
+        {/* <Link to='/'>
           <img src={mainLogo} alt='App Logo' className='navbar__logo' />
-        </Link>
+        </Link> */}
 
         <input id='menu-toggle' type='checkbox' />
         <label className='menu-button-container' htmlFor='menu-toggle'>

@@ -1,6 +1,10 @@
 @import '../../variables.scss';
 
 .sidebar {
+  position: fixed;
+
+  z-index: 99999;
+
   a {
     text-decoration: none;
     color: $color-grey-dark-4;
@@ -24,8 +28,6 @@
 
     -webkit-user-select: none;
     user-select: none;
-
-    z-index: 99999;
 
     transition: all 0.25s linear;
 

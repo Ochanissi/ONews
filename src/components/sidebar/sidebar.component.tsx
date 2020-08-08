@@ -1,5 +1,9 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
+import mainLogo from '../../assets/logo.png';
+
 import './sidebar.styles.scss';
 
 export const Sidebar = () => {
@@ -8,6 +12,13 @@ export const Sidebar = () => {
       <div id='menuToggle'>
         {/* A fake / hidden checkbox is used as click reciever, so you can use the :checked selector on it. */}
         <input type='checkbox' />
+
+        <Link to='/'>
+          {/* <span className='navbar__menu'>
+            <ion-icon name='menu-sharp'></ion-icon>
+          </span> */}
+          <img src={mainLogo} alt='App Logo' className='navbar__logo' />
+        </Link>
 
         {/* Some spans to act as a hamburger. They are acting like a real hamburger, not that McDonalds stuff. */}
         <span></span>

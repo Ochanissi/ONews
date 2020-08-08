@@ -16,7 +16,7 @@ export interface News {
   publishedAt: string;
   content: string;
 
-  id?: number;
+  // id?: number;
 }
 
 export interface FetchNewsStartAction {

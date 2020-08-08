@@ -17,14 +17,22 @@ declare global {
   }
 }
 
+interface ArticleProps {
+  id: number;
+}
+
+type Props = ArticleProps & News;
+
 const Article = ({
   title,
   description,
+  content,
   urlToImage,
   publishedAt,
   url,
   source: { name },
-}: News) => {
+  id,
+}: Props) => {
   // console.log(data);
   // console.log(id);
 
@@ -37,12 +45,16 @@ const Article = ({
     (Date.now() - Date.parse(publishedAt)) / 3600000
   );
 
+  const contentFiltered = content
+    ? content.replace(/↵|<ul>|<li>|<\/li>|<\/ul>/g, '')
+    : content;
+
   return (
     <article className='article'>
       <div className='article__content'>
         <a
           className='article__content--title'
-          href='https://www.idevice.ro/2020/08/06/windows-10-congestii-428813/'
+          href={url}
           target='_blank'
           rel='noopener noreferrer'
         >
@@ -52,7 +64,7 @@ const Article = ({
         <div className='article__content--source'>
           <a
             className='article__content--source--url'
-            href='https://www.idevice.ro/2020/08/06/windows-10-congestii-428813/'
+            href={url}
             target='_blank'
             rel='noopener noreferrer'
           >
@@ -88,14 +100,14 @@ const Article = ({
           <input
             type='checkbox'
             className='article__content--description--state'
-            id={`article-dropdown-a`}
+            id={`article-dropdown-${id}`}
           />
           <p className='article__content--description--content'>
-            {description}
+            {description ? description : contentFiltered.split('[+')[0]}
           </p>
 
           <label
-            htmlFor={`article-dropdown-a`}
+            htmlFor={`article-dropdown-${id}`}
             className='article__content--description--toggle'
           >
             <ion-icon name='chevron-down-outline'></ion-icon>
@@ -104,7 +116,7 @@ const Article = ({
 
         <a
           className='article__content--coverage'
-          href='https://www.idevice.ro/2020/08/06/windows-10-congestii-428813/'
+          href={url}
           target='_blank'
           rel='noopener noreferrer'
         >
@@ -114,7 +126,7 @@ const Article = ({
       </div>
       <a
         className='article__image-container'
-        href='https://www.idevice.ro/2020/08/06/windows-10-congestii-428813/'
+        href={url}
         target='_blank'
         rel='noopener noreferrer'
       >

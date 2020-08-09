@@ -31,7 +31,7 @@ class App extends React.Component<Props, AppState> {
         <NavBar />
         <Sidebar />
         <Switch>
-          <Route exact path='/' component={HomePage} />
+          <Route path='/' component={HomePage} />
         </Switch>
       </div>
     );

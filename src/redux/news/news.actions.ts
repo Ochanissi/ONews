@@ -28,14 +28,15 @@ export const fetchNewsFailure = (errorMessage: any): NewsActionTYPES => ({
   payload: errorMessage,
 });
 
-export const fetchNewsStartAsync = () => async (
-  dispatch: Dispatch<NewsActionTYPES>
-) => {
+export const fetchNewsStartAsync = (
+  country: string,
+  category: string
+) => async (dispatch: Dispatch<NewsActionTYPES>) => {
   try {
     dispatch(fetchNewsStart());
 
     const res = await axios.get(
-      `https://newsapi.org/v2/top-headlines?country=ro&apiKey=${process.env.REACT_APP_NEWSAPI_KEY}`
+      `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${process.env.REACT_APP_NEWSAPI_KEY}`
     );
 
     dispatch(fetchNewsSuccess(res.data.articles));

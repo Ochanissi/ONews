@@ -11,7 +11,7 @@ export const Sidebar = () => {
     <nav role='navigation' className='sidebar'>
       <div id='menuToggle'>
         {/* A fake / hidden checkbox is used as click reciever, so you can use the :checked selector on it. */}
-        <input type='checkbox' />
+        <input type='checkbox' defaultChecked />
 
         <Link to='/'>
           {/* <span className='navbar__menu'>
@@ -28,7 +28,7 @@ export const Sidebar = () => {
         {/* Too bad the menu has to be inside of the button but hey, it's pure CSS magic. */}
         <ul id='menu'>
           <a href='# '>
-            <li>
+            <li className='sidebar__selected'>
               <ion-icon name='globe-outline'></ion-icon>
               <p>Top stories</p>
             </li>
@@ -93,6 +93,12 @@ export const Sidebar = () => {
             <li>
               <ion-icon name='bicycle'></ion-icon>
               <p>Sports</p>
+            </li>
+          </a>
+          <a href='# '>
+            <li>
+              <ion-icon name='barbell-sharp'></ion-icon>
+              <p>Health</p>
             </li>
           </a>
         </ul>

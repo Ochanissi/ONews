@@ -15,7 +15,10 @@ import Article from '../article/article.component';
 
 import './articles-container.styles.scss';
 
-interface ArticlesContainerProps {}
+interface ArticlesContainerProps {
+  newsCountry: string;
+  newsCategory: string;
+}
 
 interface ArticlesContainerState {}
 
@@ -23,9 +26,11 @@ type Props = ArticlesContainerProps & LinkDispatchProps & LinkStateProps;
 
 class ArticlesContainer extends React.Component<Props, ArticlesContainerState> {
   componentDidMount() {
-    const { fetchNewsStartAsync } = this.props;
+    const { newsCountry, newsCategory, fetchNewsStartAsync } = this.props;
 
-    fetchNewsStartAsync();
+    console.log(this.props);
+
+    fetchNewsStartAsync(newsCountry, newsCategory);
   }
 
   render() {
@@ -55,7 +60,7 @@ export interface LinkStateProps {
 }
 
 interface LinkDispatchProps {
-  fetchNewsStartAsync: () => void;
+  fetchNewsStartAsync: (country: string, category: string) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -69,7 +74,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
-  fetchNewsStartAsync: () => dispatch(fetchNewsStartAsync()),
+  fetchNewsStartAsync: (country, category) =>
+    dispatch(fetchNewsStartAsync(country, category)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticlesContainer);

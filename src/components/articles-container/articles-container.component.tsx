@@ -28,7 +28,7 @@ class ArticlesContainer extends React.Component<Props, ArticlesContainerState> {
   componentDidMount() {
     const { newsCountry, newsCategory, fetchNewsStartAsync } = this.props;
 
-    console.log(this.props);
+    // console.log(this.props);
 
     fetchNewsStartAsync(newsCountry, newsCategory);
   }

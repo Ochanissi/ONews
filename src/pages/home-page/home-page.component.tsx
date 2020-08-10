@@ -5,31 +5,22 @@ import ArticlesContainer from '../../components/articles-container/articles-cont
 import './home-page.styles.scss';
 
 interface HomePageProps {
-  location: {
-    pathname: string;
-    search: string;
+  match: {
+    params: {
+      category: string;
+      country: string;
+    };
   };
 }
 
 class HomePage extends React.Component<HomePageProps> {
   render() {
-    const { pathname, search } = this.props.location;
-
-    // console.log(pathname, search);
-    // console.log(this.props);
-
-    const newsCountry = search.slice(1).split('&')[0].split('=')[1];
-    const newsCategory = search.slice(1).split('&')[1].split('=')[1];
-
-    console.log(newsCountry, newsCategory);
+    const { category, country } = this.props.match.params;
 
     return (
       <div className='homepage'>
         <div className='homepage__content'>
-          <ArticlesContainer
-            newsCountry={newsCountry}
-            newsCategory={newsCategory}
-          />
+          <ArticlesContainer newsCountry={country} newsCategory={category} />
         </div>
       </div>
     );

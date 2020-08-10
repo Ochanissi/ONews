@@ -7,6 +7,16 @@ import mainLogo from '../../assets/logo.png';
 import './sidebar.styles.scss';
 
 export const Sidebar = () => {
+  const handleClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    e.preventDefault();
+
+    console.log(arguments);
+
+    // this.props.history.push(`/search/${this.state.searchValue}`);
+  };
+
   return (
     <nav role='navigation' className='sidebar'>
       <div id='menuToggle'>
@@ -27,12 +37,12 @@ export const Sidebar = () => {
 
         {/* Too bad the menu has to be inside of the button but hey, it's pure CSS magic. */}
         <ul id='menu'>
-          <a href='# '>
+          <button onClick={handleClick.bind('general')}>
             <li className='sidebar__selected'>
               <ion-icon name='globe-outline'></ion-icon>
               <p>Top stories</p>
             </li>
-          </a>
+          </button>
           <a href='# '>
             <li>
               <ion-icon name='walk-sharp'></ion-icon>

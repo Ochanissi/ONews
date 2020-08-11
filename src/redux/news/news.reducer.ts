@@ -3,8 +3,8 @@ import {
   FETCH_NEWS_START,
   FETCH_NEWS_SUCCESS,
   FETCH_NEWS_FAILURE,
+  NewsActionTYPES,
 } from './news.types';
-import { NewsActionTYPES } from './news.types';
 
 interface NewsState {
   isNewsFetching: boolean;

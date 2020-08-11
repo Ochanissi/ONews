@@ -1,21 +1,33 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import mainLogo from '../../assets/logo.png';
 
 import './sidebar.styles.scss';
+import { selectUserCategory } from '../../redux/user/user.selectors';
 
-export const Sidebar = () => {
-  const handleClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
-    e.preventDefault();
+interface SidebarProps {
+  history: any;
+}
 
-    console.log(arguments);
+type Props = SidebarProps & LinkStateProps;
 
-    // this.props.history.push(`/search/${this.state.searchValue}`);
-  };
+export const Sidebar = ({ userCategory }: Props) => {
+  // console.log(userCategory);
+
+  // const handleClick = (category: string) => (
+  //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  // ): void => {
+  //   e.preventDefault();
+
+  //   props.history.push(`/news/ro/${category}`);
+  // };
+
+  // console.log(userCategory);
 
   return (
     <nav role='navigation' className='sidebar'>
@@ -37,12 +49,14 @@ export const Sidebar = () => {
 
         {/* Too bad the menu has to be inside of the button but hey, it's pure CSS magic. */}
         <ul id='menu'>
-          <button onClick={handleClick.bind('general')}>
-            <li className='sidebar__selected'>
+          <Link to='/news/ro/general'>
+            <li
+              className={userCategory === 'general' ? 'sidebar__selected' : ''}
+            >
               <ion-icon name='globe-outline'></ion-icon>
               <p>Top stories</p>
             </li>
-          </button>
+          </Link>
           <a href='# '>
             <li>
               <ion-icon name='walk-sharp'></ion-icon>
@@ -75,46 +89,70 @@ export const Sidebar = () => {
             </li>
           </a>
           <hr></hr>
-          <a href='# '>
-            <li>
+          <Link to='/news/ro/business'>
+            <li
+              className={userCategory === 'business' ? 'sidebar__selected' : ''}
+            >
               <ion-icon name='business-outline'></ion-icon>
               <p>Business</p>
             </li>
-          </a>
-          <a href='# '>
-            <li>
+          </Link>
+          <Link to='/news/ro/technology'>
+            <li
+              className={
+                userCategory === 'technology' ? 'sidebar__selected' : ''
+              }
+            >
               <ion-icon name='rocket-outline'></ion-icon>
               <p>Technology</p>
             </li>
-          </a>
-          <a href='# '>
-            <li>
+          </Link>
+          <Link to='/news/ro/entertainment'>
+            <li
+              className={
+                userCategory === 'entertainment' ? 'sidebar__selected' : ''
+              }
+            >
               <ion-icon name='game-controller-outline'></ion-icon>
               <p>Entertainment</p>
             </li>
-          </a>
-          <a href='# '>
-            <li>
+          </Link>
+          <Link to='/news/ro/science'>
+            <li
+              className={userCategory === 'science' ? 'sidebar__selected' : ''}
+            >
               <ion-icon name='flask-sharp'></ion-icon>
               <p>Science</p>
             </li>
-          </a>
-          <a href='# '>
-            <li>
+          </Link>
+          <Link to='/news/ro/sports'>
+            <li
+              className={userCategory === 'sports' ? 'sidebar__selected' : ''}
+            >
               <ion-icon name='bicycle'></ion-icon>
               <p>Sports</p>
             </li>
-          </a>
-          <a href='# '>
-            <li>
+          </Link>
+          <Link to='/news/ro/health'>
+            <li
+              className={userCategory === 'health' ? 'sidebar__selected' : ''}
+            >
               <ion-icon name='barbell-sharp'></ion-icon>
               <p>Health</p>
             </li>
-          </a>
+          </Link>
         </ul>
       </div>
     </nav>
   );
 };
 
-export default Sidebar;
+interface LinkStateProps {
+  userCategory: string;
+}
+
+const mapStateToProps = createStructuredSelector({
+  userCategory: selectUserCategory,
+});
+
+export default withRouter(connect(mapStateToProps)(Sidebar));

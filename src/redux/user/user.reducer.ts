@@ -1,26 +1,22 @@
-const INITIAL_STATE = {
-  currentUser: null,
-};
+import { SET_USER_CATEGORY, UserActionTYPES } from './user.types';
 
-// interface User {}
-
-// type State = User[];
-
-export interface User {
-  id: string;
+interface UserState {
+  userCategory: string;
 }
 
-type Actions = {
-  type: string;
-  payload: User;
+const INITIAL_STATE: UserState = {
+  userCategory: 'general',
 };
 
-const userReducer = (state = INITIAL_STATE, action: Actions) => {
+const userReducer = (
+  state: UserState = INITIAL_STATE,
+  action: UserActionTYPES
+): UserState => {
   switch (action.type) {
-    case 'SET_CURRENT_USER':
+    case SET_USER_CATEGORY:
       return {
         ...state,
-        currentUser: action.payload,
+        userCategory: action.payload,
       };
 
     default:

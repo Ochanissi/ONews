@@ -1,15 +1,10 @@
 import { createSelector } from 'reselect';
+// import { AppState } from '../root-reducer';
+// import { LinkStateProps } from '../../App';
 
-// const selectUser = (state) => state.user;
+const selectUser = (state: any): any => state.user;
 
-// export const selectCurrentUser = createSelector(
-//   [selectUser],
-//   (user) => user.selectCurrentUser
-// );
-
-import { User } from './user.reducer';
-
-export const setCurrentUser = (user: User) => ({
-  type: 'SET_CURRENT_USER',
-  payload: user,
-});
+export const selectUserCategory = createSelector(
+  [selectUser],
+  (user) => user.userCategory
+);

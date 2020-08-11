@@ -12,6 +12,9 @@
     border-top-right-radius: 5rem;
     border-bottom-right-radius: 5rem;
 
+    // padding-top: 1.5rem;
+    // padding-bottom: 1.5rem;
+
     // transition: all 0.25s ease;
 
     // &:hover {
@@ -20,13 +23,21 @@
     // }
   }
 
+  button,
   a {
     text-decoration: none;
     color: $color-grey-dark-4;
 
     transition: color 0.25s ease;
+
+    border: none;
+
+    background-color: $color-white;
+
+    cursor: pointer;
   }
 
+  button:hover,
   a:hover {
     color: $color-primary;
   }

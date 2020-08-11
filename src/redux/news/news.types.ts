@@ -19,16 +19,16 @@ export interface News {
   // id?: number;
 }
 
-export interface FetchNewsStartAction {
+interface FetchNewsStartAction {
   type: typeof FETCH_NEWS_START;
 }
 
-export interface FetchNewsSuccessAction {
+interface FetchNewsSuccessAction {
   type: typeof FETCH_NEWS_SUCCESS;
   payload: News[];
 }
 
-export interface FetchNewsFailureAction {
+interface FetchNewsFailureAction {
   type: typeof FETCH_NEWS_FAILURE;
   payload: any;
 }

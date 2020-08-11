@@ -1,6 +1,6 @@
-import { User } from './user.reducer';
+import { SET_USER_CATEGORY, UserActionTYPES } from './user.types';
 
-export const setCurrentUser = (user: User) => ({
-  type: 'SET_CURRENT_USER',
-  payload: user,
+export const setUserCategory = (category: string): UserActionTYPES => ({
+  type: SET_USER_CATEGORY,
+  payload: category,
 });

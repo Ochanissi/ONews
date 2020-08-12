@@ -8,3 +8,8 @@ export const selectUserCategory = createSelector(
   [selectUser],
   (user) => user.userCategory
 );
+
+export const selectUserCountry = createSelector(
+  [selectUser],
+  (user) => user.userCountry
+);

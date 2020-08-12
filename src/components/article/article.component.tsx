@@ -47,7 +47,7 @@ const Article = ({
 
   const contentFiltered = content
     ? content.replace(/↵|<ul>|<li>|<\/li>|<\/ul>/g, '')
-    : content;
+    : '';
 
   return (
     <article className='article'>

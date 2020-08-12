@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+
+import { createStructuredSelector } from 'reselect';
 
 // import { createStructuredSelector } from 'reselect';
 // import { selectNewsArticles } from './redux/news/news.selectors';
@@ -10,6 +12,11 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 // import { ThunkDispatch } from 'redux-thunk';
 // import { News } from './redux/news/news.types';
+
+import {
+  selectUserCategory,
+  selectUserCountry,
+} from './redux/user/user.selectors';
 
 import './App.scss';
 
@@ -26,6 +33,8 @@ type Props = AppProps & LinkDispatchProps & LinkStateProps;
 
 class App extends React.Component<Props, AppState> {
   render() {
+    const { userCategory, userCountry } = this.props;
+
     return (
       <div className='App'>
         <NavBar />
@@ -34,21 +43,15 @@ class App extends React.Component<Props, AppState> {
           <Route
             exact
             path='/'
-            render={() => <Redirect to='/news/:country/:category' />}
+            render={() => (
+              <Redirect to={`/news/${userCountry}/${userCategory}`} />
+            )}
           />
           <Route exact path='/news/:country/:category' component={HomePage} />
         </Switch>
       </div>
     );
   }
-}
-
-export interface LinkStateProps {
-  // newsArticles: News;
-}
-
-interface LinkDispatchProps {
-  // fetchNewsStartAsync: () => void;
 }
 
 // const mapStateToProps = createStructuredSelector({
@@ -65,5 +68,20 @@ interface LinkDispatchProps {
 //   fetchNewsStartAsync: () => dispatch(fetchNewsStartAsync()),
 // });
 
-// export default connect(mapStateToProps, mapDispatchToProps)(App);
-export default App;
+interface LinkDispatchProps {
+  userCategory: string;
+  userCountry: string;
+}
+
+interface LinkStateProps {
+  userCategory: string;
+  userCountry: string;
+}
+
+const mapStateToProps = createStructuredSelector({
+  userCategory: selectUserCategory,
+  userCountry: selectUserCountry,
+});
+
+export default connect(mapStateToProps)(App);
+// export default App;

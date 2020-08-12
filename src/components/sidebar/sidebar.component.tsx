@@ -8,15 +8,18 @@ import { createStructuredSelector } from 'reselect';
 import mainLogo from '../../assets/logo.png';
 
 import './sidebar.styles.scss';
-import { selectUserCategory } from '../../redux/user/user.selectors';
+import {
+  selectUserCategory,
+  selectUserCountry,
+} from '../../redux/user/user.selectors';
 
 interface SidebarProps {
-  history: any;
+  // history: any;
 }
 
 type Props = SidebarProps & LinkStateProps;
 
-export const Sidebar = ({ userCategory }: Props) => {
+export const Sidebar = ({ userCategory, userCountry }: Props) => {
   // console.log(userCategory);
 
   // const handleClick = (category: string) => (
@@ -49,7 +52,7 @@ export const Sidebar = ({ userCategory }: Props) => {
 
         {/* Too bad the menu has to be inside of the button but hey, it's pure CSS magic. */}
         <ul id='menu'>
-          <Link to='/news/ro/general'>
+          <Link to={`/news/${userCountry}/general`}>
             <li
               className={userCategory === 'general' ? 'sidebar__selected' : ''}
             >
@@ -76,20 +79,28 @@ export const Sidebar = ({ userCategory }: Props) => {
             </li>
           </a>
           <hr></hr>
-          <a href='# '>
-            <li>
+          <Link to={`/news/ro/${userCategory}`}>
+            <li
+              className={
+                userCountry === 'ro' ? 'sidebar__selected--country' : ''
+              }
+            >
               <ion-icon name='flag'></ion-icon>
               <p>Romania</p>
             </li>
-          </a>
-          <a href='# '>
-            <li>
+          </Link>
+          <Link to={`/news/us/${userCategory}`}>
+            <li
+              className={
+                userCountry === 'us' ? 'sidebar__selected--country' : ''
+              }
+            >
               <ion-icon name='earth'></ion-icon>
               <p>World</p>
             </li>
-          </a>
+          </Link>
           <hr></hr>
-          <Link to='/news/ro/business'>
+          <Link to={`/news/${userCountry}/business`}>
             <li
               className={userCategory === 'business' ? 'sidebar__selected' : ''}
             >
@@ -97,7 +108,7 @@ export const Sidebar = ({ userCategory }: Props) => {
               <p>Business</p>
             </li>
           </Link>
-          <Link to='/news/ro/technology'>
+          <Link to={`/news/${userCountry}/technology`}>
             <li
               className={
                 userCategory === 'technology' ? 'sidebar__selected' : ''
@@ -107,7 +118,7 @@ export const Sidebar = ({ userCategory }: Props) => {
               <p>Technology</p>
             </li>
           </Link>
-          <Link to='/news/ro/entertainment'>
+          <Link to={`/news/${userCountry}/entertainment`}>
             <li
               className={
                 userCategory === 'entertainment' ? 'sidebar__selected' : ''
@@ -117,7 +128,7 @@ export const Sidebar = ({ userCategory }: Props) => {
               <p>Entertainment</p>
             </li>
           </Link>
-          <Link to='/news/ro/science'>
+          <Link to={`/news/${userCountry}/science`}>
             <li
               className={userCategory === 'science' ? 'sidebar__selected' : ''}
             >
@@ -125,7 +136,7 @@ export const Sidebar = ({ userCategory }: Props) => {
               <p>Science</p>
             </li>
           </Link>
-          <Link to='/news/ro/sports'>
+          <Link to={`/news/${userCountry}/sports`}>
             <li
               className={userCategory === 'sports' ? 'sidebar__selected' : ''}
             >
@@ -133,7 +144,7 @@ export const Sidebar = ({ userCategory }: Props) => {
               <p>Sports</p>
             </li>
           </Link>
-          <Link to='/news/ro/health'>
+          <Link to={`/news/${userCountry}/health`}>
             <li
               className={userCategory === 'health' ? 'sidebar__selected' : ''}
             >
@@ -149,10 +160,12 @@ export const Sidebar = ({ userCategory }: Props) => {
 
 interface LinkStateProps {
   userCategory: string;
+  userCountry: string;
 }
 
 const mapStateToProps = createStructuredSelector({
   userCategory: selectUserCategory,
+  userCountry: selectUserCountry,
 });
 
 export default withRouter(connect(mapStateToProps)(Sidebar));

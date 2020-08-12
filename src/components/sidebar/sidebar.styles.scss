@@ -21,6 +21,14 @@
     //   color: $color-primary-darker;
     //   background-color: $color-primary-light;
     // }
+
+    &--country {
+      color: $color-secondary;
+      background-color: $color-secondary-light;
+
+      border-top-right-radius: 5rem;
+      border-bottom-right-radius: 5rem;
+    }
   }
 
   button,

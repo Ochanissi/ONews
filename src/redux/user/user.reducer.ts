@@ -1,11 +1,17 @@
-import { SET_USER_CATEGORY, UserActionTYPES } from './user.types';
+import {
+  SET_USER_CATEGORY,
+  SET_USER_COUNTRY,
+  UserActionTYPES,
+} from './user.types';
 
 interface UserState {
   userCategory: string;
+  userCountry: string;
 }
 
 const INITIAL_STATE: UserState = {
   userCategory: 'general',
+  userCountry: 'ro',
 };
 
 const userReducer = (
@@ -17,6 +23,12 @@ const userReducer = (
       return {
         ...state,
         userCategory: action.payload,
+      };
+
+    case SET_USER_COUNTRY:
+      return {
+        ...state,
+        userCountry: action.payload,
       };
 
     default:

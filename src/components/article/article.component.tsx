@@ -4,6 +4,8 @@ import React from 'react';
 
 // import { fetchNewsStartAsync, AppActions } from '../../redux/news/news.actions';
 
+import defaultArticle from '../../assets/article-default.png';
+
 import { News } from '../../redux/news/news.types';
 
 import './article.styles.scss';
@@ -96,23 +98,25 @@ const Article = ({
             </a>
           </div>
         </div>
-        <div className='article__content--description'>
-          <input
-            type='checkbox'
-            className='article__content--description--state'
-            id={`article-dropdown-${id}`}
-          />
-          <p className='article__content--description--content'>
-            {description ? description : contentFiltered.split('[+')[0]}
-          </p>
+        {description || description ? (
+          <div className='article__content--description'>
+            <input
+              type='checkbox'
+              className='article__content--description--state'
+              id={`article-dropdown-${id}`}
+            />
+            <p className='article__content--description--content'>
+              {description ? description : contentFiltered.split('[+')[0]}
+            </p>
 
-          <label
-            htmlFor={`article-dropdown-${id}`}
-            className='article__content--description--toggle'
-          >
-            <ion-icon name='chevron-down-outline'></ion-icon>
-          </label>
-        </div>
+            <label
+              htmlFor={`article-dropdown-${id}`}
+              className='article__content--description--toggle'
+            >
+              <ion-icon name='chevron-down-outline'></ion-icon>
+            </label>
+          </div>
+        ) : null}
 
         <a
           className='article__content--coverage'
@@ -132,7 +136,7 @@ const Article = ({
       >
         <img
           className='article__image-container--image'
-          src={urlToImage}
+          src={urlToImage || defaultArticle}
           alt='Article'
         ></img>
       </a>

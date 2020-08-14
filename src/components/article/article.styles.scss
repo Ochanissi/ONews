@@ -10,6 +10,8 @@
 
   max-width: 75rem;
 
+  // min-height: 17.2rem;
+
   &:not(:last-child) {
     margin-bottom: 2rem;
   }
@@ -29,9 +31,13 @@
     display: flex;
     flex-direction: column;
 
+    width: 55.8rem;
+
     &--title {
       text-decoration: none;
       color: $color-grey-dark-4;
+
+      min-height: 5.6rem;
 
       &:hover {
         text-decoration: underline;
@@ -238,6 +244,9 @@
   }
 
   &__image-container {
+    min-width: 10rem;
+    min-height: 10rem;
+
     &--image {
       width: 10rem;
       height: 10rem;

@@ -10,7 +10,7 @@
 
   max-width: 75rem;
 
-  // min-height: 17.2rem;
+  // min-height: 17rem;
 
   &:not(:last-child) {
     margin-bottom: 2rem;
@@ -36,8 +36,6 @@
     &--title {
       text-decoration: none;
       color: $color-grey-dark-4;
-
-      min-height: 5.6rem;
 
       &:hover {
         text-decoration: underline;

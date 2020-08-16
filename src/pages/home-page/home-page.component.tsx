@@ -96,7 +96,7 @@ class HomePage extends React.Component<Props> {
 
     const subHeader = this.handleSubheader(newsCategory);
 
-    // console.log(subHeader);
+    console.log(newsArticles);
 
     return (
       <div className='homepage'>

@@ -47,6 +47,23 @@ class App extends React.Component<Props, AppState> {
               <Redirect to={`/news/${userCountry}/${userCategory}`} />
             )}
           />
+          {/* <Route
+            exact
+            path='/auth/sign-in'
+            component={SignIn}
+            // render={() =>
+            //   currentUser ? <Redirect to='/' /> : <SignIn />
+            // }
+          />
+          <Route
+            exact
+            path='/auth/sign-up'
+            // render={() =>
+            //   currentUser ? <Redirect to='/' /> : <SignUp />
+            // }
+            component={SignUp}
+          /> */}
+
           <Route exact path='/news/:country/:category' component={HomePage} />
         </Switch>
       </div>

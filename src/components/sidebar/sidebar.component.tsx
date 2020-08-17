@@ -13,6 +13,8 @@ import {
   selectUserCountry,
 } from '../../redux/user/user.selectors';
 
+import SidebarItem from './../sidebar-item/sidebar-item.component';
+
 interface SidebarProps {
   // history: any;
 }
@@ -20,18 +22,6 @@ interface SidebarProps {
 type Props = SidebarProps & LinkStateProps;
 
 export const Sidebar = ({ userCategory, userCountry }: Props) => {
-  // console.log(userCategory);
-
-  // const handleClick = (category: string) => (
-  //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  // ): void => {
-  //   e.preventDefault();
-
-  //   props.history.push(`/news/ro/${category}`);
-  // };
-
-  // console.log(userCategory);
-
   return (
     <nav role='navigation' className='sidebar'>
       <div id='menuToggle'>
@@ -52,106 +42,119 @@ export const Sidebar = ({ userCategory, userCountry }: Props) => {
 
         {/* Too bad the menu has to be inside of the button but hey, it's pure CSS magic. */}
         <ul id='menu'>
-          <Link to={`/news/${userCountry}/general`}>
-            <li
-              className={userCategory === 'general' ? 'sidebar__selected' : ''}
-            >
-              <ion-icon name='globe-outline'></ion-icon>
-              <p>Top stories</p>
-            </li>
-          </Link>
-          <a href='# '>
-            <li>
-              <ion-icon name='walk-sharp'></ion-icon>
-              <p>For you</p>
-            </li>
-          </a>
-          <a href='# '>
-            <li>
-              <ion-icon name='star-outline'></ion-icon>
-              <p>Following</p>
-            </li>
-          </a>
-          <a href='# '>
-            <li>
-              <ion-icon name='search'></ion-icon>
-              <p>Saved searches</p>
-            </li>
-          </a>
+          <SidebarItem
+            userCountry={userCountry}
+            userCategory={userCategory}
+            linkType='general'
+            linkCountry={userCountry}
+            iconType='globe-outline'
+            itemLabel='Top stories'
+          />
+
+          <SidebarItem
+            userCountry={userCountry}
+            userCategory={userCategory}
+            linkType=''
+            linkCountry={userCountry}
+            iconType='walk-sharp'
+            itemLabel='For you'
+          />
+
+          <SidebarItem
+            userCountry={userCountry}
+            userCategory={userCategory}
+            linkType=''
+            linkCountry={userCountry}
+            iconType='star-outline'
+            itemLabel='Following'
+          />
+
+          <SidebarItem
+            userCountry={userCountry}
+            userCategory={userCategory}
+            linkType=''
+            linkCountry={userCountry}
+            iconType='search'
+            itemLabel='Saved searches'
+          />
+
           <hr></hr>
-          <Link to={`/news/ro/${userCategory}`}>
-            <li
-              className={
-                userCountry === 'ro' ? 'sidebar__selected--country' : ''
-              }
-            >
-              <ion-icon name='flag'></ion-icon>
-              <p>Romania</p>
-            </li>
-          </Link>
-          <Link to={`/news/us/${userCategory}`}>
-            <li
-              className={
-                userCountry === 'us' ? 'sidebar__selected--country' : ''
-              }
-            >
-              <ion-icon name='earth'></ion-icon>
-              <p>World</p>
-            </li>
-          </Link>
+
+          <SidebarItem
+            userCountry={userCountry}
+            userCategory={userCategory}
+            linkType={userCategory}
+            linkCountry='ro'
+            iconType='flag'
+            itemLabel='Romania'
+            countryBool
+          />
+
+          <SidebarItem
+            userCountry={userCountry}
+            userCategory={userCategory}
+            linkType={userCategory}
+            linkCountry='us'
+            iconType='earth'
+            itemLabel='World'
+            countryBool
+          />
+
           <hr></hr>
-          <Link to={`/news/${userCountry}/business`}>
-            <li
-              className={userCategory === 'business' ? 'sidebar__selected' : ''}
-            >
-              <ion-icon name='business-outline'></ion-icon>
-              <p>Business</p>
-            </li>
-          </Link>
-          <Link to={`/news/${userCountry}/technology`}>
-            <li
-              className={
-                userCategory === 'technology' ? 'sidebar__selected' : ''
-              }
-            >
-              <ion-icon name='rocket-outline'></ion-icon>
-              <p>Technology</p>
-            </li>
-          </Link>
-          <Link to={`/news/${userCountry}/entertainment`}>
-            <li
-              className={
-                userCategory === 'entertainment' ? 'sidebar__selected' : ''
-              }
-            >
-              <ion-icon name='game-controller-outline'></ion-icon>
-              <p>Entertainment</p>
-            </li>
-          </Link>
-          <Link to={`/news/${userCountry}/science`}>
-            <li
-              className={userCategory === 'science' ? 'sidebar__selected' : ''}
-            >
-              <ion-icon name='flask-sharp'></ion-icon>
-              <p>Science</p>
-            </li>
-          </Link>
-          <Link to={`/news/${userCountry}/sports`}>
-            <li
-              className={userCategory === 'sports' ? 'sidebar__selected' : ''}
-            >
-              <ion-icon name='bicycle'></ion-icon>
-              <p>Sports</p>
-            </li>
-          </Link>
-          <Link to={`/news/${userCountry}/health`}>
-            <li
-              className={userCategory === 'health' ? 'sidebar__selected' : ''}
-            >
-              <ion-icon name='barbell-sharp'></ion-icon>
-              <p>Health</p>
-            </li>
-          </Link>
+
+          <SidebarItem
+            userCountry={userCountry}
+            userCategory={userCategory}
+            linkType='business'
+            linkCountry={userCountry}
+            iconType='business-outline'
+            itemLabel='Business'
+          />
+
+          <SidebarItem
+            userCountry={userCountry}
+            userCategory={userCategory}
+            linkType='technology'
+            linkCountry={userCountry}
+            iconType='rocket-outline'
+            itemLabel='Technology'
+          />
+
+          <SidebarItem
+            userCountry={userCountry}
+            userCategory={userCategory}
+            linkType='entertainment'
+            linkCountry={userCountry}
+            iconType='game-controller-outline'
+            itemLabel='Entertainment'
+          />
+
+          <SidebarItem
+            userCountry={userCountry}
+            userCategory={userCategory}
+            linkType='science'
+            linkCountry={userCountry}
+            iconType='flask-sharp'
+            itemLabel='Science'
+          />
+
+          <SidebarItem
+            userCountry={userCountry}
+            userCategory={userCategory}
+            linkType='sports'
+            linkCountry={userCountry}
+            iconType='bicycle'
+            itemLabel='Sports'
+          />
+
+          <SidebarItem
+            userCountry={userCountry}
+            userCategory={userCategory}
+            linkType='health'
+            linkCountry={userCountry}
+            iconType='barbell-sharp'
+            itemLabel='Health'
+          />
         </ul>
       </div>
     </nav>

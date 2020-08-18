@@ -3,7 +3,19 @@ import { Link } from 'react-router-dom';
 
 import './custom-button.styles.scss';
 
-const CustomButton = ({ children, link, profile, ...otherProps }) => {
+interface CustomButtonProps {
+  children: any;
+  link?: string;
+  type?: any;
+  profile?: boolean;
+}
+
+const CustomButton = ({
+  children,
+  link,
+  profile,
+  ...otherProps
+}: CustomButtonProps) => {
   return link ? (
     <Link
       to={link}

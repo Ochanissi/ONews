@@ -1,18 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import LogoForm from '../../assets/logo-form.png';
+// import LogoForm from '../../assets/logo-form.png';
 
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 
-import { signUpStartAsync } from '../../redux/user/user.actions';
+// import { signUpStartAsync } from '../../redux/user/user.actions';
 
 import './sign-up.styles.scss';
 
-class SignUp extends React.Component {
-  constructor() {
-    super();
+interface SignUpState {}
+
+interface SignUpProps {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+class SignUp extends React.Component<SignUpState, SignUpProps> {
+  constructor(props: any) {
+    super(props);
 
     this.state = {
       name: '',
@@ -22,25 +31,25 @@ class SignUp extends React.Component {
     };
   }
 
-  handleSubmit = async (event) => {
+  handleSubmit = async (event: any) => {
     event.preventDefault();
 
     const { name, email, password, confirmPassword } = this.state;
 
-    const { signUpStartAsync } = this.props;
+    // const { signUpStartAsync } = this.props;
 
     if (password !== confirmPassword) {
       alert("Passwords don't match");
       return;
     }
 
-    signUpStartAsync(name, email, password);
+    // signUpStartAsync(name, email, password);
   };
 
-  handleChange = (event) => {
+  handleChange = (event: any) => {
     const { name, value } = event.target;
 
-    this.setState({ [name]: value });
+    this.setState<any>({ [name]: value });
   };
 
   render() {
@@ -50,11 +59,7 @@ class SignUp extends React.Component {
       <div className='sign-up'>
         <span className='sign-up__background' />
         <div className='sign-up__content'>
-          <img
-            className='sign-up__content--logo'
-            alt='Form Logo'
-            src={LogoForm}
-          />
+          <img className='sign-up__content--logo' alt='Form Logo' src='' />
           <form className='sign-up__content--form' onSubmit={this.handleSubmit}>
             <h2 className='sign-up__content--form--header'>Sign Up</h2>
 
@@ -111,9 +116,10 @@ class SignUp extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  signUpStartAsync: (name, email, password) =>
-    dispatch(signUpStartAsync(name, email, password)),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   signUpStartAsync: (name, email, password) =>
+//     dispatch(signUpStartAsync(name, email, password)),
+// });
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default SignUp;
+// export default connect(null, mapDispatchToProps)(SignUp);

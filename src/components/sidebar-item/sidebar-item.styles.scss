@@ -1,0 +1,29 @@
+@import '../../variables.scss';
+
+.sidebar {
+  &__selected {
+    color: $color-primary;
+    background-color: $color-primary-lighter;
+
+    border-top-right-radius: 5rem;
+    border-bottom-right-radius: 5rem;
+
+    // padding-top: 1.5rem;
+    // padding-bottom: 1.5rem;
+
+    // transition: all 0.25s ease;
+
+    // &:hover {
+    //   color: $color-primary-darker;
+    //   background-color: $color-primary-light;
+    // }
+
+    &--country {
+      color: $color-secondary;
+      background-color: $color-secondary-light;
+
+      border-top-right-radius: 5rem;
+      border-bottom-right-radius: 5rem;
+    }
+  }
+}

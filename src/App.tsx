@@ -13,6 +13,8 @@ import { createStructuredSelector } from 'reselect';
 // import { ThunkDispatch } from 'redux-thunk';
 // import { News } from './redux/news/news.types';
 
+import SignUp from './pages/sign-up/sign-up.component';
+
 import {
   selectUserCategory,
   selectUserCountry,
@@ -54,7 +56,7 @@ class App extends React.Component<Props, AppState> {
             // render={() =>
             //   currentUser ? <Redirect to='/' /> : <SignIn />
             // }
-          />
+          /> */}
           <Route
             exact
             path='/auth/sign-up'
@@ -62,7 +64,7 @@ class App extends React.Component<Props, AppState> {
             //   currentUser ? <Redirect to='/' /> : <SignUp />
             // }
             component={SignUp}
-          /> */}
+          />
 
           <Route exact path='/news/:country/:category' component={HomePage} />
         </Switch>

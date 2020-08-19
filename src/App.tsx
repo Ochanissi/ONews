@@ -14,6 +14,7 @@ import { createStructuredSelector } from 'reselect';
 // import { News } from './redux/news/news.types';
 
 import SignUp from './pages/sign-up/sign-up.component';
+import SignIn from './pages/sign-in/sign-in.component';
 
 import {
   selectUserCategory,
@@ -49,14 +50,14 @@ class App extends React.Component<Props, AppState> {
               <Redirect to={`/news/${userCountry}/${userCategory}`} />
             )}
           />
-          {/* <Route
+          <Route
             exact
             path='/auth/sign-in'
             component={SignIn}
             // render={() =>
             //   currentUser ? <Redirect to='/' /> : <SignIn />
             // }
-          /> */}
+          />
           <Route
             exact
             path='/auth/sign-up'

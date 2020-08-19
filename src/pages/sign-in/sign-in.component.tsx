@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { signInStartAsync } from '../../redux/user/user.actions';
+// import { signInStartAsync } from '../../redux/user/user.actions';
 
 import LogoForm from '../../assets/logo-form.png';
 
@@ -10,9 +10,16 @@ import CustomButton from '../../components/custom-button/custom-button.component
 
 import './sign-in.styles.scss';
 
-class SignIn extends React.Component {
-  constructor() {
-    super();
+interface SignInState {}
+
+interface SignInProps {
+  email: string;
+  password: string;
+}
+
+class SignIn extends React.Component<SignInState, SignInProps> {
+  constructor(props: any) {
+    super(props);
 
     this.state = {
       email: '',
@@ -20,22 +27,22 @@ class SignIn extends React.Component {
     };
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = (event: any) => {
     event.preventDefault();
 
     const { email, password } = this.state;
 
-    const { signInStartAsync } = this.props;
+    // const { signInStartAsync } = this.props;
 
-    signInStartAsync(email, password);
+    // signInStartAsync(email, password);
 
     // this.setState({ email: '', password: '' });
   };
 
-  handleChange = (event) => {
+  handleChange = (event: any) => {
     const { value, name } = event.target;
 
-    this.setState({ [name]: value });
+    this.setState<any>({ [name]: value });
   };
 
   render() {
@@ -45,11 +52,6 @@ class SignIn extends React.Component {
       <div className='sign-in'>
         <span className='sign-in__background' />
         <div className='sign-in__content'>
-          <img
-            className='sign-in__content--logo'
-            alt='Form Logo'
-            src={LogoForm}
-          />
           <form className='sign-in__content--form' onSubmit={this.handleSubmit}>
             <h2 className='sign-in__content--form--header'>Sign In</h2>
 
@@ -83,9 +85,10 @@ class SignIn extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  signInStartAsync: (email, password) =>
-    dispatch(signInStartAsync(email, password)),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   signInStartAsync: (email, password) =>
+//     dispatch(signInStartAsync(email, password)),
+// });
 
-export default connect(null, mapDispatchToProps)(SignIn);
+// export default connect(null, mapDispatchToProps)(SignIn);
+export default SignIn;

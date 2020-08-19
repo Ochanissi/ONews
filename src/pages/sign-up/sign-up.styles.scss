@@ -1,13 +1,9 @@
 @import '../../variables.scss';
 
 .sign-up {
-  background-color: white;
+  background-color: $color-white;
 
   height: 100vh;
-
-  // grid-column: full-start / full-end;
-
-  // padding: 10rem;
 
   display: grid;
 
@@ -36,53 +32,15 @@
   //   padding: 15rem 0 5rem 0;
   // }
 
-  &__background {
-    position: absolute;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    display: block;
-    // background-image: url('../../assets/sign-up-background.png');
-    background-size: cover;
-    background-position: center;
-    width: 105%;
-    height: 105%;
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: blur(5px);
-
-    margin: -10px -10px 0px -10px;
-    overflow: hidden;
-  }
-
   &__content {
-    z-index: 99;
-
-    position: relative;
-
-    opacity: 0.9;
-
-    &--logo {
-      position: absolute;
-      // top: 50%;
-      left: 50%;
-      transform: translate(-50%, -60%);
-
-      width: 15rem;
-    }
-
     &--form {
-      box-shadow: 0 0 30px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 30px 20px rgba(0, 0, 0, 0.1);
 
-      padding: 7.5rem;
+      padding: 5rem 7.5rem;
 
       min-width: 50rem;
 
-      // padding-top: 10rem;
-
-      background-color: $color-grey-light-1;
+      background-color: $color-white;
 
       // @media only screen and (max-width: $bp-smallest) {
       //   min-width: 40rem;

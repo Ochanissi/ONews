@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // import LogoForm from '../../assets/logo-form.png';
+import LogoForm from '../../assets/logo.png';
 
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
@@ -59,7 +60,6 @@ class SignUp extends React.Component<SignUpState, SignUpProps> {
       <div className='sign-up'>
         <span className='sign-up__background' />
         <div className='sign-up__content'>
-          <img className='sign-up__content--logo' alt='Form Logo' src='' />
           <form className='sign-up__content--form' onSubmit={this.handleSubmit}>
             <h2 className='sign-up__content--form--header'>Sign Up</h2>
 

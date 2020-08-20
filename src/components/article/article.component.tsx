@@ -72,28 +72,61 @@ const Article = ({
           >
             {name}
           </a>
-          <div className='article__content--source--date'>
-            &nbsp; &middot; {dateFormat} hours ago &nbsp; &middot; &nbsp;
+          <div className='article__content--source--options'>
+            &nbsp; &middot; {dateFormat} hours ago &nbsp; &middot;
             <a
-              className='article__content--source--date--save'
+              className='article__content--source--options--save'
               href='# '
               target='_blank'
               rel='noopener noreferrer'
             >
               <ion-icon name='bookmark-outline'></ion-icon>
-              <span className='article__content--source--date--save--info'>
+              <span className='article__content--source--options--save--info'>
                 Save for later
               </span>
             </a>
             <a
-              className='article__content--source--date--share'
+              className='article__content--source--options--share'
               href='# '
               target='_blank'
               rel='noopener noreferrer'
             >
               <ion-icon name='share-social-outline'></ion-icon>
-              <span className='article__content--source--date--share--info'>
+              <span className='article__content--source--options--share--info'>
                 Share
+              </span>
+            </a>
+            <a
+              className='article__content--source--options--thumbs-up'
+              href='# '
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <ion-icon name='thumbs-up-sharp'></ion-icon>
+              <span className='article__content--source--options--thumbs-up--info'>
+                More stories like this
+              </span>
+            </a>
+            <a
+              className='article__content--source--options--thumbs-down'
+              href='# '
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <ion-icon name='thumbs-down-sharp'></ion-icon>
+              <span className='article__content--source--options--thumbs-down--info'>
+                Less stories like this
+              </span>
+            </a>
+            <a
+              className='article__content--source--options--hide'
+              href='# '
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <ion-icon name='eye-off'></ion-icon>
+              <span className='article__content--source--options--hide--info'>
+                Hide all stories from ...
               </span>
             </a>
           </div>

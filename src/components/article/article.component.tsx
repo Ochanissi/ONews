@@ -25,6 +25,7 @@ interface ArticleProps {
 
 type Props = ArticleProps & News;
 
+// const Article: React.FC = ({
 const Article = ({
   title,
   description,

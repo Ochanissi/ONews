@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 // import { signInStartAsync } from '../../redux/user/user.actions';
 
-import LogoForm from '../../assets/logo-form.png';
+// import LogoForm from '../../assets/logo-form.png';
 
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
@@ -30,7 +30,7 @@ class SignIn extends React.Component<SignInState, SignInProps> {
   handleSubmit = (event: any) => {
     event.preventDefault();
 
-    const { email, password } = this.state;
+    // const { email, password } = this.state;
 
     // const { signInStartAsync } = this.props;
 

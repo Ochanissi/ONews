@@ -1,8 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 // import LogoForm from '../../assets/logo-form.png';
-import LogoForm from '../../assets/logo.png';
+// import LogoForm from '../../assets/logo.png';
 
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
@@ -35,7 +35,8 @@ class SignUp extends React.Component<SignUpState, SignUpProps> {
   handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    const { name, email, password, confirmPassword } = this.state;
+    // const { name, email, password, confirmPassword } = this.state;
+    const { password, confirmPassword } = this.state;
 
     // const { signUpStartAsync } = this.props;
 

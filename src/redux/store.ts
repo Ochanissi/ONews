@@ -3,8 +3,8 @@ import { persistStore } from 'redux-persist';
 import logger from 'redux-logger';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 
-import { AppState } from './root-reducer';
-import rootReducer from './root-reducer';
+import rootReducer, { AppState } from './root-reducer';
+// import rootReducer from './root-reducer';
 
 import { NewsActionTYPES } from './news/news.types';
 import { UserActionTYPES } from './user/user.types';

@@ -11,16 +11,17 @@ const morgan = require('morgan');
 // const multer = require('multer');
 // const sharp = require('sharp');
 
-// const signUp = require('./controllers/sign-up');
-// const signIn = require('./controllers/sign-in');
-// const profile = require('./controllers/profile');
-// const watched = require('./controllers/watched');
-// const collection = require('./controllers/collection');
-// const watchlist = require('./controllers/watchlist');
+const news = require('./controllers/news');
+const signUp = require('./controllers/sign-up');
+const signIn = require('./controllers/sign-in');
+const profile = require('./controllers/profile');
+const watched = require('./controllers/watched');
+const collection = require('./controllers/collection');
+const watchlist = require('./controllers/watchlist');
 
 // App initialization
 const app = express();
-const port = process.env.PORT || process.env.CLOUD_CINEMA_PORT || 3000;
+const port = process.env.PORT || process.env.CLOUD_CINEMA_PORT || 5008;
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config({ path: __dirname + '/.env' });
@@ -69,62 +70,66 @@ app.get('/service-worker.js', (req, res) => {
 
 // app.use(express.static('./public'));
 
-// app.post('/sign-in', (req, res) => {
-//   signIn.handleSignIn(req, res, db, bcrypt);
-// });
+app.post('/news', (req, res) => {
+  news.handleGetNews(req, res);
+});
 
-// app.post('/sign-up', (req, res) => {
-//   signUp.handleSignUp(req, res, db, bcrypt);
-// });
+app.post('/sign-in', (req, res) => {
+  signIn.handleSignIn(req, res, db, bcrypt);
+});
 
-// // User Profile
+app.post('/sign-up', (req, res) => {
+  signUp.handleSignUp(req, res, db, bcrypt);
+});
 
-// app.get('/profile/:id', (req, res) => {
-//   profile.handleGetProfile(req, res, db);
-// });
+// User Profile
 
-// app.patch('/profile', (req, res) => {
-//   profile.handlePatchProfile(req, res, db);
-// });
+app.get('/profile/:id', (req, res) => {
+  profile.handleGetProfile(req, res, db);
+});
 
-// // User Watched
-// app.post('/watched', (req, res) => {
-//   watched.handlePostWatched(req, res, db);
-// });
+app.patch('/profile', (req, res) => {
+  profile.handlePatchProfile(req, res, db);
+});
 
-// app.post('/get-watched', (req, res) => {
-//   watched.handleGetWatched(req, res, db);
-// });
+// User Watched
+app.post('/watched', (req, res) => {
+  watched.handlePostWatched(req, res, db);
+});
 
-// app.post('/delete-watched', (req, res) => {
-//   watched.handleDeleteWatched(req, res, db);
-// });
+app.post('/get-watched', (req, res) => {
+  watched.handleGetWatched(req, res, db);
+});
 
-// // User Collection
-// app.post('/collection', (req, res) => {
-//   collection.handlePostCollection(req, res, db);
-// });
+app.post('/delete-watched', (req, res) => {
+  watched.handleDeleteWatched(req, res, db);
+});
 
-// app.post('/get-collection', (req, res) => {
-//   collection.handleGetCollection(req, res, db);
-// });
+// User Collection
+app.post('/collection', (req, res) => {
+  collection.handlePostCollection(req, res, db);
+});
 
-// app.post('/delete-collection', (req, res) => {
-//   collection.handleDeleteCollection(req, res, db);
-// });
+app.post('/get-collection', (req, res) => {
+  collection.handleGetCollection(req, res, db);
+});
 
-// // User Watchlist
-// app.post('/watchlist', (req, res) => {
-//   watchlist.handlePostWatchlist(req, res, db);
-// });
+app.post('/delete-collection', (req, res) => {
+  collection.handleDeleteCollection(req, res, db);
+});
 
-// app.post('/get-watchlist', (req, res) => {
-//   watchlist.handleGetWatchlist(req, res, db);
-// });
+// User Watchlist
+app.post('/watchlist', (req, res) => {
+  watchlist.handlePostWatchlist(req, res, db);
+});
 
-// app.post('/delete-watchlist', (req, res) => {
-//   watchlist.handleDeleteWatchlist(req, res, db);
-// });
+app.post('/get-watchlist', (req, res) => {
+  watchlist.handleGetWatchlist(req, res, db);
+});
+
+app.post('/delete-watchlist', (req, res) => {
+  watchlist.handleDeleteWatchlist(req, res, db);
+});
 
 app.listen(port, (error) => {
   if (error) throw error;

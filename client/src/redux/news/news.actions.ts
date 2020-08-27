@@ -35,11 +35,22 @@ export const fetchNewsStartAsync = (
   try {
     dispatch(fetchNewsStart());
 
-    const res = await axios.get(
-      `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${process.env.REACT_APP_NEWSAPI_KEY}`
-    );
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}/news`,
+      data: {
+        country,
+        category,
+      },
+    });
 
-    dispatch(fetchNewsSuccess(res.data.articles));
+    // const res = await axios.get(
+    //   `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${process.env.ONEWS_NEWSAPI_KEY}`
+    // );
+
+    console.log(res);
+
+    dispatch(fetchNewsSuccess(res.data));
   } catch (error) {
     dispatch(fetchNewsFailure(error));
   }

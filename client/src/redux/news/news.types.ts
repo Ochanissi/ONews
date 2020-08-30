@@ -15,8 +15,6 @@ export interface News {
   urlToImage: string;
   publishedAt: string;
   content: string;
-
-  // id?: number;
 }
 
 interface FetchNewsStartAction {
@@ -30,7 +28,7 @@ interface FetchNewsSuccessAction {
 
 interface FetchNewsFailureAction {
   type: typeof FETCH_NEWS_FAILURE;
-  payload: any;
+  payload: string;
 }
 
 export type NewsActionTYPES =

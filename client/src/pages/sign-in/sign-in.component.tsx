@@ -1,7 +1,10 @@
 import React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
-// import { signInStartAsync } from '../../redux/user/user.actions';
+import { signInStartAsync } from '../../redux/user/user.actions';
+import { AppActions } from '../../redux/store';
+
+import { ThunkDispatch } from 'redux-thunk';
 
 // import LogoForm from '../../assets/logo-form.png';
 
@@ -10,14 +13,19 @@ import CustomButton from '../../components/custom-button/custom-button.component
 
 import './sign-in.styles.scss';
 
-interface SignInState {}
+interface SignInState {
+  email: string;
+  password: string;
+}
 
 interface SignInProps {
   email: string;
   password: string;
 }
 
-class SignIn extends React.Component<SignInState, SignInProps> {
+type Props = SignInProps & LinkDispatchProps;
+
+class SignIn extends React.Component<Props, SignInState> {
   constructor(props: any) {
     super(props);
 
@@ -30,13 +38,13 @@ class SignIn extends React.Component<SignInState, SignInProps> {
   handleSubmit = (event: any) => {
     event.preventDefault();
 
-    // const { email, password } = this.state;
+    const { email, password } = this.state;
 
-    // const { signInStartAsync } = this.props;
+    const { signInStartAsync } = this.props;
 
-    // signInStartAsync(email, password);
+    signInStartAsync(email, password);
 
-    // this.setState({ email: '', password: '' });
+    this.setState({ email: '', password: '' });
   };
 
   handleChange = (event: any) => {
@@ -85,10 +93,15 @@ class SignIn extends React.Component<SignInState, SignInProps> {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => ({
-//   signInStartAsync: (email, password) =>
-//     dispatch(signInStartAsync(email, password)),
-// });
+interface LinkDispatchProps {
+  signInStartAsync: (email: string, password: string) => void;
+}
 
-// export default connect(null, mapDispatchToProps)(SignIn);
-export default SignIn;
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<any, any, AppActions>
+): LinkDispatchProps => ({
+  signInStartAsync: (email, password) =>
+    dispatch(signInStartAsync(email, password)),
+});
+
+export default connect(null, mapDispatchToProps)(SignIn);

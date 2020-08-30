@@ -9,7 +9,7 @@ import {
 interface NewsState {
   isNewsFetching: boolean;
   news: News[];
-  errorMessage?: any;
+  errorMessage?: string;
 }
 
 const INITIAL_STATE: NewsState = {

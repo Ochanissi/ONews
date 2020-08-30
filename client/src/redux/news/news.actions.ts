@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Dispatch } from 'react';
 
 import {
   News,
@@ -7,8 +8,6 @@ import {
   FETCH_NEWS_FAILURE,
   NewsActionTYPES,
 } from './news.types';
-
-import { Dispatch } from 'react';
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config({ path: '../../.env' });
@@ -37,23 +36,17 @@ export const fetchNewsStartAsync = (
 
     const res = await axios({
       method: 'POST',
-      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}/news`,
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}news`,
       data: {
         country,
         category,
       },
     });
 
-    // const res = await axios.get(
-    //   `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${process.env.ONEWS_NEWSAPI_KEY}`
-    // );
-
-    // console.log(res);
-
     if (res.status === 200) {
       dispatch(fetchNewsSuccess(res.data));
     }
   } catch (error) {
-    dispatch(fetchNewsFailure(error));
+    dispatch(fetchNewsFailure(error.message));
   }
 };

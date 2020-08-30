@@ -21,7 +21,7 @@ const watchlist = require('./controllers/watchlist');
 
 // App initialization
 const app = express();
-const port = process.env.PORT || process.env.CLOUD_CINEMA_PORT || 5008;
+const port = process.env.PORT || process.env.ONEWS_PORT || 5008;
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config({ path: __dirname + '/.env' });
@@ -33,10 +33,10 @@ if (process.env.NODE_ENV !== 'production') {
 const db = knex({
   client: 'pg',
   connection: {
-    host: process.env.CLOUD_CINEMA_DB_HOST,
-    user: process.env.CLOUD_CINEMA_DB_USER,
-    password: process.env.CLOUD_CINEMA_DB_PASSWORD,
-    database: process.env.CLOUD_CINEMA_DB_NAME,
+    host: process.env.ONEWS_DB_HOST,
+    user: process.env.ONEWS_DB_USER,
+    password: process.env.ONEWS_DB_PASSWORD,
+    database: process.env.ONEWS_DB_NAME,
   },
 });
 

@@ -48,9 +48,11 @@ export const fetchNewsStartAsync = (
     //   `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${process.env.ONEWS_NEWSAPI_KEY}`
     // );
 
-    console.log(res);
+    // console.log(res);
 
-    dispatch(fetchNewsSuccess(res.data));
+    if (res.status === 200) {
+      dispatch(fetchNewsSuccess(res.data));
+    }
   } catch (error) {
     dispatch(fetchNewsFailure(error));
   }

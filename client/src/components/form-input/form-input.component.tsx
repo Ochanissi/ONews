@@ -3,7 +3,7 @@ import React from 'react';
 import './form-input.styles.scss';
 
 interface FormInputProps {
-  handleChange: any;
+  handleChange(event: React.ChangeEvent<HTMLInputElement>): void;
   label: string;
   name: string;
   type: string;
@@ -14,7 +14,11 @@ interface FormInputProps {
   maxLength?: any;
 }
 
-const FormInput = ({ handleChange, label, ...otherProps }: FormInputProps) => (
+const FormInput: React.FunctionComponent<FormInputProps> = ({
+  handleChange,
+  label,
+  ...otherProps
+}) => (
   <div className='form-input'>
     {label ? <label className='form-input__label'>{label}</label> : null}
     <input

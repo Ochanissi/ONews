@@ -18,15 +18,12 @@ interface SignInState {
   password: string;
 }
 
-interface SignInProps {
-  email: string;
-  password: string;
-}
+interface SignInProps {}
 
 type Props = SignInProps & LinkDispatchProps;
 
 class SignIn extends React.Component<Props, SignInState> {
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -35,7 +32,7 @@ class SignIn extends React.Component<Props, SignInState> {
     };
   }
 
-  handleSubmit = (event: any) => {
+  handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     const { email, password } = this.state;
@@ -47,13 +44,13 @@ class SignIn extends React.Component<Props, SignInState> {
     this.setState({ email: '', password: '' });
   };
 
-  handleChange = (event: any) => {
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value, name } = event.target;
 
     this.setState<any>({ [name]: value });
   };
 
-  render() {
+  render(): JSX.Element {
     const { email, password } = this.state;
 
     return (

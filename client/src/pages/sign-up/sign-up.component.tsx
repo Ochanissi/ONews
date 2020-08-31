@@ -1,5 +1,9 @@
 import React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+
+import { AppActions } from '../../redux/store';
+
+import { ThunkDispatch } from 'redux-thunk';
 
 // import LogoForm from '../../assets/logo-form.png';
 // import LogoForm from '../../assets/logo.png';
@@ -7,20 +11,22 @@ import React from 'react';
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 
-// import { signUpStartAsync } from '../../redux/user/user.actions';
+import { signUpStartAsync } from '../../redux/user/user.actions';
 
 import './sign-up.styles.scss';
 
-interface SignUpState {}
-
-interface SignUpProps {
+interface SignUpState {
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
 
-class SignUp extends React.Component<SignUpState, SignUpProps> {
+interface SignUpProps {}
+
+type Props = SignUpProps & LinkDispatchProps;
+
+class SignUp extends React.Component<Props, SignUpState> {
   constructor(props: any) {
     super(props);
 
@@ -35,17 +41,17 @@ class SignUp extends React.Component<SignUpState, SignUpProps> {
   handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    // const { name, email, password, confirmPassword } = this.state;
-    const { password, confirmPassword } = this.state;
+    const { name, email, password, confirmPassword } = this.state;
+    // const { password, confirmPassword } = this.state;
 
-    // const { signUpStartAsync } = this.props;
+    const { signUpStartAsync } = this.props;
 
     if (password !== confirmPassword) {
       alert("Passwords don't match");
       return;
     }
 
-    // signUpStartAsync(name, email, password);
+    signUpStartAsync(name, email, password);
   };
 
   handleChange = (event: any) => {
@@ -117,10 +123,15 @@ class SignUp extends React.Component<SignUpState, SignUpProps> {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => ({
-//   signUpStartAsync: (name, email, password) =>
-//     dispatch(signUpStartAsync(name, email, password)),
-// });
+interface LinkDispatchProps {
+  signUpStartAsync: (name: string, email: string, password: string) => void;
+}
 
-export default SignUp;
-// export default connect(null, mapDispatchToProps)(SignUp);
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<any, any, AppActions>
+): LinkDispatchProps => ({
+  signUpStartAsync: (name, email, password) =>
+    dispatch(signUpStartAsync(name, email, password)),
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);

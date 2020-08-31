@@ -26,7 +26,7 @@ interface ArticleProps {
 type Props = ArticleProps & News;
 
 // const Article: React.FC = ({
-const Article = ({
+const Article: React.FunctionComponent<Props> = ({
   title,
   description,
   content,
@@ -35,7 +35,7 @@ const Article = ({
   url,
   source: { name },
   id,
-}: Props) => {
+}) => {
   // console.log(data);
   // console.log(id);
 

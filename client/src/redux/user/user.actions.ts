@@ -75,3 +75,49 @@ export const signInStartAsync = (email: string, password: string) => async (
     // Toast.fail(`Failed signing in!`, 1500);
   }
 };
+
+// Sign Up
+export const signUpStart = (): UserActionTYPES => ({
+  type: SIGN_UP_START,
+});
+
+export const signUpSuccess = (currentUser: User): UserActionTYPES => ({
+  type: SIGN_UP_SUCCESS,
+  payload: currentUser,
+});
+
+export const signUpFailure = (errorMessage: any): UserActionTYPES => ({
+  type: SIGN_UP_FAILURE,
+  payload: errorMessage,
+});
+
+export const signUpStartAsync = (
+  name: string,
+  email: string,
+  password: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
+  try {
+    dispatch(signInStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}sign-up`,
+      data: {
+        name,
+        email,
+        password,
+      },
+    });
+
+    if (res.data.id) {
+      dispatch(signUpSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    } else {
+      dispatch(signUpFailure(res.data));
+      // Toast.fail(res.data, 1500);
+    }
+  } catch (error) {
+    dispatch(signUpFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};

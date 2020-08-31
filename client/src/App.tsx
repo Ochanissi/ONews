@@ -19,6 +19,7 @@ import SignIn from './pages/sign-in/sign-in.component';
 import {
   selectUserCategory,
   selectUserCountry,
+  selectCurrentUser,
 } from './redux/user/user.selectors';
 
 import './App.scss';
@@ -26,6 +27,7 @@ import './App.scss';
 import HomePage from './pages/home-page/home-page.component';
 import NavBar from './components/navbar/navbar.component';
 import Sidebar from './components/sidebar/sidebar.component';
+import { User } from './redux/user/user.types';
 // import { setCurrentUser } from './redux/user/user.actions';
 
 interface AppProps {}
@@ -36,7 +38,7 @@ type Props = AppProps & LinkDispatchProps & LinkStateProps;
 
 class App extends React.Component<Props, AppState> {
   render() {
-    const { userCategory, userCountry } = this.props;
+    const { userCategory, userCountry, currentUser } = this.props;
 
     return (
       <div className='App'>
@@ -53,18 +55,12 @@ class App extends React.Component<Props, AppState> {
           <Route
             exact
             path='/auth/sign-in'
-            component={SignIn}
-            // render={() =>
-            //   currentUser ? <Redirect to='/' /> : <SignIn />
-            // }
+            render={() => (currentUser ? <Redirect to='/' /> : <SignIn />)}
           />
           <Route
             exact
             path='/auth/sign-up'
-            // render={() =>
-            //   currentUser ? <Redirect to='/' /> : <SignUp />
-            // }
-            component={SignUp}
+            render={() => (currentUser ? <Redirect to='/' /> : <SignUp />)}
           />
 
           <Route exact path='/news/:country/:category' component={HomePage} />
@@ -88,19 +84,18 @@ class App extends React.Component<Props, AppState> {
 //   fetchNewsStartAsync: () => dispatch(fetchNewsStartAsync()),
 // });
 
-interface LinkDispatchProps {
-  userCategory: string;
-  userCountry: string;
-}
+interface LinkDispatchProps {}
 
 interface LinkStateProps {
   userCategory: string;
   userCountry: string;
+  currentUser: User;
 }
 
 const mapStateToProps = createStructuredSelector({
   userCategory: selectUserCategory,
   userCountry: selectUserCountry,
+  currentUser: selectCurrentUser,
 });
 
 export default connect(mapStateToProps)(App);

@@ -63,6 +63,24 @@ const userReducer = (
         errorMessage: action.payload,
       };
 
+    case SIGN_UP_SUCCESS:
+      return {
+        ...state,
+        currentUser: action.payload,
+      };
+
+    case SIGN_UP_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    case SIGN_OUT:
+      return {
+        ...state,
+        currentUser: null,
+      };
+
     default:
       return state;
   }

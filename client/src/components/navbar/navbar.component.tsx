@@ -2,10 +2,15 @@ import React from 'react';
 // import { connect } from 'react-redux';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
+import { createStructuredSelector } from 'reselect';
+
 // import mainLogo from '../../assets/logo.png';
-// import defaultLogo from '../../assets/default.png';
+import defaultLogo from '../../assets/default.png';
 
 import './navbar.styles.scss';
+import { User } from '../../redux/user/user.types';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { connect } from 'react-redux';
 
 interface NavbarProps extends RouteComponentProps<any> {
   // handleSearch(event: React.SyntheticEvent<HTMLInputElement>): void;
@@ -15,8 +20,10 @@ interface NavbarState {
   searchValue: string;
 }
 
-class Navbar extends React.Component<NavbarProps, NavbarState> {
-  constructor(props: NavbarProps) {
+type Props = NavbarProps & LinkStateProps;
+
+class Navbar extends React.Component<Props, NavbarState> {
+  constructor(props: Props) {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -44,15 +51,11 @@ class Navbar extends React.Component<NavbarProps, NavbarState> {
   };
 
   render(): JSX.Element {
-    // const { currentUser } = this.props;
+    const { currentUser } = this.props;
     const { searchValue } = this.state;
 
     return (
       <nav role='navigation' className='navbar'>
-        {/* <Link to='/'>
-          <img src={mainLogo} alt='App Logo' className='navbar__logo' />
-        </Link> */}
-
         <input id='menu-toggle' type='checkbox' />
         <label className='menu-button-container' htmlFor='menu-toggle'>
           <div className='menu-button'></div>
@@ -90,15 +93,15 @@ class Navbar extends React.Component<NavbarProps, NavbarState> {
           </li>
           <li>
             <Link to='/profile'>
-              {/* {currentUser ? (
-          <img
-            src={defaultLogo}
-            alt='User Profile'
-            className='navbar__secondary--logo'
-          />
-        ) : ( */}
-              <ion-icon name='person-circle'></ion-icon>
-              {/* )} */}
+              {currentUser ? (
+                <img
+                  src={defaultLogo}
+                  alt='User Profile'
+                  className='navbar__secondary--logo'
+                />
+              ) : (
+                <ion-icon name='person-circle'></ion-icon>
+              )}
             </Link>
           </li>
         </ul>
@@ -107,9 +110,12 @@ class Navbar extends React.Component<NavbarProps, NavbarState> {
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   currentUser: state.user.currentUser,
-// });
+interface LinkStateProps {
+  currentUser: User;
+}
 
-// export default withRouter(connect(mapStateToProps)(Navbar));
-export default withRouter(Navbar);
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+});
+
+export default withRouter(connect(mapStateToProps)(Navbar));

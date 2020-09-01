@@ -30,6 +30,14 @@ import Sidebar from './components/sidebar/sidebar.component';
 import { User } from './redux/user/user.types';
 // import { setCurrentUser } from './redux/user/user.actions';
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'ion-icon': { name: string };
+    }
+  }
+}
+
 interface AppProps {}
 
 interface AppState {}

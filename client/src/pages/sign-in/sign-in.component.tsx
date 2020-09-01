@@ -6,8 +6,6 @@ import { AppActions } from '../../redux/store';
 
 import { ThunkDispatch } from 'redux-thunk';
 
-// import LogoForm from '../../assets/logo-form.png';
-
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 

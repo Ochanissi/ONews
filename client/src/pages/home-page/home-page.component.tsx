@@ -39,8 +39,6 @@ class HomePage extends React.Component<Props> {
     fetchNewsStartAsync(newsCountry, newsCategory);
     setUserCategory(newsCategory);
     setUserCountry(newsCountry);
-
-    // console.log(newsCategory);
   }
 
   // Checks if the component received new props and refetches data
@@ -90,13 +88,11 @@ class HomePage extends React.Component<Props> {
     }
   };
 
-  render() {
+  render(): JSX.Element {
     const { newsArticles } = this.props;
     const { category: newsCategory } = this.props.match.params;
 
     const subHeader = this.handleSubheader(newsCategory);
-
-    // console.log(newsArticles);
 
     return (
       <div className='homepage'>
@@ -134,10 +130,6 @@ interface LinkDispatchProps {
 const mapStateToProps = createStructuredSelector({
   newsArticles: selectNewsArticles,
 });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-// });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>

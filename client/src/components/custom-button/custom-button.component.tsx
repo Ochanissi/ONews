@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './custom-button.styles.scss';
 
 interface CustomButtonProps {
-  children: JSX.Element;
+  children: JSX.Element | string;
   link?: string;
   type?: any;
   profile?: boolean;
@@ -15,7 +15,7 @@ const CustomButton: React.FunctionComponent<CustomButtonProps> = ({
   link,
   profile,
   ...otherProps
-}) => {
+}): JSX.Element => {
   return link ? (
     <Link
       to={link}

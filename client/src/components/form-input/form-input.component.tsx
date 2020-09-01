@@ -18,7 +18,7 @@ const FormInput: React.FunctionComponent<FormInputProps> = ({
   handleChange,
   label,
   ...otherProps
-}) => (
+}): JSX.Element => (
   <div className='form-input'>
     {label ? <label className='form-input__label'>{label}</label> : null}
     <input

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -15,9 +15,7 @@ import {
 
 import SidebarItem from './../sidebar-item/sidebar-item.component';
 
-interface SidebarProps {
-  // history: any;
-}
+interface SidebarProps extends RouteComponentProps {}
 
 type Props = SidebarProps & LinkStateProps;
 
@@ -25,22 +23,16 @@ export const Sidebar = ({ userCategory, userCountry }: Props) => {
   return (
     <nav role='navigation' className='sidebar'>
       <div id='menuToggle'>
-        {/* A fake / hidden checkbox is used as click reciever, so you can use the :checked selector on it. */}
         <input type='checkbox' defaultChecked />
 
         <Link to='/'>
-          {/* <span className='navbar__menu'>
-            <ion-icon name='menu-sharp'></ion-icon>
-          </span> */}
           <img src={mainLogo} alt='App Logo' className='navbar__logo' />
         </Link>
 
-        {/* Some spans to act as a hamburger. They are acting like a real hamburger, not that McDonalds stuff. */}
         <span></span>
         <span></span>
         <span></span>
 
-        {/* Too bad the menu has to be inside of the button but hey, it's pure CSS magic. */}
         <ul id='menu'>
           <SidebarItem
             userCountry={userCountry}

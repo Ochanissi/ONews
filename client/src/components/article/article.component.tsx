@@ -1,23 +1,10 @@
 import React from 'react';
 
-// import { connect } from 'react-redux';
-
-// import { fetchNewsStartAsync, AppActions } from '../../redux/news/news.actions';
-
 import defaultArticle from '../../assets/article-default.png';
 
 import { News } from '../../redux/news/news.types';
 
 import './article.styles.scss';
-// import { ThunkDispatch } from 'redux-thunk';
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'ion-icon': { name: string };
-    }
-  }
-}
 
 interface ArticleProps {
   id: number;
@@ -25,7 +12,6 @@ interface ArticleProps {
 
 type Props = ArticleProps & News;
 
-// const Article: React.FC = ({
 const Article: React.FunctionComponent<Props> = ({
   title,
   description,
@@ -35,15 +21,7 @@ const Article: React.FunctionComponent<Props> = ({
   url,
   source: { name },
   id,
-}) => {
-  // console.log(data);
-  // console.log(id);
-
-  // { title, description, urlToImage }: News
-  // props: News, id: number
-
-  // const { title, description, urlToImage } = props;
-
+}): JSX.Element => {
   const dateFormat = Math.round(
     (Date.now() - Date.parse(publishedAt)) / 3600000
   );
@@ -177,7 +155,5 @@ const Article: React.FunctionComponent<Props> = ({
     </article>
   );
 };
-
-// const mapStateToProps = (state) => ({});
 
 export default Article;

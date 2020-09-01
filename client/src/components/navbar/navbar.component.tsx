@@ -1,21 +1,18 @@
 import React from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { createStructuredSelector } from 'reselect';
 
-// import mainLogo from '../../assets/logo.png';
 import defaultLogo from '../../assets/default.png';
 
 import './navbar.styles.scss';
 import { User } from '../../redux/user/user.types';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
-import { connect } from 'react-redux';
 
-interface NavbarProps extends RouteComponentProps<any> {
-  // handleSearch(event: React.SyntheticEvent<HTMLInputElement>): void;
+interface NavbarProps extends RouteComponentProps {
+  className: string;
 }
-
 interface NavbarState {
   searchValue: string;
 }
@@ -92,7 +89,11 @@ class Navbar extends React.Component<Props, NavbarState> {
             </Link>
           </li>
           <li>
-            <Link to='/profile'>
+            {/* <Link to='/profile'>
+              
+            </Link> */}
+
+            <a href='#profile'>
               {currentUser ? (
                 <img
                   src={defaultLogo}
@@ -102,7 +103,17 @@ class Navbar extends React.Component<Props, NavbarState> {
               ) : (
                 <ion-icon name='person-circle'></ion-icon>
               )}
-            </Link>
+            </a>
+            <div id='profile' className='navbar__secondary--profile'>
+              <a href='#' className='navbar__secondary--profile--close-btn'>
+                &times;
+              </a>
+              <p>Manage you account!</p>
+            </div>
+            <a
+              href='#'
+              className='navbar__secondary--profile--close-background'
+            ></a>
           </li>
         </ul>
       </nav>

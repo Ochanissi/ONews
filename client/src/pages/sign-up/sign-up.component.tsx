@@ -5,9 +5,6 @@ import { AppActions } from '../../redux/store';
 
 import { ThunkDispatch } from 'redux-thunk';
 
-// import LogoForm from '../../assets/logo-form.png';
-// import LogoForm from '../../assets/logo.png';
-
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 
@@ -27,7 +24,7 @@ interface SignUpProps {}
 type Props = SignUpProps & LinkDispatchProps;
 
 class SignUp extends React.Component<Props, SignUpState> {
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -38,11 +35,10 @@ class SignUp extends React.Component<Props, SignUpState> {
     };
   }
 
-  handleSubmit = async (event: any) => {
+  handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     const { name, email, password, confirmPassword } = this.state;
-    // const { password, confirmPassword } = this.state;
 
     const { signUpStartAsync } = this.props;
 
@@ -54,13 +50,13 @@ class SignUp extends React.Component<Props, SignUpState> {
     signUpStartAsync(name, email, password);
   };
 
-  handleChange = (event: any) => {
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
 
     this.setState<any>({ [name]: value });
   };
 
-  render() {
+  render(): JSX.Element {
     const { name, email, password, confirmPassword } = this.state;
 
     return (

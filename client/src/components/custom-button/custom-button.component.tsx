@@ -8,6 +8,7 @@ interface CustomButtonProps {
   link?: string;
   type?: any;
   profile?: boolean;
+  onClick?(event: React.MouseEvent<HTMLElement>): void;
 }
 
 const CustomButton: React.FunctionComponent<CustomButtonProps> = ({

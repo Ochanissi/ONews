@@ -375,11 +375,11 @@
 
 .navbar__secondary--profile {
   position: fixed;
-  padding: 2rem;
+  padding: 2rem 0 1rem 0;
 
   width: 35rem;
 
-  top: 12rem;
+  top: 22rem;
   right: -16rem;
 
   z-index: 100;
@@ -440,6 +440,67 @@
 
     &:hover {
       color: #00e5ee;
+    }
+  }
+
+  &--content {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    // grid-gap: 1rem;
+
+    font-size: 1.5rem;
+
+    &--placeholder {
+      margin: 0.75rem 0;
+    }
+
+    &--footer {
+      margin-top: 0.75rem;
+
+      font-size: 1.2rem;
+    }
+
+    img {
+      width: 7.5rem;
+      border-radius: 50%;
+      border: none;
+
+      margin-bottom: 0.5rem;
+
+      &:hover {
+        border: none;
+      }
+    }
+
+    a {
+      border: 1px solid #dadce0;
+      border-radius: 100px;
+      padding: 0.4rem 1rem;
+      text-decoration: none;
+      color: $color-grey-dark-4;
+
+      font-size: 1.4rem;
+
+      font-weight: 500;
+
+      margin: 1.5rem 0;
+
+      &:hover {
+        background-color: $color-grey-light-1;
+      }
+    }
+
+    hr {
+      border-color: $color-grey-light-1;
+      opacity: 0.5;
+
+      width: 100%;
+    }
+
+    button {
+      margin: 1rem 0;
     }
   }
 }

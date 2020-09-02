@@ -9,6 +9,7 @@ import defaultLogo from '../../assets/default.png';
 import './navbar.styles.scss';
 import { User } from '../../redux/user/user.types';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
+import CustomButton from '../custom-button/custom-button.component';
 
 interface NavbarProps extends RouteComponentProps {
   className: string;
@@ -47,9 +48,23 @@ class Navbar extends React.Component<Props, NavbarState> {
     // ></Link>
   };
 
+  handleSignOut = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
+    const {
+      signOutSuccess,
+      currentUser: { name },
+    } = this.props;
+
+    signOutSuccess();
+    // Toast.success(`See you soon, ${name}!`, 1500);
+  };
+
   render(): JSX.Element {
     const { currentUser } = this.props;
     const { searchValue } = this.state;
+
+    const { name, email } = currentUser;
 
     return (
       <nav role='navigation' className='navbar'>
@@ -105,10 +120,32 @@ class Navbar extends React.Component<Props, NavbarState> {
               )}
             </a>
             <div id='profile' className='navbar__secondary--profile'>
-              <a href='#' className='navbar__secondary--profile--close-btn'>
+              {/* <a href='#' className='navbar__secondary--profile--close-btn'>
                 &times;
-              </a>
-              <p>Manage you account!</p>
+              </a> */}
+              <div className='navbar__secondary--profile--content'>
+                <img
+                  src={defaultLogo}
+                  alt='User Profile'
+                  className='navbar__secondary--logo'
+                />
+                <h4>{name}</h4>
+                <div>{email}</div>
+                <Link to='/profile'>Manage your Google Account</Link>
+                <hr></hr>
+                <div className='navbar__secondary--profile--content--placeholder'>
+                  Add another account
+                </div>
+                <hr></hr>
+                <CustomButton profile onClick={this.handleSignOut}>
+                  Sign Out
+                </CustomButton>
+                <hr></hr>
+                <div className='navbar__secondary--profile--content--footer'>
+                  <span>Privacy Policy | </span>
+                  <span>Terms of Service</span>
+                </div>
+              </div>
             </div>
             <a
               href='#'

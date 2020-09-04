@@ -10,6 +10,9 @@ import './navbar.styles.scss';
 import { User } from '../../redux/user/user.types';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import CustomButton from '../custom-button/custom-button.component';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppActions } from '../../redux/store';
+import { signOut } from '../../redux/user/user.actions';
 
 interface NavbarProps extends RouteComponentProps {
   className: string;
@@ -18,7 +21,7 @@ interface NavbarState {
   searchValue: string;
 }
 
-type Props = NavbarProps & LinkStateProps;
+type Props = NavbarProps & LinkStateProps & LinkDispatchProps;
 
 class Navbar extends React.Component<Props, NavbarState> {
   constructor(props: Props) {
@@ -52,19 +55,17 @@ class Navbar extends React.Component<Props, NavbarState> {
     event.preventDefault();
 
     const {
-      signOutSuccess,
+      signOut,
       currentUser: { name },
     } = this.props;
 
-    signOutSuccess();
+    signOut();
     // Toast.success(`See you soon, ${name}!`, 1500);
   };
 
   render(): JSX.Element {
     const { currentUser } = this.props;
     const { searchValue } = this.state;
-
-    const { name, email } = currentUser;
 
     return (
       <nav role='navigation' className='navbar'>
@@ -104,53 +105,54 @@ class Navbar extends React.Component<Props, NavbarState> {
             </Link>
           </li>
           <li>
-            {/* <Link to='/profile'>
-              
-            </Link> */}
-
-            <a href='#profile'>
-              {currentUser ? (
-                <img
-                  src={defaultLogo}
-                  alt='User Profile'
-                  className='navbar__secondary--logo'
-                />
-              ) : (
-                <ion-icon name='person-circle'></ion-icon>
-              )}
-            </a>
-            <div id='profile' className='navbar__secondary--profile'>
-              {/* <a href='#' className='navbar__secondary--profile--close-btn'>
+            {currentUser ? (
+              <div>
+                <a href='#profile'>
+                  <img
+                    src={defaultLogo}
+                    alt='User Profile'
+                    className='navbar__secondary--logo'
+                  />
+                </a>
+                <div id='profile' className='navbar__secondary--profile'>
+                  {/* <a href='#' className='navbar__secondary--profile--close-btn'>
                 &times;
               </a> */}
-              <div className='navbar__secondary--profile--content'>
-                <img
-                  src={defaultLogo}
-                  alt='User Profile'
-                  className='navbar__secondary--logo'
-                />
-                <h4>{name}</h4>
-                <div>{email}</div>
-                <Link to='/profile'>Manage your Google Account</Link>
-                <hr></hr>
-                <div className='navbar__secondary--profile--content--placeholder'>
-                  Add another account
+
+                  <div className='navbar__secondary--profile--content'>
+                    <img
+                      src={defaultLogo}
+                      alt='User Profile'
+                      className='navbar__secondary--logo'
+                    />
+                    <h4>{currentUser.name}</h4>
+                    <div>{currentUser.email}</div>
+                    <Link to='/profile'>Manage your ONews Account</Link>
+                    <hr></hr>
+                    <div className='navbar__secondary--profile--content--placeholder'>
+                      Add another account
+                    </div>
+                    <hr></hr>
+                    <CustomButton profile onClick={this.handleSignOut}>
+                      Sign Out
+                    </CustomButton>
+                    <hr></hr>
+                    <div className='navbar__secondary--profile--content--footer'>
+                      <span>Privacy Policy | </span>
+                      <span>Terms of Service</span>
+                    </div>
+                  </div>
                 </div>
-                <hr></hr>
-                <CustomButton profile onClick={this.handleSignOut}>
-                  Sign Out
-                </CustomButton>
-                <hr></hr>
-                <div className='navbar__secondary--profile--content--footer'>
-                  <span>Privacy Policy | </span>
-                  <span>Terms of Service</span>
-                </div>
+                <a
+                  href='#'
+                  className='navbar__secondary--profile--close-background'
+                ></a>
               </div>
-            </div>
-            <a
-              href='#'
-              className='navbar__secondary--profile--close-background'
-            ></a>
+            ) : (
+              <Link to='/auth/sign-in'>
+                <ion-icon name='person-circle'></ion-icon>
+              </Link>
+            )}
           </li>
         </ul>
       </nav>
@@ -162,8 +164,18 @@ interface LinkStateProps {
   currentUser: User;
 }
 
+interface LinkDispatchProps {
+  signOut: () => void;
+}
+
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
 
-export default withRouter(connect(mapStateToProps)(Navbar));
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<any, any, AppActions>
+): LinkDispatchProps => ({
+  signOut: () => dispatch(signOut()),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

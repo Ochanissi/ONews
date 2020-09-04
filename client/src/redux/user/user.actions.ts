@@ -121,3 +121,8 @@ export const signUpStartAsync = (
     // Toast.fail(`Failed signing in!`, 1500);
   }
 };
+
+// Sign Out
+export const signOut = (): UserActionTYPES => ({
+  type: SIGN_OUT,
+});

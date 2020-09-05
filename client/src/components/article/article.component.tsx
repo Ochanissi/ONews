@@ -105,7 +105,7 @@ const Article: React.FunctionComponent<Props> = ({
             >
               <ion-icon name='eye-off'></ion-icon>
               <span className='article__content--source--options--hide--info'>
-                Hide all stories from ...
+                Hide all stories from {name}
               </span>
             </a>
           </div>

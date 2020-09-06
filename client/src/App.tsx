@@ -27,6 +27,7 @@ import './App.scss';
 import HomePage from './pages/home-page/home-page.component';
 import NavBar from './components/navbar/navbar.component';
 import Sidebar from './components/sidebar/sidebar.component';
+import Profile from './pages/profile/profile.component';
 import { User } from './redux/user/user.types';
 // import { setCurrentUser } from './redux/user/user.actions';
 
@@ -59,6 +60,13 @@ class App extends React.Component<Props, AppState> {
             render={() => (
               <Redirect to={`/news/${userCountry}/${userCategory}`} />
             )}
+          />
+          <Route
+            exact
+            path='/profile'
+            render={() =>
+              currentUser ? <Profile /> : <Redirect to='/auth/sign-in' />
+            }
           />
           <Route
             exact

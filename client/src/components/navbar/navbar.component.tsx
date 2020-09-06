@@ -14,9 +14,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../redux/store';
 import { signOut } from '../../redux/user/user.actions';
 
-interface NavbarProps extends RouteComponentProps {
-  className: string;
-}
+interface NavbarProps extends RouteComponentProps {}
 interface NavbarState {
   searchValue: string;
 }
@@ -33,6 +31,15 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchValue: '',
     };
   }
+
+  // componentDidUpdate(prevProps: Props) {
+  //   const { pathname } = this.props.location;
+
+  //   if (pathname !== prevProps.location.pathname) {
+  //     this.forceUpdate();
+  //     console.log('lel');
+  //   }
+  // }
 
   handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({ searchValue: event.currentTarget.value });

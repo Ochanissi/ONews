@@ -1,17 +1,18 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import './sidebar-item.styles.scss';
 
-interface SidebarItemProps {
-  userCategory: string;
-  userCountry: string;
-  linkType: string;
-  linkCountry: string;
+interface SidebarItemProps extends RouteComponentProps {
+  userCategory?: string;
+  userCountry?: string;
+  linkType?: string;
+  linkCountry?: string;
   iconType: string;
   itemLabel: string;
   countryBool?: boolean;
+  profileLink?: string;
 }
 
 const SidebarItem = ({
@@ -22,14 +23,20 @@ const SidebarItem = ({
   iconType,
   itemLabel,
   countryBool,
+  profileLink,
+  location,
 }: SidebarItemProps) => {
   return (
-    <Link to={`/news/${linkCountry}/${linkType}`}>
+    <Link
+      to={profileLink ? `${profileLink}` : `/news/${linkCountry}/${linkType}`}
+    >
       <li
         className={
-          countryBool && userCountry === linkCountry
+          countryBool && userCountry === linkCountry && !profileLink
             ? 'sidebar__selected--country'
-            : !countryBool && userCategory === linkType
+            : !countryBool && userCategory === linkType && !profileLink
+            ? 'sidebar__selected'
+            : location.pathname === profileLink
             ? 'sidebar__selected'
             : ''
         }
@@ -41,4 +48,4 @@ const SidebarItem = ({
   );
 };
 
-export default SidebarItem;
+export default withRouter(SidebarItem);

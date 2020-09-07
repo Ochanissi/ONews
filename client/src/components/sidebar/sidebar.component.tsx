@@ -19,7 +19,7 @@ interface SidebarProps extends RouteComponentProps {}
 
 type Props = SidebarProps & LinkStateProps;
 
-export const Sidebar = ({ userCategory, userCountry }: Props) => {
+const Sidebar = ({ userCategory, userCountry, location }: Props) => {
   return (
     <nav role='navigation' className='sidebar'>
       <div id='menuToggle'>
@@ -33,121 +33,163 @@ export const Sidebar = ({ userCategory, userCountry }: Props) => {
         <span></span>
         <span></span>
 
-        <ul id='menu'>
-          <SidebarItem
-            userCountry={userCountry}
-            userCategory={userCategory}
-            linkType='general'
-            linkCountry={userCountry}
-            iconType='globe-outline'
-            itemLabel='Top stories'
-          />
+        {location.pathname.startsWith('/profile') ? (
+          <ul id='menu'>
+            <SidebarItem
+              iconType='person-circle-outline'
+              itemLabel='Home'
+              profileLink='/profile'
+            />
 
-          <SidebarItem
-            userCountry={userCountry}
-            userCategory={userCategory}
-            linkType=''
-            linkCountry={userCountry}
-            iconType='walk-sharp'
-            itemLabel='For you'
-          />
+            <SidebarItem
+              iconType='settings-sharp'
+              itemLabel='Settings'
+              profileLink='/profile/settings'
+            />
 
-          <SidebarItem
-            userCountry={userCountry}
-            userCategory={userCategory}
-            linkType=''
-            linkCountry={userCountry}
-            iconType='star-outline'
-            itemLabel='Following'
-          />
+            <SidebarItem
+              iconType='newspaper-outline'
+              itemLabel='Saved Stories'
+              profileLink='/profile/saved'
+            />
 
-          <SidebarItem
-            userCountry={userCountry}
-            userCategory={userCategory}
-            linkType=''
-            linkCountry={userCountry}
-            iconType='search'
-            itemLabel='Saved searches'
-          />
+            <SidebarItem
+              iconType='thumbs-up-sharp'
+              itemLabel='Liked Stories'
+              profileLink='/profile/liked'
+            />
 
-          <hr></hr>
+            <SidebarItem
+              iconType='thumbs-down-sharp'
+              itemLabel='Disliked Stories'
+              profileLink='/profile/disliked'
+            />
 
-          <SidebarItem
-            userCountry={userCountry}
-            userCategory={userCategory}
-            linkType={userCategory}
-            linkCountry='ro'
-            iconType='flag'
-            itemLabel='Romania'
-            countryBool
-          />
+            <hr></hr>
 
-          <SidebarItem
-            userCountry={userCountry}
-            userCategory={userCategory}
-            linkType={userCategory}
-            linkCountry='us'
-            iconType='earth'
-            itemLabel='World'
-            countryBool
-          />
+            <SidebarItem
+              iconType='information-circle-outline'
+              itemLabel='About'
+              profileLink='/profile/about'
+            />
+          </ul>
+        ) : (
+          <ul id='menu'>
+            <SidebarItem
+              userCountry={userCountry}
+              userCategory={userCategory}
+              linkType='general'
+              linkCountry={userCountry}
+              iconType='globe-outline'
+              itemLabel='Top stories'
+            />
 
-          <hr></hr>
+            <SidebarItem
+              userCountry={userCountry}
+              userCategory={userCategory}
+              linkType=''
+              linkCountry={userCountry}
+              iconType='walk-sharp'
+              itemLabel='For you'
+            />
 
-          <SidebarItem
-            userCountry={userCountry}
-            userCategory={userCategory}
-            linkType='business'
-            linkCountry={userCountry}
-            iconType='business-outline'
-            itemLabel='Business'
-          />
+            <SidebarItem
+              userCountry={userCountry}
+              userCategory={userCategory}
+              linkType=''
+              linkCountry={userCountry}
+              iconType='star-outline'
+              itemLabel='Following'
+            />
 
-          <SidebarItem
-            userCountry={userCountry}
-            userCategory={userCategory}
-            linkType='technology'
-            linkCountry={userCountry}
-            iconType='rocket-outline'
-            itemLabel='Technology'
-          />
+            <SidebarItem
+              userCountry={userCountry}
+              userCategory={userCategory}
+              linkType=''
+              linkCountry={userCountry}
+              iconType='search'
+              itemLabel='Saved searches'
+            />
 
-          <SidebarItem
-            userCountry={userCountry}
-            userCategory={userCategory}
-            linkType='entertainment'
-            linkCountry={userCountry}
-            iconType='game-controller-outline'
-            itemLabel='Entertainment'
-          />
+            <hr></hr>
 
-          <SidebarItem
-            userCountry={userCountry}
-            userCategory={userCategory}
-            linkType='science'
-            linkCountry={userCountry}
-            iconType='flask-sharp'
-            itemLabel='Science'
-          />
+            <SidebarItem
+              userCountry={userCountry}
+              userCategory={userCategory}
+              linkType={userCategory}
+              linkCountry='ro'
+              iconType='flag'
+              itemLabel='Romania'
+              countryBool
+            />
 
-          <SidebarItem
-            userCountry={userCountry}
-            userCategory={userCategory}
-            linkType='sports'
-            linkCountry={userCountry}
-            iconType='bicycle'
-            itemLabel='Sports'
-          />
+            <SidebarItem
+              userCountry={userCountry}
+              userCategory={userCategory}
+              linkType={userCategory}
+              linkCountry='us'
+              iconType='earth'
+              itemLabel='World'
+              countryBool
+            />
 
-          <SidebarItem
-            userCountry={userCountry}
-            userCategory={userCategory}
-            linkType='health'
-            linkCountry={userCountry}
-            iconType='barbell-sharp'
-            itemLabel='Health'
-          />
-        </ul>
+            <hr></hr>
+
+            <SidebarItem
+              userCountry={userCountry}
+              userCategory={userCategory}
+              linkType='business'
+              linkCountry={userCountry}
+              iconType='business-outline'
+              itemLabel='Business'
+            />
+
+            <SidebarItem
+              userCountry={userCountry}
+              userCategory={userCategory}
+              linkType='technology'
+              linkCountry={userCountry}
+              iconType='rocket-outline'
+              itemLabel='Technology'
+            />
+
+            <SidebarItem
+              userCountry={userCountry}
+              userCategory={userCategory}
+              linkType='entertainment'
+              linkCountry={userCountry}
+              iconType='game-controller-outline'
+              itemLabel='Entertainment'
+            />
+
+            <SidebarItem
+              userCountry={userCountry}
+              userCategory={userCategory}
+              linkType='science'
+              linkCountry={userCountry}
+              iconType='flask-sharp'
+              itemLabel='Science'
+            />
+
+            <SidebarItem
+              userCountry={userCountry}
+              userCategory={userCategory}
+              linkType='sports'
+              linkCountry={userCountry}
+              iconType='bicycle'
+              itemLabel='Sports'
+            />
+
+            <SidebarItem
+              userCountry={userCountry}
+              userCategory={userCategory}
+              linkType='health'
+              linkCountry={userCountry}
+              iconType='barbell-sharp'
+              itemLabel='Health'
+            />
+          </ul>
+        )}
       </div>
     </nav>
   );

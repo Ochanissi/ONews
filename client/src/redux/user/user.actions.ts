@@ -14,7 +14,17 @@ import {
   SIGN_UP_FAILURE,
   SIGN_OUT,
   UserActionTYPES,
+  GET_USER_SAVED_START,
+  GET_USER_SAVED_SUCCESS,
+  GET_USER_SAVED_FAILURE,
+  POST_USER_SAVED_START,
+  POST_USER_SAVED_SUCCESS,
+  POST_USER_SAVED_FAILURE,
+  DELETE_USER_SAVED_START,
+  DELETE_USER_SAVED_SUCCESS,
+  DELETE_USER_SAVED_FAILURE,
 } from './user.types';
+import { News } from '../news/news.types';
 
 // Set Guest User
 export const setUserCategory = (category: string): UserActionTYPES => ({
@@ -66,9 +76,6 @@ export const signInStartAsync = (email: string, password: string) => async (
     if (res.data.id) {
       dispatch(signInSuccess(res.data));
       // Toast.success(`Welcome back ${res.data.name}!`, 1500);
-    } else {
-      dispatch(signInFailure(res.data));
-      // Toast.fail(res.data, 1500);
     }
   } catch (error) {
     dispatch(signInFailure(error.message));
@@ -86,7 +93,7 @@ export const signUpSuccess = (currentUser: User): UserActionTYPES => ({
   payload: currentUser,
 });
 
-export const signUpFailure = (errorMessage: any): UserActionTYPES => ({
+export const signUpFailure = (errorMessage: string): UserActionTYPES => ({
   type: SIGN_UP_FAILURE,
   payload: errorMessage,
 });
@@ -112,9 +119,6 @@ export const signUpStartAsync = (
     if (res.data.id) {
       dispatch(signUpSuccess(res.data));
       // Toast.success(`Welcome back ${res.data.name}!`, 1500);
-    } else {
-      dispatch(signUpFailure(res.data));
-      // Toast.fail(res.data, 1500);
     }
   } catch (error) {
     dispatch(signUpFailure(error.message));
@@ -126,3 +130,148 @@ export const signUpStartAsync = (
 export const signOut = (): UserActionTYPES => ({
   type: SIGN_OUT,
 });
+
+// Get Saved
+export const getUserSavedStart = (): UserActionTYPES => ({
+  type: GET_USER_SAVED_START,
+});
+
+export const getUserSavedSuccess = (saved: News[]): UserActionTYPES => ({
+  type: GET_USER_SAVED_SUCCESS,
+  payload: saved,
+});
+
+export const getUserSavedFailure = (errorMessage: string): UserActionTYPES => ({
+  type: GET_USER_SAVED_FAILURE,
+  payload: errorMessage,
+});
+
+export const getUserSavedStartAsync = (email: string) => async (
+  dispatch: Dispatch<UserActionTYPES>
+) => {
+  try {
+    dispatch(getUserSavedStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}get-saved/`,
+      data: {
+        email,
+      },
+    });
+
+    // console.log(res);
+
+    if (res.status === 200) {
+      dispatch(getUserSavedSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(getUserSavedFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
+// Post Saved
+export const postUserSavedStart = (): UserActionTYPES => ({
+  type: POST_USER_SAVED_START,
+});
+
+export const postUserSavedSuccess = (saved: News[]): UserActionTYPES => ({
+  type: POST_USER_SAVED_SUCCESS,
+  payload: saved,
+});
+
+export const postUserSavedFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: POST_USER_SAVED_FAILURE,
+  payload: errorMessage,
+});
+
+export const postUserSavedStartAsync = (
+  email: string,
+  source: string,
+  author: string,
+  title: string,
+  description: string,
+  url: string,
+  image: string,
+  date: string,
+  content: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
+  try {
+    dispatch(postUserSavedStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}post-saved/`,
+      data: {
+        email,
+        source,
+        author,
+        title,
+        description,
+        url,
+        image,
+        date,
+        content,
+      },
+    });
+
+    // console.log(res);
+
+    if (res.status === 200) {
+      dispatch(postUserSavedSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(postUserSavedFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
+// Delete Saved
+export const deleteUserSavedStart = (): UserActionTYPES => ({
+  type: DELETE_USER_SAVED_START,
+});
+
+export const deleteUserSavedSuccess = (saved: News[]): UserActionTYPES => ({
+  type: DELETE_USER_SAVED_SUCCESS,
+  payload: saved,
+});
+
+export const deleteUserSavedFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: DELETE_USER_SAVED_FAILURE,
+  payload: errorMessage,
+});
+
+export const deleteUserSavedStartAsync = (
+  email: string,
+  title: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
+  try {
+    dispatch(deleteUserSavedStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}delete-saved/`,
+      data: {
+        email,
+        title,
+      },
+    });
+
+    // console.log(res);
+
+    if (res.status === 200) {
+      dispatch(deleteUserSavedSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(deleteUserSavedFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};

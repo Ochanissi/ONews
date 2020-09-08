@@ -15,9 +15,7 @@ const news = require('./controllers/news');
 const signUp = require('./controllers/sign-up');
 const signIn = require('./controllers/sign-in');
 const profile = require('./controllers/profile');
-const watched = require('./controllers/watched');
-const collection = require('./controllers/collection');
-const watchlist = require('./controllers/watchlist');
+const saved = require('./controllers/saved');
 
 // App initialization
 const app = express();
@@ -83,7 +81,6 @@ app.post('/sign-up', (req, res) => {
 });
 
 // User Profile
-
 app.get('/profile/:id', (req, res) => {
   profile.handleGetProfile(req, res, db);
 });
@@ -92,43 +89,17 @@ app.patch('/profile', (req, res) => {
   profile.handlePatchProfile(req, res, db);
 });
 
-// User Watched
-app.post('/watched', (req, res) => {
-  watched.handlePostWatched(req, res, db);
+// User Saved
+app.post('/post-saved', (req, res) => {
+  saved.handlePostSaved(req, res, db);
 });
 
-app.post('/get-watched', (req, res) => {
-  watched.handleGetWatched(req, res, db);
+app.post('/get-saved', (req, res) => {
+  saved.handleGetSaved(req, res, db);
 });
 
-app.post('/delete-watched', (req, res) => {
-  watched.handleDeleteWatched(req, res, db);
-});
-
-// User Collection
-app.post('/collection', (req, res) => {
-  collection.handlePostCollection(req, res, db);
-});
-
-app.post('/get-collection', (req, res) => {
-  collection.handleGetCollection(req, res, db);
-});
-
-app.post('/delete-collection', (req, res) => {
-  collection.handleDeleteCollection(req, res, db);
-});
-
-// User Watchlist
-app.post('/watchlist', (req, res) => {
-  watchlist.handlePostWatchlist(req, res, db);
-});
-
-app.post('/get-watchlist', (req, res) => {
-  watchlist.handleGetWatchlist(req, res, db);
-});
-
-app.post('/delete-watchlist', (req, res) => {
-  watchlist.handleDeleteWatchlist(req, res, db);
+app.post('/delete-saved', (req, res) => {
+  saved.handleDeleteSaved(req, res, db);
 });
 
 app.listen(port, (error) => {

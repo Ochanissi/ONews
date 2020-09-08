@@ -5,7 +5,11 @@ import { createStructuredSelector } from 'reselect';
 import { selectNewsArticles } from '../../redux/news/news.selectors';
 
 import { fetchNewsStartAsync } from '../../redux/news/news.actions';
-import { setUserCategory, setUserCountry } from '../../redux/user/user.actions';
+import {
+  setUserCategory,
+  setUserCountry,
+  getUserSavedStartAsync,
+} from '../../redux/user/user.actions';
 import { AppActions } from '../../redux/store';
 
 import { ThunkDispatch } from 'redux-thunk';
@@ -34,11 +38,18 @@ class HomePage extends React.Component<Props> {
       country: newsCountry,
     } = this.props.match.params;
 
-    const { fetchNewsStartAsync, setUserCategory, setUserCountry } = this.props;
+    const {
+      fetchNewsStartAsync,
+      setUserCategory,
+      setUserCountry,
+      getUserSavedStartAsync,
+    } = this.props;
 
     fetchNewsStartAsync(newsCountry, newsCategory);
     setUserCategory(newsCategory);
     setUserCountry(newsCountry);
+
+    getUserSavedStartAsync('mirelalex2094@gmail.com');
   }
 
   // Checks if the component received new props and refetches data
@@ -125,6 +136,8 @@ interface LinkDispatchProps {
   fetchNewsStartAsync: (country: string, category: string) => void;
   setUserCategory: (category: string) => void;
   setUserCountry: (country: string) => void;
+
+  getUserSavedStartAsync: (email: string) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -139,6 +152,8 @@ const mapDispatchToProps = (
 
   setUserCategory: (category) => dispatch(setUserCategory(category)),
   setUserCountry: (country) => dispatch(setUserCountry(country)),
+
+  getUserSavedStartAsync: (email) => dispatch(getUserSavedStartAsync(email)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

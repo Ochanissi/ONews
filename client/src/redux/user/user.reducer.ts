@@ -10,14 +10,24 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
   SIGN_OUT,
+  GET_USER_SAVED_START,
+  GET_USER_SAVED_SUCCESS,
+  GET_USER_SAVED_FAILURE,
   UserActionTYPES,
+  POST_USER_SAVED_SUCCESS,
+  POST_USER_SAVED_FAILURE,
+  DELETE_USER_SAVED_SUCCESS,
+  DELETE_USER_SAVED_FAILURE,
 } from './user.types';
+import { News } from '../news/news.types';
 
 interface UserState {
   userCategory: string;
   userCountry: string;
 
   currentUser: User | null;
+
+  userSaved: News[];
 
   errorMessage?: string;
 }
@@ -26,6 +36,7 @@ const INITIAL_STATE: UserState = {
   userCategory: 'general',
   userCountry: 'ro',
   currentUser: null,
+  userSaved: [],
 };
 
 const userReducer = (
@@ -70,6 +81,42 @@ const userReducer = (
       };
 
     case SIGN_UP_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    case GET_USER_SAVED_SUCCESS:
+      return {
+        ...state,
+        userSaved: action.payload,
+      };
+
+    case GET_USER_SAVED_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    case POST_USER_SAVED_SUCCESS:
+      return {
+        ...state,
+        userSaved: action.payload,
+      };
+
+    case POST_USER_SAVED_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    case DELETE_USER_SAVED_SUCCESS:
+      return {
+        ...state,
+        userSaved: action.payload,
+      };
+
+    case DELETE_USER_SAVED_FAILURE:
       return {
         ...state,
         errorMessage: action.payload,

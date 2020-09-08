@@ -5,7 +5,6 @@ export const FETCH_NEWS_FAILURE = 'FETCH_NEWS_FAILURE';
 
 export interface News {
   source: {
-    id: number;
     name: string;
   };
   author: string;

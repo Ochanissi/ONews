@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { signInStartAsync } from '../../redux/user/user.actions';
+import {
+  signInStartAsync,
+  // getUserSavedStartAsync,
+} from '../../redux/user/user.actions';
 import { AppActions } from '../../redux/store';
 
 import { ThunkDispatch } from 'redux-thunk';
@@ -38,6 +41,7 @@ class SignIn extends React.Component<Props, SignInState> {
     const { signInStartAsync } = this.props;
 
     signInStartAsync(email, password);
+    // getUserSavedStartAsync(email);
 
     this.setState({ email: '', password: '' });
   };
@@ -90,6 +94,7 @@ class SignIn extends React.Component<Props, SignInState> {
 
 interface LinkDispatchProps {
   signInStartAsync: (email: string, password: string) => void;
+  // getUserSavedStartAsync: (email: string) => void;
 }
 
 const mapDispatchToProps = (
@@ -97,6 +102,7 @@ const mapDispatchToProps = (
 ): LinkDispatchProps => ({
   signInStartAsync: (email, password) =>
     dispatch(signInStartAsync(email, password)),
+  // getUserSavedStartAsync: (email) => dispatch(getUserSavedStartAsync(email)),
 });
 
 export default connect(null, mapDispatchToProps)(SignIn);

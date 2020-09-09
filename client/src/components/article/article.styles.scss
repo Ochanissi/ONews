@@ -56,12 +56,20 @@
         text-decoration: none;
         color: inherit;
 
+        padding-top: 0.45rem;
+
         &:hover {
           text-decoration: underline;
         }
       }
 
       &--options {
+        button {
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+        }
+
         ion-icon {
           vertical-align: middle;
         }

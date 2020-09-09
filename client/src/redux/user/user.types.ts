@@ -45,6 +45,17 @@ export interface User {
   joined: string;
 }
 
+export interface UserNews {
+  email: string;
+  sourceName: string;
+  title: string;
+  description: string;
+  url: string;
+  urlToImage: string;
+  publishedAt: string;
+  content: string;
+}
+
 // Set Guest User
 interface SetUserCategoryAction {
   type: typeof SET_USER_CATEGORY;

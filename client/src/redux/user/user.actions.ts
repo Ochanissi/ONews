@@ -23,6 +23,7 @@ import {
   DELETE_USER_SAVED_START,
   DELETE_USER_SAVED_SUCCESS,
   DELETE_USER_SAVED_FAILURE,
+  UserNews,
 } from './user.types';
 import { News } from '../news/news.types';
 
@@ -75,6 +76,10 @@ export const signInStartAsync = (email: string, password: string) => async (
 
     if (res.data.id) {
       dispatch(signInSuccess(res.data));
+
+      // console.log(res.data.email);
+      // getUserSavedStartAsync;
+
       // Toast.success(`Welcome back ${res.data.name}!`, 1500);
     }
   } catch (error) {
@@ -189,17 +194,16 @@ export const postUserSavedFailure = (
   payload: errorMessage,
 });
 
-export const postUserSavedStartAsync = (
-  email: string,
-  source: string,
-  author: string,
-  title: string,
-  description: string,
-  url: string,
-  image: string,
-  date: string,
-  content: string
-) => async (dispatch: Dispatch<UserActionTYPES>) => {
+export const postUserSavedStartAsync = ({
+  email,
+  sourceName,
+  title,
+  description,
+  url,
+  urlToImage,
+  publishedAt,
+  content,
+}: UserNews) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(postUserSavedStart());
 
@@ -208,13 +212,12 @@ export const postUserSavedStartAsync = (
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}post-saved/`,
       data: {
         email,
-        source,
-        author,
+        source: sourceName,
         title,
         description,
         url,
-        image,
-        date,
+        image: urlToImage,
+        date: publishedAt,
         content,
       },
     });

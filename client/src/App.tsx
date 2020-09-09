@@ -29,6 +29,9 @@ import NavBar from './components/navbar/navbar.component';
 import Sidebar from './components/sidebar/sidebar.component';
 import Profile from './pages/profile/profile.component';
 import { User } from './redux/user/user.types';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppActions } from './redux/store';
+import { getUserSavedStartAsync } from './redux/user/user.actions';
 // import { setCurrentUser } from './redux/user/user.actions';
 
 declare global {
@@ -41,66 +44,57 @@ declare global {
 
 interface AppProps {}
 
-interface AppState {}
-
 type Props = AppProps & LinkDispatchProps & LinkStateProps;
 
-class App extends React.Component<Props, AppState> {
-  render() {
-    const { userCategory, userCountry, currentUser } = this.props;
-
-    return (
-      <div className='App'>
-        <NavBar />
-        <Sidebar />
-        <Switch>
-          <Route
-            exact
-            path='/'
-            render={() => (
-              <Redirect to={`/news/${userCountry}/${userCategory}`} />
-            )}
-          />
-          <Route
-            exact
-            path='/profile'
-            render={() =>
-              currentUser ? <Profile /> : <Redirect to='/auth/sign-in' />
-            }
-          />
-          <Route
-            exact
-            path='/auth/sign-in'
-            render={() => (currentUser ? <Redirect to='/' /> : <SignIn />)}
-          />
-          <Route
-            exact
-            path='/auth/sign-up'
-            render={() => (currentUser ? <Redirect to='/' /> : <SignUp />)}
-          />
-
-          <Route exact path='/news/:country/:category' component={HomePage} />
-        </Switch>
-      </div>
-    );
+const App: React.FunctionComponent<Props> = ({
+  userCategory,
+  userCountry,
+  currentUser,
+  getUserSavedStartAsync,
+}): JSX.Element => {
+  if (currentUser) {
+    getUserSavedStartAsync(currentUser.email);
   }
+
+  return (
+    <div className='App'>
+      <NavBar />
+      <Sidebar />
+      <Switch>
+        <Route
+          exact
+          path='/'
+          render={() => (
+            <Redirect to={`/news/${userCountry}/${userCategory}`} />
+          )}
+        />
+        <Route
+          exact
+          path='/profile'
+          render={() =>
+            currentUser ? <Profile /> : <Redirect to='/auth/sign-in' />
+          }
+        />
+        <Route
+          exact
+          path='/auth/sign-in'
+          render={() => (currentUser ? <Redirect to='/' /> : <SignIn />)}
+        />
+        <Route
+          exact
+          path='/auth/sign-up'
+          render={() => (currentUser ? <Redirect to='/' /> : <SignUp />)}
+        />
+
+        <Route exact path='/news/:country/:category' component={HomePage} />
+      </Switch>
+    </div>
+  );
+};
+
+interface LinkDispatchProps {
+  getUserSavedStartAsync: (email: string) => void;
 }
-
-// const mapStateToProps = createStructuredSelector({
-//   newsArticles: selectNewsArticles,
-// });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-// });
-
-// const mapDispatchToProps = (
-//   dispatch: ThunkDispatch<any, any, AppActions>
-// ): LinkDispatchProps => ({
-//   fetchNewsStartAsync: () => dispatch(fetchNewsStartAsync()),
-// });
-
-interface LinkDispatchProps {}
 
 interface LinkStateProps {
   userCategory: string;
@@ -114,5 +108,10 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
 
-export default connect(mapStateToProps)(App);
-// export default App;
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<any, any, AppActions>
+): LinkDispatchProps => ({
+  getUserSavedStartAsync: (email) => dispatch(getUserSavedStartAsync(email)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -2,7 +2,6 @@ const handlePostSaved = (req, res, db) => {
   const {
     email,
     source,
-    author,
     title,
     description,
     url,
@@ -16,7 +15,6 @@ const handlePostSaved = (req, res, db) => {
   if (
     !email ||
     !source ||
-    !author ||
     !title ||
     !description ||
     !url ||
@@ -32,7 +30,6 @@ const handlePostSaved = (req, res, db) => {
       .insert({
         email: email,
         source: source,
-        author: author,
         title: title,
         description: description,
         url: url,
@@ -52,7 +49,6 @@ const handlePostSaved = (req, res, db) => {
                 source: {
                   name: x.source,
                 },
-                author: x.author,
                 title: x.title,
                 description: x.description,
                 url: x.url,
@@ -86,7 +82,6 @@ const handleGetSaved = (req, res, db) => {
           source: {
             name: x.source,
           },
-          author: x.author,
           title: x.title,
           description: x.description,
           url: x.url,
@@ -125,7 +120,6 @@ const handleDeleteSaved = (req, res, db) => {
                 source: {
                   name: x.source,
                 },
-                author: x.author,
                 title: x.title,
                 description: x.description,
                 url: x.url,

@@ -86,6 +86,10 @@
 
           position: relative;
 
+          &--bool {
+            color: $color-primary-light;
+          }
+
           &:hover {
             // color: $color-grey-dark-4;
 
@@ -115,6 +119,10 @@
             visibility: hidden;
             opacity: 0;
             transition: all 0.25s linear;
+
+            &--bool {
+              left: -6.5rem;
+            }
           }
         }
 

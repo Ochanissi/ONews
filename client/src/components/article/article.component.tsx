@@ -85,6 +85,10 @@ class Article extends React.Component<Props> {
       url,
       source: { name: sourceName },
       id,
+
+      currentUser,
+
+      userSaved,
     } = this.props;
 
     const dateFormat = Math.round(
@@ -94,6 +98,14 @@ class Article extends React.Component<Props> {
     const contentFiltered = content
       ? content.replace(/↵|<ul>|<li>|<\/li>|<\/ul>/g, '')
       : '';
+
+    let userSavedBool;
+
+    if (currentUser) {
+      userSavedBool = userSaved.some((item) => item.title === title);
+    }
+
+    // console.log(userSavedBool);
 
     return (
       <article className='article'>
@@ -119,12 +131,26 @@ class Article extends React.Component<Props> {
             <div className='article__content--source--options'>
               &nbsp; &middot; {dateFormat} hours ago &nbsp; &middot;
               <button
-                className='article__content--source--options--save'
+                className={`article__content--source--options--save ${
+                  userSavedBool
+                    ? 'article__content--source--options--save--bool'
+                    : ''
+                }`}
                 onClick={this.handleSaved}
               >
-                <ion-icon name='bookmark-outline'></ion-icon>
-                <span className='article__content--source--options--save--info'>
-                  Save for later
+                <ion-icon
+                  name={`bookmark${userSavedBool ? '' : '-outline'}`}
+                ></ion-icon>
+                <span
+                  className={`article__content--source--options--save--info ${
+                    userSavedBool
+                      ? 'article__content--source--options--save--info--bool'
+                      : ''
+                  }`}
+                >
+                  {userSavedBool
+                    ? 'Remove from saved stories'
+                    : 'Save for later'}
                 </span>
               </button>
               <a

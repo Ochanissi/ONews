@@ -16,6 +16,8 @@ const signUp = require('./controllers/sign-up');
 const signIn = require('./controllers/sign-in');
 const profile = require('./controllers/profile');
 const saved = require('./controllers/saved');
+const liked = require('./controllers/liked');
+const disliked = require('./controllers/disliked');
 
 // App initialization
 const app = express();
@@ -100,6 +102,32 @@ app.post('/get-saved', (req, res) => {
 
 app.post('/delete-saved', (req, res) => {
   saved.handleDeleteSaved(req, res, db);
+});
+
+// User Liked
+app.post('/post-liked', (req, res) => {
+  liked.handlePostLiked(req, res, db);
+});
+
+app.post('/get-liked', (req, res) => {
+  liked.handleGetLiked(req, res, db);
+});
+
+app.post('/delete-liked', (req, res) => {
+  liked.handleDeleteLiked(req, res, db);
+});
+
+// User Disliked
+app.post('/post-disliked', (req, res) => {
+  disliked.handlePostDisliked(req, res, db);
+});
+
+app.post('/get-disliked', (req, res) => {
+  disliked.handleGetDisliked(req, res, db);
+});
+
+app.post('/delete-disliked', (req, res) => {
+  disliked.handleDeleteDisliked(req, res, db);
 });
 
 app.listen(port, (error) => {

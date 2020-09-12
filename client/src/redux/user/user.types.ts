@@ -33,6 +33,19 @@ export const DELETE_USER_SAVED_START = 'DELETE_USER_SAVED_START';
 export const DELETE_USER_SAVED_SUCCESS = 'DELETE_USER_SAVED_SUCCESS';
 export const DELETE_USER_SAVED_FAILURE = 'DELETE_USER_SAVED_FAILURE';
 
+// User Liked
+export const POST_USER_LIKED_START = 'POST_USER_LIKED_START';
+export const POST_USER_LIKED_SUCCESS = 'POST_USER_LIKED_SUCCESS';
+export const POST_USER_LIKED_FAILURE = 'POST_USER_LIKED_FAILURE';
+
+export const GET_USER_LIKED_START = 'GET_USER_LIKED_START';
+export const GET_USER_LIKED_SUCCESS = 'GET_USER_LIKED_SUCCESS';
+export const GET_USER_LIKED_FAILURE = 'GET_USER_LIKED_FAILURE';
+
+export const DELETE_USER_LIKED_START = 'DELETE_USER_LIKED_START';
+export const DELETE_USER_LIKED_SUCCESS = 'DELETE_USER_LIKED_SUCCESS';
+export const DELETE_USER_LIKED_FAILURE = 'DELETE_USER_LIKED_FAILURE';
+
 export interface User {
   id: number;
   name: string;
@@ -151,6 +164,49 @@ interface DeleteUserSavedFailure {
   payload: string;
 }
 
+// User Liked
+interface PostUserLikedStart {
+  type: typeof POST_USER_LIKED_START;
+}
+
+interface PostUserLikedSuccess {
+  type: typeof POST_USER_LIKED_SUCCESS;
+  payload: News[];
+}
+
+interface PostUserLikedFailure {
+  type: typeof POST_USER_LIKED_FAILURE;
+  payload: string;
+}
+
+interface GetUserLikedStart {
+  type: typeof GET_USER_LIKED_START;
+}
+
+interface GetUserLikedSuccess {
+  type: typeof GET_USER_LIKED_SUCCESS;
+  payload: News[];
+}
+
+interface GetUserLikedFailure {
+  type: typeof GET_USER_LIKED_FAILURE;
+  payload: string;
+}
+
+interface DeleteUserLikedStart {
+  type: typeof DELETE_USER_LIKED_START;
+}
+
+interface DeleteUserLikedSuccess {
+  type: typeof DELETE_USER_LIKED_SUCCESS;
+  payload: News[];
+}
+
+interface DeleteUserLikedFailure {
+  type: typeof DELETE_USER_LIKED_FAILURE;
+  payload: string;
+}
+
 export type UserActionTYPES =
   | SetUserCategoryAction
   | SetUserCountryAction
@@ -170,4 +226,13 @@ export type UserActionTYPES =
   | GetUserSavedFailure
   | DeleteUserSavedStart
   | DeleteUserSavedSuccess
-  | DeleteUserSavedFailure;
+  | DeleteUserSavedFailure
+  | PostUserLikedStart
+  | PostUserLikedSuccess
+  | PostUserLikedFailure
+  | GetUserLikedStart
+  | GetUserLikedSuccess
+  | GetUserLikedFailure
+  | DeleteUserLikedStart
+  | DeleteUserLikedSuccess
+  | DeleteUserLikedFailure;

@@ -23,3 +23,8 @@ export const selectUserSaved = createSelector(
   [selectUser],
   (user) => user.userSaved
 );
+
+export const selectUserLiked = createSelector(
+  [selectUser],
+  (user) => user.userLiked
+);

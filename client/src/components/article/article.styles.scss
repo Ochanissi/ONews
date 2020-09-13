@@ -89,7 +89,7 @@
           position: relative;
 
           &--bool {
-            color: $color-primary-light;
+            color: $color-button-3;
           }
 
           &:hover {
@@ -183,6 +183,10 @@
           transition: 0.25 linear;
 
           position: relative;
+
+          &--bool {
+            color: $color-button-2;
+          }
 
           &:hover {
             // color: $color-grey-dark-4;

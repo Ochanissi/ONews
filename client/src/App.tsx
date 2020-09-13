@@ -31,7 +31,10 @@ import Profile from './pages/profile/profile.component';
 import { User } from './redux/user/user.types';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from './redux/store';
-import { getUserSavedStartAsync } from './redux/user/user.actions';
+import {
+  getUserLikedStartAsync,
+  getUserSavedStartAsync,
+} from './redux/user/user.actions';
 // import { setCurrentUser } from './redux/user/user.actions';
 
 declare global {
@@ -50,10 +53,10 @@ const App: React.FunctionComponent<Props> = ({
   userCategory,
   userCountry,
   currentUser,
-  getUserSavedStartAsync,
 }): JSX.Element => {
   if (currentUser) {
     getUserSavedStartAsync(currentUser.email);
+    getUserLikedStartAsync(currentUser.email);
   }
 
   return (
@@ -94,6 +97,7 @@ const App: React.FunctionComponent<Props> = ({
 
 interface LinkDispatchProps {
   getUserSavedStartAsync: (email: string) => void;
+  getUserLikedStartAsync: (email: string) => void;
 }
 
 interface LinkStateProps {
@@ -112,6 +116,7 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
   getUserSavedStartAsync: (email) => dispatch(getUserSavedStartAsync(email)),
+  getUserLikedStartAsync: (email) => dispatch(getUserLikedStartAsync(email)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

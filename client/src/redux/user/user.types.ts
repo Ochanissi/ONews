@@ -46,6 +46,19 @@ export const DELETE_USER_LIKED_START = 'DELETE_USER_LIKED_START';
 export const DELETE_USER_LIKED_SUCCESS = 'DELETE_USER_LIKED_SUCCESS';
 export const DELETE_USER_LIKED_FAILURE = 'DELETE_USER_LIKED_FAILURE';
 
+// User Disliked
+export const POST_USER_DISLIKED_START = 'POST_USER_DISLIKED_START';
+export const POST_USER_DISLIKED_SUCCESS = 'POST_USER_DISLIKED_SUCCESS';
+export const POST_USER_DISLIKED_FAILURE = 'POST_USER_DISLIKED_FAILURE';
+
+export const GET_USER_DISLIKED_START = 'GET_USER_DISLIKED_START';
+export const GET_USER_DISLIKED_SUCCESS = 'GET_USER_DISLIKED_SUCCESS';
+export const GET_USER_DISLIKED_FAILURE = 'GET_USER_DISLIKED_FAILURE';
+
+export const DELETE_USER_DISLIKED_START = 'DELETE_USER_DISLIKED_START';
+export const DELETE_USER_DISLIKED_SUCCESS = 'DELETE_USER_DISLIKED_SUCCESS';
+export const DELETE_USER_DISLIKED_FAILURE = 'DELETE_USER_DISLIKED_FAILURE';
+
 export interface User {
   id: number;
   name: string;
@@ -207,6 +220,49 @@ interface DeleteUserLikedFailure {
   payload: string;
 }
 
+// User Disliked
+interface PostUserDislikedStart {
+  type: typeof POST_USER_DISLIKED_START;
+}
+
+interface PostUserDislikedSuccess {
+  type: typeof POST_USER_DISLIKED_SUCCESS;
+  payload: News[];
+}
+
+interface PostUserDislikedFailure {
+  type: typeof POST_USER_DISLIKED_FAILURE;
+  payload: string;
+}
+
+interface GetUserDislikedStart {
+  type: typeof GET_USER_DISLIKED_START;
+}
+
+interface GetUserDislikedSuccess {
+  type: typeof GET_USER_DISLIKED_SUCCESS;
+  payload: News[];
+}
+
+interface GetUserDislikedFailure {
+  type: typeof GET_USER_DISLIKED_FAILURE;
+  payload: string;
+}
+
+interface DeleteUserDislikedStart {
+  type: typeof DELETE_USER_DISLIKED_START;
+}
+
+interface DeleteUserDislikedSuccess {
+  type: typeof DELETE_USER_DISLIKED_SUCCESS;
+  payload: News[];
+}
+
+interface DeleteUserDislikedFailure {
+  type: typeof DELETE_USER_DISLIKED_FAILURE;
+  payload: string;
+}
+
 export type UserActionTYPES =
   | SetUserCategoryAction
   | SetUserCountryAction
@@ -235,4 +291,13 @@ export type UserActionTYPES =
   | GetUserLikedFailure
   | DeleteUserLikedStart
   | DeleteUserLikedSuccess
-  | DeleteUserLikedFailure;
+  | DeleteUserLikedFailure
+  | PostUserDislikedStart
+  | PostUserDislikedSuccess
+  | PostUserDislikedFailure
+  | GetUserDislikedStart
+  | GetUserDislikedSuccess
+  | GetUserDislikedFailure
+  | DeleteUserDislikedStart
+  | DeleteUserDislikedSuccess
+  | DeleteUserDislikedFailure;

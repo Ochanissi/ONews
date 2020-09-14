@@ -28,3 +28,8 @@ export const selectUserLiked = createSelector(
   [selectUser],
   (user) => user.userLiked
 );
+
+export const selectUserDisliked = createSelector(
+  [selectUser],
+  (user) => user.userDisliked
+);

@@ -28,6 +28,15 @@ import {
   DELETE_USER_LIKED_START,
   DELETE_USER_LIKED_SUCCESS,
   DELETE_USER_LIKED_FAILURE,
+  GET_USER_DISLIKED_START,
+  GET_USER_DISLIKED_SUCCESS,
+  GET_USER_DISLIKED_FAILURE,
+  POST_USER_DISLIKED_START,
+  POST_USER_DISLIKED_SUCCESS,
+  POST_USER_DISLIKED_FAILURE,
+  DELETE_USER_DISLIKED_START,
+  DELETE_USER_DISLIKED_SUCCESS,
+  DELETE_USER_DISLIKED_FAILURE,
   UserActionTYPES,
 } from './user.types';
 import { News } from '../news/news.types';
@@ -40,6 +49,7 @@ interface UserState {
 
   userSaved: News[];
   userLiked: News[];
+  userDisliked: News[];
 
   errorMessage?: string;
 }
@@ -50,6 +60,7 @@ const INITIAL_STATE: UserState = {
   currentUser: null,
   userSaved: [],
   userLiked: [],
+  userDisliked: [],
 };
 
 const userReducer = (
@@ -168,6 +179,43 @@ const userReducer = (
       };
 
     case DELETE_USER_LIKED_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    // User Disliked
+    case GET_USER_DISLIKED_SUCCESS:
+      return {
+        ...state,
+        userDisliked: action.payload,
+      };
+
+    case GET_USER_DISLIKED_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    case POST_USER_DISLIKED_SUCCESS:
+      return {
+        ...state,
+        userDisliked: action.payload,
+      };
+
+    case POST_USER_DISLIKED_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    case DELETE_USER_DISLIKED_SUCCESS:
+      return {
+        ...state,
+        userDisliked: action.payload,
+      };
+
+    case DELETE_USER_DISLIKED_FAILURE:
       return {
         ...state,
         errorMessage: action.payload,

@@ -13,6 +13,7 @@ import {
   selectUserSaved,
   selectCurrentUser,
   selectUserLiked,
+  selectUserDisliked,
 } from '../../redux/user/user.selectors';
 import { User, UserNews } from '../../redux/user/user.types';
 import {
@@ -20,6 +21,8 @@ import {
   deleteUserSavedStartAsync,
   postUserLikedStartAsync,
   deleteUserLikedStartAsync,
+  postUserDislikedStartAsync,
+  deleteUserDislikedStartAsync,
 } from '../../redux/user/user.actions';
 
 interface ArticleProps {
@@ -82,7 +85,10 @@ class Article extends React.Component<Props> {
         postUserLikedStartAsync,
         deleteUserLikedStartAsync,
 
+        deleteUserDislikedStartAsync,
+
         userLiked,
+        userDisliked,
 
         currentUser: { email },
 
@@ -98,6 +104,13 @@ class Article extends React.Component<Props> {
       const userLikedDuplicate =
         userLiked.find((item) => item.title === title) || {};
 
+      const userDislikedDuplicate =
+        userDisliked.find((item) => item.title === title) || {};
+
+      if (Object.keys(userDislikedDuplicate).length !== 0) {
+        deleteUserDislikedStartAsync(email, title);
+      }
+
       Object.keys(userLikedDuplicate).length === 0
         ? postUserLikedStartAsync({
             email,
@@ -110,6 +123,59 @@ class Article extends React.Component<Props> {
             content,
           })
         : deleteUserLikedStartAsync(email, title);
+    } else {
+      // Toast.fail('Please sign in to add to collection!', 1000);
+    }
+  };
+
+  handleDisliked = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
+    const { currentUser } = this.props;
+
+    if (currentUser) {
+      const {
+        postUserDislikedStartAsync,
+        deleteUserDislikedStartAsync,
+
+        deleteUserLikedStartAsync,
+
+        userLiked,
+        userDisliked,
+
+        currentUser: { email },
+
+        title,
+        description,
+        content,
+        urlToImage,
+        publishedAt,
+        url,
+        source: { name: sourceName },
+      } = this.props;
+
+      const userDislikedDuplicate =
+        userDisliked.find((item) => item.title === title) || {};
+
+      const userLikedDuplicate =
+        userLiked.find((item) => item.title === title) || {};
+
+      if (Object.keys(userLikedDuplicate).length !== 0) {
+        deleteUserLikedStartAsync(email, title);
+      }
+
+      Object.keys(userDislikedDuplicate).length === 0
+        ? postUserDislikedStartAsync({
+            email,
+            sourceName,
+            title,
+            description,
+            url,
+            urlToImage,
+            publishedAt,
+            content,
+          })
+        : deleteUserDislikedStartAsync(email, title);
     } else {
       // Toast.fail('Please sign in to add to collection!', 1000);
     }
@@ -130,6 +196,7 @@ class Article extends React.Component<Props> {
 
       userSaved,
       userLiked,
+      userDisliked,
     } = this.props;
 
     const dateFormat = Math.round(
@@ -140,11 +207,12 @@ class Article extends React.Component<Props> {
       ? content.replace(/↵|<ul>|<li>|<\/li>|<\/ul>/g, '')
       : '';
 
-    let userSavedBool, userLikedBool;
+    let userSavedBool, userLikedBool, userDislikedBool;
 
     if (currentUser) {
       userSavedBool = userSaved.some((item) => item.title === title);
       userLikedBool = userLiked.some((item) => item.title === title);
+      userDislikedBool = userDisliked.some((item) => item.title === title);
     }
 
     // console.log(userSavedBool);
@@ -219,17 +287,19 @@ class Article extends React.Component<Props> {
                   {`${userLikedBool ? 'Less' : 'More'} stories like this`}
                 </span>
               </button>
-              <a
-                className='article__content--source--options--thumbs-down'
-                href='# '
-                target='_blank'
-                rel='noopener noreferrer'
+              <button
+                className={`article__content--source--options--thumbs-down ${
+                  userDislikedBool
+                    ? 'article__content--source--options--thumbs-down--bool'
+                    : ''
+                }`}
+                onClick={this.handleDisliked}
               >
                 <ion-icon name='thumbs-down-sharp'></ion-icon>
                 <span className='article__content--source--options--thumbs-down--info'>
-                  Less stories like this
+                  {`${userDislikedBool ? 'More' : 'Less'} stories like this`}
                 </span>
-              </a>
+              </button>
               <a
                 className='article__content--source--options--hide'
                 href='# '
@@ -294,6 +364,7 @@ interface LinkStateProps {
   currentUser: User;
   userSaved: News[];
   userLiked: News[];
+  userDisliked: News[];
 }
 
 interface LinkDispatchProps {
@@ -302,12 +373,16 @@ interface LinkDispatchProps {
 
   postUserLikedStartAsync: (userNews: UserNews) => void;
   deleteUserLikedStartAsync: (email: string, title: string) => void;
+
+  postUserDislikedStartAsync: (userNews: UserNews) => void;
+  deleteUserDislikedStartAsync: (email: string, title: string) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   userSaved: selectUserSaved,
   userLiked: selectUserLiked,
+  userDisliked: selectUserDisliked,
 });
 
 const mapDispatchToProps = (
@@ -322,6 +397,11 @@ const mapDispatchToProps = (
     dispatch(postUserLikedStartAsync(userNews)),
   deleteUserLikedStartAsync: (email, title) =>
     dispatch(deleteUserLikedStartAsync(email, title)),
+
+  postUserDislikedStartAsync: (userNews) =>
+    dispatch(postUserDislikedStartAsync(userNews)),
+  deleteUserDislikedStartAsync: (email, title) =>
+    dispatch(deleteUserDislikedStartAsync(email, title)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Article);

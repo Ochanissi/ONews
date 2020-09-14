@@ -31,6 +31,15 @@ import {
   DELETE_USER_LIKED_START,
   DELETE_USER_LIKED_SUCCESS,
   DELETE_USER_LIKED_FAILURE,
+  GET_USER_DISLIKED_START,
+  GET_USER_DISLIKED_SUCCESS,
+  GET_USER_DISLIKED_FAILURE,
+  POST_USER_DISLIKED_START,
+  POST_USER_DISLIKED_SUCCESS,
+  POST_USER_DISLIKED_FAILURE,
+  DELETE_USER_DISLIKED_START,
+  DELETE_USER_DISLIKED_SUCCESS,
+  DELETE_USER_DISLIKED_FAILURE,
   UserActionTYPES,
   UserNews,
 } from './user.types';
@@ -427,6 +436,153 @@ export const deleteUserLikedStartAsync = (
     }
   } catch (error) {
     dispatch(deleteUserLikedFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
+// Get Disliked
+export const getUserDislikedStart = (): UserActionTYPES => ({
+  type: GET_USER_DISLIKED_START,
+});
+
+export const getUserDislikedSuccess = (disliked: News[]): UserActionTYPES => ({
+  type: GET_USER_DISLIKED_SUCCESS,
+  payload: disliked,
+});
+
+export const getUserDislikedFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: GET_USER_DISLIKED_FAILURE,
+  payload: errorMessage,
+});
+
+export const getUserDislikedStartAsync = (email: string) => async (
+  dispatch: Dispatch<UserActionTYPES>
+) => {
+  try {
+    dispatch(getUserDislikedStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}get-disliked/`,
+      data: {
+        email,
+      },
+    });
+
+    // console.log(res);
+
+    if (res.status === 200) {
+      dispatch(getUserDislikedSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(getUserDislikedFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
+// Post Disliked
+export const postUserDislikedStart = (): UserActionTYPES => ({
+  type: POST_USER_DISLIKED_START,
+});
+
+export const postUserDislikedSuccess = (disliked: News[]): UserActionTYPES => ({
+  type: POST_USER_DISLIKED_SUCCESS,
+  payload: disliked,
+});
+
+export const postUserDislikedFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: POST_USER_DISLIKED_FAILURE,
+  payload: errorMessage,
+});
+
+export const postUserDislikedStartAsync = ({
+  email,
+  sourceName,
+  title,
+  description,
+  url,
+  urlToImage,
+  publishedAt,
+  content,
+}: UserNews) => async (dispatch: Dispatch<UserActionTYPES>) => {
+  try {
+    dispatch(postUserDislikedStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}post-disliked/`,
+      data: {
+        email,
+        source: sourceName,
+        title,
+        description,
+        url,
+        image: urlToImage,
+        date: publishedAt,
+        content,
+      },
+    });
+
+    // console.log(res);
+
+    if (res.status === 200) {
+      dispatch(postUserDislikedSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(postUserDislikedFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
+// Delete Disliked
+export const deleteUserDislikedStart = (): UserActionTYPES => ({
+  type: DELETE_USER_DISLIKED_START,
+});
+
+export const deleteUserDislikedSuccess = (
+  disliked: News[]
+): UserActionTYPES => ({
+  type: DELETE_USER_DISLIKED_SUCCESS,
+  payload: disliked,
+});
+
+export const deleteUserDislikedFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: DELETE_USER_DISLIKED_FAILURE,
+  payload: errorMessage,
+});
+
+export const deleteUserDislikedStartAsync = (
+  email: string,
+  title: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
+  try {
+    dispatch(deleteUserDislikedStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}delete-disliked/`,
+      data: {
+        email,
+        title,
+      },
+    });
+
+    // console.log(res);
+
+    if (res.status === 200) {
+      dispatch(deleteUserDislikedSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(deleteUserDislikedFailure(error.message));
     // Toast.fail(`Failed signing in!`, 1500);
   }
 };

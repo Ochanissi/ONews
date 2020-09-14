@@ -232,6 +232,10 @@
 
           position: relative;
 
+          &--bool {
+            color: $color-button-4;
+          }
+
           &:hover {
             // color: $color-grey-dark-4;
 

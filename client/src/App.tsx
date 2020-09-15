@@ -36,6 +36,7 @@ import {
   getUserLikedStartAsync,
   getUserSavedStartAsync,
 } from './redux/user/user.actions';
+import ProfileData from './pages/profile-data/profile-data.component';
 // import { setCurrentUser } from './redux/user/user.actions';
 
 declare global {
@@ -76,13 +77,7 @@ const App: React.FunctionComponent<Props> = ({
             <Redirect to={`/news/${userCountry}/${userCategory}`} />
           )}
         />
-        <Route
-          exact
-          path='/profile'
-          render={() =>
-            currentUser ? <Profile /> : <Redirect to='/auth/sign-in' />
-          }
-        />
+        <Route exact path='/news/:country/:category' component={HomePage} />
         <Route
           exact
           path='/auth/sign-in'
@@ -93,8 +88,29 @@ const App: React.FunctionComponent<Props> = ({
           path='/auth/sign-up'
           render={() => (currentUser ? <Redirect to='/' /> : <SignUp />)}
         />
+        <Route
+          exact
+          path='/profile'
+          render={() =>
+            currentUser ? <Profile /> : <Redirect to='/auth/sign-in' />
+          }
+        />
 
-        <Route exact path='/news/:country/:category' component={HomePage} />
+        <Route
+          exact
+          path='/profile/settings'
+          render={() =>
+            currentUser ? <Profile /> : <Redirect to='/auth/sign-in' />
+          }
+        />
+
+        <Route
+          exact
+          path='/profile/:type'
+          render={() =>
+            currentUser ? <ProfileData /> : <Redirect to='/auth/sign-in' />
+          }
+        />
       </Switch>
     </div>
   );

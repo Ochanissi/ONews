@@ -23,7 +23,17 @@ const ProfileItem: React.FunctionComponent<ProfileIemProps> = ({
         <h3>{title}</h3>
         <p>{text}</p>
       </div>
-      <div className='profile-item__content--image'>
+      <div
+        className={`profile-item__content--image profile-item__content--image--${
+          title === 'Saved Stories'
+            ? '3'
+            : title === 'Liked Stories'
+            ? '2'
+            : title === 'Disliked Stories'
+            ? '4'
+            : ''
+        }`}
+      >
         <ion-icon name={icon}></ion-icon>
       </div>
     </div>

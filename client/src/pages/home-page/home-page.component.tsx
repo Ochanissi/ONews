@@ -90,7 +90,10 @@ class HomePage extends React.Component<Props> {
 
   render(): JSX.Element {
     const { newsArticles } = this.props;
-    const { category: newsCategory } = this.props.match.params;
+    const {
+      category: newsCategory,
+      country: newsCountry,
+    } = this.props.match.params;
 
     const subHeader = this.handleSubheader(newsCategory);
 
@@ -108,7 +111,11 @@ class HomePage extends React.Component<Props> {
 
           <div className='homepage__content--articles'>
             {newsArticles.map((x: News, i: number) => (
-              <Article key={i} {...x} id={i} />
+              <Article
+                key={`${i + newsCountry + newsCategory}`}
+                {...x}
+                id={`${i + newsCountry + newsCategory}`}
+              />
             ))}
           </div>
         </div>

@@ -26,7 +26,7 @@ import {
 } from '../../redux/user/user.actions';
 
 interface ArticleProps {
-  id: number;
+  id: string;
 }
 
 type Props = ArticleProps & News & LinkStateProps & LinkDispatchProps;
@@ -216,6 +216,8 @@ class Article extends React.Component<Props> {
     }
 
     // console.log(userSavedBool);
+
+    // console.log(id);
 
     return (
       <article className='article'>

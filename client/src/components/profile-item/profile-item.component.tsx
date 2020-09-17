@@ -9,6 +9,7 @@ interface ProfileIemProps {
   text: string;
   icon: string;
   btn: string;
+  link: string;
 }
 
 const ProfileItem: React.FunctionComponent<ProfileIemProps> = ({
@@ -16,6 +17,7 @@ const ProfileItem: React.FunctionComponent<ProfileIemProps> = ({
   text,
   icon,
   btn,
+  link,
 }): JSX.Element => (
   <article className='profile-item'>
     <div className='profile-item__content'>
@@ -40,9 +42,9 @@ const ProfileItem: React.FunctionComponent<ProfileIemProps> = ({
 
     <hr></hr>
 
-    <div className='profile-item__btn'>
-      <Link to='/'>{btn}</Link>
-    </div>
+    <Link className='profile-item__btn' to={`/profile/${link}`}>
+      {btn}
+    </Link>
   </article>
 );
 

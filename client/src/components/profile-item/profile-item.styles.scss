@@ -50,12 +50,18 @@
   &__btn {
     padding: 1.5rem 2rem;
 
-    a {
-      text-decoration: none;
-      color: $color-primary;
+    display: inline-block;
 
-      font-size: 1.5rem;
-      font-weight: 500;
+    text-decoration: none;
+    color: $color-primary;
+
+    font-size: 1.5rem;
+    font-weight: 500;
+
+    width: 100%;
+
+    &:hover {
+      background-color: $color-grey-light-1;
     }
   }
 

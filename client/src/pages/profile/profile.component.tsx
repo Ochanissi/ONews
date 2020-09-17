@@ -27,24 +27,28 @@ const Profile = () => (
           text='See the data in your ONews Account and choose what activity is saved to personalize your ONews experience.'
           icon='settings-sharp'
           btn='Manage your data & personalization'
+          link='settings'
         />
         <ProfileItem
           title='Saved Stories'
           text='You can save stories on ONews to read later. Saving for later is a great way to make sure you remember them.'
           icon='newspaper-outline'
           btn='Read all your saved stories'
+          link='saved'
         />
         <ProfileItem
           title='Liked Stories'
           text='You can find here all the stories that you liked in the past.'
           icon='thumbs-up-sharp'
           btn='Read all your liked stories'
+          link='liked'
         />
         <ProfileItem
           title='Disliked Stories'
           text='You can find here all the stories that you disliked in the past.'
           icon='thumbs-down-sharp'
           btn='Read all your disliked stories'
+          link='disliked'
         />
       </section>
     </div>

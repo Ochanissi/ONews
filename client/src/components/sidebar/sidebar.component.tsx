@@ -49,19 +49,19 @@ const Sidebar = ({ userCategory, userCountry, location }: Props) => {
 
             <SidebarItem
               iconType='newspaper-outline'
-              itemLabel='Saved Stories'
+              itemLabel='Saved stories'
               profileLink='/profile/saved'
             />
 
             <SidebarItem
               iconType='thumbs-up-sharp'
-              itemLabel='Liked Stories'
+              itemLabel='Liked stories'
               profileLink='/profile/liked'
             />
 
             <SidebarItem
               iconType='thumbs-down-sharp'
-              itemLabel='Disliked Stories'
+              itemLabel='Disliked stories'
               profileLink='/profile/disliked'
             />
 
@@ -85,21 +85,9 @@ const Sidebar = ({ userCategory, userCountry, location }: Props) => {
             />
 
             <SidebarItem
-              userCountry={userCountry}
-              userCategory={userCategory}
-              linkType=''
-              linkCountry={userCountry}
-              iconType='walk-sharp'
-              itemLabel='For you'
-            />
-
-            <SidebarItem
-              userCountry={userCountry}
-              userCategory={userCategory}
-              linkType=''
-              linkCountry={userCountry}
-              iconType='star-outline'
-              itemLabel='Following'
+              iconType='hourglass-outline'
+              itemLabel='Saved for later'
+              profileLink='/profile/saved'
             />
 
             <SidebarItem

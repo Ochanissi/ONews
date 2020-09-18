@@ -48,7 +48,7 @@ const ProfileData: React.FunctionComponent<Props> = ({
       <div className='profile-data__content'>
         <h2 className='profile-data__content--header'>{`${
           type.slice(0, 1).toUpperCase() + type.slice(1).toLowerCase()
-        } Stories`}</h2>
+        } stories`}</h2>
         <h4 className='profile-data__content--sub-header'>{`You can find here all the stories that you ${type.toLowerCase()} in the past.`}</h4>
 
         <div className='profile-data__content--articles'>

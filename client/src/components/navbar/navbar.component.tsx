@@ -17,6 +17,7 @@ import { signOut } from '../../redux/user/user.actions';
 interface NavbarProps extends RouteComponentProps {}
 interface NavbarState {
   searchValue: string;
+  popupVisible: boolean;
 }
 
 type Props = NavbarProps & LinkStateProps & LinkDispatchProps;
@@ -25,12 +26,37 @@ class Navbar extends React.Component<Props, NavbarState> {
   constructor(props: Props) {
     super(props);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
       searchValue: '',
+      popupVisible: false,
     };
   }
+
+  componentDidMount() {
+    document.addEventListener('click', this.handleClick);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClick);
+  }
+
+  handleClick = (event: any): void => {
+    // console.log(event.target.className);
+
+    if (event.target.className === 'navbar__secondary--logo') {
+      this.setState((prevState) => ({
+        popupVisible: !prevState.popupVisible,
+      }));
+    } else if (
+      event.target.className === 'navbar__secondary--profile' ||
+      event.target.className === 'navbar__secondary--profile--x'
+    ) {
+      this.setState({ popupVisible: true });
+    } else {
+      this.setState({ popupVisible: false });
+    }
+  };
 
   // componentDidUpdate(prevProps: Props) {
   //   const { pathname } = this.props.location;
@@ -51,11 +77,6 @@ class Navbar extends React.Component<Props, NavbarState> {
     // this.props.history.push(`/search/${this.state.searchValue}`);
 
     this.setState({ searchValue: '' });
-
-    //   <Link
-    //   to={`/search/${this.state.searchValue}`}
-    //   className='navbar__main--btn-search'
-    // ></Link>
   };
 
   handleSignOut = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -72,7 +93,9 @@ class Navbar extends React.Component<Props, NavbarState> {
 
   render(): JSX.Element {
     const { currentUser } = this.props;
-    const { searchValue } = this.state;
+    const { searchValue, popupVisible } = this.state;
+
+    // console.log(popupVisible);
 
     return (
       <nav role='navigation' className='navbar'>
@@ -114,46 +137,56 @@ class Navbar extends React.Component<Props, NavbarState> {
           <li>
             {currentUser ? (
               <div>
-                <a href='#profile'>
-                  <img
-                    src={defaultLogo}
-                    alt='User Profile'
-                    className='navbar__secondary--logo'
-                  />
-                </a>
-                <div id='profile' className='navbar__secondary--profile'>
-                  {/* <a href='#' className='navbar__secondary--profile--close-btn'>
-                &times;
-              </a> */}
+                <img
+                  src={defaultLogo}
+                  alt='User Profile'
+                  className='navbar__secondary--logo'
+                />
+                {popupVisible ? (
+                  <div className='navbar__secondary--profile'>
+                    <Link
+                      to='/profile'
+                      className='navbar__secondary--profile--link-1'
+                    >
+                      <img
+                        src={defaultLogo}
+                        alt='User Profile'
+                        className='navbar__secondary--logo'
+                      />
+                    </Link>
 
-                  <div className='navbar__secondary--profile--content'>
-                    <img
-                      src={defaultLogo}
-                      alt='User Profile'
-                      className='navbar__secondary--logo'
-                    />
-                    <h4>{currentUser.name}</h4>
-                    <div>{currentUser.email}</div>
-                    <Link to='/profile'>Manage your ONews Account</Link>
-                    <hr></hr>
-                    <div className='navbar__secondary--profile--content--placeholder'>
+                    <h4 className='navbar__secondary--profile--x'>
+                      {currentUser.name}
+                    </h4>
+                    <div className='navbar__secondary--profile--x'>
+                      {currentUser.email}
+                    </div>
+                    <Link
+                      to='/profile'
+                      className='navbar__secondary--profile--link-2'
+                    >
+                      Manage your Onews Account
+                    </Link>
+                    <hr className='navbar__secondary--profile--x'></hr>
+                    <div className='navbar__secondary--profile--placeholder'>
                       Add another account
                     </div>
-                    <hr></hr>
+                    <hr className='navbar__secondary--profile--x'></hr>
                     <CustomButton profile onClick={this.handleSignOut}>
                       Sign Out
                     </CustomButton>
-                    <hr></hr>
-                    <div className='navbar__secondary--profile--content--footer'>
-                      <span>Privacy Policy | </span>
-                      <span>Terms of Service</span>
+                    <hr className='navbar__secondary--profile--x'></hr>
+                    <div className='navbar__secondary--profile--footer'>
+                      <span className='navbar__secondary--profile--x'>
+                        Privacy Policy
+                      </span>
+                      <span className='navbar__secondary--profile--x'> | </span>
+                      <span className='navbar__secondary--profile--x'>
+                        Terms of Service
+                      </span>
                     </div>
                   </div>
-                </div>
-                <a
-                  href='#'
-                  className='navbar__secondary--profile--close-background'
-                ></a>
+                ) : null}
               </div>
             ) : (
               <Link to='/auth/sign-in'>

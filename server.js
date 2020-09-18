@@ -12,6 +12,7 @@ const morgan = require('morgan');
 // const sharp = require('sharp');
 
 const news = require('./controllers/news');
+const search = require('./controllers/search');
 const signUp = require('./controllers/sign-up');
 const signIn = require('./controllers/sign-in');
 const profile = require('./controllers/profile');
@@ -72,6 +73,10 @@ app.get('/service-worker.js', (req, res) => {
 
 app.post('/news', (req, res) => {
   news.handleGetNews(req, res);
+});
+
+app.post('/search', (req, res) => {
+  search.handleGetSearch(req, res);
 });
 
 app.post('/sign-in', (req, res) => {

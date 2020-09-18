@@ -102,10 +102,10 @@ class HomePage extends React.Component<Props> {
         <div className='homepage__content'>
           <h2 className='homepage__content--header'>
             {newsCategory === 'general'
-              ? 'Top Stories'
+              ? 'Top stories'
               : `${
                   newsCategory.slice(0, 1).toUpperCase() + newsCategory.slice(1)
-                } News`}
+                } news`}
           </h2>
           <h4 className='homepage__content--sub-header'>{subHeader}</h4>
 

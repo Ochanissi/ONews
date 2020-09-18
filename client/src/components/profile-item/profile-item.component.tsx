@@ -27,11 +27,11 @@ const ProfileItem: React.FunctionComponent<ProfileIemProps> = ({
       </div>
       <div
         className={`profile-item__content--image profile-item__content--image--${
-          title === 'Saved Stories'
+          title === 'Saved stories'
             ? '3'
-            : title === 'Liked Stories'
+            : title === 'Liked stories'
             ? '2'
-            : title === 'Disliked Stories'
+            : title === 'Disliked stories'
             ? '4'
             : ''
         }`}

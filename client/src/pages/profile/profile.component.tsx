@@ -30,21 +30,21 @@ const Profile = () => (
           link='settings'
         />
         <ProfileItem
-          title='Saved Stories'
+          title='Saved stories'
           text='You can save stories on ONews to read later. Saving for later is a great way to make sure you remember them.'
           icon='newspaper-outline'
           btn='Read all your saved stories'
           link='saved'
         />
         <ProfileItem
-          title='Liked Stories'
+          title='Liked stories'
           text='You can find here all the stories that you liked in the past.'
           icon='thumbs-up-sharp'
           btn='Read all your liked stories'
           link='liked'
         />
         <ProfileItem
-          title='Disliked Stories'
+          title='Disliked stories'
           text='You can find here all the stories that you disliked in the past.'
           icon='thumbs-down-sharp'
           btn='Read all your disliked stories'

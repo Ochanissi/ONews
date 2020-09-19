@@ -81,20 +81,33 @@
     //   margin-right: 7rem;
     // }
 
-    &--searchbar {
-      float: right;
-      background-color: rgba($color-grey-dark-3, 0);
-      // background-color: #d03237;
-      color: $color-grey-dark-4;
-      padding: 0.25rem 1rem;
-      width: 20rem;
-      border: none;
+    &--container {
+      // border: 1px solid #dadce0;
+      border-radius: 8px;
+
       margin-top: 1rem;
       margin-right: 0.8rem;
 
+      padding: 1rem 1rem 0rem 1rem;
+
+      background-color: $color-grey-light-2;
+
+      // height: 3rem;
+      // width: 2.25rem;
+    }
+
+    &--searchbar {
+      background-color: rgba($color-grey-dark-3, 0);
+      // background-color: #d03237;
+      color: $color-grey-dark-4;
+      width: 40rem;
+      border: none;
+
+      vertical-align: top;
+
       font-size: 1.75rem;
-      border-bottom: $color-grey-dark-4 solid 2px;
-      transition: 0.3s;
+      // border-bottom: $color-grey-dark-4 solid 2px;
+      // transition: 0.3s;
 
       // @media only screen and (max-width: $bp-small) {
       //   width: 15rem;
@@ -106,17 +119,19 @@
     }
 
     &--searchbar::placeholder {
-      color: $color-grey-dark-4;
+      color: $color-grey-dark-2;
       opacity: 1;
       /* transition: 0.2s; */
     }
 
-    &--searchbar:focus {
-      width: 40rem;
-      transition: 0.3s;
+    &--searchbar:focus ~ .navbar__main--dropdown {
+      // display: block;
+
+      // width: 40rem;
+      // transition: 0.3s;
       /* Stops the input box from inheriting the styling from the inputs on the request form */
-      border-bottom: $color-grey-dark-4 solid 2px;
-      outline: none;
+      // border-bottom: $color-grey-dark-4 solid 2px;
+      // outline: none;
 
       // @media only screen and (max-width: $bp-small) {
       //   width: 30rem;
@@ -131,15 +146,40 @@
       // }
     }
 
+    &--dd-icon {
+      float: right;
+
+      margin-top: 0.25rem;
+
+      border: none;
+      cursor: pointer;
+    }
+
+    &--dropdown {
+      // display: none;
+
+      // background-color: white;
+
+      // padding: 0;
+    }
+
     &--btn-search {
       cursor: pointer;
-      color: $color-grey-dark-4;
+      color: $color-grey-dark-3;
       text-decoration: none !important;
       font-size: 2.25rem;
-      margin-top: 1.5rem;
+      // margin-top: 1.5rem;
       // margin-right: 4rem;
       background-color: transparent;
       border: none;
+
+      height: 2rem;
+
+      margin-right: 1.5rem;
+
+      ion-icon {
+        font-size: 2rem;
+      }
     }
   }
 

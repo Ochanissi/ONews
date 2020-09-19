@@ -18,6 +18,7 @@ interface NavbarProps extends RouteComponentProps {}
 interface NavbarState {
   searchValue: string;
   popupVisible: boolean;
+  dropdownVisible: boolean;
 }
 
 type Props = NavbarProps & LinkStateProps & LinkDispatchProps;
@@ -31,6 +32,7 @@ class Navbar extends React.Component<Props, NavbarState> {
     this.state = {
       searchValue: '',
       popupVisible: false,
+      dropdownVisible: false,
     };
   }
 
@@ -42,7 +44,8 @@ class Navbar extends React.Component<Props, NavbarState> {
   }
 
   handleClick = (event: any): void => {
-    // console.log(event.target.className);
+    console.log(event.target.className);
+    // console.log(event.target.parentNode.className);
 
     if (event.target.className === 'navbar__secondary--logo') {
       this.setState((prevState) => ({
@@ -55,6 +58,19 @@ class Navbar extends React.Component<Props, NavbarState> {
       this.setState({ popupVisible: true });
     } else {
       this.setState({ popupVisible: false });
+    }
+
+    if (event.target.parentNode.className === 'navbar__main--dd-icon') {
+      this.setState((prevState) => ({
+        dropdownVisible: !prevState.dropdownVisible,
+      }));
+    } else if (
+      event.target.className === 'navbar__main--searchbar' ||
+      event.target.className === 'navbar__main--dropdown'
+    ) {
+      this.setState({ dropdownVisible: true });
+    } else {
+      this.setState({ dropdownVisible: false });
     }
   };
 
@@ -69,6 +85,7 @@ class Navbar extends React.Component<Props, NavbarState> {
 
   handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({ searchValue: event.currentTarget.value });
+    // console.log(event.currentTarget.value);
   };
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -93,7 +110,7 @@ class Navbar extends React.Component<Props, NavbarState> {
 
   render(): JSX.Element {
     const { currentUser } = this.props;
-    const { searchValue, popupVisible } = this.state;
+    const { searchValue, popupVisible, dropdownVisible } = this.state;
 
     // console.log(popupVisible);
 
@@ -105,22 +122,42 @@ class Navbar extends React.Component<Props, NavbarState> {
         </label>
 
         <form onSubmit={this.handleSubmit} className='navbar__main'>
-          <input
-            id='searchBar'
-            className='navbar__main--searchbar'
-            type='text'
-            placeholder='Search...'
-            autoComplete='off'
-            onChange={this.handleSearch}
-            value={searchValue}
-          />
-          <button
-            className='navbar__main--btn-search'
-            type='submit'
-            value='Submit'
-          >
-            <ion-icon name='search'></ion-icon>
-          </button>
+          <div className='navbar__main--container'>
+            <button
+              className='navbar__main--btn-search'
+              type='submit'
+              value='Submit'
+            >
+              <ion-icon name='search'></ion-icon>
+            </button>
+            <input
+              id='searchBar'
+              className='navbar__main--searchbar'
+              type='text'
+              placeholder='Search...'
+              autoComplete='off'
+              onChange={this.handleSearch}
+              value={searchValue}
+            />
+            <button className='navbar__main--dd-icon'>
+              <ion-icon
+                name={`caret-${dropdownVisible ? 'up' : 'down'}-sharp`}
+              ></ion-icon>
+            </button>
+
+            {dropdownVisible ? (
+              <div className='navbar__main--dropdown'>
+                <label htmlFor='cars'>Choose a car:</label>
+
+                <select name='cars' id='cars'>
+                  <option value='volvo'>Volvo</option>
+                  <option value='saab'>Saab</option>
+                  <option value='mercedes'>Mercedes</option>
+                  <option value='audi'>Audi</option>
+                </select>
+              </div>
+            ) : null}
+          </div>
         </form>
 
         <ul className='navbar__secondary'>

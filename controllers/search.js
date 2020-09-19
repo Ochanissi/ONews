@@ -1,9 +1,15 @@
 const axios = require('axios');
 
 const handleGetSearch = async (req, res) => {
-  const { query } = req.body;
+  const {
+    query,
+    queryTitle = false,
+    date,
+    lang = 'en',
+    sortBy = 'publishedAt',
+  } = req.body;
 
-  // console.log(process.env.ONEWS_NEWSAPI_KEY);
+  console.log(req.body);
 
   if (!query) {
     return res.status(400).json('Incorrect request!');
@@ -11,7 +17,11 @@ const handleGetSearch = async (req, res) => {
 
   try {
     const data = await axios.get(
-      `https://newsapi.org/v2/everything?q=${query}&apiKey=${process.env.ONEWS_NEWSAPI_KEY}`
+      `https://newsapi.org/v2/everything?${
+        queryTitle ? 'qInTitle' : 'q'
+      }=${query}&language=${lang}&sortBy=${sortBy}${
+        date ? `&from=${date}` : ''
+      }&apiKey=${process.env.ONEWS_NEWSAPI_KEY}`
     );
 
     // console.log(data.data.articles);

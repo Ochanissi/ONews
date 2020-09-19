@@ -85,7 +85,7 @@ const Sidebar = ({ userCategory, userCountry, location }: Props) => {
             />
 
             <SidebarItem
-              iconType='hourglass-outline'
+              iconType='newspaper-outline'
               itemLabel='Saved for later'
               profileLink='/profile/saved'
             />

@@ -92,8 +92,16 @@
 
       background-color: $color-grey-light-2;
 
+      border: 1px solid transparent;
+
       // height: 3rem;
       // width: 2.25rem;
+
+      &--focused {
+        background-color: $color-white;
+        box-shadow: 0 1px 1px rgba(65, 69, 73, 0.3),
+          0 1px 3px 1px rgba(65, 69, 73, 0.15);
+      }
     }
 
     &--searchbar {
@@ -106,6 +114,7 @@
       vertical-align: top;
 
       font-size: 1.75rem;
+
       // border-bottom: $color-grey-dark-4 solid 2px;
       // transition: 0.3s;
 
@@ -149,13 +158,20 @@
     &--dd-icon {
       float: right;
 
-      margin-top: 0.25rem;
+      // margin-top: 0.25rem;
+
+      font-size: 1.5rem;
+      color: $color-grey-dark-2;
 
       border: none;
       cursor: pointer;
+
+      background-color: transparent;
     }
 
     &--dropdown {
+      margin-top: 0.5rem;
+
       // display: none;
 
       // background-color: white;

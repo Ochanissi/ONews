@@ -44,7 +44,7 @@ class Navbar extends React.Component<Props, NavbarState> {
   }
 
   handleClick = (event: any): void => {
-    console.log(event.target.className);
+    // console.log(event.target.className);
     // console.log(event.target.parentNode.className);
 
     if (event.target.className === 'navbar__secondary--logo') {
@@ -66,7 +66,8 @@ class Navbar extends React.Component<Props, NavbarState> {
       }));
     } else if (
       event.target.className === 'navbar__main--searchbar' ||
-      event.target.className === 'navbar__main--dropdown'
+      event.target.className === 'navbar__main--dropdown' ||
+      event.target.parentNode.className === 'navbar__main--dropdown'
     ) {
       this.setState({ dropdownVisible: true });
     } else {
@@ -113,6 +114,7 @@ class Navbar extends React.Component<Props, NavbarState> {
     const { searchValue, popupVisible, dropdownVisible } = this.state;
 
     // console.log(popupVisible);
+    // console.log(dropdownVisible);
 
     return (
       <nav role='navigation' className='navbar'>
@@ -122,7 +124,11 @@ class Navbar extends React.Component<Props, NavbarState> {
         </label>
 
         <form onSubmit={this.handleSubmit} className='navbar__main'>
-          <div className='navbar__main--container'>
+          <div
+            className={`navbar__main--container ${
+              dropdownVisible ? 'navbar__main--container--focused' : ''
+            }`}
+          >
             <button
               className='navbar__main--btn-search'
               type='submit'
@@ -139,23 +145,29 @@ class Navbar extends React.Component<Props, NavbarState> {
               onChange={this.handleSearch}
               value={searchValue}
             />
-            <button className='navbar__main--dd-icon'>
+            <div className='navbar__main--dd-icon'>
               <ion-icon
                 name={`caret-${dropdownVisible ? 'up' : 'down'}-sharp`}
               ></ion-icon>
-            </button>
+            </div>
 
             {dropdownVisible ? (
-              <div className='navbar__main--dropdown'>
-                <label htmlFor='cars'>Choose a car:</label>
+              <form
+                className='navbar__main--dropdown'
+                onSubmit={this.handleSubmit}
+              >
+                <div className='navbar__main--dropdown--header'>
+                  Narrow your search results
+                </div>
 
-                <select name='cars' id='cars'>
-                  <option value='volvo'>Volvo</option>
-                  <option value='saab'>Saab</option>
-                  <option value='mercedes'>Mercedes</option>
-                  <option value='audi'>Audi</option>
-                </select>
-              </div>
+                <label htmlFor='title'> I have a bike</label>
+                <input type='checkbox' id='title' name='title' />
+
+                <div className='navbar__main--dropdown--btns'>
+                  {/* <CustomButton type='submit'>Sign In</CustomButton>
+              <CustomButton link='/auth/sign-up'>Sign up</CustomButton> */}
+                </div>
+              </form>
             ) : null}
           </div>
         </form>

@@ -19,6 +19,7 @@ interface NavbarState {
   searchValue: string;
   popupVisible: boolean;
   dropdownVisible: boolean;
+  titleChecked: boolean;
 }
 
 type Props = NavbarProps & LinkStateProps & LinkDispatchProps;
@@ -33,6 +34,7 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchValue: '',
       popupVisible: false,
       dropdownVisible: false,
+      titleChecked: false,
     };
   }
 
@@ -67,7 +69,8 @@ class Navbar extends React.Component<Props, NavbarState> {
     } else if (
       event.target.className === 'navbar__main--searchbar' ||
       event.target.className === 'navbar__main--dropdown' ||
-      event.target.parentNode.className === 'navbar__main--dropdown'
+      event.target.parentNode.className === 'navbar__main--dropdown' ||
+      event.target.parentNode.className === 'navbar__main--dropdown--row'
     ) {
       this.setState({ dropdownVisible: true });
     } else {
@@ -85,8 +88,12 @@ class Navbar extends React.Component<Props, NavbarState> {
   // }
 
   handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ searchValue: event.currentTarget.value });
+    this.setState({
+      searchValue: event.currentTarget.value,
+      titleChecked: !this.state.titleChecked,
+    });
     // console.log(event.currentTarget.value);
+    // console.log(event.currentTarget);
   };
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -109,12 +116,27 @@ class Navbar extends React.Component<Props, NavbarState> {
     // Toast.success(`See you soon, ${name}!`, 1500);
   };
 
+  // handleToggle = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  //   event.preventDefault();
+
+  //   this.setState({
+  //     titleChecked: !this.state.titleChecked,
+  //   });
+  // };
+
   render(): JSX.Element {
     const { currentUser } = this.props;
-    const { searchValue, popupVisible, dropdownVisible } = this.state;
+    const {
+      searchValue,
+      popupVisible,
+      dropdownVisible,
+      titleChecked,
+    } = this.state;
 
     // console.log(popupVisible);
     // console.log(dropdownVisible);
+
+    // console.log(titleChecked);
 
     return (
       <nav role='navigation' className='navbar'>
@@ -136,6 +158,7 @@ class Navbar extends React.Component<Props, NavbarState> {
             >
               <ion-icon name='search'></ion-icon>
             </button>
+
             <input
               id='searchBar'
               className='navbar__main--searchbar'
@@ -160,8 +183,45 @@ class Navbar extends React.Component<Props, NavbarState> {
                   Narrow your search results
                 </div>
 
-                <label htmlFor='title'> I have a bike</label>
-                <input type='checkbox' id='title' name='title' />
+                <div className='navbar__main--dropdown--row'>
+                  <label htmlFor='title'>Title search </label>
+                  <input
+                    type='checkbox'
+                    id='title'
+                    name='title'
+                    value='title'
+                    onChange={this.handleSearch}
+                    checked={titleChecked}
+                  />
+                </div>
+
+                <div className='navbar__main--dropdown--row'>
+                  <label htmlFor='location'>Location: </label>
+                  <select name='location' id='location'>
+                    <option value='ro'>Romania</option>
+                    <option value='en'>World</option>
+                  </select>
+                </div>
+
+                <div className='navbar__main--dropdown--row'>
+                  <label htmlFor='date'>Date: </label>
+                  <select name='date' id='date'>
+                    <option value=''>Anytime</option>
+                    <option value=''>Past hour</option>
+                    <option value=''>Past 24 hours</option>
+                    <option value=''>Past week</option>
+                    <option value=''>Past year</option>
+                  </select>
+                </div>
+
+                <div className='navbar__main--dropdown--row'>
+                  <label htmlFor='sort'>Sort by: </label>
+                  <select name='sort' id='sort'>
+                    <option value='relevancy'>Relevancy</option>
+                    <option value='popularity'>Popularity</option>
+                    <option value='publishedAt'>Published At</option>
+                  </select>
+                </div>
 
                 <div className='navbar__main--dropdown--btns'>
                   {/* <CustomButton type='submit'>Sign In</CustomButton>

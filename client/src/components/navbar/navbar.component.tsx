@@ -8,7 +8,10 @@ import defaultLogo from '../../assets/default.png';
 
 import './navbar.styles.scss';
 import { User } from '../../redux/user/user.types';
-import { selectCurrentUser } from '../../redux/user/user.selectors';
+import {
+  selectCurrentUser,
+  selectUserCountry,
+} from '../../redux/user/user.selectors';
 import CustomButton from '../custom-button/custom-button.component';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../redux/store';
@@ -19,7 +22,10 @@ interface NavbarState {
   searchValue: string;
   popupVisible: boolean;
   dropdownVisible: boolean;
-  titleChecked: boolean;
+  searchTitle: boolean;
+  searchLocation: string;
+  searchDate: string | null;
+  searchSortBy: string;
 }
 
 type Props = NavbarProps & LinkStateProps & LinkDispatchProps;
@@ -31,10 +37,14 @@ class Navbar extends React.Component<Props, NavbarState> {
     // this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-      searchValue: '',
       popupVisible: false,
       dropdownVisible: false,
-      titleChecked: false,
+
+      searchValue: '',
+      searchTitle: false,
+      searchLocation: this.props.userCountry,
+      searchDate: null,
+      searchSortBy: 'publishedAt',
     };
   }
 
@@ -67,10 +77,9 @@ class Navbar extends React.Component<Props, NavbarState> {
         dropdownVisible: !prevState.dropdownVisible,
       }));
     } else if (
-      event.target.className === 'navbar__main--searchbar' ||
-      event.target.className === 'navbar__main--dropdown' ||
-      event.target.parentNode.className === 'navbar__main--dropdown' ||
-      event.target.parentNode.className === 'navbar__main--dropdown--row'
+      event.target.className.startsWith('navbar__main--searchbar') ||
+      event.target.className.startsWith('navbar__main--dropdown') ||
+      event.target.parentNode.className.startsWith('navbar__main--dropdown')
     ) {
       this.setState({ dropdownVisible: true });
     } else {
@@ -87,11 +96,34 @@ class Navbar extends React.Component<Props, NavbarState> {
   //   }
   // }
 
-  handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState({
-      searchValue: event.currentTarget.value,
-      titleChecked: !this.state.titleChecked,
-    });
+  handleSearch = (event: any): void => {
+    if (event.currentTarget.id === 'title') {
+      this.setState({
+        searchTitle: !this.state.searchTitle,
+      });
+    } else if (event.currentTarget.id === 'location') {
+      this.setState({
+        searchLocation: event.currentTarget.value,
+      });
+    } else if (event.currentTarget.id === 'date') {
+      this.setState({
+        searchDate: event.currentTarget.value,
+      });
+    } else if (event.currentTarget.id === 'sort') {
+      this.setState({
+        searchSortBy: event.currentTarget.value,
+      });
+    } else if (event.currentTarget.id === 'searchBar') {
+      this.setState({
+        searchValue: event.currentTarget.value,
+      });
+    }
+
+    // this.setState({
+    //   searchValue: event.currentTarget.value,
+    //   searchTitle: !this.state.searchTitle,
+    // });
+
     // console.log(event.currentTarget.value);
     // console.log(event.currentTarget);
   };
@@ -101,7 +133,15 @@ class Navbar extends React.Component<Props, NavbarState> {
 
     // this.props.history.push(`/search/${this.state.searchValue}`);
 
-    this.setState({ searchValue: '' });
+    console.log('kek');
+
+    this.setState({
+      searchValue: '',
+      searchTitle: false,
+      searchLocation: this.props.userCountry,
+      searchDate: null,
+      searchSortBy: 'publishedAt',
+    });
   };
 
   handleSignOut = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -116,13 +156,17 @@ class Navbar extends React.Component<Props, NavbarState> {
     // Toast.success(`See you soon, ${name}!`, 1500);
   };
 
-  // handleToggle = (event: React.ChangeEvent<HTMLInputElement>): void => {
-  //   event.preventDefault();
+  handleClear = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
 
-  //   this.setState({
-  //     titleChecked: !this.state.titleChecked,
-  //   });
-  // };
+    this.setState({
+      searchValue: '',
+      searchTitle: false,
+      searchLocation: this.props.userCountry,
+      searchDate: null,
+      searchSortBy: 'publishedAt',
+    });
+  };
 
   render(): JSX.Element {
     const { currentUser } = this.props;
@@ -130,13 +174,16 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchValue,
       popupVisible,
       dropdownVisible,
-      titleChecked,
+      searchTitle,
+      searchLocation,
     } = this.state;
 
     // console.log(popupVisible);
     // console.log(dropdownVisible);
 
-    // console.log(titleChecked);
+    // console.log(searchTitle);
+
+    // console.log(this.props);
 
     return (
       <nav role='navigation' className='navbar'>
@@ -145,34 +192,36 @@ class Navbar extends React.Component<Props, NavbarState> {
           <div className='menu-button'></div>
         </label>
 
-        <form onSubmit={this.handleSubmit} className='navbar__main'>
+        <div className='navbar__main'>
           <div
             className={`navbar__main--container ${
               dropdownVisible ? 'navbar__main--container--focused' : ''
             }`}
           >
-            <button
-              className='navbar__main--btn-search'
-              type='submit'
-              value='Submit'
-            >
-              <ion-icon name='search'></ion-icon>
-            </button>
+            <form onSubmit={this.handleSubmit}>
+              <button
+                className='navbar__main--btn-search'
+                type='submit'
+                value='Submit'
+              >
+                <ion-icon name='search'></ion-icon>
+              </button>
 
-            <input
-              id='searchBar'
-              className='navbar__main--searchbar'
-              type='text'
-              placeholder='Search...'
-              autoComplete='off'
-              onChange={this.handleSearch}
-              value={searchValue}
-            />
-            <div className='navbar__main--dd-icon'>
-              <ion-icon
-                name={`caret-${dropdownVisible ? 'up' : 'down'}-sharp`}
-              ></ion-icon>
-            </div>
+              <input
+                id='searchBar'
+                className='navbar__main--searchbar'
+                type='text'
+                placeholder='Search...'
+                autoComplete='off'
+                onChange={this.handleSearch}
+                value={searchValue}
+              />
+              <div className='navbar__main--dd-icon'>
+                <ion-icon
+                  name={`caret-${dropdownVisible ? 'up' : 'down'}-sharp`}
+                ></ion-icon>
+              </div>
+            </form>
 
             {dropdownVisible ? (
               <form
@@ -184,28 +233,36 @@ class Navbar extends React.Component<Props, NavbarState> {
                 </div>
 
                 <div className='navbar__main--dropdown--row'>
-                  <label htmlFor='title'>Title search </label>
+                  <label htmlFor='title'>Title search</label>
                   <input
                     type='checkbox'
                     id='title'
                     name='title'
                     value='title'
                     onChange={this.handleSearch}
-                    checked={titleChecked}
+                    checked={searchTitle}
                   />
                 </div>
 
                 <div className='navbar__main--dropdown--row'>
-                  <label htmlFor='location'>Location: </label>
-                  <select name='location' id='location'>
-                    <option value='ro'>Romania</option>
-                    <option value='en'>World</option>
+                  <label htmlFor='location'>Location</label>
+                  <select
+                    name='location'
+                    id='location'
+                    onChange={this.handleSearch}
+                  >
+                    <option value={searchLocation}>
+                      {searchLocation === 'ro' ? 'Romania' : 'World'}
+                    </option>
+                    <option value={searchLocation === 'ro' ? 'en' : 'ro'}>
+                      {searchLocation === 'ro' ? 'World' : 'Romania'}
+                    </option>
                   </select>
                 </div>
 
                 <div className='navbar__main--dropdown--row'>
-                  <label htmlFor='date'>Date: </label>
-                  <select name='date' id='date'>
+                  <label htmlFor='date'>Date</label>
+                  <select name='date' id='date' onChange={this.handleSearch}>
                     <option value=''>Anytime</option>
                     <option value=''>Past hour</option>
                     <option value=''>Past 24 hours</option>
@@ -215,22 +272,33 @@ class Navbar extends React.Component<Props, NavbarState> {
                 </div>
 
                 <div className='navbar__main--dropdown--row'>
-                  <label htmlFor='sort'>Sort by: </label>
-                  <select name='sort' id='sort'>
-                    <option value='relevancy'>Relevancy</option>
+                  <label htmlFor='sort'>Sort by</label>
+                  <select name='sort' id='sort' onChange={this.handleSearch}>
+                    <option value='publishedAt'>Published</option>
                     <option value='popularity'>Popularity</option>
-                    <option value='publishedAt'>Published At</option>
+                    <option value='relevancy'>Relevancy</option>
                   </select>
                 </div>
 
                 <div className='navbar__main--dropdown--btns'>
-                  {/* <CustomButton type='submit'>Sign In</CustomButton>
-              <CustomButton link='/auth/sign-up'>Sign up</CustomButton> */}
+                  <button
+                    className='navbar__main--dropdown--btns--1'
+                    onClick={this.handleClear}
+                  >
+                    Clear
+                  </button>
+                  <button
+                    className='navbar__main--dropdown--btns--2'
+                    type='submit'
+                    value='Submit'
+                  >
+                    Submit
+                  </button>
                 </div>
               </form>
             ) : null}
           </div>
-        </form>
+        </div>
 
         <ul className='navbar__secondary'>
           <li>
@@ -311,6 +379,7 @@ class Navbar extends React.Component<Props, NavbarState> {
 
 interface LinkStateProps {
   currentUser: User;
+  userCountry: string;
 }
 
 interface LinkDispatchProps {
@@ -319,6 +388,7 @@ interface LinkDispatchProps {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
+  userCountry: selectUserCountry,
 });
 
 const mapDispatchToProps = (

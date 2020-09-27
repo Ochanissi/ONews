@@ -186,9 +186,43 @@
       &--row {
         margin-bottom: 1rem;
 
-        select {
+        select,
+        input {
           border: 1px solid $color-grey-light-3;
           color: $color-grey-dark-2;
+
+          font-size: 1.5rem;
+
+          float: right;
+          margin-right: 40%;
+        }
+
+        input {
+          margin-right: 50%;
+        }
+      }
+
+      &--btns {
+        margin-bottom: 0.5rem;
+        margin-top: 3rem;
+        margin-right: 0.5rem;
+        margin-left: auto;
+
+        button {
+          color: $color-grey-dark-1;
+          cursor: pointer;
+          background-color: transparent;
+          border: none;
+
+          font-size: 1.35rem;
+          font-weight: 700;
+        }
+
+        &--1 {
+          margin-right: 3rem;
+        }
+
+        &--2 {
         }
       }
 

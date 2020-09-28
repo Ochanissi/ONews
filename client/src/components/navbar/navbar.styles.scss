@@ -178,6 +178,7 @@
 
       display: flex;
       flex-direction: column;
+      // align-items: center;
 
       &--header {
         margin-bottom: 1rem;
@@ -185,6 +186,8 @@
 
       &--row {
         margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
 
         select,
         input {
@@ -193,12 +196,13 @@
 
           font-size: 1.5rem;
 
-          float: right;
-          margin-right: 40%;
+          // float: right;
+          // margin-left: 30%;
         }
 
         input {
-          margin-right: 50%;
+          // margin-left: 32.5%;
+          margin-right: 3.5rem;
         }
       }
 
@@ -208,7 +212,8 @@
         margin-right: 0.5rem;
         margin-left: auto;
 
-        button {
+        &--1,
+        &--2 {
           color: $color-grey-dark-1;
           cursor: pointer;
           background-color: transparent;
@@ -220,9 +225,40 @@
 
         &--1 {
           margin-right: 3rem;
+
+          transition: all 0.25s linear;
+
+          &:hover {
+            color: $color-primary;
+          }
         }
 
         &--2 {
+          background: $color-primary;
+
+          // border: 1px solid #dadce0;
+          border-radius: 4px;
+          padding: 0.8rem 2.6rem;
+          text-decoration: none;
+          color: $color-white;
+
+          transition: all 0.25s linear;
+
+          &:hover {
+            background: $color-primary-dark;
+          }
+
+          &:disabled {
+            cursor: default;
+
+            background: $color-grey-light-2;
+            color: $color-grey-dark-1;
+            border: none;
+
+            &:hover {
+              background: $color-grey-light-2;
+            }
+          }
         }
       }
 

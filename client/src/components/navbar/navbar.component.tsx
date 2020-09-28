@@ -16,6 +16,8 @@ import CustomButton from '../custom-button/custom-button.component';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../redux/store';
 import { signOut } from '../../redux/user/user.actions';
+import { NewsSearch } from '../../redux/news/news.types';
+import { fetchNewsSearchStartAsync } from '../../redux/news/news.actions';
 
 interface NavbarProps extends RouteComponentProps {}
 interface NavbarState {
@@ -106,8 +108,38 @@ class Navbar extends React.Component<Props, NavbarState> {
         searchLocation: event.currentTarget.value,
       });
     } else if (event.currentTarget.id === 'date') {
+      let date: any;
+
+      if (event.currentTarget.value === 'hour') {
+        date = new Date(new Date().getTime() - 1000 * 60 * 60).toISOString();
+      } else if (event.currentTarget.value === 'day') {
+        date = new Date().toISOString().split('T')[0];
+      } else if (event.currentTarget.value === 'week') {
+        date = new Date(
+          new Date().getTime() - 7 * 24 * 60 * 60 * 1000
+        ).toISOString();
+      } else if (event.currentTarget.value === 'year') {
+        date = date = new Date(
+          new Date().getTime() - 365 * 24 * 60 * 60 * 1000
+        ).toISOString();
+      } else if (event.currentTarget.value === 'anytime') {
+        date = null;
+      }
+
+      // const date: any =
+      //   event.currentTarget.value === 'hour'
+      //     ? new Date(new Date().getTime() - 1000 * 60 * 60)
+      //     : event.currentTarget.value === 'day'
+      //     ? new Date()
+      //     : event.currentTarget.value === 'week'
+      //     ? new Date().setDate(new Date().getDate() - 7)
+      //     : '';
+
+      // console.log(date);
+      // console.log(new Date().toISOString());
+
       this.setState({
-        searchDate: event.currentTarget.value,
+        searchDate: date,
       });
     } else if (event.currentTarget.id === 'sort') {
       this.setState({
@@ -126,14 +158,32 @@ class Navbar extends React.Component<Props, NavbarState> {
 
     // console.log(event.currentTarget.value);
     // console.log(event.currentTarget);
+    // console.log(new Date().toISOString());
+    // console.log(this.state.searchDate);
   };
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
+    const {
+      searchValue,
+      searchDate,
+      searchSortBy,
+      searchTitle,
+      searchLocation,
+    } = this.state;
+
+    this.props.fetchNewsSearchStartAsync({
+      query: encodeURI(searchValue),
+      queryTitle: searchTitle,
+      date: searchDate,
+      lang: searchLocation,
+      sortBy: searchSortBy,
+    });
+
     // this.props.history.push(`/search/${this.state.searchValue}`);
 
-    console.log('kek');
+    // console.log(this.state);
 
     this.setState({
       searchValue: '',
@@ -263,11 +313,11 @@ class Navbar extends React.Component<Props, NavbarState> {
                 <div className='navbar__main--dropdown--row'>
                   <label htmlFor='date'>Date</label>
                   <select name='date' id='date' onChange={this.handleSearch}>
-                    <option value=''>Anytime</option>
-                    <option value=''>Past hour</option>
-                    <option value=''>Past 24 hours</option>
-                    <option value=''>Past week</option>
-                    <option value=''>Past year</option>
+                    <option value='anytime'>Anytime</option>
+                    <option value='hour'>Past hour</option>
+                    <option value='day'>Past 24 hours</option>
+                    <option value='week'>Past week</option>
+                    <option value='year'>Past year</option>
                   </select>
                 </div>
 
@@ -291,6 +341,7 @@ class Navbar extends React.Component<Props, NavbarState> {
                     className='navbar__main--dropdown--btns--2'
                     type='submit'
                     value='Submit'
+                    disabled={searchValue ? false : true}
                   >
                     Submit
                   </button>
@@ -384,6 +435,7 @@ interface LinkStateProps {
 
 interface LinkDispatchProps {
   signOut: () => void;
+  fetchNewsSearchStartAsync: (newsSearch: NewsSearch) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -395,6 +447,8 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
   signOut: () => dispatch(signOut()),
+  fetchNewsSearchStartAsync: (newsSearch) =>
+    dispatch(fetchNewsSearchStartAsync(newsSearch)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

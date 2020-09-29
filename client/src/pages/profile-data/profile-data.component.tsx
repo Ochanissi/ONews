@@ -13,7 +13,7 @@ import {
 
 import './profile-data.styles.scss';
 
-interface ProfileData {
+interface ProfileDataProps {
   match: {
     params: {
       type: string;
@@ -21,7 +21,7 @@ interface ProfileData {
   };
 }
 
-type Props = LinkStateProps & ProfileData;
+type Props = LinkStateProps & ProfileDataProps;
 
 const ProfileData: React.FunctionComponent<Props> = ({
   match: {

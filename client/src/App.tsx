@@ -25,6 +25,7 @@ import {
 import './App.scss';
 
 import HomePage from './pages/home-page/home-page.component';
+import SearchPage from './pages/search-page/search-page.component';
 import NavBar from './components/navbar/navbar.component';
 import Sidebar from './components/sidebar/sidebar.component';
 import Profile from './pages/profile/profile.component';
@@ -78,6 +79,11 @@ const App: React.FunctionComponent<Props> = ({
           )}
         />
         <Route exact path='/news/:country/:category' component={HomePage} />
+        <Route
+          exact
+          path='/search/:query/:queryTitle/:date/:lang/:sortBy'
+          component={SearchPage}
+        />
         <Route
           exact
           path='/auth/sign-in'

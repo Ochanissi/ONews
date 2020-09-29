@@ -61,27 +61,32 @@ class Navbar extends React.Component<Props, NavbarState> {
     // console.log(event.target.className);
     // console.log(event.target.parentNode.className);
 
-    if (event.target.className === 'navbar__secondary--logo') {
+    // console.log(event.target.className);
+
+    const defaultClick = event.target.className || '';
+    const defaultClickParent = event.target.parentNode.className || '';
+
+    if (defaultClick === 'navbar__secondary--logo') {
       this.setState((prevState) => ({
         popupVisible: !prevState.popupVisible,
       }));
     } else if (
-      event.target.className === 'navbar__secondary--profile' ||
-      event.target.className === 'navbar__secondary--profile--x'
+      defaultClick === 'navbar__secondary--profile' ||
+      defaultClick === 'navbar__secondary--profile--x'
     ) {
       this.setState({ popupVisible: true });
     } else {
       this.setState({ popupVisible: false });
     }
 
-    if (event.target.parentNode.className === 'navbar__main--dd-icon') {
+    if (defaultClickParent === 'navbar__main--dd-icon') {
       this.setState((prevState) => ({
         dropdownVisible: !prevState.dropdownVisible,
       }));
     } else if (
-      event.target.className.startsWith('navbar__main--searchbar') ||
-      event.target.className.startsWith('navbar__main--dropdown') ||
-      event.target.parentNode.className.startsWith('navbar__main--dropdown')
+      defaultClick.startsWith('navbar__main--searchbar') ||
+      defaultClick.startsWith('navbar__main--dropdown') ||
+      defaultClickParent.startsWith('navbar__main--dropdown')
     ) {
       this.setState({ dropdownVisible: true });
     } else {
@@ -173,15 +178,18 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchLocation,
     } = this.state;
 
-    this.props.fetchNewsSearchStartAsync({
-      query: encodeURI(searchValue),
-      queryTitle: searchTitle,
-      date: searchDate,
-      lang: searchLocation,
-      sortBy: searchSortBy,
-    });
+    // console.log(searchValue);
 
-    // this.props.history.push(`/search/${this.state.searchValue}`);
+    this.props.history.push(
+      `/search/
+    ${searchValue.replace(
+      / /g,
+      '%20'
+    )}/${searchTitle}/${searchDate}/${searchLocation}/${searchSortBy}`.replace(
+        / /g,
+        ''
+      )
+    );
 
     // console.log(this.state);
 
@@ -435,7 +443,6 @@ interface LinkStateProps {
 
 interface LinkDispatchProps {
   signOut: () => void;
-  fetchNewsSearchStartAsync: (newsSearch: NewsSearch) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -447,8 +454,6 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
   signOut: () => dispatch(signOut()),
-  fetchNewsSearchStartAsync: (newsSearch) =>
-    dispatch(fetchNewsSearchStartAsync(newsSearch)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

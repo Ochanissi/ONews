@@ -16,8 +16,6 @@ import CustomButton from '../custom-button/custom-button.component';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../redux/store';
 import { signOut } from '../../redux/user/user.actions';
-import { NewsSearch } from '../../redux/news/news.types';
-import { fetchNewsSearchStartAsync } from '../../redux/news/news.actions';
 
 interface NavbarProps extends RouteComponentProps {}
 interface NavbarState {
@@ -26,7 +24,7 @@ interface NavbarState {
   dropdownVisible: boolean;
   searchTitle: boolean;
   searchLocation: string;
-  searchDate: string | null;
+  searchDate: string;
   searchSortBy: string;
 }
 
@@ -45,7 +43,7 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchValue: '',
       searchTitle: false,
       searchLocation: this.props.userCountry,
-      searchDate: null,
+      searchDate: 'anytime',
       searchSortBy: 'publishedAt',
     };
   }
@@ -120,15 +118,15 @@ class Navbar extends React.Component<Props, NavbarState> {
       } else if (event.currentTarget.value === 'day') {
         date = new Date().toISOString().split('T')[0];
       } else if (event.currentTarget.value === 'week') {
-        date = new Date(
-          new Date().getTime() - 7 * 24 * 60 * 60 * 1000
-        ).toISOString();
-      } else if (event.currentTarget.value === 'year') {
-        date = date = new Date(
-          new Date().getTime() - 365 * 24 * 60 * 60 * 1000
-        ).toISOString();
+        date = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .split('T')[0];
+      } else if (event.currentTarget.value === 'month') {
+        date = date = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .split('T')[0];
       } else if (event.currentTarget.value === 'anytime') {
-        date = null;
+        date = 'anytime';
       }
 
       // const date: any =
@@ -180,25 +178,29 @@ class Navbar extends React.Component<Props, NavbarState> {
 
     // console.log(searchValue);
 
+    // this.props.history.push(
+    //   `/search/
+    // ${searchValue.replace(
+    //   / /g,
+    //   '%20'
+    // )}/${searchTitle}/${searchDate}/${searchLocation}/${searchSortBy}`.replace(
+    //     / /g,
+    //     ''
+    //   )
+    // );
+
     this.props.history.push(
-      `/search/
-    ${searchValue.replace(
-      / /g,
-      '%20'
-    )}/${searchTitle}/${searchDate}/${searchLocation}/${searchSortBy}`.replace(
-        / /g,
-        ''
-      )
+      `/search/${`${searchValue}/${searchTitle}/${searchDate}/${searchLocation}/${searchSortBy}`.trim()}`
     );
 
     // console.log(this.state);
-
     this.setState({
       searchValue: '',
       searchTitle: false,
       searchLocation: this.props.userCountry,
-      searchDate: null,
+      searchDate: 'anytime',
       searchSortBy: 'publishedAt',
+      dropdownVisible: false,
     });
   };
 
@@ -221,7 +223,7 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchValue: '',
       searchTitle: false,
       searchLocation: this.props.userCountry,
-      searchDate: null,
+      searchDate: 'anytime',
       searchSortBy: 'publishedAt',
     });
   };
@@ -325,7 +327,7 @@ class Navbar extends React.Component<Props, NavbarState> {
                     <option value='hour'>Past hour</option>
                     <option value='day'>Past 24 hours</option>
                     <option value='week'>Past week</option>
-                    <option value='year'>Past year</option>
+                    <option value='month'>Past month</option>
                   </select>
                 </div>
 

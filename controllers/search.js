@@ -28,7 +28,7 @@ const handleGetSearch = async (req, res) => {
 
     res.json(data.data.articles);
   } catch (error) {
-    res.status(400).json('Unable to get news!');
+    res.status(400).json(error);
   }
 };
 

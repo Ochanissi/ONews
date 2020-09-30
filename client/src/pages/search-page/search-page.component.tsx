@@ -26,45 +26,99 @@ interface SearchPageProps {
 
 type Props = LinkStateProps & SearchPageProps & LinkDispatchProps;
 
-const SearchPage: React.FunctionComponent<Props> = ({
-  match: {
-    params: { query, queryTitle, date, lang, sortBy },
-  },
-  newsSearch,
-  fetchNewsSearchStartAsync,
-}): JSX.Element => {
-  // console.log({ query, queryTitle, date, lang, sortBy });
-  // console.log(query.replace(/%20/g, ' '));
+class SearchPage extends React.Component<Props> {
+  componentDidMount() {
+    const {
+      match: {
+        params: { query, queryTitle, date, lang, sortBy },
+      },
+      fetchNewsSearchStartAsync,
+    } = this.props;
 
-  // const { fetchNewsSearchStartAsync } = this.props;
+    const queryFormatted = query.replace(/ /g, '%20');
+    const titleBool = queryTitle === 'true';
+    const dateFormatted = date === 'anytime' ? '' : date;
 
-  // fetchNewsSearchStartAsync({
-  //   query,
-  //   queryTitle,
-  //   date,
-  //   lang,
-  //   sortBy,
-  // });
+    fetchNewsSearchStartAsync({
+      query: queryFormatted,
+      queryTitle: titleBool,
+      date: dateFormatted,
+      lang,
+      sortBy,
+    });
+  }
 
-  console.log(query);
+  // Checks if the component received new props and refetches data
+  componentDidUpdate(prevProps: SearchPageProps) {
+    const {
+      match: {
+        params: { query, queryTitle, date, lang, sortBy },
+      },
+      fetchNewsSearchStartAsync,
+    } = this.props;
 
-  return (
-    <div className='search-page'>
-      <div className='search-page__content'>
-        <h2 className='search-page__content--header'>Search news</h2>
-        <h4 className='search-page__content--sub-header'>
-          Results for: {query.replace(/%20/g, ' ')}
-        </h4>
+    if (
+      query !== prevProps.match.params.query ||
+      queryTitle !== prevProps.match.params.queryTitle ||
+      date !== prevProps.match.params.date ||
+      lang !== prevProps.match.params.lang ||
+      sortBy !== prevProps.match.params.sortBy
+    ) {
+      const queryFormatted = query.replace(/ /g, '%20');
+      const titleBool = queryTitle === 'true';
+      const dateFormatted = date === 'anytime' ? '' : date;
 
-        <div className='search-page__content--articles'>
-          {newsSearch.map((x: News, i: number) => (
-            <Article key={`${i + query}`} {...x} id={`${i + query}`} />
-          ))}
+      fetchNewsSearchStartAsync({
+        query: queryFormatted,
+        queryTitle: titleBool,
+        date: dateFormatted,
+        lang,
+        sortBy,
+      });
+    }
+  }
+
+  render() {
+    // console.log(query);
+
+    // console.log({ query, queryTitle, date, lang, sortBy });
+    // console.log(query.replace(/%20/g, ' '));
+
+    // const { fetchNewsSearchStartAsync } = this.props;
+
+    // fetchNewsSearchStartAsync({
+    //   query,
+    //   queryTitle,
+    //   date,
+    //   lang,
+    //   sortBy,
+    // });
+
+    const {
+      match: {
+        params: { query },
+      },
+      newsSearch,
+    } = this.props;
+
+    return (
+      <div className='search-page'>
+        <div className='search-page__content'>
+          <h2 className='search-page__content--header'>Search news</h2>
+          <h4 className='search-page__content--sub-header'>
+            Results for: {query}
+          </h4>
+
+          <div className='search-page__content--articles'>
+            {newsSearch.map((x: News, i: number) => (
+              <Article key={`${i + query}`} {...x} id={`${i + query}`} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 interface LinkStateProps {
   newsSearch: News[];

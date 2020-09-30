@@ -78,7 +78,7 @@ export const fetchNewsSearchFailure = (
 export const fetchNewsSearchStartAsync = ({
   query,
   queryTitle = false,
-  date,
+  date = 'anytime',
   lang = 'en',
   sortBy = 'publishedAt',
 }: NewsSearch) => async (dispatch: Dispatch<NewsActionTYPES>) => {

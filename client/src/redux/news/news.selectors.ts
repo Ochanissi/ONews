@@ -7,9 +7,9 @@ import { createSelector } from 'reselect';
 const selectNews = (state: any): any => state.news;
 
 export const selectNewsArticles = createSelector([selectNews], (news) =>
-  news.news.filter((x: any) => x.title.length > 65)
+  news.news.filter((x: any) => x.title && x.title.length > 65)
 );
 
 export const selectNewsSearch = createSelector([selectNews], (news) =>
-  news.newsSearch.filter((x: any) => x.title.length > 65)
+  news.newsSearch.filter((x: any) => x.title && x.title.length > 65)
 );

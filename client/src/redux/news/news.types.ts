@@ -23,7 +23,7 @@ export interface News {
 export interface NewsSearch {
   query: string;
   queryTitle: boolean;
-  date: string | null;
+  date: string;
   lang: string;
   sortBy: string;
 }

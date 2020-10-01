@@ -226,6 +226,14 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchDate: 'anytime',
       searchSortBy: 'publishedAt',
     });
+
+    const elLocation = document.getElementById('location')!;
+    const elDate = document.getElementById('date')!;
+    const elSortBy = document.getElementById('sort')!;
+
+    elLocation.selectedIndex = this.props.userCountry === 'ro' ? 0 : 1;
+    elDate.selectedIndex = 0;
+    elSortBy.selectedIndex = 0;
   };
 
   render(): JSX.Element {
@@ -236,6 +244,8 @@ class Navbar extends React.Component<Props, NavbarState> {
       dropdownVisible,
       searchTitle,
       searchLocation,
+      searchDate,
+      searchSortBy,
     } = this.state;
 
     // console.log(popupVisible);
@@ -310,19 +320,21 @@ class Navbar extends React.Component<Props, NavbarState> {
                     name='location'
                     id='location'
                     onChange={this.handleSearch}
+                    defaultValue={searchLocation}
                   >
-                    <option value={searchLocation}>
-                      {searchLocation === 'ro' ? 'Romania' : 'World'}
-                    </option>
-                    <option value={searchLocation === 'ro' ? 'en' : 'ro'}>
-                      {searchLocation === 'ro' ? 'World' : 'Romania'}
-                    </option>
+                    <option value='ro'>Romania</option>
+                    <option value='us'>World</option>
                   </select>
                 </div>
 
                 <div className='navbar__main--dropdown--row'>
                   <label htmlFor='date'>Date</label>
-                  <select name='date' id='date' onChange={this.handleSearch}>
+                  <select
+                    name='date'
+                    id='date'
+                    onChange={this.handleSearch}
+                    defaultValue={searchDate}
+                  >
                     <option value='anytime'>Anytime</option>
                     <option value='hour'>Past hour</option>
                     <option value='day'>Past 24 hours</option>
@@ -333,7 +345,12 @@ class Navbar extends React.Component<Props, NavbarState> {
 
                 <div className='navbar__main--dropdown--row'>
                   <label htmlFor='sort'>Sort by</label>
-                  <select name='sort' id='sort' onChange={this.handleSearch}>
+                  <select
+                    name='sort'
+                    id='sort'
+                    onChange={this.handleSearch}
+                    defaultValue={searchSortBy}
+                  >
                     <option value='publishedAt'>Published</option>
                     <option value='popularity'>Popularity</option>
                     <option value='relevancy'>Relevancy</option>

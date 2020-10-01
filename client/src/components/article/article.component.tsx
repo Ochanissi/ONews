@@ -199,9 +199,22 @@ class Article extends React.Component<Props> {
       userDisliked,
     } = this.props;
 
-    const dateFormat = Math.round(
+    const dateFormatMins = Math.round(
+      (Date.now() - Date.parse(publishedAt)) / 60000
+    );
+    const dateFormatHours = Math.round(
       (Date.now() - Date.parse(publishedAt)) / 3600000
     );
+    const dateFormatDays = Math.round(
+      (Date.now() - Date.parse(publishedAt)) / 86400000
+    );
+
+    const dateFormat =
+      dateFormatMins < 60
+        ? `${dateFormatMins} minute${dateFormatMins > 1 ? 's' : ''} ago`
+        : dateFormatHours < 24
+        ? `${dateFormatHours} hour${dateFormatHours > 1 ? 's' : ''} ago`
+        : `${dateFormatDays} day${dateFormatDays > 1 ? 's' : ''} ago`;
 
     const contentFiltered = content
       ? content.replace(/↵|<ul>|<li>|<\/li>|<\/ul>/g, '')
@@ -241,7 +254,7 @@ class Article extends React.Component<Props> {
               {sourceName}
             </a>
             <div className='article__content--source--options'>
-              &nbsp; &middot; {dateFormat} hours ago &nbsp; &middot;
+              &nbsp; &middot; {dateFormat} &nbsp; &middot;
               <button
                 className={`article__content--source--options--save ${
                   userSavedBool

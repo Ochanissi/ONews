@@ -38,12 +38,13 @@ class SearchPage extends React.Component<Props> {
     const queryFormatted = query.replace(/ /g, '%20');
     const titleBool = queryTitle === 'true';
     const dateFormatted = date === 'anytime' ? '' : date;
+    const langFormatted = lang === 'us' ? 'en' : 'ro';
 
     fetchNewsSearchStartAsync({
       query: queryFormatted,
       queryTitle: titleBool,
       date: dateFormatted,
-      lang,
+      lang: langFormatted,
       sortBy,
     });
   }
@@ -67,12 +68,13 @@ class SearchPage extends React.Component<Props> {
       const queryFormatted = query.replace(/ /g, '%20');
       const titleBool = queryTitle === 'true';
       const dateFormatted = date === 'anytime' ? '' : date;
+      const langFormatted = lang === 'us' ? 'en' : 'ro';
 
       fetchNewsSearchStartAsync({
         query: queryFormatted,
         queryTitle: titleBool,
         date: dateFormatted,
-        lang,
+        lang: langFormatted,
         sortBy,
       });
     }
@@ -101,20 +103,31 @@ class SearchPage extends React.Component<Props> {
       newsSearch,
     } = this.props;
 
+    // console.log(newsSearch.length);
+
     return (
       <div className='search-page'>
-        <div className='search-page__content'>
-          <h2 className='search-page__content--header'>Search news</h2>
-          <h4 className='search-page__content--sub-header'>
-            Results for: {query}
-          </h4>
+        {newsSearch.length ? (
+          <div className='search-page__content'>
+            <h2 className='search-page__content--header'>
+              Search results for:
+            </h2>
+            <h4 className='search-page__content--sub-header'>"{query}"</h4>
 
-          <div className='search-page__content--articles'>
-            {newsSearch.map((x: News, i: number) => (
-              <Article key={`${i + query}`} {...x} id={`${i + query}`} />
-            ))}
+            <div className='search-page__content--articles'>
+              {newsSearch.map((x: News, i: number) => (
+                <Article key={`${i + query}`} {...x} id={`${i + query}`} />
+              ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className='search-page__content'>
+            <h2 className='search-page__content--header search-page__content--header--none'>
+              No search results found for:
+            </h2>
+            <h4 className='search-page__content--sub-header'>"{query}"</h4>
+          </div>
+        )}
       </div>
     );
   }

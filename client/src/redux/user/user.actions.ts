@@ -40,6 +40,15 @@ import {
   DELETE_USER_DISLIKED_START,
   DELETE_USER_DISLIKED_SUCCESS,
   DELETE_USER_DISLIKED_FAILURE,
+  GET_USER_HIDDEN_START,
+  GET_USER_HIDDEN_SUCCESS,
+  GET_USER_HIDDEN_FAILURE,
+  POST_USER_HIDDEN_START,
+  POST_USER_HIDDEN_SUCCESS,
+  POST_USER_HIDDEN_FAILURE,
+  DELETE_USER_HIDDEN_START,
+  DELETE_USER_HIDDEN_SUCCESS,
+  DELETE_USER_HIDDEN_FAILURE,
   UserActionTYPES,
   UserNews,
 } from './user.types';
@@ -583,6 +592,139 @@ export const deleteUserDislikedStartAsync = (
     }
   } catch (error) {
     dispatch(deleteUserDislikedFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
+// Get Hidden
+export const getUserHiddenStart = (): UserActionTYPES => ({
+  type: GET_USER_HIDDEN_START,
+});
+
+export const getUserHiddenSuccess = (hidden: News[]): UserActionTYPES => ({
+  type: GET_USER_HIDDEN_SUCCESS,
+  payload: hidden,
+});
+
+export const getUserHiddenFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: GET_USER_HIDDEN_FAILURE,
+  payload: errorMessage,
+});
+
+export const getUserHiddenStartAsync = (email: string) => async (
+  dispatch: Dispatch<UserActionTYPES>
+) => {
+  try {
+    dispatch(getUserHiddenStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}get-hidden/`,
+      data: {
+        email,
+      },
+    });
+
+    // console.log(res);
+
+    if (res.status === 200) {
+      dispatch(getUserHiddenSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(getUserHiddenFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
+// Post Hidden
+export const postUserHiddenStart = (): UserActionTYPES => ({
+  type: POST_USER_HIDDEN_START,
+});
+
+export const postUserHiddenSuccess = (hidden: News[]): UserActionTYPES => ({
+  type: POST_USER_HIDDEN_SUCCESS,
+  payload: hidden,
+});
+
+export const postUserHiddenFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: POST_USER_HIDDEN_FAILURE,
+  payload: errorMessage,
+});
+
+export const postUserHiddenStartAsync = (
+  email: string,
+  sourceName: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
+  try {
+    dispatch(postUserHiddenStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}post-hidden/`,
+      data: {
+        email,
+        source: sourceName,
+      },
+    });
+
+    // console.log(res);
+
+    if (res.status === 200) {
+      dispatch(postUserHiddenSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(postUserHiddenFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
+// Delete Hidden
+export const deleteUserHiddenStart = (): UserActionTYPES => ({
+  type: DELETE_USER_HIDDEN_START,
+});
+
+export const deleteUserHiddenSuccess = (hidden: News[]): UserActionTYPES => ({
+  type: DELETE_USER_HIDDEN_SUCCESS,
+  payload: hidden,
+});
+
+export const deleteUserHiddenFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: DELETE_USER_HIDDEN_FAILURE,
+  payload: errorMessage,
+});
+
+export const deleteUserHiddenStartAsync = (
+  email: string,
+  sourceName: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
+  try {
+    dispatch(deleteUserHiddenStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}delete-hidden/`,
+      data: {
+        email,
+        source: sourceName,
+      },
+    });
+
+    // console.log(res);
+
+    if (res.status === 200) {
+      dispatch(deleteUserHiddenSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(deleteUserHiddenFailure(error.message));
     // Toast.fail(`Failed signing in!`, 1500);
   }
 };

@@ -19,6 +19,7 @@ const profile = require('./controllers/profile');
 const saved = require('./controllers/saved');
 const liked = require('./controllers/liked');
 const disliked = require('./controllers/disliked');
+const hidden = require('./controllers/hidden');
 
 // App initialization
 const app = express();
@@ -133,6 +134,19 @@ app.post('/get-disliked', (req, res) => {
 
 app.post('/delete-disliked', (req, res) => {
   disliked.handleDeleteDisliked(req, res, db);
+});
+
+// User Hidden
+app.post('/post-hidden', (req, res) => {
+  hidden.handlePostHidden(req, res, db);
+});
+
+app.post('/get-hidden', (req, res) => {
+  hidden.handleGetHidden(req, res, db);
+});
+
+app.post('/delete-hidden', (req, res) => {
+  hidden.handleDeleteHidden(req, res, db);
 });
 
 app.listen(port, (error) => {

@@ -14,6 +14,7 @@ import {
   selectCurrentUser,
   selectUserLiked,
   selectUserDisliked,
+  selectUserHidden,
 } from '../../redux/user/user.selectors';
 import { User, UserNews } from '../../redux/user/user.types';
 import {
@@ -23,6 +24,8 @@ import {
   deleteUserLikedStartAsync,
   postUserDislikedStartAsync,
   deleteUserDislikedStartAsync,
+  postUserHiddenStartAsync,
+  deleteUserHiddenStartAsync,
 } from '../../redux/user/user.actions';
 
 interface ArticleProps {
@@ -181,6 +184,34 @@ class Article extends React.Component<Props> {
     }
   };
 
+  handleHidden = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
+    const { currentUser } = this.props;
+
+    if (currentUser) {
+      const {
+        postUserHiddenStartAsync,
+        deleteUserHiddenStartAsync,
+
+        userHidden,
+
+        currentUser: { email },
+
+        source: { name: sourceName },
+      } = this.props;
+
+      const userHiddenDuplicate =
+        userHidden.find((item) => item === sourceName) || {};
+
+      Object.keys(userHiddenDuplicate).length === 0
+        ? postUserHiddenStartAsync(email, sourceName)
+        : deleteUserHiddenStartAsync(email, sourceName);
+    } else {
+      // Toast.fail('Please sign in to add to collection!', 1000);
+    }
+  };
+
   render(): JSX.Element {
     const {
       title,
@@ -197,6 +228,7 @@ class Article extends React.Component<Props> {
       userSaved,
       userLiked,
       userDisliked,
+      userHidden,
     } = this.props;
 
     const dateFormatMins = Math.round(
@@ -220,12 +252,13 @@ class Article extends React.Component<Props> {
       ? content.replace(/↵|<ul>|<li>|<\/li>|<\/ul>/g, '')
       : '';
 
-    let userSavedBool, userLikedBool, userDislikedBool;
+    let userSavedBool, userLikedBool, userDislikedBool, userHiddenBool;
 
     if (currentUser) {
       userSavedBool = userSaved.some((item) => item.title === title);
       userLikedBool = userLiked.some((item) => item.title === title);
       userDislikedBool = userDisliked.some((item) => item.title === title);
+      userHiddenBool = userHidden.some((item) => item === sourceName);
     }
 
     // console.log(userSavedBool);
@@ -315,17 +348,21 @@ class Article extends React.Component<Props> {
                   {`${userDislikedBool ? 'More' : 'Less'} stories like this`}
                 </span>
               </button>
-              <a
-                className='article__content--source--options--hide'
-                href='# '
-                target='_blank'
-                rel='noopener noreferrer'
+              <button
+                className={`article__content--source--options--hide ${
+                  userHiddenBool
+                    ? 'article__content--source--options--hide--bool'
+                    : ''
+                }`}
+                onClick={this.handleHidden}
               >
                 <ion-icon name='eye-off'></ion-icon>
                 <span className='article__content--source--options--hide--info'>
-                  Hide all stories from {sourceName}
+                  {`${
+                    userHiddenBool ? 'Show' : 'Hide'
+                  } all stories from ${sourceName}`}
                 </span>
-              </a>
+              </button>
             </div>
           </div>
           {description || description ? (
@@ -380,6 +417,7 @@ interface LinkStateProps {
   userSaved: News[];
   userLiked: News[];
   userDisliked: News[];
+  userHidden: [string];
 }
 
 interface LinkDispatchProps {
@@ -391,6 +429,9 @@ interface LinkDispatchProps {
 
   postUserDislikedStartAsync: (userNews: UserNews) => void;
   deleteUserDislikedStartAsync: (email: string, title: string) => void;
+
+  postUserHiddenStartAsync: (email: string, sourceName: string) => void;
+  deleteUserHiddenStartAsync: (email: string, sourceName: string) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -398,6 +439,7 @@ const mapStateToProps = createStructuredSelector({
   userSaved: selectUserSaved,
   userLiked: selectUserLiked,
   userDisliked: selectUserDisliked,
+  userHidden: selectUserHidden,
 });
 
 const mapDispatchToProps = (
@@ -417,6 +459,11 @@ const mapDispatchToProps = (
     dispatch(postUserDislikedStartAsync(userNews)),
   deleteUserDislikedStartAsync: (email, title) =>
     dispatch(deleteUserDislikedStartAsync(email, title)),
+
+  postUserHiddenStartAsync: (email, sourceName) =>
+    dispatch(postUserHiddenStartAsync(email, sourceName)),
+  deleteUserHiddenStartAsync: (email, sourceName) =>
+    dispatch(deleteUserHiddenStartAsync(email, sourceName)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Article);

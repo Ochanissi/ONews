@@ -34,6 +34,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from './redux/store';
 import {
   getUserDislikedStartAsync,
+  getUserHiddenStartAsync,
   getUserLikedStartAsync,
   getUserSavedStartAsync,
 } from './redux/user/user.actions';
@@ -59,11 +60,13 @@ const App: React.FunctionComponent<Props> = ({
   getUserSavedStartAsync,
   getUserLikedStartAsync,
   getUserDislikedStartAsync,
+  getUserHiddenStartAsync,
 }): JSX.Element => {
   if (currentUser) {
     getUserSavedStartAsync(currentUser.email);
     getUserLikedStartAsync(currentUser.email);
     getUserDislikedStartAsync(currentUser.email);
+    getUserHiddenStartAsync(currentUser.email);
   }
 
   return (
@@ -126,6 +129,7 @@ interface LinkDispatchProps {
   getUserSavedStartAsync: (email: string) => void;
   getUserLikedStartAsync: (email: string) => void;
   getUserDislikedStartAsync: (email: string) => void;
+  getUserHiddenStartAsync: (email: string) => void;
 }
 
 interface LinkStateProps {
@@ -147,6 +151,7 @@ const mapDispatchToProps = (
   getUserLikedStartAsync: (email) => dispatch(getUserLikedStartAsync(email)),
   getUserDislikedStartAsync: (email) =>
     dispatch(getUserDislikedStartAsync(email)),
+  getUserHiddenStartAsync: (email) => dispatch(getUserHiddenStartAsync(email)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

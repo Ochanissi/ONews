@@ -265,150 +265,157 @@ class Article extends React.Component<Props> {
 
     // console.log(id);
 
-    return (
-      <article className='article'>
-        <div className='article__content'>
-          <a
-            className='article__content--title'
-            href={url}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <h3 className='article__content--title--text'>{title}</h3>
-          </a>
+    const userHiddenDuplicate =
+      userHidden.find((item) => item === sourceName) || {};
 
-          <div className='article__content--source'>
+    if (Object.keys(userHiddenDuplicate).length === 0) {
+      return (
+        <article className='article'>
+          <div className='article__content'>
             <a
-              className='article__content--source--url'
+              className='article__content--title'
               href={url}
               target='_blank'
               rel='noopener noreferrer'
             >
-              {sourceName}
+              <h3 className='article__content--title--text'>{title}</h3>
             </a>
-            <div className='article__content--source--options'>
-              &nbsp; &middot; {dateFormat} &nbsp; &middot;
-              <button
-                className={`article__content--source--options--save ${
-                  userSavedBool
-                    ? 'article__content--source--options--save--bool'
-                    : ''
-                }`}
-                onClick={this.handleSaved}
-              >
-                <ion-icon
-                  name={`bookmark${userSavedBool ? '' : '-outline'}`}
-                ></ion-icon>
-                <span
-                  className={`article__content--source--options--save--info ${
-                    userSavedBool
-                      ? 'article__content--source--options--save--info--bool'
-                      : ''
-                  }`}
-                >
-                  {userSavedBool
-                    ? 'Remove from saved stories'
-                    : 'Save for later'}
-                </span>
-              </button>
+
+            <div className='article__content--source'>
               <a
-                className='article__content--source--options--share'
-                href='# '
+                className='article__content--source--url'
+                href={url}
                 target='_blank'
                 rel='noopener noreferrer'
               >
-                <ion-icon name='share-social-outline'></ion-icon>
-                <span className='article__content--source--options--share--info'>
-                  Share
-                </span>
+                {sourceName}
               </a>
-              <button
-                className={`article__content--source--options--thumbs-up ${
-                  userLikedBool
-                    ? 'article__content--source--options--thumbs-up--bool'
-                    : ''
-                }`}
-                onClick={this.handleLiked}
-              >
-                <ion-icon name='thumbs-up-sharp'></ion-icon>
-                <span className='article__content--source--options--thumbs-up--info'>
-                  {`${userLikedBool ? 'Less' : 'More'} stories like this`}
-                </span>
-              </button>
-              <button
-                className={`article__content--source--options--thumbs-down ${
-                  userDislikedBool
-                    ? 'article__content--source--options--thumbs-down--bool'
-                    : ''
-                }`}
-                onClick={this.handleDisliked}
-              >
-                <ion-icon name='thumbs-down-sharp'></ion-icon>
-                <span className='article__content--source--options--thumbs-down--info'>
-                  {`${userDislikedBool ? 'More' : 'Less'} stories like this`}
-                </span>
-              </button>
-              <button
-                className={`article__content--source--options--hide ${
-                  userHiddenBool
-                    ? 'article__content--source--options--hide--bool'
-                    : ''
-                }`}
-                onClick={this.handleHidden}
-              >
-                <ion-icon name='eye-off'></ion-icon>
-                <span className='article__content--source--options--hide--info'>
-                  {`${
-                    userHiddenBool ? 'Show' : 'Hide'
-                  } all stories from ${sourceName}`}
-                </span>
-              </button>
+              <div className='article__content--source--options'>
+                &nbsp; &middot; {dateFormat} &nbsp; &middot;
+                <button
+                  className={`article__content--source--options--save ${
+                    userSavedBool
+                      ? 'article__content--source--options--save--bool'
+                      : ''
+                  }`}
+                  onClick={this.handleSaved}
+                >
+                  <ion-icon
+                    name={`bookmark${userSavedBool ? '' : '-outline'}`}
+                  ></ion-icon>
+                  <span
+                    className={`article__content--source--options--save--info ${
+                      userSavedBool
+                        ? 'article__content--source--options--save--info--bool'
+                        : ''
+                    }`}
+                  >
+                    {userSavedBool
+                      ? 'Remove from saved stories'
+                      : 'Save for later'}
+                  </span>
+                </button>
+                <a
+                  className='article__content--source--options--share'
+                  href='# '
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  <ion-icon name='share-social-outline'></ion-icon>
+                  <span className='article__content--source--options--share--info'>
+                    Share
+                  </span>
+                </a>
+                <button
+                  className={`article__content--source--options--thumbs-up ${
+                    userLikedBool
+                      ? 'article__content--source--options--thumbs-up--bool'
+                      : ''
+                  }`}
+                  onClick={this.handleLiked}
+                >
+                  <ion-icon name='thumbs-up-sharp'></ion-icon>
+                  <span className='article__content--source--options--thumbs-up--info'>
+                    {`${userLikedBool ? 'Less' : 'More'} stories like this`}
+                  </span>
+                </button>
+                <button
+                  className={`article__content--source--options--thumbs-down ${
+                    userDislikedBool
+                      ? 'article__content--source--options--thumbs-down--bool'
+                      : ''
+                  }`}
+                  onClick={this.handleDisliked}
+                >
+                  <ion-icon name='thumbs-down-sharp'></ion-icon>
+                  <span className='article__content--source--options--thumbs-down--info'>
+                    {`${userDislikedBool ? 'More' : 'Less'} stories like this`}
+                  </span>
+                </button>
+                <button
+                  className={`article__content--source--options--hide ${
+                    userHiddenBool
+                      ? 'article__content--source--options--hide--bool'
+                      : ''
+                  }`}
+                  onClick={this.handleHidden}
+                >
+                  <ion-icon name='eye-off'></ion-icon>
+                  <span className='article__content--source--options--hide--info'>
+                    {`${
+                      userHiddenBool ? 'Show' : 'Hide'
+                    } all stories from ${sourceName}`}
+                  </span>
+                </button>
+              </div>
             </div>
+            {description || description ? (
+              <div className='article__content--description'>
+                <input
+                  type='checkbox'
+                  className='article__content--description--state'
+                  id={`article-dropdown-${id}`}
+                />
+                <p className='article__content--description--content'>
+                  {description ? description : contentFiltered.split('[+')[0]}
+                </p>
+
+                <label
+                  htmlFor={`article-dropdown-${id}`}
+                  className='article__content--description--toggle'
+                >
+                  <ion-icon name='chevron-down-outline'></ion-icon>
+                </label>
+              </div>
+            ) : null}
+
+            <a
+              className='article__content--coverage'
+              href={url}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <ion-icon name='newspaper-outline'></ion-icon>
+              View Full Coverage
+            </a>
           </div>
-          {description || description ? (
-            <div className='article__content--description'>
-              <input
-                type='checkbox'
-                className='article__content--description--state'
-                id={`article-dropdown-${id}`}
-              />
-              <p className='article__content--description--content'>
-                {description ? description : contentFiltered.split('[+')[0]}
-              </p>
-
-              <label
-                htmlFor={`article-dropdown-${id}`}
-                className='article__content--description--toggle'
-              >
-                <ion-icon name='chevron-down-outline'></ion-icon>
-              </label>
-            </div>
-          ) : null}
-
           <a
-            className='article__content--coverage'
+            className='article__image-container'
             href={url}
             target='_blank'
             rel='noopener noreferrer'
           >
-            <ion-icon name='newspaper-outline'></ion-icon>
-            View Full Coverage
+            <img
+              className='article__image-container--image'
+              src={urlToImage || defaultArticle}
+              alt='Article'
+            ></img>
           </a>
-        </div>
-        <a
-          className='article__image-container'
-          href={url}
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <img
-            className='article__image-container--image'
-            src={urlToImage || defaultArticle}
-            alt='Article'
-          ></img>
-        </a>
-      </article>
-    );
+        </article>
+      );
+    } else {
+      return null as any;
+    }
   }
 }
 

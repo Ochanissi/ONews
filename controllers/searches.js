@@ -1,9 +1,9 @@
-const handlePostHidden = (req, res, db) => {
-  const { email, source } = req.body;
+const handlePostSearches = (req, res, db) => {
+  const { email, query } = req.body;
 
   // console.log(req.body);
 
-  if (!email || !source) {
+  if (!email || !query) {
     return res.status(400).json('Incorrect request!');
   }
 
@@ -11,24 +11,24 @@ const handlePostHidden = (req, res, db) => {
     trx
       .insert({
         email: email,
-        source: source,
+        query: query,
       })
-      .into('hidden')
+      .into('searches')
       .returning('*')
       .then((data) => {
-        return trx('hidden')
+        return trx('searches')
           .where('email', '=', email)
           .returning('*')
           .then((data) => {
-            res.json(data.map((x) => x.source));
+            res.json(data.map((x) => x.query));
           });
       })
       .then(trx.commit)
       .catch(trx.rollback);
-  }).catch((err) => res.status(400).json('Unable to submit hidden!'));
+  }).catch((err) => res.status(400).json('Unable to submit searches!'));
 };
 
-const handleGetHidden = (req, res, db) => {
+const handleGetSearches = (req, res, db) => {
   const { email } = req.body;
 
   if (!email) {
@@ -36,43 +36,43 @@ const handleGetHidden = (req, res, db) => {
   }
 
   db.select('*')
-    .from('hidden')
+    .from('searches')
     .where('email', '=', email)
     .then((data) => {
-      res.json(data.map((x) => x.source));
+      res.json(data.map((x) => x.query));
     })
-    .catch((err) => res.status(400).json('Unable to get hidden!'));
+    .catch((err) => res.status(400).json('Unable to get searches!'));
 };
 
-const handleDeleteHidden = (req, res, db) => {
-  const { email, source } = req.body;
+const handleDeleteSearches = (req, res, db) => {
+  const { email, query } = req.body;
 
   // console.log(id);
 
-  if (!email || !source) {
+  if (!email || !query) {
     return res.status(400).json('Incorrect request!');
   }
 
   db.transaction((trx) => {
-    trx('hidden')
-      .where('source', '=', source)
+    trx('searches')
+      .where('query', '=', query)
       .del()
       .returning('*')
       .then((data) => {
-        return trx('hidden')
+        return trx('searches')
           .where('email', '=', email)
           .returning('*')
           .then((data) => {
-            res.json(data.map((x) => x.source));
+            res.json(data.map((x) => x.query));
           });
       })
       .then(trx.commit)
       .catch(trx.rollback);
-  }).catch((err) => res.status(400).json('Unable to submit hidden!'));
+  }).catch((err) => res.status(400).json('Unable to submit searches!'));
 };
 
 module.exports = {
-  handlePostHidden,
-  handleGetHidden,
-  handleDeleteHidden,
+  handlePostSearches,
+  handleGetSearches,
+  handleDeleteSearches,
 };

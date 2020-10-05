@@ -50,19 +50,31 @@ const Sidebar = ({ userCategory, userCountry, location }: Props) => {
             <SidebarItem
               iconType='newspaper-outline'
               itemLabel='Saved stories'
-              profileLink='/profile/saved'
+              profileLink='/profile/saved-stories'
             />
 
             <SidebarItem
               iconType='thumbs-up-sharp'
               itemLabel='Liked stories'
-              profileLink='/profile/liked'
+              profileLink='/profile/liked-stories'
             />
 
             <SidebarItem
               iconType='thumbs-down-sharp'
               itemLabel='Disliked stories'
-              profileLink='/profile/disliked'
+              profileLink='/profile/disliked-stories'
+            />
+
+            <SidebarItem
+              iconType='search'
+              itemLabel='Past searches'
+              profileLink='/profile/past-searches'
+            />
+
+            <SidebarItem
+              iconType='eye-off'
+              itemLabel='Hidden sources'
+              profileLink='/profile/hidden-sources'
             />
 
             <hr></hr>
@@ -87,16 +99,13 @@ const Sidebar = ({ userCategory, userCountry, location }: Props) => {
             <SidebarItem
               iconType='newspaper-outline'
               itemLabel='Saved for later'
-              profileLink='/profile/saved'
+              profileLink='/profile/saved-stories'
             />
 
             <SidebarItem
-              userCountry={userCountry}
-              userCategory={userCategory}
-              linkType=''
-              linkCountry={userCountry}
               iconType='search'
-              itemLabel='Saved searches'
+              itemLabel='Past searches'
+              profileLink='/profile/past-searches'
             />
 
             <hr></hr>

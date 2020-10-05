@@ -20,6 +20,7 @@ const saved = require('./controllers/saved');
 const liked = require('./controllers/liked');
 const disliked = require('./controllers/disliked');
 const hidden = require('./controllers/hidden');
+const searches = require('./controllers/searches');
 
 // App initialization
 const app = express();
@@ -147,6 +148,19 @@ app.post('/get-hidden', (req, res) => {
 
 app.post('/delete-hidden', (req, res) => {
   hidden.handleDeleteHidden(req, res, db);
+});
+
+// User Searches
+app.post('/post-searches', (req, res) => {
+  searches.handlePostSearches(req, res, db);
+});
+
+app.post('/get-searches', (req, res) => {
+  searches.handleGetSearches(req, res, db);
+});
+
+app.post('/delete-searches', (req, res) => {
+  searches.handleDeleteSearches(req, res, db);
 });
 
 app.listen(port, (error) => {

@@ -37,6 +37,15 @@ import {
   DELETE_USER_DISLIKED_START,
   DELETE_USER_DISLIKED_SUCCESS,
   DELETE_USER_DISLIKED_FAILURE,
+  GET_USER_HIDDEN_START,
+  GET_USER_HIDDEN_SUCCESS,
+  GET_USER_HIDDEN_FAILURE,
+  POST_USER_HIDDEN_START,
+  POST_USER_HIDDEN_SUCCESS,
+  POST_USER_HIDDEN_FAILURE,
+  DELETE_USER_HIDDEN_START,
+  DELETE_USER_HIDDEN_SUCCESS,
+  DELETE_USER_HIDDEN_FAILURE,
   UserActionTYPES,
 } from './user.types';
 import { News } from '../news/news.types';
@@ -50,6 +59,7 @@ interface UserState {
   userSaved: News[];
   userLiked: News[];
   userDisliked: News[];
+  userHidden: [string?];
 
   errorMessage?: string;
 }
@@ -61,6 +71,7 @@ const INITIAL_STATE: UserState = {
   userSaved: [],
   userLiked: [],
   userDisliked: [],
+  userHidden: [],
 };
 
 const userReducer = (
@@ -108,6 +119,12 @@ const userReducer = (
       return {
         ...state,
         errorMessage: action.payload,
+      };
+
+    case SIGN_OUT:
+      return {
+        ...state,
+        currentUser: null,
       };
 
     // User Saved
@@ -221,10 +238,41 @@ const userReducer = (
         errorMessage: action.payload,
       };
 
-    case SIGN_OUT:
+    // User Hidden
+    case GET_USER_HIDDEN_SUCCESS:
       return {
         ...state,
-        currentUser: null,
+        userHidden: action.payload,
+      };
+
+    case GET_USER_HIDDEN_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    case POST_USER_HIDDEN_SUCCESS:
+      return {
+        ...state,
+        userHidden: action.payload,
+      };
+
+    case POST_USER_HIDDEN_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    case DELETE_USER_HIDDEN_SUCCESS:
+      return {
+        ...state,
+        userHidden: action.payload,
+      };
+
+    case DELETE_USER_HIDDEN_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
       };
 
     default:

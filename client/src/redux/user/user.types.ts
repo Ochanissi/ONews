@@ -59,6 +59,19 @@ export const DELETE_USER_DISLIKED_START = 'DELETE_USER_DISLIKED_START';
 export const DELETE_USER_DISLIKED_SUCCESS = 'DELETE_USER_DISLIKED_SUCCESS';
 export const DELETE_USER_DISLIKED_FAILURE = 'DELETE_USER_DISLIKED_FAILURE';
 
+// User Hidden
+export const POST_USER_HIDDEN_START = 'POST_USER_HIDDEN_START';
+export const POST_USER_HIDDEN_SUCCESS = 'POST_USER_HIDDEN_SUCCESS';
+export const POST_USER_HIDDEN_FAILURE = 'POST_USER_HIDDEN_FAILURE';
+
+export const GET_USER_HIDDEN_START = 'GET_USER_HIDDEN_START';
+export const GET_USER_HIDDEN_SUCCESS = 'GET_USER_HIDDEN_SUCCESS';
+export const GET_USER_HIDDEN_FAILURE = 'GET_USER_HIDDEN_FAILURE';
+
+export const DELETE_USER_HIDDEN_START = 'DELETE_USER_HIDDEN_START';
+export const DELETE_USER_HIDDEN_SUCCESS = 'DELETE_USER_HIDDEN_SUCCESS';
+export const DELETE_USER_HIDDEN_FAILURE = 'DELETE_USER_HIDDEN_FAILURE';
+
 export interface User {
   id: number;
   name: string;
@@ -263,6 +276,49 @@ interface DeleteUserDislikedFailure {
   payload: string;
 }
 
+// User Hidden
+interface PostUserHiddenStart {
+  type: typeof POST_USER_HIDDEN_START;
+}
+
+interface PostUserHiddenSuccess {
+  type: typeof POST_USER_HIDDEN_SUCCESS;
+  payload: [string];
+}
+
+interface PostUserHiddenFailure {
+  type: typeof POST_USER_HIDDEN_FAILURE;
+  payload: string;
+}
+
+interface GetUserHiddenStart {
+  type: typeof GET_USER_HIDDEN_START;
+}
+
+interface GetUserHiddenSuccess {
+  type: typeof GET_USER_HIDDEN_SUCCESS;
+  payload: [string];
+}
+
+interface GetUserHiddenFailure {
+  type: typeof GET_USER_HIDDEN_FAILURE;
+  payload: string;
+}
+
+interface DeleteUserHiddenStart {
+  type: typeof DELETE_USER_HIDDEN_START;
+}
+
+interface DeleteUserHiddenSuccess {
+  type: typeof DELETE_USER_HIDDEN_SUCCESS;
+  payload: [string];
+}
+
+interface DeleteUserHiddenFailure {
+  type: typeof DELETE_USER_HIDDEN_FAILURE;
+  payload: string;
+}
+
 export type UserActionTYPES =
   | SetUserCategoryAction
   | SetUserCountryAction
@@ -300,4 +356,13 @@ export type UserActionTYPES =
   | GetUserDislikedFailure
   | DeleteUserDislikedStart
   | DeleteUserDislikedSuccess
-  | DeleteUserDislikedFailure;
+  | DeleteUserDislikedFailure
+  | PostUserHiddenStart
+  | PostUserHiddenSuccess
+  | PostUserHiddenFailure
+  | GetUserHiddenStart
+  | GetUserHiddenSuccess
+  | GetUserHiddenFailure
+  | DeleteUserHiddenStart
+  | DeleteUserHiddenSuccess
+  | DeleteUserHiddenFailure;

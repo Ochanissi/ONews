@@ -33,6 +33,10 @@ const ProfileItem: React.FunctionComponent<ProfileIemProps> = ({
             ? '2'
             : title === 'Disliked stories'
             ? '4'
+            : title === 'Past searches'
+            ? '5'
+            : title === 'Hidden sources'
+            ? '6'
             : ''
         }`}
       >

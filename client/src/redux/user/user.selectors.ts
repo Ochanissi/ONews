@@ -33,3 +33,8 @@ export const selectUserDisliked = createSelector(
   [selectUser],
   (user) => user.userDisliked
 );
+
+export const selectUserHidden = createSelector(
+  [selectUser],
+  (user) => user.userHidden
+);

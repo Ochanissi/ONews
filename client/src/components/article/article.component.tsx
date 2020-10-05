@@ -14,6 +14,7 @@ import {
   selectCurrentUser,
   selectUserLiked,
   selectUserDisliked,
+  selectUserHidden,
 } from '../../redux/user/user.selectors';
 import { User, UserNews } from '../../redux/user/user.types';
 import {
@@ -23,6 +24,8 @@ import {
   deleteUserLikedStartAsync,
   postUserDislikedStartAsync,
   deleteUserDislikedStartAsync,
+  postUserHiddenStartAsync,
+  deleteUserHiddenStartAsync,
 } from '../../redux/user/user.actions';
 
 interface ArticleProps {
@@ -181,6 +184,34 @@ class Article extends React.Component<Props> {
     }
   };
 
+  handleHidden = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
+    const { currentUser } = this.props;
+
+    if (currentUser) {
+      const {
+        postUserHiddenStartAsync,
+        deleteUserHiddenStartAsync,
+
+        userHidden,
+
+        currentUser: { email },
+
+        source: { name: sourceName },
+      } = this.props;
+
+      const userHiddenDuplicate =
+        userHidden.find((item) => item === sourceName) || {};
+
+      Object.keys(userHiddenDuplicate).length === 0
+        ? postUserHiddenStartAsync(email, sourceName)
+        : deleteUserHiddenStartAsync(email, sourceName);
+    } else {
+      // Toast.fail('Please sign in to add to collection!', 1000);
+    }
+  };
+
   render(): JSX.Element {
     const {
       title,
@@ -197,168 +228,194 @@ class Article extends React.Component<Props> {
       userSaved,
       userLiked,
       userDisliked,
+      userHidden,
     } = this.props;
 
-    const dateFormat = Math.round(
+    const dateFormatMins = Math.round(
+      (Date.now() - Date.parse(publishedAt)) / 60000
+    );
+    const dateFormatHours = Math.round(
       (Date.now() - Date.parse(publishedAt)) / 3600000
     );
+    const dateFormatDays = Math.round(
+      (Date.now() - Date.parse(publishedAt)) / 86400000
+    );
+
+    const dateFormat =
+      dateFormatMins < 60
+        ? `${dateFormatMins} minute${dateFormatMins > 1 ? 's' : ''} ago`
+        : dateFormatHours < 24
+        ? `${dateFormatHours} hour${dateFormatHours > 1 ? 's' : ''} ago`
+        : `${dateFormatDays} day${dateFormatDays > 1 ? 's' : ''} ago`;
 
     const contentFiltered = content
       ? content.replace(/↵|<ul>|<li>|<\/li>|<\/ul>/g, '')
       : '';
 
-    let userSavedBool, userLikedBool, userDislikedBool;
+    let userSavedBool, userLikedBool, userDislikedBool, userHiddenBool;
 
     if (currentUser) {
       userSavedBool = userSaved.some((item) => item.title === title);
       userLikedBool = userLiked.some((item) => item.title === title);
       userDislikedBool = userDisliked.some((item) => item.title === title);
+      userHiddenBool = userHidden.some((item) => item === sourceName);
     }
 
     // console.log(userSavedBool);
 
     // console.log(id);
 
-    return (
-      <article className='article'>
-        <div className='article__content'>
-          <a
-            className='article__content--title'
-            href={url}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <h3 className='article__content--title--text'>{title}</h3>
-          </a>
+    const userHiddenDuplicate =
+      userHidden.find((item) => item === sourceName) || {};
 
-          <div className='article__content--source'>
+    if (Object.keys(userHiddenDuplicate).length === 0) {
+      return (
+        <article className='article'>
+          <div className='article__content'>
             <a
-              className='article__content--source--url'
+              className='article__content--title'
               href={url}
               target='_blank'
               rel='noopener noreferrer'
             >
-              {sourceName}
+              <h3 className='article__content--title--text'>{title}</h3>
             </a>
-            <div className='article__content--source--options'>
-              &nbsp; &middot; {dateFormat} hours ago &nbsp; &middot;
-              <button
-                className={`article__content--source--options--save ${
-                  userSavedBool
-                    ? 'article__content--source--options--save--bool'
-                    : ''
-                }`}
-                onClick={this.handleSaved}
+
+            <div className='article__content--source'>
+              <a
+                className='article__content--source--url'
+                href={url}
+                target='_blank'
+                rel='noopener noreferrer'
               >
-                <ion-icon
-                  name={`bookmark${userSavedBool ? '' : '-outline'}`}
-                ></ion-icon>
-                <span
-                  className={`article__content--source--options--save--info ${
+                {sourceName}
+              </a>
+              <div className='article__content--source--options'>
+                &nbsp; &middot; {dateFormat} &nbsp; &middot;
+                <button
+                  className={`article__content--source--options--save ${
                     userSavedBool
-                      ? 'article__content--source--options--save--info--bool'
+                      ? 'article__content--source--options--save--bool'
                       : ''
                   }`}
+                  onClick={this.handleSaved}
                 >
-                  {userSavedBool
-                    ? 'Remove from saved stories'
-                    : 'Save for later'}
-                </span>
-              </button>
-              <a
-                className='article__content--source--options--share'
-                href='# '
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                <ion-icon name='share-social-outline'></ion-icon>
-                <span className='article__content--source--options--share--info'>
-                  Share
-                </span>
-              </a>
-              <button
-                className={`article__content--source--options--thumbs-up ${
-                  userLikedBool
-                    ? 'article__content--source--options--thumbs-up--bool'
-                    : ''
-                }`}
-                onClick={this.handleLiked}
-              >
-                <ion-icon name='thumbs-up-sharp'></ion-icon>
-                <span className='article__content--source--options--thumbs-up--info'>
-                  {`${userLikedBool ? 'Less' : 'More'} stories like this`}
-                </span>
-              </button>
-              <button
-                className={`article__content--source--options--thumbs-down ${
-                  userDislikedBool
-                    ? 'article__content--source--options--thumbs-down--bool'
-                    : ''
-                }`}
-                onClick={this.handleDisliked}
-              >
-                <ion-icon name='thumbs-down-sharp'></ion-icon>
-                <span className='article__content--source--options--thumbs-down--info'>
-                  {`${userDislikedBool ? 'More' : 'Less'} stories like this`}
-                </span>
-              </button>
-              <a
-                className='article__content--source--options--hide'
-                href='# '
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                <ion-icon name='eye-off'></ion-icon>
-                <span className='article__content--source--options--hide--info'>
-                  Hide all stories from {sourceName}
-                </span>
-              </a>
+                  <ion-icon
+                    name={`bookmark${userSavedBool ? '' : '-outline'}`}
+                  ></ion-icon>
+                  <span
+                    className={`article__content--source--options--save--info ${
+                      userSavedBool
+                        ? 'article__content--source--options--save--info--bool'
+                        : ''
+                    }`}
+                  >
+                    {userSavedBool
+                      ? 'Remove from saved stories'
+                      : 'Save for later'}
+                  </span>
+                </button>
+                <a
+                  className='article__content--source--options--share'
+                  href='# '
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  <ion-icon name='share-social-outline'></ion-icon>
+                  <span className='article__content--source--options--share--info'>
+                    Share
+                  </span>
+                </a>
+                <button
+                  className={`article__content--source--options--thumbs-up ${
+                    userLikedBool
+                      ? 'article__content--source--options--thumbs-up--bool'
+                      : ''
+                  }`}
+                  onClick={this.handleLiked}
+                >
+                  <ion-icon name='thumbs-up-sharp'></ion-icon>
+                  <span className='article__content--source--options--thumbs-up--info'>
+                    {`${userLikedBool ? 'Less' : 'More'} stories like this`}
+                  </span>
+                </button>
+                <button
+                  className={`article__content--source--options--thumbs-down ${
+                    userDislikedBool
+                      ? 'article__content--source--options--thumbs-down--bool'
+                      : ''
+                  }`}
+                  onClick={this.handleDisliked}
+                >
+                  <ion-icon name='thumbs-down-sharp'></ion-icon>
+                  <span className='article__content--source--options--thumbs-down--info'>
+                    {`${userDislikedBool ? 'More' : 'Less'} stories like this`}
+                  </span>
+                </button>
+                <button
+                  className={`article__content--source--options--hide ${
+                    userHiddenBool
+                      ? 'article__content--source--options--hide--bool'
+                      : ''
+                  }`}
+                  onClick={this.handleHidden}
+                >
+                  <ion-icon name='eye-off'></ion-icon>
+                  <span className='article__content--source--options--hide--info'>
+                    {`${
+                      userHiddenBool ? 'Show' : 'Hide'
+                    } all stories from ${sourceName}`}
+                  </span>
+                </button>
+              </div>
             </div>
+            {description || description ? (
+              <div className='article__content--description'>
+                <input
+                  type='checkbox'
+                  className='article__content--description--state'
+                  id={`article-dropdown-${id}`}
+                />
+                <p className='article__content--description--content'>
+                  {description ? description : contentFiltered.split('[+')[0]}
+                </p>
+
+                <label
+                  htmlFor={`article-dropdown-${id}`}
+                  className='article__content--description--toggle'
+                >
+                  <ion-icon name='chevron-down-outline'></ion-icon>
+                </label>
+              </div>
+            ) : null}
+
+            <a
+              className='article__content--coverage'
+              href={url}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <ion-icon name='newspaper-outline'></ion-icon>
+              View Full Coverage
+            </a>
           </div>
-          {description || description ? (
-            <div className='article__content--description'>
-              <input
-                type='checkbox'
-                className='article__content--description--state'
-                id={`article-dropdown-${id}`}
-              />
-              <p className='article__content--description--content'>
-                {description ? description : contentFiltered.split('[+')[0]}
-              </p>
-
-              <label
-                htmlFor={`article-dropdown-${id}`}
-                className='article__content--description--toggle'
-              >
-                <ion-icon name='chevron-down-outline'></ion-icon>
-              </label>
-            </div>
-          ) : null}
-
           <a
-            className='article__content--coverage'
+            className='article__image-container'
             href={url}
             target='_blank'
             rel='noopener noreferrer'
           >
-            <ion-icon name='newspaper-outline'></ion-icon>
-            View Full Coverage
+            <img
+              className='article__image-container--image'
+              src={urlToImage || defaultArticle}
+              alt='Article'
+            ></img>
           </a>
-        </div>
-        <a
-          className='article__image-container'
-          href={url}
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <img
-            className='article__image-container--image'
-            src={urlToImage || defaultArticle}
-            alt='Article'
-          ></img>
-        </a>
-      </article>
-    );
+        </article>
+      );
+    } else {
+      return null as any;
+    }
   }
 }
 
@@ -367,6 +424,7 @@ interface LinkStateProps {
   userSaved: News[];
   userLiked: News[];
   userDisliked: News[];
+  userHidden: [string];
 }
 
 interface LinkDispatchProps {
@@ -378,6 +436,9 @@ interface LinkDispatchProps {
 
   postUserDislikedStartAsync: (userNews: UserNews) => void;
   deleteUserDislikedStartAsync: (email: string, title: string) => void;
+
+  postUserHiddenStartAsync: (email: string, sourceName: string) => void;
+  deleteUserHiddenStartAsync: (email: string, sourceName: string) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -385,6 +446,7 @@ const mapStateToProps = createStructuredSelector({
   userSaved: selectUserSaved,
   userLiked: selectUserLiked,
   userDisliked: selectUserDisliked,
+  userHidden: selectUserHidden,
 });
 
 const mapDispatchToProps = (
@@ -404,6 +466,11 @@ const mapDispatchToProps = (
     dispatch(postUserDislikedStartAsync(userNews)),
   deleteUserDislikedStartAsync: (email, title) =>
     dispatch(deleteUserDislikedStartAsync(email, title)),
+
+  postUserHiddenStartAsync: (email, sourceName) =>
+    dispatch(postUserHiddenStartAsync(email, sourceName)),
+  deleteUserHiddenStartAsync: (email, sourceName) =>
+    dispatch(deleteUserHiddenStartAsync(email, sourceName)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Article);

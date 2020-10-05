@@ -81,20 +81,42 @@
     //   margin-right: 7rem;
     // }
 
-    &--searchbar {
-      float: right;
-      background-color: rgba($color-grey-dark-3, 0);
-      // background-color: #d03237;
-      color: $color-grey-dark-4;
-      padding: 0.25rem 1rem;
-      width: 20rem;
-      border: none;
+    &--container {
+      // border: 1px solid #dadce0;
+      border-radius: 8px;
+
       margin-top: 1rem;
       margin-right: 0.8rem;
 
+      padding: 1rem 1rem 0rem 1rem;
+
+      background-color: $color-grey-light-2;
+
+      border: 1px solid transparent;
+
+      // height: 3rem;
+      // width: 2.25rem;
+
+      &--focused {
+        background-color: $color-white;
+        box-shadow: 0 1px 1px rgba(65, 69, 73, 0.3),
+          0 1px 3px 1px rgba(65, 69, 73, 0.15);
+      }
+    }
+
+    &--searchbar {
+      background-color: rgba($color-grey-dark-3, 0);
+      // background-color: #d03237;
+      color: $color-grey-dark-4;
+      width: 40rem;
+      border: none;
+
+      vertical-align: top;
+
       font-size: 1.75rem;
-      border-bottom: $color-grey-dark-4 solid 2px;
-      transition: 0.3s;
+
+      // border-bottom: $color-grey-dark-4 solid 2px;
+      // transition: 0.3s;
 
       // @media only screen and (max-width: $bp-small) {
       //   width: 15rem;
@@ -106,17 +128,19 @@
     }
 
     &--searchbar::placeholder {
-      color: $color-grey-dark-4;
+      color: $color-grey-dark-2;
       opacity: 1;
       /* transition: 0.2s; */
     }
 
-    &--searchbar:focus {
-      width: 40rem;
-      transition: 0.3s;
+    &--searchbar:focus ~ .navbar__main--dropdown {
+      // display: block;
+
+      // width: 40rem;
+      // transition: 0.3s;
       /* Stops the input box from inheriting the styling from the inputs on the request form */
-      border-bottom: $color-grey-dark-4 solid 2px;
-      outline: none;
+      // border-bottom: $color-grey-dark-4 solid 2px;
+      // outline: none;
 
       // @media only screen and (max-width: $bp-small) {
       //   width: 30rem;
@@ -131,15 +155,139 @@
       // }
     }
 
+    &--dd-icon {
+      float: right;
+
+      // margin-top: 0.25rem;
+
+      font-size: 1.5rem;
+      color: $color-grey-dark-2;
+
+      border: none;
+      cursor: pointer;
+
+      background-color: transparent;
+    }
+
+    &--dropdown {
+      margin: 0.5rem 0;
+
+      font-size: 1.5rem;
+
+      color: $color-grey-dark-2;
+
+      display: flex;
+      flex-direction: column;
+      // align-items: center;
+
+      &--header {
+        margin-bottom: 1rem;
+      }
+
+      &--row {
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+
+        select,
+        input {
+          border: 1px solid $color-grey-light-3;
+          color: $color-grey-dark-2;
+
+          font-size: 1.5rem;
+
+          cursor: pointer;
+
+          // float: right;
+          // margin-left: 30%;
+        }
+
+        input {
+          // margin-left: 32.5%;
+          margin-right: 3.5rem;
+        }
+      }
+
+      &--btns {
+        margin-bottom: 0.5rem;
+        margin-top: 3rem;
+        margin-right: 0.5rem;
+        margin-left: auto;
+
+        &--1,
+        &--2 {
+          color: $color-grey-dark-1;
+          cursor: pointer;
+          background-color: transparent;
+          border: none;
+
+          font-size: 1.35rem;
+          font-weight: 700;
+        }
+
+        &--1 {
+          margin-right: 3rem;
+
+          transition: all 0.25s linear;
+
+          &:hover {
+            color: $color-primary;
+          }
+        }
+
+        &--2 {
+          background: $color-primary;
+
+          // border: 1px solid #dadce0;
+          border-radius: 4px;
+          padding: 0.8rem 2.6rem;
+          text-decoration: none;
+          color: $color-white;
+
+          transition: all 0.25s linear;
+
+          &:hover {
+            background: $color-primary-dark;
+          }
+
+          &:disabled {
+            cursor: default;
+
+            background: $color-grey-light-2;
+            color: $color-grey-dark-1;
+            border: none;
+
+            &:hover {
+              background: $color-grey-light-2;
+            }
+          }
+        }
+      }
+
+      // display: none;
+
+      // background-color: white;
+
+      // padding: 0;
+    }
+
     &--btn-search {
       cursor: pointer;
-      color: $color-grey-dark-4;
+      color: $color-grey-dark-3;
       text-decoration: none !important;
       font-size: 2.25rem;
-      margin-top: 1.5rem;
+      // margin-top: 1.5rem;
       // margin-right: 4rem;
       background-color: transparent;
       border: none;
+
+      height: 2rem;
+
+      margin-right: 1.5rem;
+
+      ion-icon {
+        font-size: 2rem;
+      }
     }
   }
 

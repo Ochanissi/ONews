@@ -38,3 +38,8 @@ export const selectUserHidden = createSelector(
   [selectUser],
   (user) => user.userHidden
 );
+
+export const selectUserSearches = createSelector(
+  [selectUser],
+  (user) => user.userSearches
+);

@@ -9,7 +9,7 @@ const handleGetSearch = async (req, res) => {
     sortBy = 'publishedAt',
   } = req.body;
 
-  console.log(req.body);
+  // console.log(req.body);
 
   if (!query) {
     return res.status(400).json('Incorrect request!');

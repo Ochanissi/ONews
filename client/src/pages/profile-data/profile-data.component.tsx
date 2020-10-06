@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
+import ArticleSmall from '../../components/article-small/article-small.component';
 
 import Article from '../../components/article/article.component';
 import { News } from '../../redux/news/news.types';
@@ -10,6 +11,7 @@ import {
   selectUserHidden,
   selectUserLiked,
   selectUserSaved,
+  selectUserSearches,
 } from '../../redux/user/user.selectors';
 
 import './profile-data.styles.scss';
@@ -32,6 +34,7 @@ const ProfileData: React.FunctionComponent<Props> = ({
   userLiked,
   userDisliked,
   userHidden,
+  userSearches,
 }): JSX.Element => {
   let newsArticles =
     type === 'saved-stories'
@@ -40,15 +43,11 @@ const ProfileData: React.FunctionComponent<Props> = ({
       ? userLiked
       : type === 'disliked-stories'
       ? userDisliked
-      : // : type === 'past-searches'
-        // ? userDisliked
-        // : type === 'hidden-sources'
-        // ? userHidden
-        [];
+      : [];
 
-  let newsItems =
+  let newsItems: [string] | [] =
     type === 'past-searches'
-      ? userDisliked
+      ? userSearches
       : type === 'hidden-sources'
       ? userHidden
       : [];
@@ -66,6 +65,7 @@ const ProfileData: React.FunctionComponent<Props> = ({
   // console.log(type);
   // console.log(newsArticles);
   // console.log(userHidden);
+  // console.log(newsItems);
 
   return (
     <div className='profile-data'>
@@ -87,7 +87,7 @@ const ProfileData: React.FunctionComponent<Props> = ({
         {newsItems.length ? (
           <div className='profile-data__content--articles'>
             {newsItems.map((x: string, i: number) => (
-              <div>{x}</div>
+              <ArticleSmall key={`${i + type}`} name={x} id={`${i + type}`} />
             ))}
           </div>
         ) : null}
@@ -101,6 +101,7 @@ interface LinkStateProps {
   userLiked: News[];
   userDisliked: News[];
   userHidden: [string];
+  userSearches: [string];
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -108,6 +109,7 @@ const mapStateToProps = createStructuredSelector({
   userLiked: selectUserLiked,
   userDisliked: selectUserDisliked,
   userHidden: selectUserHidden,
+  userSearches: selectUserSearches,
 });
 
 export default withRouter(connect(mapStateToProps)(ProfileData));

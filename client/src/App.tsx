@@ -37,6 +37,7 @@ import {
   getUserHiddenStartAsync,
   getUserLikedStartAsync,
   getUserSavedStartAsync,
+  getUserSearchesStartAsync,
 } from './redux/user/user.actions';
 import ProfileData from './pages/profile-data/profile-data.component';
 // import { setCurrentUser } from './redux/user/user.actions';
@@ -61,12 +62,14 @@ const App: React.FunctionComponent<Props> = ({
   getUserLikedStartAsync,
   getUserDislikedStartAsync,
   getUserHiddenStartAsync,
+  getUserSearchesStartAsync,
 }): JSX.Element => {
   if (currentUser) {
     getUserSavedStartAsync(currentUser.email);
     getUserLikedStartAsync(currentUser.email);
     getUserDislikedStartAsync(currentUser.email);
     getUserHiddenStartAsync(currentUser.email);
+    getUserSearchesStartAsync(currentUser.email);
   }
 
   return (
@@ -130,6 +133,7 @@ interface LinkDispatchProps {
   getUserLikedStartAsync: (email: string) => void;
   getUserDislikedStartAsync: (email: string) => void;
   getUserHiddenStartAsync: (email: string) => void;
+  getUserSearchesStartAsync: (email: string) => void;
 }
 
 interface LinkStateProps {
@@ -152,6 +156,8 @@ const mapDispatchToProps = (
   getUserDislikedStartAsync: (email) =>
     dispatch(getUserDislikedStartAsync(email)),
   getUserHiddenStartAsync: (email) => dispatch(getUserHiddenStartAsync(email)),
+  getUserSearchesStartAsync: (email) =>
+    dispatch(getUserSearchesStartAsync(email)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

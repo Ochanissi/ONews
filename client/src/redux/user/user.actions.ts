@@ -49,6 +49,15 @@ import {
   DELETE_USER_HIDDEN_START,
   DELETE_USER_HIDDEN_SUCCESS,
   DELETE_USER_HIDDEN_FAILURE,
+  GET_USER_SEARCHES_START,
+  GET_USER_SEARCHES_SUCCESS,
+  GET_USER_SEARCHES_FAILURE,
+  POST_USER_SEARCHES_START,
+  POST_USER_SEARCHES_SUCCESS,
+  POST_USER_SEARCHES_FAILURE,
+  DELETE_USER_SEARCHES_START,
+  DELETE_USER_SEARCHES_SUCCESS,
+  DELETE_USER_SEARCHES_FAILURE,
   UserActionTYPES,
   UserNews,
 } from './user.types';
@@ -601,7 +610,7 @@ export const getUserHiddenStart = (): UserActionTYPES => ({
   type: GET_USER_HIDDEN_START,
 });
 
-export const getUserHiddenSuccess = (hidden: News[]): UserActionTYPES => ({
+export const getUserHiddenSuccess = (hidden: [string]): UserActionTYPES => ({
   type: GET_USER_HIDDEN_SUCCESS,
   payload: hidden,
 });
@@ -644,7 +653,7 @@ export const postUserHiddenStart = (): UserActionTYPES => ({
   type: POST_USER_HIDDEN_START,
 });
 
-export const postUserHiddenSuccess = (hidden: News[]): UserActionTYPES => ({
+export const postUserHiddenSuccess = (hidden: [string]): UserActionTYPES => ({
   type: POST_USER_HIDDEN_SUCCESS,
   payload: hidden,
 });
@@ -689,7 +698,7 @@ export const deleteUserHiddenStart = (): UserActionTYPES => ({
   type: DELETE_USER_HIDDEN_START,
 });
 
-export const deleteUserHiddenSuccess = (hidden: News[]): UserActionTYPES => ({
+export const deleteUserHiddenSuccess = (hidden: [string]): UserActionTYPES => ({
   type: DELETE_USER_HIDDEN_SUCCESS,
   payload: hidden,
 });
@@ -725,6 +734,145 @@ export const deleteUserHiddenStartAsync = (
     }
   } catch (error) {
     dispatch(deleteUserHiddenFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
+// Get Searches
+export const getUserSearchesStart = (): UserActionTYPES => ({
+  type: GET_USER_SEARCHES_START,
+});
+
+export const getUserSearchesSuccess = (
+  searches: [string]
+): UserActionTYPES => ({
+  type: GET_USER_SEARCHES_SUCCESS,
+  payload: searches,
+});
+
+export const getUserSearchesFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: GET_USER_SEARCHES_FAILURE,
+  payload: errorMessage,
+});
+
+export const getUserSearchesStartAsync = (email: string) => async (
+  dispatch: Dispatch<UserActionTYPES>
+) => {
+  try {
+    dispatch(getUserSearchesStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}get-searches/`,
+      data: {
+        email,
+      },
+    });
+
+    // console.log(res);
+
+    if (res.status === 200) {
+      dispatch(getUserSearchesSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(getUserSearchesFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
+// Post Searches
+export const postUserSearchesStart = (): UserActionTYPES => ({
+  type: POST_USER_SEARCHES_START,
+});
+
+export const postUserSearchesSuccess = (
+  searches: [string]
+): UserActionTYPES => ({
+  type: POST_USER_SEARCHES_SUCCESS,
+  payload: searches,
+});
+
+export const postUserSearchesFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: POST_USER_SEARCHES_FAILURE,
+  payload: errorMessage,
+});
+
+export const postUserSearchesStartAsync = (
+  email: string,
+  query: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
+  try {
+    dispatch(postUserSearchesStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}post-searches/`,
+      data: {
+        email,
+        query,
+      },
+    });
+
+    // console.log(res);
+
+    if (res.status === 200) {
+      dispatch(postUserSearchesSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(postUserSearchesFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
+// Delete Searches
+export const deleteUserSearchesStart = (): UserActionTYPES => ({
+  type: DELETE_USER_SEARCHES_START,
+});
+
+export const deleteUserSearchesSuccess = (
+  searches: [string]
+): UserActionTYPES => ({
+  type: DELETE_USER_SEARCHES_SUCCESS,
+  payload: searches,
+});
+
+export const deleteUserSearchesFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: DELETE_USER_SEARCHES_FAILURE,
+  payload: errorMessage,
+});
+
+export const deleteUserSearchesStartAsync = (
+  email: string,
+  query: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
+  try {
+    dispatch(deleteUserSearchesStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}delete-searches/`,
+      data: {
+        email,
+        query,
+      },
+    });
+
+    // console.log(res);
+
+    if (res.status === 200) {
+      dispatch(deleteUserSearchesSuccess(res.data));
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(deleteUserSearchesFailure(error.message));
     // Toast.fail(`Failed signing in!`, 1500);
   }
 };

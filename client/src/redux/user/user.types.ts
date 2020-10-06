@@ -72,6 +72,19 @@ export const DELETE_USER_HIDDEN_START = 'DELETE_USER_HIDDEN_START';
 export const DELETE_USER_HIDDEN_SUCCESS = 'DELETE_USER_HIDDEN_SUCCESS';
 export const DELETE_USER_HIDDEN_FAILURE = 'DELETE_USER_HIDDEN_FAILURE';
 
+// User Searches
+export const POST_USER_SEARCHES_START = 'POST_USER_SEARCHES_START';
+export const POST_USER_SEARCHES_SUCCESS = 'POST_USER_SEARCHES_SUCCESS';
+export const POST_USER_SEARCHES_FAILURE = 'POST_USER_SEARCHES_FAILURE';
+
+export const GET_USER_SEARCHES_START = 'GET_USER_SEARCHES_START';
+export const GET_USER_SEARCHES_SUCCESS = 'GET_USER_SEARCHES_SUCCESS';
+export const GET_USER_SEARCHES_FAILURE = 'GET_USER_SEARCHES_FAILURE';
+
+export const DELETE_USER_SEARCHES_START = 'DELETE_USER_SEARCHES_START';
+export const DELETE_USER_SEARCHES_SUCCESS = 'DELETE_USER_SEARCHES_SUCCESS';
+export const DELETE_USER_SEARCHES_FAILURE = 'DELETE_USER_SEARCHES_FAILURE';
+
 export interface User {
   id: number;
   name: string;
@@ -319,6 +332,49 @@ interface DeleteUserHiddenFailure {
   payload: string;
 }
 
+// User Searches
+interface PostUserSearchesStart {
+  type: typeof POST_USER_SEARCHES_START;
+}
+
+interface PostUserSearchesSuccess {
+  type: typeof POST_USER_SEARCHES_SUCCESS;
+  payload: [string];
+}
+
+interface PostUserSearchesFailure {
+  type: typeof POST_USER_SEARCHES_FAILURE;
+  payload: string;
+}
+
+interface GetUserSearchesStart {
+  type: typeof GET_USER_SEARCHES_START;
+}
+
+interface GetUserSearchesSuccess {
+  type: typeof GET_USER_SEARCHES_SUCCESS;
+  payload: [string];
+}
+
+interface GetUserSearchesFailure {
+  type: typeof GET_USER_SEARCHES_FAILURE;
+  payload: string;
+}
+
+interface DeleteUserSearchesStart {
+  type: typeof DELETE_USER_SEARCHES_START;
+}
+
+interface DeleteUserSearchesSuccess {
+  type: typeof DELETE_USER_SEARCHES_SUCCESS;
+  payload: [string];
+}
+
+interface DeleteUserSearchesFailure {
+  type: typeof DELETE_USER_SEARCHES_FAILURE;
+  payload: string;
+}
+
 export type UserActionTYPES =
   | SetUserCategoryAction
   | SetUserCountryAction
@@ -365,4 +421,13 @@ export type UserActionTYPES =
   | GetUserHiddenFailure
   | DeleteUserHiddenStart
   | DeleteUserHiddenSuccess
-  | DeleteUserHiddenFailure;
+  | DeleteUserHiddenFailure
+  | PostUserSearchesStart
+  | PostUserSearchesSuccess
+  | PostUserSearchesFailure
+  | GetUserSearchesStart
+  | GetUserSearchesSuccess
+  | GetUserSearchesFailure
+  | DeleteUserSearchesStart
+  | DeleteUserSearchesSuccess
+  | DeleteUserSearchesFailure;

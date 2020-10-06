@@ -1,0 +1,29 @@
+@import '../../variables.scss';
+
+.article-small {
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+
+  padding: 2rem;
+
+  display: flex;
+
+  width: 70rem;
+
+  &:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  &:last-child {
+    margin-bottom: 5rem;
+  }
+
+  display: flex;
+  justify-content: space-between;
+
+  &__name {
+  }
+
+  &__btn {
+  }
+}

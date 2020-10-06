@@ -15,7 +15,10 @@ import {
 import CustomButton from '../custom-button/custom-button.component';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../redux/store';
-import { signOut } from '../../redux/user/user.actions';
+import {
+  postUserSearchesStartAsync,
+  signOut,
+} from '../../redux/user/user.actions';
 
 interface NavbarProps extends RouteComponentProps {}
 interface NavbarState {
@@ -176,6 +179,8 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchLocation,
     } = this.state;
 
+    const { currentUser, postUserSearchesStartAsync } = this.props;
+
     // console.log(searchValue);
 
     // this.props.history.push(
@@ -188,6 +193,8 @@ class Navbar extends React.Component<Props, NavbarState> {
     //     ''
     //   )
     // );
+
+    postUserSearchesStartAsync(currentUser.email, searchValue);
 
     this.props.history.push(
       `/search/${`${searchValue}/${searchTitle}/${searchDate}/${searchLocation}/${searchSortBy}`.trim()}`
@@ -462,6 +469,7 @@ interface LinkStateProps {
 
 interface LinkDispatchProps {
   signOut: () => void;
+  postUserSearchesStartAsync: (email: string, query: string) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -473,6 +481,8 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
   signOut: () => dispatch(signOut()),
+  postUserSearchesStartAsync: (email, query) =>
+    dispatch(postUserSearchesStartAsync(email, query)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

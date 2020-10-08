@@ -28,5 +28,16 @@
 
       color: $color-grey-dark-2;
     }
+
+    &--placeholder {
+      border: 1px solid$color-button-4;
+      border-radius: 8px;
+
+      padding: 2rem;
+
+      display: flex;
+
+      width: 70rem;
+    }
   }
 }

@@ -40,6 +40,7 @@ import {
   getUserSearchesStartAsync,
 } from './redux/user/user.actions';
 import ProfileData from './pages/profile-data/profile-data.component';
+import Weather from './components/weather/weather.component';
 // import { setCurrentUser } from './redux/user/user.actions';
 
 declare global {
@@ -76,6 +77,7 @@ const App: React.FunctionComponent<Props> = ({
     <div className='App'>
       <NavBar />
       <Sidebar />
+      <Weather />
       <Switch>
         <Route
           exact

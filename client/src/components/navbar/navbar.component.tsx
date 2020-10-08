@@ -264,10 +264,10 @@ class Navbar extends React.Component<Props, NavbarState> {
 
     return (
       <nav role='navigation' className='navbar'>
-        <input id='menu-toggle' type='checkbox' />
+        {/* <input id='menu-toggle' type='checkbox' />
         <label className='menu-button-container' htmlFor='menu-toggle'>
           <div className='menu-button'></div>
-        </label>
+        </label> */}
 
         <div className='navbar__main'>
           <div
@@ -393,7 +393,7 @@ class Navbar extends React.Component<Props, NavbarState> {
           </li>
           <li>
             <Link to='/discover'>
-              <ion-icon name='compass'></ion-icon>
+              <ion-icon name='cloudy-night'></ion-icon>
             </Link>
           </li>
           <li>

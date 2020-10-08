@@ -52,15 +52,18 @@ const ProfileData: React.FunctionComponent<Props> = ({
       ? userHidden
       : [];
 
-  const subHeader = newsArticles.length
-    ? `You can find here all the stories that you ${
-        type.toLowerCase().split('-')[0]
-      } in the past.`
-    : type === 'past-searches'
-    ? 'You can find here all your past news searches.'
-    : type === 'hidden-sources'
-    ? 'You can find here all the news sources that you hidden in the past.'
-    : '';
+  const subHeader =
+    type === 'saved-stories' ||
+    type === 'liked-stories' ||
+    type === 'disliked-stories'
+      ? `You can find here all the stories that you ${
+          type.toLowerCase().split('-')[0]
+        } in the past.`
+      : type === 'past-searches'
+      ? 'You can find here all your past news searches.'
+      : type === 'hidden-sources'
+      ? 'You can find here all the news sources that you hidden in the past.'
+      : '';
 
   // console.log(type);
   // console.log(newsArticles);
@@ -73,7 +76,7 @@ const ProfileData: React.FunctionComponent<Props> = ({
         <h2 className='profile-data__content--header'>{`${
           type.slice(0, 1).toUpperCase() +
           type.slice(1).toLowerCase().replace('-', ' ')
-        } `}</h2>
+        }`}</h2>
         <h4 className='profile-data__content--sub-header'>{subHeader}</h4>
 
         {newsArticles.length ? (
@@ -87,9 +90,20 @@ const ProfileData: React.FunctionComponent<Props> = ({
         {newsItems.length ? (
           <div className='profile-data__content--articles'>
             {newsItems.map((x: string, i: number) => (
-              <ArticleSmall key={`${i + type}`} name={x} id={`${i + type}`} />
+              <ArticleSmall
+                key={`${i + type}`}
+                name={x}
+                type={type}
+                id={`${i + type}`}
+              />
             ))}
           </div>
+        ) : null}
+
+        {!newsArticles.length && !newsItems.length ? (
+          <div className='profile-data__content--placeholder'>{`You have no ${type
+            .toLowerCase()
+            .replace('-', ' ')}!`}</div>
         ) : null}
       </div>
     </div>

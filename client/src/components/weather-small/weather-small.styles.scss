@@ -1,0 +1,17 @@
+@import '../../variables.scss';
+
+.weather-small {
+  &__header {
+    font-weight: 700;
+  }
+
+  &__icon {
+  }
+
+  &__max {
+    font-weight: 700;
+  }
+
+  &__min {
+  }
+}

@@ -6,6 +6,8 @@ import { createStructuredSelector } from 'reselect';
 
 import defaultLogo from '../../assets/default.png';
 
+import Sidebar from '../sidebar/sidebar.component';
+
 import './navbar.styles.scss';
 import { User } from '../../redux/user/user.types';
 import {
@@ -19,6 +21,7 @@ import {
   postUserSearchesStartAsync,
   signOut,
 } from '../../redux/user/user.actions';
+import Weather from '../weather/weather.component';
 
 interface NavbarProps extends RouteComponentProps {}
 interface NavbarState {
@@ -264,6 +267,8 @@ class Navbar extends React.Component<Props, NavbarState> {
 
     return (
       <nav role='navigation' className='navbar'>
+        <Sidebar />
+
         {/* <input id='menu-toggle' type='checkbox' />
         <label className='menu-button-container' htmlFor='menu-toggle'>
           <div className='menu-button'></div>
@@ -392,9 +397,7 @@ class Navbar extends React.Component<Props, NavbarState> {
             </Link>
           </li>
           <li>
-            <Link to='/discover'>
-              <ion-icon name='cloudy-night'></ion-icon>
-            </Link>
+            <Weather />
           </li>
           <li>
             {currentUser ? (

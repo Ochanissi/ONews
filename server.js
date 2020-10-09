@@ -12,6 +12,7 @@ const morgan = require('morgan');
 // const sharp = require('sharp');
 
 const news = require('./controllers/news');
+const weather = require('./controllers/weather');
 const search = require('./controllers/search');
 const signUp = require('./controllers/sign-up');
 const signIn = require('./controllers/sign-in');
@@ -73,8 +74,14 @@ app.get('/service-worker.js', (req, res) => {
 
 // app.use(express.static('./public'));
 
+// News
 app.post('/news', (req, res) => {
   news.handleGetNews(req, res);
+});
+
+// Weather
+app.post('/weather', (req, res) => {
+  weather.handleGetWeather(req, res);
 });
 
 app.post('/search', (req, res) => {

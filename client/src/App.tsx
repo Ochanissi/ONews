@@ -27,7 +27,6 @@ import './App.scss';
 import HomePage from './pages/home-page/home-page.component';
 import SearchPage from './pages/search-page/search-page.component';
 import NavBar from './components/navbar/navbar.component';
-import Sidebar from './components/sidebar/sidebar.component';
 import Profile from './pages/profile/profile.component';
 import { User } from './redux/user/user.types';
 import { ThunkDispatch } from 'redux-thunk';
@@ -40,8 +39,6 @@ import {
   getUserSearchesStartAsync,
 } from './redux/user/user.actions';
 import ProfileData from './pages/profile-data/profile-data.component';
-import Weather from './components/weather/weather.component';
-// import { setCurrentUser } from './redux/user/user.actions';
 
 declare global {
   namespace JSX {
@@ -76,8 +73,6 @@ const App: React.FunctionComponent<Props> = ({
   return (
     <div className='App'>
       <NavBar />
-      <Sidebar />
-      <Weather />
       <Switch>
         <Route
           exact

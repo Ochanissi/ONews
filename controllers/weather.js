@@ -11,7 +11,7 @@ const handleGetWeather = async (req, res) => {
 
   try {
     const data = await axios.get(
-      `http://api.openweathermap.org/data/2.5/weather?id=524901&lang=fr&appid=2779871122afbd4f2d3d7a05af64881b`
+      `http://api.openweathermap.org/data/2.5/weather?id=${process.env.ONEWS_OPENWEATHER_KEY}`
     );
 
     // console.log(data.data.articles);

@@ -23,7 +23,7 @@
     left: 1rem;
     top: 2rem;
     margin-left: 2rem;
-    z-index: 9999;
+    // z-index: 99;
     color: $color-grey-dark-4;
 
     // padding: 1rem 2rem;
@@ -52,13 +52,13 @@
     left: 4rem;
     top: -5.25rem;
     // margin-left: 1rem;
-    z-index: 9999;
+    z-index: 99;
 
     width: 12rem;
 
     transition: all 0.25s linear;
 
-    z-index: 999999;
+    z-index: 99;
 
     &--icon:link,
     &--icon:visited {
@@ -96,6 +96,8 @@
 
       // height: 3rem;
       // width: 2.25rem;
+
+      z-index: 99999;
 
       &--focused {
         background-color: $color-white;
@@ -300,7 +302,7 @@
     right: 2rem;
     top: 1.75rem;
     margin-left: 2rem;
-    z-index: 9999;
+    z-index: 99;
     list-style: none;
 
     ion-icon {
@@ -315,9 +317,14 @@
 
     li {
       &:not(:last-child) {
-        margin-right: 2rem;
+        margin-right: 3rem;
       }
     }
+
+    // &--weather {
+    //   visibility: hidden;
+    //   opacity: 0;
+    // }
 
     &--img {
       color: $color-grey-dark-4;
@@ -365,7 +372,9 @@
     &--logo {
       width: 3rem;
 
-      border: 1px solid $color-grey-dark-4;
+      // border: 1px solid $color-grey-dark-4;
+      border: 1px solid rgba($color-primary, 0);
+
       border-radius: 50%;
 
       transition: all 0.5s linear;
@@ -373,7 +382,8 @@
       cursor: pointer;
 
       &:hover {
-        border: 1px solid $color-primary;
+        // opacity: 0.75;
+        border: 1px solid rgba($color-primary, 0.75);
       }
     }
   }
@@ -383,7 +393,7 @@
   //   left: 0;
   //   top: 0;
   //   margin-left: 2rem;
-  //   z-index: 9999;
+  //   z-index: 99;
 
   //   &--icon:link,
   //   &--icon:visited {
@@ -417,7 +427,7 @@
     top: 0;
     margin-top: 2.5rem;
     margin-left: 3.5rem;
-    z-index: 9999;
+    z-index: 99;
   }
 
   #menu-toggle {
@@ -470,7 +480,7 @@
 
   //   .menu-button-container {
   //     display: flex;
-  //     z-index: 99999;
+  //     z-index: 99;
   //   }
 
   //   #menu-toggle ~ .navbar__main {
@@ -534,7 +544,7 @@
   top: 26.5rem;
   right: -16rem;
 
-  z-index: 100;
+  // z-index: 9999;
   background-color: $color-white;
 
   border: 1px solid #dadce0;
@@ -554,6 +564,8 @@
   // grid-gap: 1rem;
 
   font-size: 1.5rem;
+
+  z-index: 999;
 
   &--placeholder {
     margin: 0.75rem 0 1rem 0;
@@ -606,7 +618,7 @@
 
   img {
     width: 7.5rem;
-    border: 1px solid $color-grey-light-3;
+    // border: 1px solid $color-grey-light-3;
     // border-radius: 50%;
 
     margin-bottom: 0.5rem;

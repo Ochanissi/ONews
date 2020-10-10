@@ -8,8 +8,9 @@ import rootReducer, { AppState } from './root-reducer';
 
 import { NewsActionTYPES } from './news/news.types';
 import { UserActionTYPES } from './user/user.types';
+import { WeatherActionTYPES } from './weather/weather.types';
 
-export type AppActions = NewsActionTYPES | UserActionTYPES;
+export type AppActions = NewsActionTYPES | UserActionTYPES | WeatherActionTYPES;
 
 const middlewares = [thunk as ThunkMiddleware<AppState, AppActions>];
 

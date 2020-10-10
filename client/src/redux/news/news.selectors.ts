@@ -4,12 +4,10 @@ import { createSelector } from 'reselect';
 
 // import { News } from '../news/news.types';
 
-import { selectUserHidden } from '../user/user.selectors';
-
 const selectNews = (state: any): any => state.news;
 
 export const selectNewsArticles = createSelector(
-  [selectNews, selectUserHidden],
+  [selectNews],
   (news) => news.news.filter((x: any) => x.title && x.title.length > 65)
 );
 

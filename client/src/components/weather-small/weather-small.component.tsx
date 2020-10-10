@@ -5,8 +5,9 @@ import './weather-small.styles.scss';
 interface WeatherSmallProps {
   day: string;
   icon: string;
-  max: string;
-  min: string;
+  max: number;
+  min: number;
+  unit: string
 }
 
 const WeatherSmall: React.FunctionComponent<WeatherSmallProps> = ({
@@ -14,15 +15,16 @@ const WeatherSmall: React.FunctionComponent<WeatherSmallProps> = ({
   icon,
   max,
   min,
+  unit
 }): JSX.Element => {
   return (
     <div className='weather-small'>
       <div className='weather-small__header'>{day}</div>
       <div className='weather-small__icon'>
-        <ion-icon name={`${icon}`}></ion-icon>
+        <img src={`http://openweathermap.org/img/wn/${icon}.png`} alt='Weather Icon'></img>
       </div>
-      <div className='weather-small__max'>{max}</div>
-      <div className='weather-small__min'>{min}</div>
+      <div className='weather-small__max'>{max}&#176;{unit}</div>
+      <div className='weather-small__min'>{min}&#176;{unit}</div>
     </div>
   );
 };

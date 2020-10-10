@@ -125,8 +125,10 @@
         &--col {
           font-weight: 500;
 
-          ion-icon {
-            font-size: 5rem;
+          img {
+            // width: 10rem;
+            // height: 10rem;
+            filter: brightness(0.75);
           }
 
           &--1 {

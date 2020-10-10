@@ -21,7 +21,7 @@ import {
   postUserSearchesStartAsync,
   signOut,
 } from '../../redux/user/user.actions';
-import Weather from '../weather/weather.component';
+import WeatherContainer from '../weather/weather.component';
 
 interface NavbarProps extends RouteComponentProps {}
 interface NavbarState {
@@ -397,7 +397,7 @@ class Navbar extends React.Component<Props, NavbarState> {
             </Link>
           </li>
           <li>
-            <Weather />
+            <WeatherContainer />
           </li>
           <li>
             {currentUser ? (

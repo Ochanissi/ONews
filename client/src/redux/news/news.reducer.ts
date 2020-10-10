@@ -27,7 +27,7 @@ const newsReducer = (
   action: NewsActionTYPES
 ): NewsState => {
   switch (action.type) {
-    //News
+    // News
     case FETCH_NEWS_START:
       return {
         ...state,
@@ -48,7 +48,7 @@ const newsReducer = (
         errorMessage: action.payload,
       };
 
-    //News Search
+    // News Search
     case FETCH_NEWS_SEARCH_START:
       return {
         ...state,

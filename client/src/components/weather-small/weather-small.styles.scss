@@ -6,6 +6,11 @@
   }
 
   &__icon {
+    img {
+      // width: 10rem;
+      // height: 10rem;
+      filter: brightness(0.75);
+    }
   }
 
   &__max {

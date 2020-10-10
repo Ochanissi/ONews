@@ -39,6 +39,7 @@ import {
   getUserSearchesStartAsync,
 } from './redux/user/user.actions';
 import ProfileData from './pages/profile-data/profile-data.component';
+import { fetchWeatherStartAsync } from './redux/weather/weather.actions';
 
 declare global {
   namespace JSX {
@@ -61,7 +62,10 @@ const App: React.FunctionComponent<Props> = ({
   getUserDislikedStartAsync,
   getUserHiddenStartAsync,
   getUserSearchesStartAsync,
+  fetchWeatherStartAsync
 }): JSX.Element => {
+  fetchWeatherStartAsync('44.439663','26.096306');
+
   if (currentUser) {
     getUserSavedStartAsync(currentUser.email);
     getUserLikedStartAsync(currentUser.email);
@@ -131,6 +135,8 @@ interface LinkDispatchProps {
   getUserDislikedStartAsync: (email: string) => void;
   getUserHiddenStartAsync: (email: string) => void;
   getUserSearchesStartAsync: (email: string) => void;
+
+  fetchWeatherStartAsync: (lat: string, lon: string) => void;
 }
 
 interface LinkStateProps {
@@ -155,6 +161,9 @@ const mapDispatchToProps = (
   getUserHiddenStartAsync: (email) => dispatch(getUserHiddenStartAsync(email)),
   getUserSearchesStartAsync: (email) =>
     dispatch(getUserSearchesStartAsync(email)),
+
+    fetchWeatherStartAsync: (lat, lon) =>
+    dispatch(fetchWeatherStartAsync(lat, lon)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

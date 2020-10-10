@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 
 import userReducer from './user/user.reducer';
 import newsReducer from './news/news.reducer';
+import weatherReducer from './weather/weather.reducer';
 
 const persistConfig = {
   key: 'root',
@@ -14,6 +15,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user: userReducer,
   news: newsReducer,
+  weather: weatherReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

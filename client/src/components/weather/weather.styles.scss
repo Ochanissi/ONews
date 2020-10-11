@@ -158,6 +158,24 @@
       margin-top: 1.5rem;
 
       &--degrees {
+        button {
+          border: none;
+          background-color: transparent;
+          font-weight: 700;
+
+          cursor: pointer;
+
+          &:hover {
+            color: $color-primary;
+          }
+        }
+
+        &--selected {
+          color: $color-primary;
+
+          cursor: not-allowed;
+          pointer-events: none;
+        }
       }
 
       &--url {

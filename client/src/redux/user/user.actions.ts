@@ -5,6 +5,7 @@ import {
   User,
   SET_USER_CATEGORY,
   SET_USER_COUNTRY,
+  SET_USER_UNITS,
   SET_CURRENT_USER,
   SIGN_IN_START,
   SIGN_IN_SUCCESS,
@@ -63,7 +64,7 @@ import {
 } from './user.types';
 import { News } from '../news/news.types';
 
-// Set Guest User
+// Set User News
 export const setUserCategory = (category: string): UserActionTYPES => ({
   type: SET_USER_CATEGORY,
   payload: category,
@@ -72,6 +73,12 @@ export const setUserCategory = (category: string): UserActionTYPES => ({
 export const setUserCountry = (country: string): UserActionTYPES => ({
   type: SET_USER_COUNTRY,
   payload: country,
+});
+
+// Set User Weather
+export const setUserUnits = (unit: string): UserActionTYPES => ({
+  type: SET_USER_UNITS,
+  payload: unit,
 });
 
 // Set Current User

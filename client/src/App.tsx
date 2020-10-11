@@ -39,7 +39,8 @@ import {
   getUserSearchesStartAsync,
 } from './redux/user/user.actions';
 import ProfileData from './pages/profile-data/profile-data.component';
-import { fetchWeatherStartAsync } from './redux/weather/weather.actions';
+import { render } from '@testing-library/react';
+import { isJsxAttributes, JsxEmit } from 'typescript';
 
 declare global {
   namespace JSX {
@@ -49,22 +50,21 @@ declare global {
   }
 }
 
-interface AppProps {}
+interface AppProps { }
 
 type Props = AppProps & LinkDispatchProps & LinkStateProps;
 
-const App: React.FunctionComponent<Props> = ({
-  userCategory,
-  userCountry,
-  currentUser,
-  getUserSavedStartAsync,
-  getUserLikedStartAsync,
-  getUserDislikedStartAsync,
-  getUserHiddenStartAsync,
-  getUserSearchesStartAsync,
-  fetchWeatherStartAsync
-}): JSX.Element => {
-  fetchWeatherStartAsync('44.439663','26.096306');
+class App extends React.Component<Props> {
+  componentDidMount() {
+    const {userCategory,
+    userCountry,
+    currentUser,
+    getUserSavedStartAsync,
+    getUserLikedStartAsync,
+    getUserDislikedStartAsync,
+    getUserHiddenStartAsync,
+    getUserSearchesStartAsync,
+  } = this.props
 
   if (currentUser) {
     getUserSavedStartAsync(currentUser.email);
@@ -73,6 +73,16 @@ const App: React.FunctionComponent<Props> = ({
     getUserHiddenStartAsync(currentUser.email);
     getUserSearchesStartAsync(currentUser.email);
   }
+
+  }
+
+
+render() {
+  const {userCategory,
+    userCountry,
+    currentUser,
+
+  } = this.props
 
   return (
     <div className='App'>
@@ -127,6 +137,8 @@ const App: React.FunctionComponent<Props> = ({
       </Switch>
     </div>
   );
+}
+
 };
 
 interface LinkDispatchProps {
@@ -136,7 +148,6 @@ interface LinkDispatchProps {
   getUserHiddenStartAsync: (email: string) => void;
   getUserSearchesStartAsync: (email: string) => void;
 
-  fetchWeatherStartAsync: (lat: string, lon: string) => void;
 }
 
 interface LinkStateProps {
@@ -162,8 +173,6 @@ const mapDispatchToProps = (
   getUserSearchesStartAsync: (email) =>
     dispatch(getUserSearchesStartAsync(email)),
 
-    fetchWeatherStartAsync: (lat, lon) =>
-    dispatch(fetchWeatherStartAsync(lat, lon)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

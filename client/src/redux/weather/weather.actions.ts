@@ -30,7 +30,8 @@ export const fetchWeatherFailure = (errorMessage: string): WeatherActionTYPES =>
 
 export const fetchWeatherStartAsync = (
   lat: string | '44.439663',
-  lon: string | '26.096306'
+  lon: string | '26.096306',
+  units: string | 'metric'
 ) => async (dispatch: Dispatch<WeatherActionTYPES>) => {
   try {
     dispatch(fetchWeatherStart());
@@ -41,6 +42,7 @@ export const fetchWeatherStartAsync = (
       data: {
         lat,
         lon,
+        units
       },
     });
 

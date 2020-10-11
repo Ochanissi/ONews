@@ -4,6 +4,9 @@ import { News } from '../news/news.types';
 export const SET_USER_CATEGORY = 'SET_USER_CATEGORY';
 export const SET_USER_COUNTRY = 'SET_USER_COUNTRY';
 
+// User Weather
+export const SET_USER_UNITS = 'SET_USER_UNITS';
+
 // User Current User
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
@@ -108,7 +111,7 @@ export interface UserNews {
   content: string;
 }
 
-// Set Guest User
+// Set News
 interface SetUserCategoryAction {
   type: typeof SET_USER_CATEGORY;
   payload: string;
@@ -116,6 +119,12 @@ interface SetUserCategoryAction {
 
 interface SetUserCountryAction {
   type: typeof SET_USER_COUNTRY;
+  payload: string;
+}
+
+// User Weather
+interface SetUserUnitsAction {
+  type: typeof SET_USER_UNITS;
   payload: string;
 }
 
@@ -378,6 +387,7 @@ interface DeleteUserSearchesFailure {
 export type UserActionTYPES =
   | SetUserCategoryAction
   | SetUserCountryAction
+  | SetUserUnitsAction
   | SetCurrentUser
   | SignInStart
   | SignInSuccess

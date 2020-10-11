@@ -2,6 +2,7 @@ import {
   User,
   SET_USER_CATEGORY,
   SET_USER_COUNTRY,
+  SET_USER_UNITS,
   SET_CURRENT_USER,
   SIGN_IN_START,
   SIGN_IN_SUCCESS,
@@ -62,6 +63,7 @@ import { News } from '../news/news.types';
 interface UserState {
   userCategory: string;
   userCountry: string;
+  userUnits: string;
 
   currentUser: User | null;
 
@@ -77,6 +79,7 @@ interface UserState {
 const INITIAL_STATE: UserState = {
   userCategory: 'general',
   userCountry: 'ro',
+  userUnits: 'c',
   currentUser: null,
   userSaved: [],
   userLiked: [],
@@ -90,6 +93,7 @@ const userReducer = (
   action: UserActionTYPES
 ): UserState => {
   switch (action.type) {
+    // User News
     case SET_USER_CATEGORY:
       return {
         ...state,
@@ -102,6 +106,14 @@ const userReducer = (
         userCountry: action.payload,
       };
 
+    // User Weather
+    case SET_USER_UNITS:
+      return {
+        ...state,
+        userUnits: action.payload,
+      };
+
+    // User Current
     case SET_CURRENT_USER:
       return {
         ...state,

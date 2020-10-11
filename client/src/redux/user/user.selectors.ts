@@ -14,6 +14,11 @@ export const selectUserCountry = createSelector(
   (user) => user.userCountry
 );
 
+export const selectUserUnits = createSelector(
+  [selectUser],
+  (user) => user.userUnits
+);
+
 export const selectCurrentUser = createSelector(
   [selectUser],
   (user) => user.currentUser

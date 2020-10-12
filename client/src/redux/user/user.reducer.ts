@@ -3,6 +3,7 @@ import {
   SET_USER_CATEGORY,
   SET_USER_COUNTRY,
   SET_USER_UNITS,
+  SET_USER_COORDS,
   SET_CURRENT_USER,
   SIGN_IN_START,
   SIGN_IN_SUCCESS,
@@ -57,6 +58,7 @@ import {
   DELETE_USER_SEARCHES_SUCCESS,
   DELETE_USER_SEARCHES_FAILURE,
   UserActionTYPES,
+  UserCoords,
 } from './user.types';
 import { News } from '../news/news.types';
 
@@ -64,6 +66,7 @@ interface UserState {
   userCategory: string;
   userCountry: string;
   userUnits: string;
+  userCoords: UserCoords
 
   currentUser: User | null;
 
@@ -80,6 +83,10 @@ const INITIAL_STATE: UserState = {
   userCategory: 'general',
   userCountry: 'ro',
   userUnits: 'c',
+  userCoords: {
+    lat: '44.439663',
+    lng: '26.096306'
+  },
   currentUser: null,
   userSaved: [],
   userLiked: [],
@@ -111,6 +118,13 @@ const userReducer = (
       return {
         ...state,
         userUnits: action.payload,
+      };
+
+    // User Coords
+    case SET_USER_COORDS:
+      return {
+        ...state,
+        userCoords: action.payload,
       };
 
     // User Current

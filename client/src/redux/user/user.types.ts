@@ -7,6 +7,9 @@ export const SET_USER_COUNTRY = 'SET_USER_COUNTRY';
 // User Weather
 export const SET_USER_UNITS = 'SET_USER_UNITS';
 
+// User Coords
+export const SET_USER_COORDS = 'SET_USER_COORDS';
+
 // User Current User
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
@@ -111,6 +114,11 @@ export interface UserNews {
   content: string;
 }
 
+export interface UserCoords {
+  lat: string,
+  lng: string
+};
+
 // Set News
 interface SetUserCategoryAction {
   type: typeof SET_USER_CATEGORY;
@@ -126,6 +134,12 @@ interface SetUserCountryAction {
 interface SetUserUnitsAction {
   type: typeof SET_USER_UNITS;
   payload: string;
+}
+
+// User Coords
+interface SetUserCoordsAction {
+  type: typeof SET_USER_COORDS;
+  payload: UserCoords
 }
 
 // Set Current User
@@ -388,6 +402,7 @@ export type UserActionTYPES =
   | SetUserCategoryAction
   | SetUserCountryAction
   | SetUserUnitsAction
+  | SetUserCoordsAction
   | SetCurrentUser
   | SignInStart
   | SignInSuccess

@@ -6,6 +6,7 @@ import {
   SET_USER_CATEGORY,
   SET_USER_COUNTRY,
   SET_USER_UNITS,
+  SET_USER_COORDS,
   SET_CURRENT_USER,
   SIGN_IN_START,
   SIGN_IN_SUCCESS,
@@ -61,6 +62,7 @@ import {
   DELETE_USER_SEARCHES_FAILURE,
   UserActionTYPES,
   UserNews,
+  UserCoords
 } from './user.types';
 import { News } from '../news/news.types';
 
@@ -79,6 +81,12 @@ export const setUserCountry = (country: string): UserActionTYPES => ({
 export const setUserUnits = (unit: string): UserActionTYPES => ({
   type: SET_USER_UNITS,
   payload: unit,
+});
+
+// Set User Coords
+export const setUserCoords = (coords: UserCoords): UserActionTYPES => ({
+  type: SET_USER_COORDS,
+  payload: coords,
 });
 
 // Set Current User

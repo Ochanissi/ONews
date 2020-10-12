@@ -110,6 +110,11 @@
 
         cursor: pointer;
       }
+
+      button {
+        border: none;
+        background-color: transparent;
+      }
     }
 
     &--content {
@@ -184,6 +189,36 @@
           text-decoration: none;
         }
       }
+    }
+  }
+
+  &__animation {
+    @keyframes times {
+      0% {
+        transform: translateX(0);
+      }
+      15% {
+        transform: translateX(2.5px);
+      }
+      30% {
+        transform: translateX(-2.5px);
+      }
+      45% {
+        transform: translateX(1.5px);
+      }
+      60% {
+        transform: translateX(-1.5px);
+      }
+      75% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    &:hover {
+      animation: times 1s cubic-bezier(0.36, 0.07, 0.57, 0.99);
     }
   }
 }

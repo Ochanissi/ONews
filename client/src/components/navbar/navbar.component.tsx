@@ -12,6 +12,7 @@ import './navbar.styles.scss';
 import { User } from '../../redux/user/user.types';
 import {
   selectCurrentUser,
+  selectUserCategory,
   selectUserCountry,
 } from '../../redux/user/user.selectors';
 import CustomButton from '../custom-button/custom-button.component';
@@ -247,7 +248,7 @@ class Navbar extends React.Component<Props, NavbarState> {
   };
 
   render(): JSX.Element {
-    const { currentUser } = this.props;
+    const { currentUser, userCategory, userCountry } = this.props;
     const {
       searchValue,
       popupVisible,
@@ -392,7 +393,7 @@ class Navbar extends React.Component<Props, NavbarState> {
 
         <ul className='navbar__secondary'>
           <li>
-            <Link to='/'>
+            <Link to={`/news/${userCountry}/${userCategory}`}>
               <ion-icon name='home'></ion-icon>
             </Link>
           </li>
@@ -468,6 +469,7 @@ class Navbar extends React.Component<Props, NavbarState> {
 interface LinkStateProps {
   currentUser: User;
   userCountry: string;
+  userCategory: string;
 }
 
 interface LinkDispatchProps {
@@ -478,6 +480,7 @@ interface LinkDispatchProps {
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   userCountry: selectUserCountry,
+  userCategory: selectUserCategory,
 });
 
 const mapDispatchToProps = (

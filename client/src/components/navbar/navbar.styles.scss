@@ -60,6 +60,8 @@
 
     z-index: 99;
 
+    image-rendering: -webkit-optimize-contrast;
+
     &--icon:link,
     &--icon:visited {
       text-decoration: none;
@@ -135,27 +137,27 @@
       /* transition: 0.2s; */
     }
 
-    &--searchbar:focus ~ .navbar__main--dropdown {
-      // display: block;
+    // &--searchbar:focus ~ .navbar__main--dropdown {
+    // display: block;
 
-      // width: 40rem;
-      // transition: 0.3s;
-      /* Stops the input box from inheriting the styling from the inputs on the request form */
-      // border-bottom: $color-grey-dark-4 solid 2px;
-      // outline: none;
+    // width: 40rem;
+    // transition: 0.3s;
+    /* Stops the input box from inheriting the styling from the inputs on the request form */
+    // border-bottom: $color-grey-dark-4 solid 2px;
+    // outline: none;
 
-      // @media only screen and (max-width: $bp-small) {
-      //   width: 30rem;
-      // }
+    // @media only screen and (max-width: $bp-small) {
+    //   width: 30rem;
+    // }
 
-      // @media only screen and (max-width: $bp-smallest) {
-      //   width: 20rem;
-      // }
+    // @media only screen and (max-width: $bp-smallest) {
+    //   width: 20rem;
+    // }
 
-      // @media only screen and (max-width: $bp-phone) {
-      //   width: 15rem;
-      // }
-    }
+    // @media only screen and (max-width: $bp-phone) {
+    //   width: 15rem;
+    // }
+    // }
 
     &--dd-icon {
       float: right;

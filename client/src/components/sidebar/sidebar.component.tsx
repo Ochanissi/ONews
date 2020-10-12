@@ -25,7 +25,7 @@ const Sidebar = ({ userCategory, userCountry, location }: Props) => {
       <div id='menuToggle'>
         <input type='checkbox' defaultChecked />
 
-        <Link to='/'>
+        <Link to={`/news/${userCountry}/${userCategory}`}>
           <img src={mainLogo} alt='App Logo' className='navbar__logo' />
         </Link>
 

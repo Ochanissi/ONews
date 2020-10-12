@@ -41,6 +41,7 @@ import {
 import ProfileData from './pages/profile-data/profile-data.component';
 import { render } from '@testing-library/react';
 import { isJsxAttributes, JsxEmit } from 'typescript';
+import ProfileSettings from './pages/profile-settings/profile-settings.components';
 
 declare global {
   namespace JSX {
@@ -50,96 +51,92 @@ declare global {
   }
 }
 
-interface AppProps { }
+interface AppProps {}
 
 type Props = AppProps & LinkDispatchProps & LinkStateProps;
 
 class App extends React.Component<Props> {
   componentDidMount() {
-    const {userCategory,
-    userCountry,
-    currentUser,
-    getUserSavedStartAsync,
-    getUserLikedStartAsync,
-    getUserDislikedStartAsync,
-    getUserHiddenStartAsync,
-    getUserSearchesStartAsync,
-  } = this.props
+    const {
+      currentUser,
+      getUserSavedStartAsync,
+      getUserLikedStartAsync,
+      getUserDislikedStartAsync,
+      getUserHiddenStartAsync,
+      getUserSearchesStartAsync,
+    } = this.props;
 
-  if (currentUser) {
-    getUserSavedStartAsync(currentUser.email);
-    getUserLikedStartAsync(currentUser.email);
-    getUserDislikedStartAsync(currentUser.email);
-    getUserHiddenStartAsync(currentUser.email);
-    getUserSearchesStartAsync(currentUser.email);
+    if (currentUser) {
+      getUserSavedStartAsync(currentUser.email);
+      getUserLikedStartAsync(currentUser.email);
+      getUserDislikedStartAsync(currentUser.email);
+      getUserHiddenStartAsync(currentUser.email);
+      getUserSearchesStartAsync(currentUser.email);
+    }
   }
 
+  render() {
+    const { userCategory, userCountry, currentUser } = this.props;
+
+    return (
+      <div className='App'>
+        <NavBar />
+        <Switch>
+          <Route
+            exact
+            path='/'
+            render={() => (
+              <Redirect to={`/news/${userCountry}/${userCategory}`} />
+            )}
+          />
+          <Route exact path='/news/:country/:category' component={HomePage} />
+          <Route
+            exact
+            path='/search/:query/:queryTitle/:date/:lang/:sortBy'
+            component={SearchPage}
+          />
+          <Route
+            exact
+            path='/auth/sign-in'
+            render={() => (currentUser ? <Redirect to='/' /> : <SignIn />)}
+          />
+          <Route
+            exact
+            path='/auth/sign-up'
+            render={() => (currentUser ? <Redirect to='/' /> : <SignUp />)}
+          />
+          <Route
+            exact
+            path='/profile'
+            render={() =>
+              currentUser ? <Profile /> : <Redirect to='/auth/sign-in' />
+            }
+          />
+
+          <Route
+            exact
+            path='/profile/settings'
+            render={() =>
+              currentUser ? (
+                <ProfileSettings />
+              ) : (
+                <Redirect to='/auth/sign-in' />
+              )
+            }
+          />
+
+          <Route
+            exact
+            path='/profile/:type'
+            render={() =>
+              currentUser ? <ProfileData /> : <Redirect to='/auth/sign-in' />
+            }
+          />
+        </Switch>
+      </div>
+    );
   }
-
-
-render() {
-  const {userCategory,
-    userCountry,
-    currentUser,
-
-  } = this.props
-
-  return (
-    <div className='App'>
-      <NavBar />
-      <Switch>
-        <Route
-          exact
-          path='/'
-          render={() => (
-            <Redirect to={`/news/${userCountry}/${userCategory}`} />
-          )}
-        />
-        <Route exact path='/news/:country/:category' component={HomePage} />
-        <Route
-          exact
-          path='/search/:query/:queryTitle/:date/:lang/:sortBy'
-          component={SearchPage}
-        />
-        <Route
-          exact
-          path='/auth/sign-in'
-          render={() => (currentUser ? <Redirect to='/' /> : <SignIn />)}
-        />
-        <Route
-          exact
-          path='/auth/sign-up'
-          render={() => (currentUser ? <Redirect to='/' /> : <SignUp />)}
-        />
-        <Route
-          exact
-          path='/profile'
-          render={() =>
-            currentUser ? <Profile /> : <Redirect to='/auth/sign-in' />
-          }
-        />
-
-        <Route
-          exact
-          path='/profile/settings'
-          render={() =>
-            currentUser ? <Profile /> : <Redirect to='/auth/sign-in' />
-          }
-        />
-
-        <Route
-          exact
-          path='/profile/:type'
-          render={() =>
-            currentUser ? <ProfileData /> : <Redirect to='/auth/sign-in' />
-          }
-        />
-      </Switch>
-    </div>
-  );
 }
-
-};
 
 interface LinkDispatchProps {
   getUserSavedStartAsync: (email: string) => void;
@@ -147,7 +144,6 @@ interface LinkDispatchProps {
   getUserDislikedStartAsync: (email: string) => void;
   getUserHiddenStartAsync: (email: string) => void;
   getUserSearchesStartAsync: (email: string) => void;
-
 }
 
 interface LinkStateProps {
@@ -172,7 +168,6 @@ const mapDispatchToProps = (
   getUserHiddenStartAsync: (email) => dispatch(getUserHiddenStartAsync(email)),
   getUserSearchesStartAsync: (email) =>
     dispatch(getUserSearchesStartAsync(email)),
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -6,8 +6,6 @@
   &__profile {
     display: flex;
     align-items: center;
-
-    padding: 0 2rem;
   }
 
   &__input {
@@ -80,16 +78,26 @@
   }
 
   &__photo {
-    display: flex;
-    align-items: center;
+    margin-left: auto;
+    // display: flex;
+    // align-items: flex-end;
 
-    margin-bottom: 5rem;
+    // margin-bottom: 5rem;
+
+    position: relative;
+
+    &--container {
+      display: flex;
+      align-items: center;
+
+      margin-bottom: 1rem;
+    }
 
     &--image {
       width: 6rem;
 
-      // border-radius: 50%;
-      border: 1px solid $color-white;
+      border-radius: 50%;
+      // border: 1px solid $color-white;
     }
 
     &--text {
@@ -99,18 +107,34 @@
 }
 
 #form-input__photo--btn {
-  color: $color-primary;
+  color: $color-white;
 
   background-color: transparent;
+  border: none;
 
-  margin-left: 3rem;
+  position: absolute;
+
+  margin: 0;
+  padding: 0;
+
+  width: 6rem;
+  height: 6rem;
+
+  top: 0rem;
+  left: 0rem;
+
+  border-radius: 50%;
+  background-color: rgba($color-black, 0.5);
+
+  opacity: 0;
+
+  ion-icon {
+    font-size: 3rem;
+  }
+
+  // margin-left: 3rem;
 
   &:hover {
-    background-color: $color-primary;
-
-    border: 2px solid $color-primary-darker;
-    color: $color-white;
-
-    margin-left: 3rem;
+    opacity: 1;
   }
 }

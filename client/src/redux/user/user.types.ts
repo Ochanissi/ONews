@@ -98,6 +98,7 @@ export interface User {
   occupation: string;
   age: string;
   country: string;
+  phone: string;
   about: string;
   photo: string;
   joined: string;
@@ -115,9 +116,9 @@ export interface UserNews {
 }
 
 export interface UserCoords {
-  lat: string,
-  lng: string
-};
+  lat: string;
+  lng: string;
+}
 
 // Set News
 interface SetUserCategoryAction {
@@ -139,7 +140,7 @@ interface SetUserUnitsAction {
 // User Coords
 interface SetUserCoordsAction {
   type: typeof SET_USER_COORDS;
-  payload: UserCoords
+  payload: UserCoords;
 }
 
 // Set Current User

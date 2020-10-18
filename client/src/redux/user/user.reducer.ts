@@ -57,6 +57,8 @@ import {
   DELETE_USER_SEARCHES_START,
   DELETE_USER_SEARCHES_SUCCESS,
   DELETE_USER_SEARCHES_FAILURE,
+  UPDATE_USER_DATA_SUCCESS,
+  UPDATE_USER_DATA_FAILURE,
   UserActionTYPES,
   UserCoords,
 } from './user.types';
@@ -66,7 +68,7 @@ interface UserState {
   userCategory: string;
   userCountry: string;
   userUnits: string;
-  userCoords: UserCoords
+  userCoords: UserCoords;
 
   currentUser: User | null;
 
@@ -85,7 +87,7 @@ const INITIAL_STATE: UserState = {
   userUnits: 'c',
   userCoords: {
     lat: '44.439663',
-    lng: '26.096306'
+    lng: '26.096306',
   },
   currentUser: null,
   userSaved: [],
@@ -344,6 +346,19 @@ const userReducer = (
       };
 
     case DELETE_USER_SEARCHES_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    // User Data
+    case UPDATE_USER_DATA_SUCCESS:
+      return {
+        ...state,
+        currentUser: action.payload,
+      };
+
+    case UPDATE_USER_DATA_FAILURE:
       return {
         ...state,
         errorMessage: action.payload,

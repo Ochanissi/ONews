@@ -60,9 +60,13 @@ import {
   DELETE_USER_SEARCHES_START,
   DELETE_USER_SEARCHES_SUCCESS,
   DELETE_USER_SEARCHES_FAILURE,
+  UPDATE_USER_DATA_START,
+  UPDATE_USER_DATA_SUCCESS,
+  UPDATE_USER_DATA_FAILURE,
   UserActionTYPES,
   UserNews,
-  UserCoords
+  UserCoords,
+  UserUpdate,
 } from './user.types';
 import { News } from '../news/news.types';
 
@@ -889,5 +893,50 @@ export const deleteUserSearchesStartAsync = (
   } catch (error) {
     dispatch(deleteUserSearchesFailure(error.message));
     // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
+// Update User Data
+export const updateUserDataStart = (): UserActionTYPES => ({
+  type: UPDATE_USER_DATA_START,
+});
+
+export const updateUserDataSuccess = (currentUser: User): UserActionTYPES => ({
+  type: UPDATE_USER_DATA_SUCCESS,
+  payload: currentUser,
+});
+
+export const updateUserDataFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: UPDATE_USER_DATA_FAILURE,
+  payload: errorMessage,
+});
+
+export const updateUserDataStartAsync = (user: UserUpdate) => async (
+  dispatch: Dispatch<UserActionTYPES>
+) => {
+  try {
+    dispatch(updateUserDataStart());
+
+    const res = await axios({
+      method: 'PATCH',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}profile`,
+      data: {
+        ...user,
+      },
+    });
+
+    if (res.data.id) {
+      dispatch(updateUserDataSuccess(res.data));
+
+      // console.log(res.data.email);
+      // getUserSavedStartAsync;
+
+      //   // Toast.success('Data successfully updated!', 1000);
+    }
+  } catch (error) {
+    dispatch(updateUserDataFailure(error.message));
+    // Toast.fail('Failed updating data!', 1000);
   }
 };

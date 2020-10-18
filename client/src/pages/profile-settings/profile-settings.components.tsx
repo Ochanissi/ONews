@@ -9,22 +9,163 @@ import { connect } from 'react-redux';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../redux/store';
-import { User } from '../../redux/user/user.types';
+import { User, UserUpdate } from '../../redux/user/user.types';
 import { createStructuredSelector } from 'reselect';
+import { updateUserDataStartAsync } from '../../redux/user/user.actions';
 
 interface ProfileSettingsProps {}
 
-interface ProfileSettingsState {}
+interface ProfileSettingsState {
+  name: string;
+  email: string;
+  occupation: string;
+  age: string;
+  country: string;
+  phone: string;
+  about: string;
+  photo: string;
+  joined: string;
+}
 
 type Props = ProfileSettingsProps & LinkDispatchProps & LinkStateProps;
 
 class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
-  handleChange = () => {
-    console.log('lel');
+  constructor(props: Props) {
+    super(props);
+
+    const {
+      currentUser: {
+        name,
+        email,
+        occupation,
+        age,
+        country,
+        phone,
+        about,
+        photo,
+        joined,
+      },
+    } = this.props;
+
+    this.state = {
+      name,
+      email,
+      age,
+      occupation,
+      country,
+      phone,
+      about,
+      photo,
+      joined,
+    };
+  }
+
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = event.target;
+    this.setState<any>({ [name]: value });
+  };
+
+  handleSubmitPublic = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+
+    const { email, name, age, occupation, country, about, photo } = this.state;
+
+    const { updateUserDataStartAsync } = this.props;
+
+    updateUserDataStartAsync({
+      email,
+      name,
+      age,
+      occupation,
+      country,
+      about,
+      photo,
+    });
+  };
+
+  handleClearPublic = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
+    const {
+      currentUser: { name, age, occupation, country, about, photo },
+    } = this.props;
+
+    this.setState({
+      name,
+      age,
+      occupation,
+      country,
+      about,
+      photo,
+    });
+  };
+
+  handleSubmitContact = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+
+    const { email, phone } = this.state;
+
+    const { updateUserDataStartAsync } = this.props;
+
+    updateUserDataStartAsync({
+      email,
+      phone,
+    });
+  };
+
+  handleClearContact = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
+    const {
+      currentUser: { name, phone },
+    } = this.props;
+
+    this.setState({
+      name,
+      phone,
+    });
+  };
+
+  handleSubmitSecurity = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+
+    // const { email, phone } = this.state;
+
+    // const { updateUserDataStartAsync } = this.props;
+
+    // updateUserDataStartAsync({
+    //   email,
+    //   phone,
+    // });
+  };
+
+  handleClearSecurity = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
+    // const {
+    //   currentUser: { name, phone },
+    // } = this.props;
+
+    // this.setState({
+    //   name,
+    //   phone,
+    // });
   };
 
   render(): JSX.Element {
-    console.log(this.props);
+    const {
+      name,
+      email,
+      occupation,
+      age,
+      country,
+      phone,
+      about,
+      photo,
+      joined,
+    } = this.state;
+
+    // console.log(this.props);
 
     return (
       <div className='profile-settings'>
@@ -35,7 +176,10 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
           </h4>
 
           <div className='profile-settings__content--blocks'>
-            <div className='profile-settings-block'>
+            <form
+              className='profile-settings-block'
+              onSubmit={this.handleSubmitPublic}
+            >
               <h3 className='profile-settings-block__header'>Public info</h3>
               <h4 className='profile-settings-block__sub-header'>
                 Some info may be visible to other people using ONews services.
@@ -71,7 +215,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                 <FormInput
                   name='name'
                   type='text'
-                  value={'name' || ''}
+                  value={name || ''}
                   handleChange={this.handleChange}
                   required
                   label='Your name'
@@ -80,20 +224,9 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   profile
                 />
                 <FormInput
-                  name='email'
-                  type='email'
-                  value={'email' || ''}
-                  handleChange={this.handleChange}
-                  required
-                  label='Email Address'
-                  placeholder='example@google.com'
-                  disabled
-                  profile
-                />
-                <FormInput
                   name='age'
                   type='number'
-                  value={'age' || ''}
+                  value={age || ''}
                   handleChange={this.handleChange}
                   label='Age'
                   placeholder='How old are you.'
@@ -105,7 +238,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                 <FormInput
                   name='occupation'
                   type='text'
-                  value={'occupation' || ''}
+                  value={occupation || ''}
                   handleChange={this.handleChange}
                   label='Occupation'
                   placeholder='What do you do for a living.'
@@ -115,7 +248,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                 <FormInput
                   name='country'
                   type='text'
-                  value={'country' || ''}
+                  value={country || ''}
                   handleChange={this.handleChange}
                   label='Country'
                   placeholder='Which country you are from.'
@@ -134,12 +267,15 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                     placeholder='Tell us about yourself.'
                     maxLength={200}
                     rows={3}
-                    value={'about' || ''}
+                    value={about || ''}
                   ></textarea>
                 </div>
 
                 <div className='profile-settings-block__content--btns'>
-                  <button className='profile-settings-block__content--btns--1'>
+                  <button
+                    className='profile-settings-block__content--btns--1'
+                    onClick={this.handleClearPublic}
+                  >
                     Clear
                   </button>
 
@@ -152,9 +288,12 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   </button>
                 </div>
               </div>
-            </div>
+            </form>
 
-            <div className='profile-settings-block'>
+            <form
+              className='profile-settings-block'
+              onSubmit={this.handleSubmitContact}
+            >
               <h3 className='profile-settings-block__header'>Contact info</h3>
               <h4 className='profile-settings-block__sub-header'>
                 This info is not shared with other people.
@@ -163,7 +302,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                 <FormInput
                   name='email'
                   type='email'
-                  value={'email' || ''}
+                  value={email || ''}
                   handleChange={this.handleChange}
                   required
                   label='Email Address'
@@ -173,18 +312,20 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                 />
 
                 <FormInput
-                  name='email'
-                  type='email'
-                  value={'email' || ''}
+                  name='phone'
+                  type='tel'
+                  value={phone || ''}
                   handleChange={this.handleChange}
                   required
                   label='Phone Number'
-                  placeholder='example@google.com'
-                  disabled
+                  placeholder='123-456-7890'
                   profile
                 />
                 <div className='profile-settings-block__content--btns'>
-                  <button className='profile-settings-block__content--btns--1'>
+                  <button
+                    className='profile-settings-block__content--btns--1'
+                    onClick={this.handleClearContact}
+                  >
                     Clear
                   </button>
 
@@ -197,9 +338,12 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   </button>
                 </div>
               </div>
-            </div>
+            </form>
 
-            <div className='profile-settings-block'>
+            <form
+              className='profile-settings-block'
+              onSubmit={this.handleSubmitSecurity}
+            >
               <h3 className='profile-settings-block__header'>Security</h3>
               <h4 className='profile-settings-block__sub-header'>
                 Settings and recommendations to help you keep your account
@@ -209,7 +353,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                 <FormInput
                   name='email'
                   type='email'
-                  value={'email' || ''}
+                  value={email || ''}
                   handleChange={this.handleChange}
                   required
                   label='Email Address'
@@ -221,7 +365,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                 <FormInput
                   name='email'
                   type='email'
-                  value={'email' || ''}
+                  value={email || ''}
                   handleChange={this.handleChange}
                   required
                   label='Phone Number'
@@ -230,7 +374,10 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   profile
                 />
                 <div className='profile-settings-block__content--btns'>
-                  <button className='profile-settings-block__content--btns--1'>
+                  <button
+                    className='profile-settings-block__content--btns--1'
+                    onClick={this.handleClearSecurity}
+                  >
                     Clear
                   </button>
 
@@ -243,7 +390,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   </button>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -252,11 +399,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 }
 
 interface LinkDispatchProps {
-  // getUserSavedStartAsync: (email: string) => void;
-  // getUserLikedStartAsync: (email: string) => void;
-  // getUserDislikedStartAsync: (email: string) => void;
-  // getUserHiddenStartAsync: (email: string) => void;
-  // getUserSearchesStartAsync: (email: string) => void;
+  updateUserDataStartAsync: (user: UserUpdate) => void;
 }
 
 interface LinkStateProps {
@@ -270,13 +413,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
-  // getUserSavedStartAsync: (email) => dispatch(getUserSavedStartAsync(email)),
-  // getUserLikedStartAsync: (email) => dispatch(getUserLikedStartAsync(email)),
-  // getUserDislikedStartAsync: (email) =>
-  //   dispatch(getUserDislikedStartAsync(email)),
-  // getUserHiddenStartAsync: (email) => dispatch(getUserHiddenStartAsync(email)),
-  // getUserSearchesStartAsync: (email) =>
-  //   dispatch(getUserSearchesStartAsync(email)),
+  updateUserDataStartAsync: (user) => dispatch(updateUserDataStartAsync(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileSettings);

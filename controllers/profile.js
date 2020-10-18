@@ -16,9 +16,9 @@ const handleGetProfile = (req, res, db) => {
 };
 
 const handlePatchProfile = (req, res, db) => {
-  const { name, email, age, occupation, country, about } = req.body;
+  const { name, email, age, occupation, country, phone, about } = req.body;
 
-  // console.log({ name, email, age, occupation, country, about });
+  // console.log(req.body);
 
   // console.log(req.file);
 
@@ -28,6 +28,7 @@ const handlePatchProfile = (req, res, db) => {
     .update({ occupation: occupation })
     .update({ age: age })
     .update({ country: country })
+    .update({ phone: phone })
     .update({ about: about })
     // .update({ photo: photo })
     .returning('*')

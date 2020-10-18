@@ -91,6 +91,11 @@ export const DELETE_USER_SEARCHES_START = 'DELETE_USER_SEARCHES_START';
 export const DELETE_USER_SEARCHES_SUCCESS = 'DELETE_USER_SEARCHES_SUCCESS';
 export const DELETE_USER_SEARCHES_FAILURE = 'DELETE_USER_SEARCHES_FAILURE';
 
+// Update User Settings
+export const UPDATE_USER_DATA_START = 'UPDATE_USER_DATA_START';
+export const UPDATE_USER_DATA_SUCCESS = 'UPDATE_USER_DATA_SUCCESS';
+export const UPDATE_USER_DATA_FAILURE = 'UPDATE_USER_DATA_FAILURE';
+
 export interface User {
   id: number;
   name: string;
@@ -102,6 +107,17 @@ export interface User {
   about: string;
   photo: string;
   joined: string;
+}
+
+export interface UserUpdate {
+  name?: string;
+  email: string;
+  occupation?: string;
+  age?: string;
+  country?: string;
+  phone?: string;
+  about?: string;
+  photo?: string;
 }
 
 export interface UserNews {
@@ -399,6 +415,21 @@ interface DeleteUserSearchesFailure {
   payload: string;
 }
 
+// Update User Settings
+interface UpdateUserDataStart {
+  type: typeof UPDATE_USER_DATA_START;
+}
+
+interface UpdateUserDataSuccess {
+  type: typeof UPDATE_USER_DATA_SUCCESS;
+  payload: User;
+}
+
+interface UpdateUserDataFailure {
+  type: typeof UPDATE_USER_DATA_FAILURE;
+  payload: string;
+}
+
 export type UserActionTYPES =
   | SetUserCategoryAction
   | SetUserCountryAction
@@ -456,4 +487,7 @@ export type UserActionTYPES =
   | GetUserSearchesFailure
   | DeleteUserSearchesStart
   | DeleteUserSearchesSuccess
-  | DeleteUserSearchesFailure;
+  | DeleteUserSearchesFailure
+  | UpdateUserDataStart
+  | UpdateUserDataSuccess
+  | UpdateUserDataFailure;

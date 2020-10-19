@@ -25,6 +25,9 @@ interface ProfileSettingsState {
   about: string;
   photo: string;
   joined: string;
+  oldPass: string;
+  newPass1: string;
+  newPass2: string;
 }
 
 type Props = ProfileSettingsProps & LinkDispatchProps & LinkStateProps;
@@ -57,6 +60,9 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       about,
       photo,
       joined,
+      oldPass: '',
+      newPass1: '',
+      newPass2: '',
     };
   }
 
@@ -142,14 +148,11 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
   handleClearSecurity = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
-    // const {
-    //   currentUser: { name, phone },
-    // } = this.props;
-
-    // this.setState({
-    //   name,
-    //   phone,
-    // });
+    this.setState({
+      oldPass: '',
+      newPass1: '',
+      newPass2: '',
+    });
   };
 
   render(): JSX.Element {
@@ -163,6 +166,9 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       about,
       photo,
       joined,
+      oldPass,
+      newPass1,
+      newPass2,
     } = this.state;
 
     // console.log(this.props);
@@ -351,26 +357,38 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
               </h4>
               <div className='profile-settings-block__content'>
                 <FormInput
-                  name='email'
-                  type='email'
-                  value={email || ''}
+                  name='oldPass'
+                  type='password'
+                  value={oldPass || ''}
                   handleChange={this.handleChange}
                   required
-                  label='Email Address'
-                  placeholder='example@google.com'
-                  disabled
+                  label='Current Password'
+                  placeholder='••••••••'
+                  minLength={8}
                   profile
                 />
 
                 <FormInput
-                  name='email'
-                  type='email'
-                  value={email || ''}
+                  name='newPass1'
+                  type='password'
+                  value={newPass1 || ''}
                   handleChange={this.handleChange}
                   required
-                  label='Phone Number'
-                  placeholder='example@google.com'
-                  disabled
+                  label='New Password'
+                  placeholder='••••••••'
+                  minLength={8}
+                  profile
+                />
+
+                <FormInput
+                  name='newPass2'
+                  type='password'
+                  value={newPass2 || ''}
+                  handleChange={this.handleChange}
+                  required
+                  label='Confirm Password'
+                  placeholder='••••••••'
+                  minLength={8}
                   profile
                 />
                 <div className='profile-settings-block__content--btns'>

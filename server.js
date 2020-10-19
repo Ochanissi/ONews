@@ -105,6 +105,10 @@ app.patch('/profile', (req, res) => {
   profile.handlePatchProfile(req, res, db);
 });
 
+app.patch('/password', (req, res) => {
+  profile.handlePatchPassword(req, res, db, bcrypt);
+});
+
 // User Saved
 app.post('/post-saved', (req, res) => {
   saved.handlePostSaved(req, res, db);

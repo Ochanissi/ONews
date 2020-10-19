@@ -28,7 +28,7 @@
     resize: none;
 
     &:focus:invalid {
-      border-bottom: 2px solid $color-primary;
+      border-bottom: 2px solid $color-button-4;
     }
     &:focus {
       outline: none;
@@ -44,7 +44,7 @@
       border-radius: 8px;
 
       &:focus:invalid {
-        border-bottom: 1px solid $color-primary;
+        border-bottom: 1px solid $color-button-4;
       }
       &:focus {
         outline: none;

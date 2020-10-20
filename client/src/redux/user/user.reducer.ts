@@ -57,8 +57,12 @@ import {
   DELETE_USER_SEARCHES_START,
   DELETE_USER_SEARCHES_SUCCESS,
   DELETE_USER_SEARCHES_FAILURE,
+  UPDATE_USER_DATA_START,
   UPDATE_USER_DATA_SUCCESS,
   UPDATE_USER_DATA_FAILURE,
+  UPDATE_USER_PASSWORD_START,
+  UPDATE_USER_PASSWORD_SUCCESS,
+  UPDATE_USER_PASSWORD_FAILURE,
   UserActionTYPES,
   UserCoords,
 } from './user.types';
@@ -359,6 +363,18 @@ const userReducer = (
       };
 
     case UPDATE_USER_DATA_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    // User Password
+    case UPDATE_USER_PASSWORD_SUCCESS:
+      return {
+        ...state,
+      };
+
+    case UPDATE_USER_PASSWORD_FAILURE:
       return {
         ...state,
         errorMessage: action.payload,

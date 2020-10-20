@@ -39,8 +39,8 @@ import {
   getUserSearchesStartAsync,
 } from './redux/user/user.actions';
 import ProfileData from './pages/profile-data/profile-data.component';
-import { render } from '@testing-library/react';
-import { isJsxAttributes, JsxEmit } from 'typescript';
+// import { render } from '@testing-library/react';
+// import { isJsxAttributes, JsxEmit } from 'typescript';
 import ProfileSettings from './pages/profile-settings/profile-settings.components';
 
 declare global {

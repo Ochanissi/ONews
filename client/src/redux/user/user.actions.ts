@@ -63,6 +63,9 @@ import {
   UPDATE_USER_DATA_START,
   UPDATE_USER_DATA_SUCCESS,
   UPDATE_USER_DATA_FAILURE,
+  UPDATE_USER_PASSWORD_START,
+  UPDATE_USER_PASSWORD_SUCCESS,
+  UPDATE_USER_PASSWORD_FAILURE,
   UserActionTYPES,
   UserNews,
   UserCoords,
@@ -937,6 +940,57 @@ export const updateUserDataStartAsync = (user: UserUpdate) => async (
     }
   } catch (error) {
     dispatch(updateUserDataFailure(error.message));
+    // Toast.fail('Failed updating data!', 1000);
+  }
+};
+
+// Update User Password
+export const updateUserPasswordStart = (): UserActionTYPES => ({
+  type: UPDATE_USER_PASSWORD_START,
+});
+
+export const updateUserPasswordSuccess = (data: string): UserActionTYPES => ({
+  type: UPDATE_USER_PASSWORD_SUCCESS,
+  payload: data,
+});
+
+export const updateUserPasswordFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: UPDATE_USER_PASSWORD_FAILURE,
+  payload: errorMessage,
+});
+
+export const updateUserPasswordStartAsync = (
+  email: string,
+  oldPass: string,
+  newPass: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
+  try {
+    dispatch(updateUserPasswordStart());
+
+    const res = await axios({
+      method: 'PATCH',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}password`,
+      data: {
+        email,
+        oldPass,
+        newPass,
+      },
+    });
+
+    if (res.data === 'Password updated!') {
+      dispatch(updateUserPasswordSuccess(res.data));
+
+      // console.log(res.data.email);
+      // getUserSavedStartAsync;
+
+      //   // Toast.success('Data successfully updated!', 1000);
+    } else {
+      dispatch(updateUserPasswordFailure(res.data));
+    }
+  } catch (error) {
+    dispatch(updateUserPasswordFailure(error.message));
     // Toast.fail('Failed updating data!', 1000);
   }
 };

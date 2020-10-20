@@ -3,6 +3,8 @@
 .form-input {
   color: $color-grey-dark-4;
 
+  position: relative;
+
   &__profile {
     display: flex;
     align-items: center;
@@ -25,7 +27,13 @@
     /* Pseudo element (a visible thing that isn't really in the DOM).
     Also needs -ms- */
 
+    position: relative;
+
     resize: none;
+
+    &:disabled {
+      color: $color-grey-dark-1;
+    }
 
     &:focus:invalid {
       border-bottom: 2px solid $color-button-4;
@@ -103,6 +111,29 @@
     &--text {
       display: none;
     }
+  }
+
+  &__icon {
+    position: absolute;
+    right: 1.5rem;
+    height: 1.75rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    border: none;
+    background: none;
+
+    font-size: 1.75rem;
+    color: $color-grey-dark-3;
+
+    &--visible {
+      color: $color-primary;
+    }
+
+    // ion-icon {
+    //   vertical-align: middle;
+    // }
   }
 }
 

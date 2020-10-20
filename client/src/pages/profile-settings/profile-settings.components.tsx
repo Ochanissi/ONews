@@ -11,7 +11,10 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../redux/store';
 import { User, UserUpdate } from '../../redux/user/user.types';
 import { createStructuredSelector } from 'reselect';
-import { updateUserDataStartAsync } from '../../redux/user/user.actions';
+import {
+  updateUserDataStartAsync,
+  updateUserPasswordStartAsync,
+} from '../../redux/user/user.actions';
 
 interface ProfileSettingsProps {}
 
@@ -26,8 +29,11 @@ interface ProfileSettingsState {
   photo: string;
   joined: string;
   oldPass: string;
-  newPass1: string;
-  newPass2: string;
+  newPass: string;
+  newPassConfirm: string;
+  oldPassVisible: boolean;
+  newPassVisible: boolean;
+  newPassConfirmVisible: boolean;
 }
 
 type Props = ProfileSettingsProps & LinkDispatchProps & LinkStateProps;
@@ -61,12 +67,17 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       photo,
       joined,
       oldPass: '',
-      newPass1: '',
-      newPass2: '',
+      newPass: '',
+      newPassConfirm: '',
+      oldPassVisible: false,
+      newPassVisible: false,
+      newPassConfirmVisible: false,
     };
   }
 
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
     const { name, value } = event.target;
     this.setState<any>({ [name]: value });
   };
@@ -135,14 +146,23 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
   handleSubmitSecurity = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    // const { email, phone } = this.state;
+    const { email, oldPass, newPass, newPassConfirm } = this.state;
+    const { updateUserPasswordStartAsync } = this.props;
 
-    // const { updateUserDataStartAsync } = this.props;
+    if (newPass === newPassConfirm) {
+      // const newPass
 
-    // updateUserDataStartAsync({
-    //   email,
-    //   phone,
-    // });
+      updateUserPasswordStartAsync(email, oldPass, newPass);
+
+      this.setState({
+        oldPass: '',
+        newPass: '',
+        newPassConfirm: '',
+      });
+    } else {
+      // make a notification here
+      console.log("Passwords don't match!");
+    }
   };
 
   handleClearSecurity = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -150,9 +170,25 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
     this.setState({
       oldPass: '',
-      newPass1: '',
-      newPass2: '',
+      newPass: '',
+      newPassConfirm: '',
     });
+  };
+
+  handlePasswordVisible = (elem: string): void => {
+    // event.preventDefault();
+
+    console.log(elem);
+
+    this.setState<any>({ [elem]: !Boolean(elem) });
+
+    console.log(this.state.oldPassVisible);
+
+    // this.setState({
+    //   oldPass: '',
+    //   newPass: '',
+    //   newPassConfirm: '',
+    // });
   };
 
   render(): JSX.Element {
@@ -167,8 +203,8 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       photo,
       joined,
       oldPass,
-      newPass1,
-      newPass2,
+      newPass,
+      newPassConfirm,
     } = this.state;
 
     // console.log(this.props);
@@ -324,7 +360,8 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   handleChange={this.handleChange}
                   required
                   label='Phone Number'
-                  placeholder='123-456-7890'
+                  placeholder='0722 222 222'
+                  minLength={8}
                   profile
                 />
                 <div className='profile-settings-block__content--btns'>
@@ -361,35 +398,48 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   type='password'
                   value={oldPass || ''}
                   handleChange={this.handleChange}
+                  handlePasswordVisible={() =>
+                    this.handlePasswordVisible('oldPassVisible')
+                  }
                   required
                   label='Current Password'
                   placeholder='••••••••'
                   minLength={8}
                   profile
+                  password
+                  passwordVisible
                 />
 
                 <FormInput
-                  name='newPass1'
+                  name='newPass'
                   type='password'
-                  value={newPass1 || ''}
+                  value={newPass || ''}
                   handleChange={this.handleChange}
+                  handlePasswordVisible={() =>
+                    this.handlePasswordVisible('newPassVisible')
+                  }
                   required
                   label='New Password'
                   placeholder='••••••••'
                   minLength={8}
                   profile
+                  password
                 />
 
                 <FormInput
-                  name='newPass2'
+                  name='newPassConfirm'
                   type='password'
-                  value={newPass2 || ''}
+                  value={newPassConfirm || ''}
                   handleChange={this.handleChange}
+                  handlePasswordVisible={() =>
+                    this.handlePasswordVisible('newPassConfirmVisible')
+                  }
                   required
                   label='Confirm Password'
                   placeholder='••••••••'
                   minLength={8}
                   profile
+                  password
                 />
                 <div className='profile-settings-block__content--btns'>
                   <button
@@ -418,6 +468,11 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
 interface LinkDispatchProps {
   updateUserDataStartAsync: (user: UserUpdate) => void;
+  updateUserPasswordStartAsync: (
+    email: string,
+    oldPass: string,
+    newPass: string
+  ) => void;
 }
 
 interface LinkStateProps {
@@ -432,6 +487,8 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
   updateUserDataStartAsync: (user) => dispatch(updateUserDataStartAsync(user)),
+  updateUserPasswordStartAsync: (email, oldPass, newPass) =>
+    dispatch(updateUserPasswordStartAsync(email, oldPass, newPass)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileSettings);

@@ -3,7 +3,8 @@ import React from 'react';
 import './form-input.styles.scss';
 
 interface FormInputProps {
-  handleChange(event: React.ChangeEvent<HTMLInputElement>): void;
+  handleChange?(event: React.ChangeEvent<HTMLInputElement>): void;
+  handlePasswordVisible?(elem: string): void;
   label: string;
   name: string;
   type: string;
@@ -17,12 +18,17 @@ interface FormInputProps {
   max?: number;
   disabled?: boolean;
   rows?: HTMLTextAreaElement;
+  password?: boolean;
+  passwordVisible?: boolean;
 }
 
 const FormInput: React.FunctionComponent<FormInputProps> = ({
   handleChange,
+  handlePasswordVisible,
   label,
   profile,
+  password,
+  passwordVisible,
   ...otherProps
 }): JSX.Element => (
   <div className={`form-input ${profile ? 'form-input__profile' : ''}`}>
@@ -42,6 +48,16 @@ const FormInput: React.FunctionComponent<FormInputProps> = ({
       onChange={handleChange}
       {...otherProps}
     />
+    {password ? (
+      <button
+        className={`form-input__icon ${
+          passwordVisible ? 'form-input__icon--visible' : ''
+        }`}
+        onClick={handlePasswordVisible}
+      >
+        <ion-icon name={`eye${passwordVisible ? '' : '-off'}`}></ion-icon>
+      </button>
+    ) : null}
   </div>
 );
 

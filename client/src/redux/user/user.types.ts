@@ -96,6 +96,11 @@ export const UPDATE_USER_DATA_START = 'UPDATE_USER_DATA_START';
 export const UPDATE_USER_DATA_SUCCESS = 'UPDATE_USER_DATA_SUCCESS';
 export const UPDATE_USER_DATA_FAILURE = 'UPDATE_USER_DATA_FAILURE';
 
+// Update User Password
+export const UPDATE_USER_PASSWORD_START = 'UPDATE_USER_PASSWORD_START';
+export const UPDATE_USER_PASSWORD_SUCCESS = 'UPDATE_USER_PASSWORD_SUCCESS';
+export const UPDATE_USER_PASSWORD_FAILURE = 'UPDATE_USER_PASSWORD_FAILURE';
+
 export interface User {
   id: number;
   name: string;
@@ -430,6 +435,21 @@ interface UpdateUserDataFailure {
   payload: string;
 }
 
+// Update User Password
+interface UpdateUserPasswordStart {
+  type: typeof UPDATE_USER_PASSWORD_START;
+}
+
+interface UpdateUserPasswordSuccess {
+  type: typeof UPDATE_USER_PASSWORD_SUCCESS;
+  payload: string;
+}
+
+interface UpdateUserPasswordFailure {
+  type: typeof UPDATE_USER_PASSWORD_FAILURE;
+  payload: string;
+}
+
 export type UserActionTYPES =
   | SetUserCategoryAction
   | SetUserCountryAction
@@ -490,4 +510,7 @@ export type UserActionTYPES =
   | DeleteUserSearchesFailure
   | UpdateUserDataStart
   | UpdateUserDataSuccess
-  | UpdateUserDataFailure;
+  | UpdateUserDataFailure
+  | UpdateUserPasswordStart
+  | UpdateUserPasswordSuccess
+  | UpdateUserPasswordFailure;

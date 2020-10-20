@@ -66,14 +66,14 @@ class WeatherContainer extends React.Component<Props> {
     }
   }
 
-  handleUnits = (unit: string): any => {
+  handleUnits = (unit: string): void => {
     const { setUserUnits } = this.props;
 
     setUserUnits(unit);
   };
 
   handleLocation = () => {
-    const { userUnits, setUserCoords, fetchWeatherStartAsync } = this.props;
+    const { userUnits, setUserCoords } = this.props;
 
     const unitFormatted =
       userUnits === 'k'

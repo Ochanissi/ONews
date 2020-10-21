@@ -9,8 +9,6 @@ const handleGetSearch = async (req, res) => {
     sortBy = 'publishedAt',
   } = req.body;
 
-  // console.log(req.body);
-
   if (!query) {
     return res.status(400).json('Incorrect request!');
   }
@@ -23,8 +21,6 @@ const handleGetSearch = async (req, res) => {
         date ? `&from=${date}` : ''
       }&apiKey=${process.env.ONEWS_NEWSAPI_KEY}`
     );
-
-    // console.log(data.data.articles);
 
     res.json(data.data.articles);
   } catch (error) {

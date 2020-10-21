@@ -1,8 +1,6 @@
 const handlePostSearches = (req, res, db) => {
   const { email, query } = req.body;
 
-  // console.log(req.body);
-
   if (!email || !query) {
     return res.status(400).json('Incorrect request!');
   }
@@ -46,8 +44,6 @@ const handleGetSearches = (req, res, db) => {
 
 const handleDeleteSearches = (req, res, db) => {
   const { email, query } = req.body;
-
-  // console.log(id);
 
   if (!email || !query) {
     return res.status(400).json('Incorrect request!');

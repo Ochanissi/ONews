@@ -66,7 +66,12 @@ class WeatherContainer extends React.Component<Props> {
     }
   }
 
-  handleUnits = (unit: string): void => {
+  handleUnits = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    unit: string
+  ): void => {
+    event.preventDefault();
+
     const { setUserUnits } = this.props;
 
     setUserUnits(unit);
@@ -167,7 +172,7 @@ class WeatherContainer extends React.Component<Props> {
               <div className='weather__container--footer'>
                 <div className='weather__container--footer--degrees'>
                   <button
-                    onClick={() => this.handleUnits('c')}
+                    onClick={(event) => this.handleUnits(event, 'c')}
                     className={`${
                       userUnits === 'c'
                         ? 'weather__container--footer--degrees--selected'
@@ -178,7 +183,7 @@ class WeatherContainer extends React.Component<Props> {
                   </button>
                   <span> | </span>
                   <button
-                    onClick={() => this.handleUnits('f')}
+                    onClick={(event) => this.handleUnits(event, 'f')}
                     className={`${
                       userUnits === 'f'
                         ? 'weather__container--footer--degrees--selected'
@@ -189,7 +194,7 @@ class WeatherContainer extends React.Component<Props> {
                   </button>
                   <span> | </span>
                   <button
-                    onClick={() => this.handleUnits('k')}
+                    onClick={(event) => this.handleUnits(event, 'k')}
                     className={`${
                       userUnits === 'k'
                         ? 'weather__container--footer--degrees--selected'

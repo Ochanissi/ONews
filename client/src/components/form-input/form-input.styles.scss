@@ -17,6 +17,7 @@
     color: $color-black;
     padding: 1.25rem 1.75rem;
     border: 2px solid $color-grey-light-3;
+    border-radius: 8px;
     width: 100%;
     background-color: $color-white;
     // border-top: 3px solid transparent;
@@ -126,6 +127,10 @@
 
     font-size: 1.75rem;
     color: $color-grey-dark-3;
+
+    &--liner {
+      bottom: 1.5rem;
+    }
 
     &--visible {
       color: $color-primary;

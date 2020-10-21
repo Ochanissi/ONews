@@ -1,8 +1,6 @@
 const handlePostHidden = (req, res, db) => {
   const { email, source } = req.body;
 
-  // console.log(req.body);
-
   if (!email || !source) {
     return res.status(400).json('Incorrect request!');
   }
@@ -46,8 +44,6 @@ const handleGetHidden = (req, res, db) => {
 
 const handleDeleteHidden = (req, res, db) => {
   const { email, source } = req.body;
-
-  // console.log(id);
 
   if (!email || !source) {
     return res.status(400).json('Incorrect request!');

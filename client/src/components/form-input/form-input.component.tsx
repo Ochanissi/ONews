@@ -4,7 +4,7 @@ import './form-input.styles.scss';
 
 interface FormInputProps {
   handleChange?(event: React.ChangeEvent<HTMLInputElement>): void;
-  handlePasswordVisible?(elem: string): void;
+  handlePasswordVisible?(event: React.MouseEvent<HTMLButtonElement>): void;
   label: string;
   name: string;
   type: string;
@@ -51,8 +51,8 @@ const FormInput: React.FunctionComponent<FormInputProps> = ({
     {password ? (
       <button
         className={`form-input__icon ${
-          passwordVisible ? 'form-input__icon--visible' : ''
-        }`}
+          profile ? '' : 'form-input__icon--liner'
+        } ${passwordVisible ? 'form-input__icon--visible' : ''}`}
         onClick={handlePasswordVisible}
       >
         <ion-icon name={`eye${passwordVisible ? '' : '-off'}`}></ion-icon>

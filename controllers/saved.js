@@ -10,8 +10,6 @@ const handlePostSaved = (req, res, db) => {
     content,
   } = req.body;
 
-  // console.log(req.body);
-
   if (
     !email ||
     !source ||
@@ -98,8 +96,6 @@ const handleGetSaved = (req, res, db) => {
 
 const handleDeleteSaved = (req, res, db) => {
   const { email, title } = req.body;
-
-  // console.log(id);
 
   if (!email || !title) {
     return res.status(400).json('Incorrect request!');

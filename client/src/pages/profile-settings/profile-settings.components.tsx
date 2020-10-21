@@ -175,20 +175,17 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     });
   };
 
-  handlePasswordVisible = (elem: string): void => {
-    // event.preventDefault();
+  handlePasswordVisible = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    elem: string
+  ): void => {
+    event.preventDefault();
 
-    console.log(elem);
-
-    this.setState<any>({ [elem]: !Boolean(elem) });
-
-    console.log(this.state.oldPassVisible);
-
-    // this.setState({
-    //   oldPass: '',
-    //   newPass: '',
-    //   newPassConfirm: '',
-    // });
+    this.setState<any>({
+      [elem]: !this.state[
+        elem as 'oldPassVisible' | 'newPassVisible' | 'newPassConfirmVisible'
+      ],
+    });
   };
 
   render(): JSX.Element {
@@ -205,6 +202,9 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       oldPass,
       newPass,
       newPassConfirm,
+      oldPassVisible,
+      newPassVisible,
+      newPassConfirmVisible,
     } = this.state;
 
     // console.log(this.props);
@@ -395,11 +395,11 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
               <div className='profile-settings-block__content'>
                 <FormInput
                   name='oldPass'
-                  type='password'
+                  type={oldPassVisible ? 'text' : 'password'}
                   value={oldPass || ''}
                   handleChange={this.handleChange}
-                  handlePasswordVisible={() =>
-                    this.handlePasswordVisible('oldPassVisible')
+                  handlePasswordVisible={(event) =>
+                    this.handlePasswordVisible(event, 'oldPassVisible')
                   }
                   required
                   label='Current Password'
@@ -407,16 +407,16 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   minLength={8}
                   profile
                   password
-                  passwordVisible
+                  passwordVisible={oldPassVisible}
                 />
 
                 <FormInput
                   name='newPass'
-                  type='password'
+                  type={newPassVisible ? 'text' : 'password'}
                   value={newPass || ''}
                   handleChange={this.handleChange}
-                  handlePasswordVisible={() =>
-                    this.handlePasswordVisible('newPassVisible')
+                  handlePasswordVisible={(event) =>
+                    this.handlePasswordVisible(event, 'newPassVisible')
                   }
                   required
                   label='New Password'
@@ -424,15 +424,16 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   minLength={8}
                   profile
                   password
+                  passwordVisible={newPassVisible}
                 />
 
                 <FormInput
                   name='newPassConfirm'
-                  type='password'
+                  type={newPassConfirmVisible ? 'text' : 'password'}
                   value={newPassConfirm || ''}
                   handleChange={this.handleChange}
-                  handlePasswordVisible={() =>
-                    this.handlePasswordVisible('newPassConfirmVisible')
+                  handlePasswordVisible={(event) =>
+                    this.handlePasswordVisible(event, 'newPassConfirmVisible')
                   }
                   required
                   label='Confirm Password'
@@ -440,6 +441,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   minLength={8}
                   profile
                   password
+                  passwordVisible={newPassConfirmVisible}
                 />
                 <div className='profile-settings-block__content--btns'>
                   <button

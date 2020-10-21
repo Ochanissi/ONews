@@ -10,8 +10,6 @@ const handlePostDisliked = (req, res, db) => {
     content,
   } = req.body;
 
-  // console.log(req.body);
-
   if (
     !email ||
     !source ||
@@ -98,8 +96,6 @@ const handleGetDisliked = (req, res, db) => {
 
 const handleDeleteDisliked = (req, res, db) => {
   const { email, title } = req.body;
-
-  // console.log(id);
 
   if (!email || !title) {
     return res.status(400).json('Incorrect request!');

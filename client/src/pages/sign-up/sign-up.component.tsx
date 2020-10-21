@@ -17,6 +17,8 @@ interface SignUpState {
   email: string;
   password: string;
   confirmPassword: string;
+  passwordVisible: boolean;
+  confirmPasswordVisible: boolean;
 }
 
 interface SignUpProps {}
@@ -32,6 +34,8 @@ class SignUp extends React.Component<Props, SignUpState> {
       email: '',
       password: '',
       confirmPassword: '',
+      passwordVisible: false,
+      confirmPasswordVisible: false,
     };
   }
 
@@ -56,8 +60,26 @@ class SignUp extends React.Component<Props, SignUpState> {
     this.setState<any>({ [name]: value });
   };
 
+  handlePasswordVisible = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    elem: string
+  ): void => {
+    event.preventDefault();
+
+    this.setState<any>({
+      [elem]: !this.state[elem as 'passwordVisible' | 'confirmPasswordVisible'],
+    });
+  };
+
   render(): JSX.Element {
-    const { name, email, password, confirmPassword } = this.state;
+    const {
+      name,
+      email,
+      password,
+      confirmPassword,
+      passwordVisible,
+      confirmPasswordVisible,
+    } = this.state;
 
     return (
       <div className='sign-up'>
@@ -74,7 +96,7 @@ class SignUp extends React.Component<Props, SignUpState> {
               required
               label='Display Name'
               placeholder='John Doe'
-              maxLength='50'
+              maxLength={50}
             />
             <FormInput
               name='email'
@@ -88,24 +110,34 @@ class SignUp extends React.Component<Props, SignUpState> {
 
             <FormInput
               name='password'
-              type='password'
+              type={passwordVisible ? 'text' : 'password'}
               value={password}
               handleChange={this.handleChange}
+              handlePasswordVisible={(event) =>
+                this.handlePasswordVisible(event, 'passwordVisible')
+              }
               required
               label='Password'
               placeholder='••••••••'
-              minLength='8'
+              minLength={8}
+              password
+              passwordVisible={passwordVisible}
             />
 
             <FormInput
               name='confirmPassword'
-              type='password'
+              type={confirmPasswordVisible ? 'text' : 'password'}
               value={confirmPassword}
               handleChange={this.handleChange}
+              handlePasswordVisible={(event) =>
+                this.handlePasswordVisible(event, 'confirmPasswordVisible')
+              }
               required
               label='Confirm Password'
               placeholder='••••••••'
-              minLength='8'
+              minLength={8}
+              password
+              passwordVisible={confirmPasswordVisible}
             />
 
             <div className='sign-up__content--form--btns'>

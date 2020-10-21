@@ -26,10 +26,6 @@ const handlePatchProfile = (req, res, db) => {
     return res.status(400).json('Incorrect request!');
   }
 
-  // console.log(req.body);
-
-  // console.log(req.file);
-
   db('users')
     .where({ email: email })
     .update({
@@ -40,19 +36,10 @@ const handlePatchProfile = (req, res, db) => {
       phone: phone,
       about: about,
     })
-    // .update({ occupation: occupation })
-    // .update({ age: age })
-    // .update({ country: country })
-    // .update({ phone: phone })
-    // .update({ about: about })
-    // .update({ photo: photo })
     .returning('*')
     .then((user) => {
       if (user.length) {
         res.json(user[0]);
-        // res.sendFile(path.join(__dirname, `./public/uploads/${user[0]}`));
-
-        // console.log(user[0]);
       } else {
         res.status(400).json('Error updating user!');
       }
@@ -66,8 +53,6 @@ const handlePatchPassword = (req, res, db, bcrypt) => {
   if (!email || !oldPass || !newPass) {
     return res.status(400).json('Incorrect request!');
   }
-
-  // console.log(req.body);
 
   // Compare the sent password with the one saved
   db.select('*')
@@ -96,9 +81,6 @@ const handlePatchPassword = (req, res, db, bcrypt) => {
               }
             })
             .catch((err) => res.status(400).json('Unable to update password!'));
-
-          // res.json(user[0]);
-          // console.log(bcrypt.compareSync(password, user[0].hash));
         } else {
           res.json('Incorrect old password!');
         }

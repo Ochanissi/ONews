@@ -17,6 +17,7 @@ import './sign-in.styles.scss';
 interface SignInState {
   email: string;
   password: string;
+  passwordVisible: boolean;
 }
 
 interface SignInProps {}
@@ -30,6 +31,7 @@ class SignIn extends React.Component<Props, SignInState> {
     this.state = {
       email: '',
       password: '',
+      passwordVisible: false,
     };
   }
 
@@ -52,8 +54,19 @@ class SignIn extends React.Component<Props, SignInState> {
     this.setState<any>({ [name]: value });
   };
 
+  handlePasswordVisible = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    elem: string
+  ): void => {
+    event.preventDefault();
+
+    this.setState<any>({
+      [elem]: !this.state[elem as 'passwordVisible'],
+    });
+  };
+
   render(): JSX.Element {
-    const { email, password } = this.state;
+    const { email, password, passwordVisible } = this.state;
 
     return (
       <div className='sign-in'>
@@ -73,12 +86,17 @@ class SignIn extends React.Component<Props, SignInState> {
             />
             <FormInput
               name='password'
-              type='password'
+              type={passwordVisible ? 'text' : 'password'}
               value={password}
               handleChange={this.handleChange}
+              handlePasswordVisible={(event) =>
+                this.handlePasswordVisible(event, 'passwordVisible')
+              }
               required
               label='Password'
               placeholder='••••••••'
+              password
+              passwordVisible={passwordVisible}
             />
 
             <div className='sign-in__content--form--btns'>

@@ -15,7 +15,6 @@ import { News } from '../../redux/news/news.types';
 import Article from '../../components/article/article.component';
 
 import './home-page.styles.scss';
-import BackToTop from '../../components/back-to-top/back-to-top.component';
 
 interface HomePageProps {
   match: {
@@ -100,12 +99,6 @@ class HomePage extends React.Component<Props> {
 
     return (
       <div className='homepage'>
-        <BackToTop
-          btnColor='#dc3545'
-          iconColor='#fff'
-          scrollAnimationTime={700}
-        />
-
         <div className='homepage__content'>
           <h2 className='homepage__content--header'>
             {newsCategory === 'general'

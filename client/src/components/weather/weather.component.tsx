@@ -18,12 +18,25 @@ import {
   selectUserUnits,
 } from '../../redux/user/user.selectors';
 import { UserCoords } from '../../redux/user/user.types';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-interface WeatherProps {}
+interface WeatherProps extends RouteComponentProps {}
+
+interface WeatherState {
+  isChecked: boolean;
+}
 
 type Props = WeatherProps & LinkStateProps & LinkDispatchProps;
 
-class WeatherContainer extends React.Component<Props> {
+class WeatherContainer extends React.Component<Props, WeatherState> {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      isChecked: true,
+    };
+  }
+
   componentDidMount() {
     const {
       userUnits,
@@ -102,8 +115,21 @@ class WeatherContainer extends React.Component<Props> {
     }
   };
 
+  handleChecked = () => {
+    const { isChecked } = this.state;
+
+    const ele = document.getElementById('isWeatherChecked') as HTMLInputElement;
+
+    ele.checked = !isChecked;
+
+    this.setState({
+      isChecked: !isChecked,
+    });
+  };
+
   render(): JSX.Element {
     const { userUnits, weatherWeek } = this.props;
+    const { isChecked } = this.state;
 
     let weatherTodayTemp,
       weatherTodayText = '';
@@ -117,13 +143,21 @@ class WeatherContainer extends React.Component<Props> {
 
     // console.log(weatherWeek.length)
 
-    // console.log('rendered');
+    // console.log(isChecked);
+
+    // console.log(this.props);
 
     return (
       <nav role='navigation' className='weather'>
         {weatherWeek.length ? (
           <div id='menuToggle-weather'>
-            <input type='checkbox' defaultChecked />
+            <input
+              type='checkbox'
+              id='isWeatherChecked'
+              defaultChecked={isChecked}
+              // checked={isChecked}
+              onClick={this.handleChecked}
+            />
             <ion-icon name='cloudy-night'></ion-icon>
 
             <div id='menu-weather' className='weather__container'>
@@ -260,4 +294,6 @@ const mapDispatchToProps = (
     dispatch(fetchWeatherStartAsync(lat, lon, units)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(WeatherContainer);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(WeatherContainer)
+);

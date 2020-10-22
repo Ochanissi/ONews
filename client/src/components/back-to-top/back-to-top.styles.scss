@@ -1,44 +1,41 @@
-// no BackToTop component styles
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import '../../variables.scss';
 
-.container {
-  font-family: 'Montserrat', sans-serif;
-  color: #6c767a;
-  text-align: center;
-  width: calc(100% - 30px);
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-h1 {
-  color: #03a9f4;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-// BackToTop component styles
 .back-to-top {
   display: inline-block;
   text-align: center;
   vertical-align: middle;
   user-select: none;
-  padding: 0.175rem 0.55rem;
+  // padding: 0.175rem 0.55rem;
+  // font-size: 4rem;
+  // color: rgba($color-primary, 0.75);
+  color: $color-grey-dark-2;
+  // background-color: $color-grey-light-3;
   line-height: 1.1;
-  border-radius: 0.25rem;
+  // border-radius: 50%;
   border-color: transparent;
+  background-color: transparent;
   outline: none;
-  width: 40px;
-  height: 40px;
+  width: 5rem;
+  height: 5rem;
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 3rem;
+  right: 3rem;
   cursor: pointer;
   opacity: 0;
   visibility: hidden;
   z-index: 1000;
-  transition: background-color 0.3s, opacity 0.4s, visibility 0.4s;
+  transition: all 0.4s;
 
-  &.show-back-to-top {
+  ion-icon {
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    color: $color-primary;
+  }
+
+  &__visible {
     opacity: 1;
     visibility: visible;
   }

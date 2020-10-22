@@ -42,6 +42,8 @@ import ProfileData from './pages/profile-data/profile-data.component';
 // import { render } from '@testing-library/react';
 // import { isJsxAttributes, JsxEmit } from 'typescript';
 import ProfileSettings from './pages/profile-settings/profile-settings.components';
+import BackToTop from './components/back-to-top/back-to-top.component';
+import ScrollToTop from './components/scroll-to-top/scroll-to-top.component';
 
 declare global {
   namespace JSX {
@@ -80,59 +82,62 @@ class App extends React.Component<Props> {
 
     return (
       <div className='App'>
-        <NavBar />
-        <Switch>
-          <Route
-            exact
-            path='/'
-            render={() => (
-              <Redirect to={`/news/${userCountry}/${userCategory}`} />
-            )}
-          />
-          <Route exact path='/news/:country/:category' component={HomePage} />
-          <Route
-            exact
-            path='/search/:query/:queryTitle/:date/:lang/:sortBy'
-            component={SearchPage}
-          />
-          <Route
-            exact
-            path='/auth/sign-in'
-            render={() => (currentUser ? <Redirect to='/' /> : <SignIn />)}
-          />
-          <Route
-            exact
-            path='/auth/sign-up'
-            render={() => (currentUser ? <Redirect to='/' /> : <SignUp />)}
-          />
-          <Route
-            exact
-            path='/profile'
-            render={() =>
-              currentUser ? <Profile /> : <Redirect to='/auth/sign-in' />
-            }
-          />
+        <ScrollToTop>
+          <BackToTop />
+          <NavBar />
+          <Switch>
+            <Route
+              exact
+              path='/'
+              render={() => (
+                <Redirect to={`/news/${userCountry}/${userCategory}`} />
+              )}
+            />
+            <Route exact path='/news/:country/:category' component={HomePage} />
+            <Route
+              exact
+              path='/search/:query/:queryTitle/:date/:lang/:sortBy'
+              component={SearchPage}
+            />
+            <Route
+              exact
+              path='/auth/sign-in'
+              render={() => (currentUser ? <Redirect to='/' /> : <SignIn />)}
+            />
+            <Route
+              exact
+              path='/auth/sign-up'
+              render={() => (currentUser ? <Redirect to='/' /> : <SignUp />)}
+            />
+            <Route
+              exact
+              path='/profile'
+              render={() =>
+                currentUser ? <Profile /> : <Redirect to='/auth/sign-in' />
+              }
+            />
 
-          <Route
-            exact
-            path='/profile/settings'
-            render={() =>
-              currentUser ? (
-                <ProfileSettings />
-              ) : (
-                <Redirect to='/auth/sign-in' />
-              )
-            }
-          />
+            <Route
+              exact
+              path='/profile/settings'
+              render={() =>
+                currentUser ? (
+                  <ProfileSettings />
+                ) : (
+                  <Redirect to='/auth/sign-in' />
+                )
+              }
+            />
 
-          <Route
-            exact
-            path='/profile/:type'
-            render={() =>
-              currentUser ? <ProfileData /> : <Redirect to='/auth/sign-in' />
-            }
-          />
-        </Switch>
+            <Route
+              exact
+              path='/profile/:type'
+              render={() =>
+                currentUser ? <ProfileData /> : <Redirect to='/auth/sign-in' />
+              }
+            />
+          </Switch>
+        </ScrollToTop>
       </div>
     );
   }

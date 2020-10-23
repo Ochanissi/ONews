@@ -39,5 +39,19 @@
 
       width: 70rem;
     }
+
+    &--about {
+      justify-content: left;
+
+      font-weight: 500;
+
+      &--1 {
+        margin-right: 0.5rem;
+      }
+
+      &--2 {
+        color: $color-primary;
+      }
+    }
   }
 }

@@ -1,0 +1,35 @@
+@import '../../variables.scss';
+
+.footer {
+  color: $color-grey-dark-2;
+  font-size: 1.75rem !important;
+
+  &:hover {
+    color: $color-grey-dark-2;
+  }
+  &__copyright {
+    // width: 60rem;
+    // display: flex;
+
+    &--name {
+      color: $color-primary;
+      display: inline;
+    }
+
+    &--rights {
+      display: block;
+      width: 100%;
+    }
+
+    &--link:link,
+    &--link:visited {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.25s linear;
+
+      &:hover {
+        opacity: 0.75;
+      }
+    }
+  }
+}

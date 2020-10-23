@@ -14,6 +14,7 @@ import {
 } from '../../redux/user/user.selectors';
 
 import SidebarItem from './../sidebar-item/sidebar-item.component';
+import Footer from '../footer/footer.component';
 
 interface SidebarProps extends RouteComponentProps {}
 
@@ -118,6 +119,10 @@ class Sidebar extends React.Component<Props, SidebarState> {
                 itemLabel='About'
                 profileLink='/profile/about'
               />
+
+              <hr></hr>
+
+              <Footer />
             </ul>
           ) : (
             <ul id='menu'>
@@ -219,6 +224,10 @@ class Sidebar extends React.Component<Props, SidebarState> {
                 iconType='barbell-sharp'
                 itemLabel='Health'
               />
+
+              <hr></hr>
+
+              <Footer />
             </ul>
           )}
         </div>

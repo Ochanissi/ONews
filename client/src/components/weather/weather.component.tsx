@@ -118,13 +118,17 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
   handleChecked = () => {
     const { isChecked } = this.state;
 
-    const ele = document.getElementById('isWeatherChecked') as HTMLInputElement;
+    if (document.getElementById('isWeatherChecked')) {
+      const ele = document.getElementById(
+        'isWeatherChecked'
+      ) as HTMLInputElement;
 
-    ele.checked = !isChecked;
+      ele.checked = !isChecked;
 
-    this.setState({
-      isChecked: !isChecked,
-    });
+      this.setState({
+        isChecked: !isChecked,
+      });
+    }
   };
 
   render(): JSX.Element {

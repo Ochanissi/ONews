@@ -7,12 +7,14 @@ import ArticleSmall from '../../components/article-small/article-small.component
 import Article from '../../components/article/article.component';
 import { News } from '../../redux/news/news.types';
 import {
+  selectCurrentUser,
   selectUserDisliked,
   selectUserHidden,
   selectUserLiked,
   selectUserSaved,
   selectUserSearches,
 } from '../../redux/user/user.selectors';
+import { User } from '../../redux/user/user.types';
 
 import './profile-data.styles.scss';
 
@@ -30,6 +32,7 @@ const ProfileData: React.FunctionComponent<Props> = ({
   match: {
     params: { type },
   },
+  currentUser,
   userSaved,
   userLiked,
   userDisliked,
@@ -64,6 +67,8 @@ const ProfileData: React.FunctionComponent<Props> = ({
       : type === 'hidden-sources'
       ? 'You can find here all the news sources that you hidden in the past.'
       : '';
+
+  const { joined } = currentUser;
 
   // console.log(type);
   // console.log(newsArticles);
@@ -100,7 +105,19 @@ const ProfileData: React.FunctionComponent<Props> = ({
           </div>
         ) : null}
 
-        {!newsArticles.length && !newsItems.length ? (
+        {type === 'about' ? (
+          <div className='article-small profile-data__content--about'>
+            <span className='profile-data__content--about--1'>
+              Joined ONews on
+            </span>
+            <span className='profile-data__content--about--2'>
+              {joined.split('T')[0].split('-').reverse().join('/')}
+            </span>
+            <span className='profile-data__content--about--3'>!</span>
+          </div>
+        ) : null}
+
+        {!newsArticles.length && !newsItems.length && type !== 'about' ? (
           <div className='profile-data__content--placeholder'>{`You have no ${type
             .toLowerCase()
             .replace('-', ' ')}!`}</div>
@@ -111,6 +128,8 @@ const ProfileData: React.FunctionComponent<Props> = ({
 };
 
 interface LinkStateProps {
+  currentUser: User;
+
   userSaved: News[];
   userLiked: News[];
   userDisliked: News[];
@@ -119,6 +138,8 @@ interface LinkStateProps {
 }
 
 const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+
   userSaved: selectUserSaved,
   userLiked: selectUserLiked,
   userDisliked: selectUserDisliked,

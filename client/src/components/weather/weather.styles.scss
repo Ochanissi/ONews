@@ -48,8 +48,8 @@
 
   #menu-weather {
     position: absolute;
-    margin: -10rem 0 0 0;
-    margin-top: 23rem;
+    margin: 23rem 0 0 0;
+    // margin-top: 23rem;
     right: -5rem;
 
     // background: #ededed;
@@ -61,6 +61,8 @@
     transform: translate(120%, 0);
 
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+    background-color: $color-white;
   }
 
   #menuToggle-weather input:checked ~ ion-icon {

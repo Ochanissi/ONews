@@ -126,9 +126,9 @@
   #menu {
     position: absolute;
     width: 30rem;
-    margin: -10rem 0 0 0;
+    margin: 3.6rem 0 0 0;
     padding: 5rem 0;
-    padding-top: 15rem;
+    // padding-top: 15rem;
     left: -5rem;
 
     // background: #ededed;
@@ -140,6 +140,8 @@
     transform: translate(-100%, 0);
 
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+    background-color: $color-white;
   }
 
   #menu li {

@@ -8,7 +8,7 @@ const enforce = require('express-sslify');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const morgan = require('morgan');
-// const multer = require('multer');
+const multer = require('multer');
 // const sharp = require('sharp');
 
 const news = require('./controllers/news');
@@ -34,6 +34,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
 
+// Database
 const db = knex({
   client: 'pg',
   connection: {
@@ -44,6 +45,23 @@ const db = knex({
   },
 });
 
+// Multer
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    // cb(new AppError('Not an image! Please upload only images!', 400), false);
+  }
+};
+
+const upload = multer({
+  // storage: multerStorage,
+  fileFilter: multerFilter,
+  dest: 'uploads/',
+});
+
 // Set security HTTP headers
 app.use(helmet());
 
@@ -51,8 +69,14 @@ app.use(helmet());
 app.use(xss());
 
 app.use(express.json());
+
+// for parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+// for parsing multipart/form-data
+app.use(express.static('public'));
+
+// CORS
 app.use(cors());
 app.options('*', cors());
 
@@ -103,6 +127,10 @@ app.get('/profile/:id', (req, res) => {
 
 app.patch('/profile', (req, res) => {
   profile.handlePatchProfile(req, res, db);
+});
+
+app.patch('/photo', profile.handleUploadPhoto(upload), (req, res) => {
+  profile.handlePatchPhoto(req, res, db);
 });
 
 app.patch('/password', (req, res) => {

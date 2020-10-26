@@ -16,6 +16,8 @@ import {
   updateUserPasswordStartAsync,
 } from '../../redux/user/user.actions';
 
+import axios from 'axios';
+
 interface ProfileSettingsProps {}
 
 interface ProfileSettingsState {
@@ -79,13 +81,90 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
     const { name, value } = event.target;
-    this.setState<any>({ [name]: value });
+
+    if (name === 'photo') {
+      // Upload photo
+      const { updateUserDataStartAsync } = this.props;
+
+      const { email } = this.state;
+
+      // console.log(event.target.files[0]);
+
+      const { files }: any = event.target;
+
+      const formData = new FormData();
+
+      formData.append('photo', files[0]);
+      formData.append('email', email);
+
+      // console.log(formData);
+
+      // axios({
+      //   method: 'patch',
+      //   url: 'http://localhost:5008/profile',
+      //   data: {
+      //     kek: 'kek',
+      //   },
+      //   headers: { 'Content-Type': 'multipart/form-data' },
+      // })
+      //   .then(function (response) {
+      //     //handle success
+      //     console.log(response);
+      //   })
+      //   .catch(function (response) {
+      //     //handle error
+      //     console.log(response);
+      //   });
+
+      // updateUserDataStartAsync({ email, formData });
+
+      // for (var key of formData.entries()) {
+      //   console.log(key[0] + ', ' + key[1]);
+      // }
+
+      // if (formData) {
+      //   fetch(`http://localhost:5008/profile`, {
+      //     method: 'PATCH',
+      //     body: formData,
+      //   });
+      // }
+
+      // .then(images => {
+      //   this.setState({
+      //     uploading: false,
+      //     images
+      //   })
+      // })
+      // }
+
+      // profile
+
+      // updateUserDataStartAsync(formData as any);
+
+      // console.log(files[0]);
+
+      // this.setState<any>({ photo: event.target.files[0] });
+    } else {
+      this.setState<any>({ [name]: value });
+    }
+
+    // console.log(event.target.files[0]);
+
+    // const { files } = event.target;
+    // const localImageUrl = window.URL.createObjectURL(files[0]);
+
+    // this.props.onFileLoaded(localImageUrl);
+
+    // console.log(localImageUrl);
+
+    // console.log(this.state);
+    // console.log({ name, value });
   };
 
   handleSubmitPublic = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    const { email, name, age, occupation, country, about, photo } = this.state;
+    const { email, name, age, occupation, country, about } = this.state;
 
     const { updateUserDataStartAsync } = this.props;
 
@@ -96,7 +175,6 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       occupation,
       country,
       about,
-      photo,
     });
   };
 
@@ -104,7 +182,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     event.preventDefault();
 
     const {
-      currentUser: { name, age, occupation, country, about, photo },
+      currentUser: { name, age, occupation, country, about },
     } = this.props;
 
     this.setState({
@@ -113,7 +191,6 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       occupation,
       country,
       about,
-      photo,
     });
   };
 
@@ -134,11 +211,10 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     event.preventDefault();
 
     const {
-      currentUser: { name, phone },
+      currentUser: { phone },
     } = this.props;
 
     this.setState({
-      name,
       phone,
     });
   };
@@ -243,6 +319,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                       name='photo'
                       accept='image/*'
                       placeholder='••••••••'
+                      onChange={this.handleChange}
                     />
                     <label
                       htmlFor='files'

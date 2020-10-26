@@ -1,3 +1,6 @@
+var multer = require('multer');
+var upload = multer({ dest: 'uploads/' });
+
 const handleGetProfile = (req, res, db) => {
   const { id } = req.params;
 
@@ -47,6 +50,50 @@ const handlePatchProfile = (req, res, db) => {
     .catch((err) => res.status(400).json('Unable to update data!'));
 };
 
+const handleUploadPhoto = (upload) => upload.single('photo');
+
+const handlePatchPhoto = (req, res, db, file, upload) => {
+  // const { name, email, age, occupation, country, phone, about } = req.body;
+
+  // console.log(req.body);
+  console.log(req.file);
+  // console.log(req.files);
+  // console.log(upload.single('photo'));
+
+  // var type = upload.single('recfile');
+
+  // console.log(type);
+
+  res.json(req.file);
+  console.log(req.file);
+
+  // ----------------------------------------------
+
+  // if (!email) {
+  //   return res.status(400).json('Incorrect request!');
+  // }
+
+  // db('users')
+  //   .where({ email: email })
+  //   .update({
+  //     name: name,
+  //     occupation: occupation,
+  //     age: age,
+  //     country: country,
+  //     phone: phone,
+  //     about: about,
+  //   })
+  //   .returning('*')
+  //   .then((user) => {
+  //     if (user.length) {
+  //       res.json(user[0]);
+  //     } else {
+  //       res.status(400).json('Error updating user!');
+  //     }
+  //   })
+  //   .catch((err) => res.status(400).json('Unable to update data!'));
+};
+
 const handlePatchPassword = (req, res, db, bcrypt) => {
   const { email, oldPass, newPass } = req.body;
 
@@ -93,5 +140,7 @@ const handlePatchPassword = (req, res, db, bcrypt) => {
 module.exports = {
   handleGetProfile,
   handlePatchProfile,
+  handleUploadPhoto,
+  handlePatchPhoto,
   handlePatchPassword,
 };

@@ -1,5 +1,4 @@
-var multer = require('multer');
-var upload = multer({ dest: 'uploads/' });
+const sharp = require('sharp');
 
 const handleGetProfile = (req, res, db) => {
   const { id } = req.params;
@@ -44,54 +43,61 @@ const handlePatchProfile = (req, res, db) => {
       if (user.length) {
         res.json(user[0]);
       } else {
-        res.status(400).json('Error updating user!');
+        res.status(400).json("Unable to update user's data!");
       }
     })
-    .catch((err) => res.status(400).json('Unable to update data!'));
+    .catch((err) => res.status(400).json("Unable to update user's data!"));
 };
 
 const handleUploadPhoto = (upload) => upload.single('photo');
 
-const handlePatchPhoto = (req, res, db, file, upload) => {
-  // const { name, email, age, occupation, country, phone, about } = req.body;
+const handleResizePhoto = async (req, res, next) => {
+  const { email } = req.body;
 
-  // console.log(req.body);
-  console.log(req.file);
-  // console.log(req.files);
-  // console.log(upload.single('photo'));
+  if (!req.file || !email) return next();
 
-  // var type = upload.single('recfile');
+  req.file.filename = `user-${email.replace(
+    /[^\w\d]/g,
+    ''
+  )}-${Date.now()}.jpeg`;
+  req.body.photo = `user-${email.replace(/[^\w\d]/g, '')}-${Date.now()}.jpeg`;
 
-  // console.log(type);
+  // console.log(req.file.filename);
 
-  res.json(req.file);
-  console.log(req.file);
+  try {
+    await sharp(req.file.buffer)
+      .resize(500, 500)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`public/img/users/${req.file.filename}`);
+  } catch (err) {
+    console.log(err);
+  }
 
-  // ----------------------------------------------
+  next();
+};
 
-  // if (!email) {
-  //   return res.status(400).json('Incorrect request!');
-  // }
+const handlePatchPhoto = (req, res, db) => {
+  const { email } = req.body;
 
-  // db('users')
-  //   .where({ email: email })
-  //   .update({
-  //     name: name,
-  //     occupation: occupation,
-  //     age: age,
-  //     country: country,
-  //     phone: phone,
-  //     about: about,
-  //   })
-  //   .returning('*')
-  //   .then((user) => {
-  //     if (user.length) {
-  //       res.json(user[0]);
-  //     } else {
-  //       res.status(400).json('Error updating user!');
-  //     }
-  //   })
-  //   .catch((err) => res.status(400).json('Unable to update data!'));
+  if (!req.file || !email) {
+    return res.status(400).json('Incorrect request!');
+  }
+
+  db('users')
+    .where({ email: email })
+    .update({
+      photo: req.file.filename,
+    })
+    .returning('*')
+    .then((user) => {
+      if (user.length) {
+        return res.json(user[0]);
+      } else {
+        res.status(400).json("Error updating user's photo!");
+      }
+    })
+    .catch((err) => res.status(400).json("Error updating user's photo!"));
 };
 
 const handlePatchPassword = (req, res, db, bcrypt) => {
@@ -141,6 +147,7 @@ module.exports = {
   handleGetProfile,
   handlePatchProfile,
   handleUploadPhoto,
+  handleResizePhoto,
   handlePatchPhoto,
   handlePatchPassword,
 };

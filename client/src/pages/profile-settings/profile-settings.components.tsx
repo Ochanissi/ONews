@@ -4,6 +4,8 @@ import FormInput from '../../components/form-input/form-input.component';
 
 import defaultLogo from '../../assets/default.png';
 
+import kk from '../../../../public/img/users/user-kek-1603815835070.jpeg';
+
 import './profile-settings.styles.scss';
 import { connect } from 'react-redux';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
@@ -14,9 +16,12 @@ import { createStructuredSelector } from 'reselect';
 import {
   updateUserDataStartAsync,
   updateUserPasswordStartAsync,
+  updateUserPhotoStartAsync,
 } from '../../redux/user/user.actions';
 
-import axios from 'axios';
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: '../../.env' });
+}
 
 interface ProfileSettingsProps {}
 
@@ -77,6 +82,15 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     };
   }
 
+  componentDidUpdate(prevProps: any) {
+    if (this.props.currentUser.photo !== prevProps.currentUser.photo) {
+      this.setState<any>({
+        photo: this.props.currentUser.photo,
+      });
+      // console.log(this.props.currentUser.photo);
+    }
+  }
+
   handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
@@ -84,7 +98,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
     if (name === 'photo') {
       // Upload photo
-      const { updateUserDataStartAsync } = this.props;
+      const { updateUserPhotoStartAsync } = this.props;
 
       const { email } = this.state;
 
@@ -96,6 +110,12 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
       formData.append('photo', files[0]);
       formData.append('email', email);
+
+      updateUserPhotoStartAsync(formData);
+
+      // this.setState<any>({
+      //   [name]: `user-${email.replace(/[^\w\d]/g, '')}-${Date.now()}.jpeg`,
+      // });
 
       // console.log(formData);
 
@@ -285,6 +305,8 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
     // console.log(this.props);
 
+    console.log(this.props);
+
     return (
       <div className='profile-settings'>
         <div className='profile-settings__content'>
@@ -308,7 +330,11 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   <div className='form-input__photo'>
                     <img
                       className='form-input__photo--image'
-                      src={defaultLogo}
+                      src={
+                        `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}` ||
+                        defaultLogo
+                      }
+                      // onload={`${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`}
                       alt='Current User'
                     />
 
@@ -552,6 +578,7 @@ interface LinkDispatchProps {
     oldPass: string,
     newPass: string
   ) => void;
+  updateUserPhotoStartAsync: (formData: FormData) => void;
 }
 
 interface LinkStateProps {
@@ -568,6 +595,8 @@ const mapDispatchToProps = (
   updateUserDataStartAsync: (user) => dispatch(updateUserDataStartAsync(user)),
   updateUserPasswordStartAsync: (email, oldPass, newPass) =>
     dispatch(updateUserPasswordStartAsync(email, oldPass, newPass)),
+  updateUserPhotoStartAsync: (formData) =>
+    dispatch(updateUserPhotoStartAsync(formData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileSettings);

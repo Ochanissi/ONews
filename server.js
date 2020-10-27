@@ -9,7 +9,6 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const morgan = require('morgan');
 const multer = require('multer');
-// const sharp = require('sharp');
 
 const news = require('./controllers/news');
 const weather = require('./controllers/weather');
@@ -57,7 +56,7 @@ const multerFilter = (req, file, cb) => {
 };
 
 const upload = multer({
-  // storage: multerStorage,
+  storage: multerStorage,
   fileFilter: multerFilter,
   dest: 'uploads/',
 });
@@ -129,7 +128,8 @@ app.patch('/profile', (req, res) => {
   profile.handlePatchProfile(req, res, db);
 });
 
-app.patch('/photo', profile.handleUploadPhoto(upload), (req, res) => {
+app.patch('/photo', profile.handleUploadPhoto(upload), (req, res, next) => {
+  profile.handleResizePhoto(req, res, next);
   profile.handlePatchPhoto(req, res, db);
 });
 

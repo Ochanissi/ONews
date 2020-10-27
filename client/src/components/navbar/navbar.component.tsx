@@ -24,6 +24,10 @@ import {
 } from '../../redux/user/user.actions';
 import WeatherContainer from '../weather/weather.component';
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: '../../.env' });
+}
+
 interface NavbarProps extends RouteComponentProps {}
 interface NavbarState {
   searchValue: string;
@@ -404,7 +408,10 @@ class Navbar extends React.Component<Props, NavbarState> {
             {currentUser ? (
               <div>
                 <img
-                  src={defaultLogo}
+                  src={
+                    `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${currentUser.photo}` ||
+                    defaultLogo
+                  }
                   alt='User Profile'
                   className='navbar__secondary--logo'
                 />
@@ -415,7 +422,10 @@ class Navbar extends React.Component<Props, NavbarState> {
                       className='navbar__secondary--profile--link-1'
                     >
                       <img
-                        src={defaultLogo}
+                        src={
+                          `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${currentUser.photo}` ||
+                          defaultLogo
+                        }
                         alt='User Profile'
                         className='navbar__secondary--logo'
                       />

@@ -66,6 +66,9 @@ import {
   UPDATE_USER_PASSWORD_START,
   UPDATE_USER_PASSWORD_SUCCESS,
   UPDATE_USER_PASSWORD_FAILURE,
+  UPDATE_USER_PHOTO_START,
+  UPDATE_USER_PHOTO_SUCCESS,
+  UPDATE_USER_PHOTO_FAILURE,
   UserActionTYPES,
   UserNews,
   UserCoords,
@@ -991,6 +994,50 @@ export const updateUserPasswordStartAsync = (
     }
   } catch (error) {
     dispatch(updateUserPasswordFailure(error.message));
+    // Toast.fail('Failed updating data!', 1000);
+  }
+};
+
+// Update User Photo
+export const updateUserPhotoStart = (): UserActionTYPES => ({
+  type: UPDATE_USER_PHOTO_START,
+});
+
+export const updateUserPhotoSuccess = (user: User): UserActionTYPES => ({
+  type: UPDATE_USER_PHOTO_SUCCESS,
+  payload: user,
+});
+
+export const updateUserPhotoFailure = (
+  errorMessage: string
+): UserActionTYPES => ({
+  type: UPDATE_USER_PHOTO_FAILURE,
+  payload: errorMessage,
+});
+
+export const updateUserPhotoStartAsync = (formData: FormData) => async (
+  dispatch: Dispatch<UserActionTYPES>
+) => {
+  try {
+    dispatch(updateUserPhotoStart());
+    const res = await axios({
+      method: 'PATCH',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}photo`,
+      data: formData,
+    });
+
+    if (res.data.id) {
+      dispatch(updateUserPhotoSuccess(res.data));
+
+      // console.log(res.data.email);
+      // getUserSavedStartAsync;
+
+      //   // Toast.success('Data successfully updated!', 1000);
+    } else {
+      dispatch(updateUserPhotoFailure(res.data));
+    }
+  } catch (error) {
+    dispatch(updateUserPhotoFailure(error.message));
     // Toast.fail('Failed updating data!', 1000);
   }
 };

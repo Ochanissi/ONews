@@ -63,6 +63,9 @@ import {
   UPDATE_USER_PASSWORD_START,
   UPDATE_USER_PASSWORD_SUCCESS,
   UPDATE_USER_PASSWORD_FAILURE,
+  UPDATE_USER_PHOTO_START,
+  UPDATE_USER_PHOTO_SUCCESS,
+  UPDATE_USER_PHOTO_FAILURE,
   UserActionTYPES,
   UserCoords,
 } from './user.types';
@@ -375,6 +378,19 @@ const userReducer = (
       };
 
     case UPDATE_USER_PASSWORD_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+
+    // User Photo
+    case UPDATE_USER_PHOTO_SUCCESS:
+      return {
+        ...state,
+        currentUser: action.payload,
+      };
+
+    case UPDATE_USER_PHOTO_FAILURE:
       return {
         ...state,
         errorMessage: action.payload,

@@ -82,14 +82,14 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     };
   }
 
-  componentDidUpdate(prevProps: any) {
-    if (this.props.currentUser.photo !== prevProps.currentUser.photo) {
-      this.setState<any>({
-        photo: this.props.currentUser.photo,
-      });
-      // console.log(this.props.currentUser.photo);
-    }
-  }
+  // componentDidUpdate(prevProps: any) {
+  //   if (this.props.currentUser.photo !== prevProps.currentUser.photo) {
+  //     this.setState<any>({
+  //       photo: this.props.currentUser.photo,
+  //     });
+  //     // console.log(this.props.currentUser.photo);
+  //   }
+  // }
 
   handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -284,6 +284,20 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     });
   };
 
+  handleImageState = () => {
+    this.setState<any>({
+      photo: this.props.currentUser.photo,
+    });
+  };
+
+  handleImageError = (
+    event: React.SyntheticEvent<HTMLImageElement, Event>
+  ): void => {
+    const { photo } = this.state;
+
+    event.target.src = `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`;
+  };
+
   render(): JSX.Element {
     const {
       name,
@@ -293,7 +307,6 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       country,
       phone,
       about,
-      photo,
       joined,
       oldPass,
       newPass,
@@ -303,9 +316,13 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       newPassConfirmVisible,
     } = this.state;
 
+    const {
+      currentUser: { photo },
+    } = this.props;
+
     // console.log(this.props);
 
-    console.log(this.props);
+    // console.log(this.props);
 
     return (
       <div className='profile-settings'>
@@ -330,12 +347,11 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   <div className='form-input__photo'>
                     <img
                       className='form-input__photo--image'
-                      src={
-                        `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}` ||
-                        defaultLogo
-                      }
-                      // onload={`${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`}
+                      id='profile-image'
+                      src={`${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`}
                       alt='Current User'
+                      onLoad={this.handleImageState}
+                      onError={this.handleImageError}
                     />
 
                     <input

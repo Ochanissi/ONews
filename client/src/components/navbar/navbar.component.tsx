@@ -37,6 +37,8 @@ interface NavbarState {
   searchLocation: string;
   searchDate: string;
   searchSortBy: string;
+
+  photo: string;
 }
 
 type Props = NavbarProps & LinkStateProps & LinkDispatchProps;
@@ -47,6 +49,10 @@ class Navbar extends React.Component<Props, NavbarState> {
 
     // this.handleSubmit = this.handleSubmit.bind(this);
 
+    const {
+      currentUser: { photo },
+    } = this.props;
+
     this.state = {
       popupVisible: false,
       dropdownVisible: false,
@@ -56,6 +62,8 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchLocation: this.props.userCountry,
       searchDate: 'anytime',
       searchSortBy: 'publishedAt',
+
+      photo: photo,
     };
   }
 
@@ -251,6 +259,20 @@ class Navbar extends React.Component<Props, NavbarState> {
     elSortBy.selectedIndex = 0;
   };
 
+  handleImageState = () => {
+    this.setState<any>({
+      photo: this.props.currentUser.photo,
+    });
+  };
+
+  handleImageError = (
+    event: React.SyntheticEvent<HTMLImageElement, Event>
+  ): void => {
+    const { photo } = this.state;
+
+    event.target.src = `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`;
+  };
+
   render(): JSX.Element {
     const { currentUser, userCategory, userCountry } = this.props;
     const {
@@ -408,12 +430,11 @@ class Navbar extends React.Component<Props, NavbarState> {
             {currentUser ? (
               <div>
                 <img
-                  src={
-                    `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${currentUser.photo}` ||
-                    defaultLogo
-                  }
+                  src={`${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${currentUser.photo}`}
                   alt='User Profile'
                   className='navbar__secondary--logo'
+                  onLoad={this.handleImageState}
+                  onError={this.handleImageError}
                 />
                 {popupVisible ? (
                   <div className='navbar__secondary--profile'>
@@ -422,12 +443,11 @@ class Navbar extends React.Component<Props, NavbarState> {
                       className='navbar__secondary--profile--link-1'
                     >
                       <img
-                        src={
-                          `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${currentUser.photo}` ||
-                          defaultLogo
-                        }
+                        src={`${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${currentUser.photo}`}
                         alt='User Profile'
                         className='navbar__secondary--logo'
+                        onLoad={this.handleImageState}
+                        onError={this.handleImageError}
                       />
                     </Link>
 

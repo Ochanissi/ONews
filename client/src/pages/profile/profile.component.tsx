@@ -10,15 +10,19 @@ import { User } from '../../redux/user/user.types';
 
 import './profile.styles.scss';
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: '../../.env' });
+}
+
 const Profile: React.FunctionComponent<LinkStateProps> = ({
-  currentUser: { name },
+  currentUser: { name, photo },
 }): JSX.Element => {
   return (
     <div className='profile'>
       <div className='profile__content'>
         <div className='profile__content--header'>
           <img
-            src={defaultLogo}
+            src={`${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`}
             alt='User Profile'
             className='profile__content--header--avatar'
           />

@@ -38,7 +38,7 @@ interface NavbarState {
   searchDate: string;
   searchSortBy: string;
 
-  photo: string;
+  photo: string | null;
 }
 
 type Props = NavbarProps & LinkStateProps & LinkDispatchProps;
@@ -49,9 +49,7 @@ class Navbar extends React.Component<Props, NavbarState> {
 
     // this.handleSubmit = this.handleSubmit.bind(this);
 
-    const {
-      currentUser: { photo },
-    } = this.props;
+    const { currentUser } = this.props;
 
     this.state = {
       popupVisible: false,
@@ -63,7 +61,7 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchDate: 'anytime',
       searchSortBy: 'publishedAt',
 
-      photo: photo,
+      photo: currentUser ? currentUser.photo : null,
     };
   }
 

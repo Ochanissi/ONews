@@ -112,7 +112,7 @@ app.post('/search', (req, res) => {
 });
 
 app.post('/sign-in', (req, res) => {
-  signIn.handleSignIn(req, res, db, bcrypt);
+  signIn.handleSignInAuth(req, res, db, bcrypt);
 });
 
 app.post('/sign-up', (req, res) => {

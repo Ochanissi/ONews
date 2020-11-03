@@ -1,16 +1,16 @@
 const sharp = require('sharp');
 
 const handleGetProfile = (req, res, db) => {
-  const { id } = req.params;
+  const { email } = req.body;
 
-  if (!id) {
+  if (!email) {
     return res.status(400).json('Incorrect request!');
   }
 
   db.select('*')
     .from('users')
     .where({
-      id: id,
+      email: email,
     })
     .then((user) => {
       if (user.length) {

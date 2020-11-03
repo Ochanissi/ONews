@@ -21,6 +21,7 @@ const liked = require('./controllers/liked');
 const disliked = require('./controllers/disliked');
 const hidden = require('./controllers/hidden');
 const searches = require('./controllers/searches');
+const auth = require('./controllers/authorization');
 
 // App initialization
 const app = express();
@@ -120,85 +121,90 @@ app.post('/sign-up', (req, res) => {
 });
 
 // User Profile
-app.get('/profile/:id', (req, res) => {
+app.post('/profile/', auth.requireAuth, (req, res) => {
   profile.handleGetProfile(req, res, db);
 });
 
-app.patch('/profile', (req, res) => {
+app.patch('/profile', auth.requireAuth, (req, res) => {
   profile.handlePatchProfile(req, res, db);
 });
 
-app.patch('/photo', profile.handleUploadPhoto(upload), (req, res, next) => {
-  profile.handleResizePhoto(req, res, next);
-  profile.handlePatchPhoto(req, res, db);
-});
+app.patch(
+  '/photo',
+  auth.requireAuth,
+  profile.handleUploadPhoto(upload),
+  (req, res, next) => {
+    profile.handleResizePhoto(req, res, next);
+    profile.handlePatchPhoto(req, res, db);
+  }
+);
 
-app.patch('/password', (req, res) => {
+app.patch('/password', auth.requireAuth, (req, res) => {
   profile.handlePatchPassword(req, res, db, bcrypt);
 });
 
 // User Saved
-app.post('/post-saved', (req, res) => {
+app.post('/post-saved', auth.requireAuth, (req, res) => {
   saved.handlePostSaved(req, res, db);
 });
 
-app.post('/get-saved', (req, res) => {
+app.post('/get-saved', auth.requireAuth, (req, res) => {
   saved.handleGetSaved(req, res, db);
 });
 
-app.post('/delete-saved', (req, res) => {
+app.post('/delete-saved', auth.requireAuth, (req, res) => {
   saved.handleDeleteSaved(req, res, db);
 });
 
 // User Liked
-app.post('/post-liked', (req, res) => {
+app.post('/post-liked', auth.requireAuth, (req, res) => {
   liked.handlePostLiked(req, res, db);
 });
 
-app.post('/get-liked', (req, res) => {
+app.post('/get-liked', auth.requireAuth, (req, res) => {
   liked.handleGetLiked(req, res, db);
 });
 
-app.post('/delete-liked', (req, res) => {
+app.post('/delete-liked', auth.requireAuth, (req, res) => {
   liked.handleDeleteLiked(req, res, db);
 });
 
 // User Disliked
-app.post('/post-disliked', (req, res) => {
+app.post('/post-disliked', auth.requireAuth, (req, res) => {
   disliked.handlePostDisliked(req, res, db);
 });
 
-app.post('/get-disliked', (req, res) => {
+app.post('/get-disliked', auth.requireAuth, (req, res) => {
   disliked.handleGetDisliked(req, res, db);
 });
 
-app.post('/delete-disliked', (req, res) => {
+app.post('/delete-disliked', auth.requireAuth, (req, res) => {
   disliked.handleDeleteDisliked(req, res, db);
 });
 
 // User Hidden
-app.post('/post-hidden', (req, res) => {
+app.post('/post-hidden', auth.requireAuth, (req, res) => {
   hidden.handlePostHidden(req, res, db);
 });
 
-app.post('/get-hidden', (req, res) => {
+app.post('/get-hidden', auth.requireAuth, (req, res) => {
   hidden.handleGetHidden(req, res, db);
 });
 
-app.post('/delete-hidden', (req, res) => {
+app.post('/delete-hidden', auth.requireAuth, (req, res) => {
   hidden.handleDeleteHidden(req, res, db);
 });
 
 // User Searches
-app.post('/post-searches', (req, res) => {
+app.post('/post-searches', auth.requireAuth, (req, res) => {
   searches.handlePostSearches(req, res, db);
 });
 
-app.post('/get-searches', (req, res) => {
+app.post('/get-searches', auth.requireAuth, (req, res) => {
   searches.handleGetSearches(req, res, db);
 });
 
-app.post('/delete-searches', (req, res) => {
+app.post('/delete-searches', auth.requireAuth, (req, res) => {
   searches.handleDeleteSearches(req, res, db);
 });
 

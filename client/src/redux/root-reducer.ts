@@ -9,13 +9,14 @@ import weatherReducer from './weather/weather.reducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['user'],
+  whitelist: [],
+  // whitelist: ['user'],
 };
 
 const rootReducer = combineReducers({
   user: userReducer,
   news: newsReducer,
-  weather: weatherReducer
+  weather: weatherReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

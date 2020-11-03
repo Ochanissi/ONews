@@ -44,16 +44,27 @@ const handleSignIn = (req, res, db, bcrypt) => {
     });
 };
 
-const getAuthTokenId = () => {
-  console.log('Auth OK!');
+const getAuthTokenId = (req, res) => {
+  const { authorization } = req.headers;
+
+  return redisClient.get(authorization, (err, reply) => {
+    if (err || !reply) {
+      return res.status(400).json('Unauthorized!');
+    }
+    return res.json({ email: reply });
+  });
 };
 
 const signToken = (email) => {
   const jwtPayload = { email };
 
   return jwt.sign(jwtPayload, process.env.ONEWS_JWT_SECRET, {
-    expiresIn: '2 days',
+    expiresIn: '7 days',
   });
+};
+
+const setToken = (token, email) => {
+  return Promise.resolve(redisClient.set(token, email));
 };
 
 const createSessions = (user) => {
@@ -62,7 +73,11 @@ const createSessions = (user) => {
 
   const token = signToken(email);
 
-  return { success: 'true', email, token };
+  return setToken(token, email)
+    .then(() => {
+      return { success: 'true', email, token };
+    })
+    .catch(console.log);
 };
 
 const handleSignInAuth = (req, res, db, bcrypt) => {
@@ -71,7 +86,7 @@ const handleSignInAuth = (req, res, db, bcrypt) => {
   // console.log(authorization);
 
   return authorization
-    ? getAuthTokenId()
+    ? getAuthTokenId(req, res)
     : handleSignIn(req, res, db, bcrypt)
         .then((data) => {
           return data.id && data.email
@@ -84,4 +99,5 @@ const handleSignInAuth = (req, res, db, bcrypt) => {
 
 module.exports = {
   handleSignInAuth,
+  redisClient,
 };

@@ -4,6 +4,11 @@ import { createSelector } from 'reselect';
 
 const selectUser = (state: any): any => state.user;
 
+export const selectUserAuthorization = createSelector(
+  [selectUser],
+  (user) => user.authorization
+);
+
 export const selectUserCategory = createSelector(
   [selectUser],
   (user) => user.userCategory

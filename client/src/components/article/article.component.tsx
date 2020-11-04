@@ -15,8 +15,9 @@ import {
   selectUserLiked,
   selectUserDisliked,
   selectUserHidden,
+  selectUserAuthorization,
 } from '../../redux/user/user.selectors';
-import { User, UserNews } from '../../redux/user/user.types';
+import { Authorization, User, UserNews } from '../../redux/user/user.types';
 import {
   postUserSavedStartAsync,
   deleteUserSavedStartAsync,
@@ -47,7 +48,7 @@ class Article extends React.Component<Props> {
 
         userSaved,
 
-        currentUser: { email },
+        userAuthorization: { email, token },
 
         title,
         description,
@@ -62,17 +63,20 @@ class Article extends React.Component<Props> {
         userSaved.find((item) => item.title === title) || {};
 
       Object.keys(userSavedDuplicate).length === 0
-        ? postUserSavedStartAsync({
-            email,
-            sourceName,
-            title,
-            description,
-            url,
-            urlToImage,
-            publishedAt,
-            content,
-          })
-        : deleteUserSavedStartAsync(email, title);
+        ? postUserSavedStartAsync(
+            {
+              email,
+              sourceName,
+              title,
+              description,
+              url,
+              urlToImage,
+              publishedAt,
+              content,
+            },
+            token
+          )
+        : deleteUserSavedStartAsync(email, title, token);
     } else {
       // Toast.fail('Please sign in to add to collection!', 1000);
     }
@@ -93,7 +97,7 @@ class Article extends React.Component<Props> {
         userLiked,
         userDisliked,
 
-        currentUser: { email },
+        userAuthorization: { email, token },
 
         title,
         description,
@@ -111,21 +115,24 @@ class Article extends React.Component<Props> {
         userDisliked.find((item) => item.title === title) || {};
 
       if (Object.keys(userDislikedDuplicate).length !== 0) {
-        deleteUserDislikedStartAsync(email, title);
+        deleteUserDislikedStartAsync(email, title, token);
       }
 
       Object.keys(userLikedDuplicate).length === 0
-        ? postUserLikedStartAsync({
-            email,
-            sourceName,
-            title,
-            description,
-            url,
-            urlToImage,
-            publishedAt,
-            content,
-          })
-        : deleteUserLikedStartAsync(email, title);
+        ? postUserLikedStartAsync(
+            {
+              email,
+              sourceName,
+              title,
+              description,
+              url,
+              urlToImage,
+              publishedAt,
+              content,
+            },
+            token
+          )
+        : deleteUserLikedStartAsync(email, title, token);
     } else {
       // Toast.fail('Please sign in to add to collection!', 1000);
     }
@@ -146,7 +153,7 @@ class Article extends React.Component<Props> {
         userLiked,
         userDisliked,
 
-        currentUser: { email },
+        userAuthorization: { email, token },
 
         title,
         description,
@@ -164,21 +171,24 @@ class Article extends React.Component<Props> {
         userLiked.find((item) => item.title === title) || {};
 
       if (Object.keys(userLikedDuplicate).length !== 0) {
-        deleteUserLikedStartAsync(email, title);
+        deleteUserLikedStartAsync(email, title, token);
       }
 
       Object.keys(userDislikedDuplicate).length === 0
-        ? postUserDislikedStartAsync({
-            email,
-            sourceName,
-            title,
-            description,
-            url,
-            urlToImage,
-            publishedAt,
-            content,
-          })
-        : deleteUserDislikedStartAsync(email, title);
+        ? postUserDislikedStartAsync(
+            {
+              email,
+              sourceName,
+              title,
+              description,
+              url,
+              urlToImage,
+              publishedAt,
+              content,
+            },
+            token
+          )
+        : deleteUserDislikedStartAsync(email, title, token);
     } else {
       // Toast.fail('Please sign in to add to collection!', 1000);
     }
@@ -196,7 +206,7 @@ class Article extends React.Component<Props> {
 
         userHidden,
 
-        currentUser: { email },
+        userAuthorization: { email, token },
 
         source: { name: sourceName },
       } = this.props;
@@ -205,8 +215,8 @@ class Article extends React.Component<Props> {
         userHidden.find((item) => item === sourceName) || {};
 
       Object.keys(userHiddenDuplicate).length === 0
-        ? postUserHiddenStartAsync(email, sourceName)
-        : deleteUserHiddenStartAsync(email, sourceName);
+        ? postUserHiddenStartAsync(email, sourceName, token)
+        : deleteUserHiddenStartAsync(email, sourceName, token);
     } else {
       // Toast.fail('Please sign in to add to collection!', 1000);
     }
@@ -420,6 +430,7 @@ class Article extends React.Component<Props> {
 }
 
 interface LinkStateProps {
+  userAuthorization: Authorization;
   currentUser: User;
   userSaved: News[];
   userLiked: News[];
@@ -428,20 +439,41 @@ interface LinkStateProps {
 }
 
 interface LinkDispatchProps {
-  postUserSavedStartAsync: (userNews: UserNews) => void;
-  deleteUserSavedStartAsync: (email: string, title: string) => void;
+  postUserSavedStartAsync: (userNews: UserNews, token: string) => void;
+  deleteUserSavedStartAsync: (
+    email: string,
+    title: string,
+    token: string
+  ) => void;
 
-  postUserLikedStartAsync: (userNews: UserNews) => void;
-  deleteUserLikedStartAsync: (email: string, title: string) => void;
+  postUserLikedStartAsync: (userNews: UserNews, token: string) => void;
+  deleteUserLikedStartAsync: (
+    email: string,
+    title: string,
+    token: string
+  ) => void;
 
-  postUserDislikedStartAsync: (userNews: UserNews) => void;
-  deleteUserDislikedStartAsync: (email: string, title: string) => void;
+  postUserDislikedStartAsync: (userNews: UserNews, token: string) => void;
+  deleteUserDislikedStartAsync: (
+    email: string,
+    title: string,
+    token: string
+  ) => void;
 
-  postUserHiddenStartAsync: (email: string, sourceName: string) => void;
-  deleteUserHiddenStartAsync: (email: string, sourceName: string) => void;
+  postUserHiddenStartAsync: (
+    email: string,
+    sourceName: string,
+    token: string
+  ) => void;
+  deleteUserHiddenStartAsync: (
+    email: string,
+    sourceName: string,
+    token: string
+  ) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
+  userAuthorization: selectUserAuthorization,
   currentUser: selectCurrentUser,
   userSaved: selectUserSaved,
   userLiked: selectUserLiked,
@@ -452,25 +484,25 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
-  postUserSavedStartAsync: (userNews) =>
-    dispatch(postUserSavedStartAsync(userNews)),
-  deleteUserSavedStartAsync: (email, title) =>
-    dispatch(deleteUserSavedStartAsync(email, title)),
+  postUserSavedStartAsync: (userNews, token) =>
+    dispatch(postUserSavedStartAsync(userNews, token)),
+  deleteUserSavedStartAsync: (email, title, token) =>
+    dispatch(deleteUserSavedStartAsync(email, title, token)),
 
-  postUserLikedStartAsync: (userNews) =>
-    dispatch(postUserLikedStartAsync(userNews)),
-  deleteUserLikedStartAsync: (email, title) =>
-    dispatch(deleteUserLikedStartAsync(email, title)),
+  postUserLikedStartAsync: (userNews, token) =>
+    dispatch(postUserLikedStartAsync(userNews, token)),
+  deleteUserLikedStartAsync: (email, title, token) =>
+    dispatch(deleteUserLikedStartAsync(email, title, token)),
 
-  postUserDislikedStartAsync: (userNews) =>
-    dispatch(postUserDislikedStartAsync(userNews)),
-  deleteUserDislikedStartAsync: (email, title) =>
-    dispatch(deleteUserDislikedStartAsync(email, title)),
+  postUserDislikedStartAsync: (userNews, token) =>
+    dispatch(postUserDislikedStartAsync(userNews, token)),
+  deleteUserDislikedStartAsync: (email, title, token) =>
+    dispatch(deleteUserDislikedStartAsync(email, title, token)),
 
-  postUserHiddenStartAsync: (email, sourceName) =>
-    dispatch(postUserHiddenStartAsync(email, sourceName)),
-  deleteUserHiddenStartAsync: (email, sourceName) =>
-    dispatch(deleteUserHiddenStartAsync(email, sourceName)),
+  postUserHiddenStartAsync: (email, sourceName, token) =>
+    dispatch(postUserHiddenStartAsync(email, sourceName, token)),
+  deleteUserHiddenStartAsync: (email, sourceName, token) =>
+    dispatch(deleteUserHiddenStartAsync(email, sourceName, token)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Article);

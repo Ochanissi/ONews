@@ -20,6 +20,7 @@ import {
   selectUserCategory,
   selectUserCountry,
   selectCurrentUser,
+  selectUserAuthorization,
 } from './redux/user/user.selectors';
 
 import './App.scss';
@@ -28,10 +29,11 @@ import HomePage from './pages/home-page/home-page.component';
 import SearchPage from './pages/search-page/search-page.component';
 import NavBar from './components/navbar/navbar.component';
 import Profile from './pages/profile/profile.component';
-import { User } from './redux/user/user.types';
+import { Authorization, User } from './redux/user/user.types';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from './redux/store';
 import {
+  getCurrentUserStartAsync,
   getUserDislikedStartAsync,
   getUserHiddenStartAsync,
   getUserLikedStartAsync,
@@ -60,7 +62,8 @@ type Props = AppProps & LinkDispatchProps & LinkStateProps;
 class App extends React.Component<Props> {
   componentDidMount() {
     const {
-      currentUser,
+      userAuthorization,
+      getCurrentUserStartAsync,
       getUserSavedStartAsync,
       getUserLikedStartAsync,
       getUserDislikedStartAsync,
@@ -68,12 +71,40 @@ class App extends React.Component<Props> {
       getUserSearchesStartAsync,
     } = this.props;
 
-    if (currentUser) {
-      getUserSavedStartAsync(currentUser.email);
-      getUserLikedStartAsync(currentUser.email);
-      getUserDislikedStartAsync(currentUser.email);
-      getUserHiddenStartAsync(currentUser.email);
-      getUserSearchesStartAsync(currentUser.email);
+    if (userAuthorization) {
+      const { email, token } = userAuthorization;
+
+      getCurrentUserStartAsync(email, token);
+      getUserSavedStartAsync(email, token);
+      getUserLikedStartAsync(email, token);
+      getUserDislikedStartAsync(email, token);
+      getUserHiddenStartAsync(email, token);
+      getUserSearchesStartAsync(email, token);
+    }
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    const {
+      userAuthorization,
+      getCurrentUserStartAsync,
+      getUserSavedStartAsync,
+      getUserLikedStartAsync,
+      getUserDislikedStartAsync,
+      getUserHiddenStartAsync,
+      getUserSearchesStartAsync,
+    } = this.props;
+
+    if (userAuthorization !== prevProps.userAuthorization) {
+      if (userAuthorization) {
+        const { email, token } = userAuthorization;
+
+        getCurrentUserStartAsync(email, token);
+        getUserSavedStartAsync(email, token);
+        getUserLikedStartAsync(email, token);
+        getUserDislikedStartAsync(email, token);
+        getUserHiddenStartAsync(email, token);
+        getUserSearchesStartAsync(email, token);
+      }
     }
   }
 
@@ -144,20 +175,23 @@ class App extends React.Component<Props> {
 }
 
 interface LinkDispatchProps {
-  getUserSavedStartAsync: (email: string) => void;
-  getUserLikedStartAsync: (email: string) => void;
-  getUserDislikedStartAsync: (email: string) => void;
-  getUserHiddenStartAsync: (email: string) => void;
-  getUserSearchesStartAsync: (email: string) => void;
+  getUserSavedStartAsync: (email: string, token: string) => void;
+  getUserLikedStartAsync: (email: string, token: string) => void;
+  getUserDislikedStartAsync: (email: string, token: string) => void;
+  getUserHiddenStartAsync: (email: string, token: string) => void;
+  getUserSearchesStartAsync: (email: string, token: string) => void;
+  getCurrentUserStartAsync: (email: string, token: string) => void;
 }
 
 interface LinkStateProps {
+  userAuthorization: Authorization;
   userCategory: string;
   userCountry: string;
   currentUser: User;
 }
 
 const mapStateToProps = createStructuredSelector({
+  userAuthorization: selectUserAuthorization,
   userCategory: selectUserCategory,
   userCountry: selectUserCountry,
   currentUser: selectCurrentUser,
@@ -166,13 +200,18 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
-  getUserSavedStartAsync: (email) => dispatch(getUserSavedStartAsync(email)),
-  getUserLikedStartAsync: (email) => dispatch(getUserLikedStartAsync(email)),
-  getUserDislikedStartAsync: (email) =>
-    dispatch(getUserDislikedStartAsync(email)),
-  getUserHiddenStartAsync: (email) => dispatch(getUserHiddenStartAsync(email)),
-  getUserSearchesStartAsync: (email) =>
-    dispatch(getUserSearchesStartAsync(email)),
+  getUserSavedStartAsync: (email, token) =>
+    dispatch(getUserSavedStartAsync(email, token)),
+  getUserLikedStartAsync: (email, token) =>
+    dispatch(getUserLikedStartAsync(email, token)),
+  getUserDislikedStartAsync: (email, token) =>
+    dispatch(getUserDislikedStartAsync(email, token)),
+  getUserHiddenStartAsync: (email, token) =>
+    dispatch(getUserHiddenStartAsync(email, token)),
+  getUserSearchesStartAsync: (email, token) =>
+    dispatch(getUserSearchesStartAsync(email, token)),
+  getCurrentUserStartAsync: (email, token) =>
+    dispatch(getCurrentUserStartAsync(email, token)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

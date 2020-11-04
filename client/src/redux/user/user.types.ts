@@ -10,8 +10,13 @@ export const SET_USER_UNITS = 'SET_USER_UNITS';
 // User Coords
 export const SET_USER_COORDS = 'SET_USER_COORDS';
 
-// User Current User
+// Set Current User
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+
+// Get Current User
+export const GET_CURRENT_USER_START = 'GET_CURRENT_USER_START';
+export const GET_CURRENT_USER_SUCCESS = 'GET_CURRENT_USER_SUCCESS';
+export const GET_CURRENT_USER_FAILURE = 'GET_CURRENT_USER_FAILURE';
 
 // User Sign In
 export const SIGN_IN_START = 'SIGN_IN_START';
@@ -146,6 +151,12 @@ export interface UserCoords {
   lng: string;
 }
 
+export interface Authorization {
+  success: boolean;
+  email: string;
+  token: string;
+}
+
 // Set News
 interface SetUserCategoryAction {
   type: typeof SET_USER_CATEGORY;
@@ -175,6 +186,21 @@ interface SetCurrentUser {
   payload: User;
 }
 
+// Get Current User
+interface GetCurrentUserStart {
+  type: typeof GET_CURRENT_USER_START;
+}
+
+interface GetCurrentUserSuccess {
+  type: typeof GET_CURRENT_USER_SUCCESS;
+  payload: User;
+}
+
+interface GetCurrentUserFailure {
+  type: typeof GET_CURRENT_USER_FAILURE;
+  payload: string;
+}
+
 // Sign In
 interface SignInStart {
   type: typeof SIGN_IN_START;
@@ -182,7 +208,7 @@ interface SignInStart {
 
 interface SignInSuccess {
   type: typeof SIGN_IN_SUCCESS;
-  payload: User;
+  payload: Authorization;
 }
 
 interface SignInFailure {
@@ -476,6 +502,10 @@ export type UserActionTYPES =
   | SetUserUnitsAction
   | SetUserCoordsAction
   | SetCurrentUser
+  | GetCurrentUserStart
+  | GetCurrentUserSuccess
+  | GetCurrentUserFailure
+  | SignUpStart
   | SignInStart
   | SignInSuccess
   | SignInFailure

@@ -8,6 +8,9 @@ import {
   SET_USER_UNITS,
   SET_USER_COORDS,
   SET_CURRENT_USER,
+  GET_CURRENT_USER_START,
+  GET_CURRENT_USER_SUCCESS,
+  GET_CURRENT_USER_FAILURE,
   SIGN_IN_START,
   SIGN_IN_SUCCESS,
   SIGN_IN_FAILURE,
@@ -73,6 +76,7 @@ import {
   UserNews,
   UserCoords,
   UserUpdate,
+  Authorization,
 } from './user.types';
 import { News } from '../news/news.types';
 
@@ -105,14 +109,61 @@ export const setCurrentUser = (user: User): UserActionTYPES => ({
   payload: user,
 });
 
+// Get Current User
+export const getCurrentUserStart = (): UserActionTYPES => ({
+  type: GET_CURRENT_USER_START,
+});
+
+export const getCurrentUserSuccess = (currentUser: User): UserActionTYPES => ({
+  type: GET_CURRENT_USER_SUCCESS,
+  payload: currentUser,
+});
+
+export const getCurrentUserFailure = (errorMessage: any): UserActionTYPES => ({
+  type: GET_CURRENT_USER_FAILURE,
+  payload: errorMessage,
+});
+
+export const getCurrentUserStartAsync = (
+  email: string,
+  token: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
+  try {
+    dispatch(getCurrentUserStart());
+
+    const res = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}profile`,
+      data: {
+        email,
+      },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (res.data.id) {
+      dispatch(getCurrentUserSuccess(res.data));
+
+      // console.log(res.data.email);
+      // getUserSavedStartAsync;
+
+      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+    }
+  } catch (error) {
+    dispatch(getCurrentUserFailure(error.message));
+    // Toast.fail(`Failed signing in!`, 1500);
+  }
+};
+
 // Sign In
 export const signInStart = (): UserActionTYPES => ({
   type: SIGN_IN_START,
 });
 
-export const signInSuccess = (currentUser: User): UserActionTYPES => ({
+export const signInSuccess = (
+  authorization: Authorization
+): UserActionTYPES => ({
   type: SIGN_IN_SUCCESS,
-  payload: currentUser,
+  payload: authorization,
 });
 
 export const signInFailure = (errorMessage: any): UserActionTYPES => ({
@@ -135,7 +186,7 @@ export const signInStartAsync = (email: string, password: string) => async (
       },
     });
 
-    if (res.data.id) {
+    if (res.data.success) {
       dispatch(signInSuccess(res.data));
 
       // console.log(res.data.email);
@@ -212,7 +263,7 @@ export const getUserSavedFailure = (errorMessage: string): UserActionTYPES => ({
   payload: errorMessage,
 });
 
-export const getUserSavedStartAsync = (email: string) => async (
+export const getUserSavedStartAsync = (email: string, token: string) => async (
   dispatch: Dispatch<UserActionTYPES>
 ) => {
   try {
@@ -224,6 +275,7 @@ export const getUserSavedStartAsync = (email: string) => async (
       data: {
         email,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -255,16 +307,19 @@ export const postUserSavedFailure = (
   payload: errorMessage,
 });
 
-export const postUserSavedStartAsync = ({
-  email,
-  sourceName,
-  title,
-  description,
-  url,
-  urlToImage,
-  publishedAt,
-  content,
-}: UserNews) => async (dispatch: Dispatch<UserActionTYPES>) => {
+export const postUserSavedStartAsync = (
+  {
+    email,
+    sourceName,
+    title,
+    description,
+    url,
+    urlToImage,
+    publishedAt,
+    content,
+  }: UserNews,
+  token: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(postUserSavedStart());
 
@@ -281,6 +336,7 @@ export const postUserSavedStartAsync = ({
         date: publishedAt,
         content,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -314,7 +370,8 @@ export const deleteUserSavedFailure = (
 
 export const deleteUserSavedStartAsync = (
   email: string,
-  title: string
+  title: string,
+  token: string
 ) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(deleteUserSavedStart());
@@ -326,6 +383,7 @@ export const deleteUserSavedStartAsync = (
         email,
         title,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -355,7 +413,7 @@ export const getUserLikedFailure = (errorMessage: string): UserActionTYPES => ({
   payload: errorMessage,
 });
 
-export const getUserLikedStartAsync = (email: string) => async (
+export const getUserLikedStartAsync = (email: string, token: string) => async (
   dispatch: Dispatch<UserActionTYPES>
 ) => {
   try {
@@ -367,6 +425,7 @@ export const getUserLikedStartAsync = (email: string) => async (
       data: {
         email,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -398,16 +457,19 @@ export const postUserLikedFailure = (
   payload: errorMessage,
 });
 
-export const postUserLikedStartAsync = ({
-  email,
-  sourceName,
-  title,
-  description,
-  url,
-  urlToImage,
-  publishedAt,
-  content,
-}: UserNews) => async (dispatch: Dispatch<UserActionTYPES>) => {
+export const postUserLikedStartAsync = (
+  {
+    email,
+    sourceName,
+    title,
+    description,
+    url,
+    urlToImage,
+    publishedAt,
+    content,
+  }: UserNews,
+  token: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(postUserLikedStart());
 
@@ -424,6 +486,7 @@ export const postUserLikedStartAsync = ({
         date: publishedAt,
         content,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -457,7 +520,8 @@ export const deleteUserLikedFailure = (
 
 export const deleteUserLikedStartAsync = (
   email: string,
-  title: string
+  title: string,
+  token: string
 ) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(deleteUserLikedStart());
@@ -469,6 +533,7 @@ export const deleteUserLikedStartAsync = (
         email,
         title,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -500,9 +565,10 @@ export const getUserDislikedFailure = (
   payload: errorMessage,
 });
 
-export const getUserDislikedStartAsync = (email: string) => async (
-  dispatch: Dispatch<UserActionTYPES>
-) => {
+export const getUserDislikedStartAsync = (
+  email: string,
+  token: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(getUserDislikedStart());
 
@@ -512,6 +578,7 @@ export const getUserDislikedStartAsync = (email: string) => async (
       data: {
         email,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -543,16 +610,19 @@ export const postUserDislikedFailure = (
   payload: errorMessage,
 });
 
-export const postUserDislikedStartAsync = ({
-  email,
-  sourceName,
-  title,
-  description,
-  url,
-  urlToImage,
-  publishedAt,
-  content,
-}: UserNews) => async (dispatch: Dispatch<UserActionTYPES>) => {
+export const postUserDislikedStartAsync = (
+  {
+    email,
+    sourceName,
+    title,
+    description,
+    url,
+    urlToImage,
+    publishedAt,
+    content,
+  }: UserNews,
+  token: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(postUserDislikedStart());
 
@@ -569,6 +639,7 @@ export const postUserDislikedStartAsync = ({
         date: publishedAt,
         content,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -604,7 +675,8 @@ export const deleteUserDislikedFailure = (
 
 export const deleteUserDislikedStartAsync = (
   email: string,
-  title: string
+  title: string,
+  token: string
 ) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(deleteUserDislikedStart());
@@ -616,6 +688,7 @@ export const deleteUserDislikedStartAsync = (
         email,
         title,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -647,7 +720,7 @@ export const getUserHiddenFailure = (
   payload: errorMessage,
 });
 
-export const getUserHiddenStartAsync = (email: string) => async (
+export const getUserHiddenStartAsync = (email: string, token: string) => async (
   dispatch: Dispatch<UserActionTYPES>
 ) => {
   try {
@@ -659,6 +732,7 @@ export const getUserHiddenStartAsync = (email: string) => async (
       data: {
         email,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -692,7 +766,8 @@ export const postUserHiddenFailure = (
 
 export const postUserHiddenStartAsync = (
   email: string,
-  sourceName: string
+  sourceName: string,
+  token: string
 ) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(postUserHiddenStart());
@@ -704,6 +779,7 @@ export const postUserHiddenStartAsync = (
         email,
         source: sourceName,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -737,7 +813,8 @@ export const deleteUserHiddenFailure = (
 
 export const deleteUserHiddenStartAsync = (
   email: string,
-  sourceName: string
+  sourceName: string,
+  token: string
 ) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(deleteUserHiddenStart());
@@ -749,6 +826,7 @@ export const deleteUserHiddenStartAsync = (
         email,
         source: sourceName,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -782,9 +860,10 @@ export const getUserSearchesFailure = (
   payload: errorMessage,
 });
 
-export const getUserSearchesStartAsync = (email: string) => async (
-  dispatch: Dispatch<UserActionTYPES>
-) => {
+export const getUserSearchesStartAsync = (
+  email: string,
+  token: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(getUserSearchesStart());
 
@@ -794,6 +873,7 @@ export const getUserSearchesStartAsync = (email: string) => async (
       data: {
         email,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -829,7 +909,8 @@ export const postUserSearchesFailure = (
 
 export const postUserSearchesStartAsync = (
   email: string,
-  query: string
+  query: string,
+  token: string
 ) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(postUserSearchesStart());
@@ -841,6 +922,7 @@ export const postUserSearchesStartAsync = (
         email,
         query,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -876,7 +958,8 @@ export const deleteUserSearchesFailure = (
 
 export const deleteUserSearchesStartAsync = (
   email: string,
-  query: string
+  query: string,
+  token: string
 ) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(deleteUserSearchesStart());
@@ -888,6 +971,7 @@ export const deleteUserSearchesStartAsync = (
         email,
         query,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     // console.log(res);
@@ -919,9 +1003,10 @@ export const updateUserDataFailure = (
   payload: errorMessage,
 });
 
-export const updateUserDataStartAsync = (user: UserUpdate) => async (
-  dispatch: Dispatch<UserActionTYPES>
-) => {
+export const updateUserDataStartAsync = (
+  user: UserUpdate,
+  token: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(updateUserDataStart());
 
@@ -931,6 +1016,7 @@ export const updateUserDataStartAsync = (user: UserUpdate) => async (
       data: {
         ...user,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     if (res.data.id) {
@@ -967,7 +1053,8 @@ export const updateUserPasswordFailure = (
 export const updateUserPasswordStartAsync = (
   email: string,
   oldPass: string,
-  newPass: string
+  newPass: string,
+  token: string
 ) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(updateUserPasswordStart());
@@ -980,6 +1067,7 @@ export const updateUserPasswordStartAsync = (
         oldPass,
         newPass,
       },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     if (res.data === 'Password updated!') {
@@ -1015,15 +1103,17 @@ export const updateUserPhotoFailure = (
   payload: errorMessage,
 });
 
-export const updateUserPhotoStartAsync = (formData: FormData) => async (
-  dispatch: Dispatch<UserActionTYPES>
-) => {
+export const updateUserPhotoStartAsync = (
+  formData: FormData,
+  token: string
+) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(updateUserPhotoStart());
     const res = await axios({
       method: 'PATCH',
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}photo`,
       data: formData,
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     if (res.data.id) {

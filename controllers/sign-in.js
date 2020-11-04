@@ -64,7 +64,7 @@ const signToken = (email) => {
 };
 
 const setToken = (token, email) => {
-  return Promise.resolve(redisClient.set(token, email));
+  return Promise.resolve(redisClient.set(`Bearer ${token}`, email));
 };
 
 const createSessions = (user) => {

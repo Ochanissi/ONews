@@ -4,14 +4,15 @@ import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { createStructuredSelector } from 'reselect';
 
-import defaultLogo from '../../assets/default.png';
+// import defaultLogo from '../../assets/default.png';
 
 import Sidebar from '../sidebar/sidebar.component';
 
 import './navbar.styles.scss';
-import { User } from '../../redux/user/user.types';
+import { Authorization, User } from '../../redux/user/user.types';
 import {
   selectCurrentUser,
+  selectUserAuthorization,
   selectUserCategory,
   selectUserCountry,
 } from '../../redux/user/user.selectors';
@@ -193,7 +194,11 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchLocation,
     } = this.state;
 
-    const { currentUser, postUserSearchesStartAsync } = this.props;
+    const {
+      currentUser,
+      userAuthorization,
+      postUserSearchesStartAsync,
+    } = this.props;
 
     // console.log(searchValue);
 
@@ -208,7 +213,11 @@ class Navbar extends React.Component<Props, NavbarState> {
     //   )
     // );
 
-    postUserSearchesStartAsync(currentUser.email, searchValue);
+    if (currentUser) {
+      const { email, token } = userAuthorization;
+
+      postUserSearchesStartAsync(email, searchValue, token);
+    }
 
     this.props.history.push(
       `/search/${`${searchValue}/${searchTitle}/${searchDate}/${searchLocation}/${searchSortBy}`.trim()}`
@@ -248,9 +257,9 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchSortBy: 'publishedAt',
     });
 
-    const elLocation = document.getElementById('location')!;
-    const elDate = document.getElementById('date')!;
-    const elSortBy = document.getElementById('sort')!;
+    const elLocation: any = document.getElementById('location')!;
+    const elDate: any = document.getElementById('date')!;
+    const elSortBy: any = document.getElementById('sort')!;
 
     elLocation.selectedIndex = this.props.userCountry === 'ro' ? 0 : 1;
     elDate.selectedIndex = 0;
@@ -268,7 +277,9 @@ class Navbar extends React.Component<Props, NavbarState> {
   ): void => {
     const { photo } = this.state;
 
-    event.target.src = `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`;
+    console.log(event.target);
+
+    // event.target.src = `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`;
   };
 
   render(): JSX.Element {
@@ -495,6 +506,7 @@ class Navbar extends React.Component<Props, NavbarState> {
 }
 
 interface LinkStateProps {
+  userAuthorization: Authorization;
   currentUser: User;
   userCountry: string;
   userCategory: string;
@@ -502,10 +514,15 @@ interface LinkStateProps {
 
 interface LinkDispatchProps {
   signOut: () => void;
-  postUserSearchesStartAsync: (email: string, query: string) => void;
+  postUserSearchesStartAsync: (
+    email: string,
+    query: string,
+    token: string
+  ) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
+  userAuthorization: selectUserAuthorization,
   currentUser: selectCurrentUser,
   userCountry: selectUserCountry,
   userCategory: selectUserCategory,
@@ -515,8 +532,8 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
   signOut: () => dispatch(signOut()),
-  postUserSearchesStartAsync: (email, query) =>
-    dispatch(postUserSearchesStartAsync(email, query)),
+  postUserSearchesStartAsync: (email, query, token) =>
+    dispatch(postUserSearchesStartAsync(email, query, token)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

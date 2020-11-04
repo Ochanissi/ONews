@@ -10,11 +10,16 @@ const persistConfig = {
   key: 'root',
   storage,
   whitelist: [],
-  // whitelist: ['user'],
+};
+
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['authorization'],
 };
 
 const rootReducer = combineReducers({
-  user: userReducer,
+  user: persistReducer(authPersistConfig, userReducer),
   news: newsReducer,
   weather: weatherReducer,
 });

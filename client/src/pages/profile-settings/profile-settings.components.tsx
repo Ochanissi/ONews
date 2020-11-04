@@ -8,10 +8,13 @@ import kk from '../../../../public/img/users/user-kek-1603815835070.jpeg';
 
 import './profile-settings.styles.scss';
 import { connect } from 'react-redux';
-import { selectCurrentUser } from '../../redux/user/user.selectors';
+import {
+  selectCurrentUser,
+  selectUserAuthorization,
+} from '../../redux/user/user.selectors';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../redux/store';
-import { User, UserUpdate } from '../../redux/user/user.types';
+import { Authorization, User, UserUpdate } from '../../redux/user/user.types';
 import { createStructuredSelector } from 'reselect';
 import {
   updateUserDataStartAsync,
@@ -98,7 +101,10 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
     if (name === 'photo') {
       // Upload photo
-      const { updateUserPhotoStartAsync } = this.props;
+      const {
+        updateUserPhotoStartAsync,
+        userAuthorization: { token },
+      } = this.props;
 
       const { email } = this.state;
 
@@ -111,7 +117,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       formData.append('photo', files[0]);
       formData.append('email', email);
 
-      updateUserPhotoStartAsync(formData);
+      updateUserPhotoStartAsync(formData, token);
 
       // this.setState<any>({
       //   [name]: `user-${email.replace(/[^\w\d]/g, '')}-${Date.now()}.jpeg`,
@@ -186,16 +192,22 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
     const { email, name, age, occupation, country, about } = this.state;
 
-    const { updateUserDataStartAsync } = this.props;
+    const {
+      updateUserDataStartAsync,
+      userAuthorization: { token },
+    } = this.props;
 
-    updateUserDataStartAsync({
-      email,
-      name,
-      age,
-      occupation,
-      country,
-      about,
-    });
+    updateUserDataStartAsync(
+      {
+        email,
+        name,
+        age,
+        occupation,
+        country,
+        about,
+      },
+      token
+    );
   };
 
   handleClearPublic = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -219,12 +231,18 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
     const { email, phone } = this.state;
 
-    const { updateUserDataStartAsync } = this.props;
+    const {
+      updateUserDataStartAsync,
+      userAuthorization: { token },
+    } = this.props;
 
-    updateUserDataStartAsync({
-      email,
-      phone,
-    });
+    updateUserDataStartAsync(
+      {
+        email,
+        phone,
+      },
+      token
+    );
   };
 
   handleClearContact = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -243,12 +261,15 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     event.preventDefault();
 
     const { email, oldPass, newPass, newPassConfirm } = this.state;
-    const { updateUserPasswordStartAsync } = this.props;
+    const {
+      updateUserPasswordStartAsync,
+      userAuthorization: { token },
+    } = this.props;
 
     if (newPass === newPassConfirm) {
       // const newPass
 
-      updateUserPasswordStartAsync(email, oldPass, newPass);
+      updateUserPasswordStartAsync(email, oldPass, newPass, token);
 
       this.setState({
         oldPass: '',
@@ -295,7 +316,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
   ): void => {
     const { photo } = this.state;
 
-    event.target.src = `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`;
+    // event.target.src = `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`;
   };
 
   render(): JSX.Element {
@@ -588,31 +609,35 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 }
 
 interface LinkDispatchProps {
-  updateUserDataStartAsync: (user: UserUpdate) => void;
+  updateUserDataStartAsync: (user: UserUpdate, token: string) => void;
   updateUserPasswordStartAsync: (
     email: string,
     oldPass: string,
-    newPass: string
+    newPass: string,
+    token: string
   ) => void;
-  updateUserPhotoStartAsync: (formData: FormData) => void;
+  updateUserPhotoStartAsync: (formData: FormData, token: string) => void;
 }
 
 interface LinkStateProps {
+  userAuthorization: Authorization;
   currentUser: User;
 }
 
 const mapStateToProps = createStructuredSelector({
+  userAuthorization: selectUserAuthorization,
   currentUser: selectCurrentUser,
 });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
-  updateUserDataStartAsync: (user) => dispatch(updateUserDataStartAsync(user)),
-  updateUserPasswordStartAsync: (email, oldPass, newPass) =>
-    dispatch(updateUserPasswordStartAsync(email, oldPass, newPass)),
-  updateUserPhotoStartAsync: (formData) =>
-    dispatch(updateUserPhotoStartAsync(formData)),
+  updateUserDataStartAsync: (user, token) =>
+    dispatch(updateUserDataStartAsync(user, token)),
+  updateUserPasswordStartAsync: (email, oldPass, newPass, token) =>
+    dispatch(updateUserPasswordStartAsync(email, oldPass, newPass, token)),
+  updateUserPhotoStartAsync: (formData, token) =>
+    dispatch(updateUserPhotoStartAsync(formData, token)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileSettings);

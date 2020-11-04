@@ -7,8 +7,11 @@ import {
   deleteUserHiddenStartAsync,
   deleteUserSearchesStartAsync,
 } from '../../redux/user/user.actions';
-import { selectCurrentUser } from '../../redux/user/user.selectors';
-import { User } from '../../redux/user/user.types';
+import {
+  selectCurrentUser,
+  selectUserAuthorization,
+} from '../../redux/user/user.selectors';
+import { Authorization, User } from '../../redux/user/user.types';
 
 import './article-small.styles.scss';
 
@@ -28,14 +31,22 @@ class ArticleSmall extends React.Component<Props> {
 
       currentUser,
 
+      userAuthorization,
+
       deleteUserHiddenStartAsync,
       deleteUserSearchesStartAsync,
     } = this.props;
 
-    if (type === 'past-searches') {
-      deleteUserSearchesStartAsync(currentUser.email, name);
-    } else if (type === 'hidden-sources') {
-      deleteUserHiddenStartAsync(currentUser.email, name);
+    if (userAuthorization) {
+      const { email, token } = userAuthorization;
+
+      if (type === 'past-searches') {
+        deleteUserSearchesStartAsync(email, name, token);
+      } else if (type === 'hidden-sources') {
+        deleteUserHiddenStartAsync(email, name, token);
+      } else {
+        // Notification - please log in
+      }
     }
   };
 
@@ -60,25 +71,35 @@ class ArticleSmall extends React.Component<Props> {
 }
 
 interface LinkStateProps {
+  userAuthorization: Authorization;
   currentUser: User;
 }
 
 interface LinkDispatchProps {
-  deleteUserHiddenStartAsync: (email: string, sourceName: string) => void;
-  deleteUserSearchesStartAsync: (email: string, query: string) => void;
+  deleteUserHiddenStartAsync: (
+    email: string,
+    sourceName: string,
+    token: string
+  ) => void;
+  deleteUserSearchesStartAsync: (
+    email: string,
+    query: string,
+    token: string
+  ) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
+  userAuthorization: selectUserAuthorization,
   currentUser: selectCurrentUser,
 });
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<any, any, AppActions>
 ): LinkDispatchProps => ({
-  deleteUserHiddenStartAsync: (email, sourceName) =>
-    dispatch(deleteUserHiddenStartAsync(email, sourceName)),
-  deleteUserSearchesStartAsync: (email, query) =>
-    dispatch(deleteUserSearchesStartAsync(email, query)),
+  deleteUserHiddenStartAsync: (email, sourceName, token) =>
+    dispatch(deleteUserHiddenStartAsync(email, sourceName, token)),
+  deleteUserSearchesStartAsync: (email, query, token) =>
+    dispatch(deleteUserSearchesStartAsync(email, query, token)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleSmall);

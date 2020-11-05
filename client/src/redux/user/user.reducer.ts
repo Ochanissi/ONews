@@ -178,7 +178,7 @@ const userReducer = (
     case SIGN_UP_SUCCESS:
       return {
         ...state,
-        currentUser: action.payload,
+        authorization: action.payload,
       };
 
     case SIGN_UP_FAILURE:

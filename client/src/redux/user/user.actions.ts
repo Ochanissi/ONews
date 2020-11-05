@@ -205,9 +205,11 @@ export const signUpStart = (): UserActionTYPES => ({
   type: SIGN_UP_START,
 });
 
-export const signUpSuccess = (currentUser: User): UserActionTYPES => ({
+export const signUpSuccess = (
+  authorization: Authorization
+): UserActionTYPES => ({
   type: SIGN_UP_SUCCESS,
-  payload: currentUser,
+  payload: authorization,
 });
 
 export const signUpFailure = (errorMessage: string): UserActionTYPES => ({
@@ -233,7 +235,7 @@ export const signUpStartAsync = (
       },
     });
 
-    if (res.data.id) {
+    if (res.data.success) {
       dispatch(signUpSuccess(res.data));
       // Toast.success(`Welcome back ${res.data.name}!`, 1500);
     }

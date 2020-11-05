@@ -277,9 +277,11 @@ class Navbar extends React.Component<Props, NavbarState> {
   ): void => {
     const { photo } = this.state;
 
-    console.log(event.target);
+    // console.log(event.target);
 
-    // event.target.src = `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`;
+    const elImg: any = event.target;
+
+    elImg.src = `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`;
   };
 
   render(): JSX.Element {

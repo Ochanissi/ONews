@@ -117,7 +117,7 @@ app.post('/sign-in', (req, res) => {
 });
 
 app.post('/sign-up', (req, res) => {
-  signUp.handleSignUp(req, res, db, bcrypt);
+  signUp.handleSignUpAuth(req, res, db, bcrypt);
 });
 
 // User Profile

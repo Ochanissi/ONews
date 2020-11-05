@@ -31,7 +31,7 @@ const handleSignIn = (req, res, db, bcrypt) => {
           })
           .catch((err) => {
             // res.status(400).json('Unable to connect!');
-            return Promise.reject('Unable to connect!');
+            return Promise.reject('Unable to log in!');
           });
       } else {
         // res.status(400).json('Wrong credentials!');

@@ -10,16 +10,7 @@ const handlePostLiked = (req, res, db) => {
     content,
   } = req.body;
 
-  if (
-    !email ||
-    !source ||
-    !title ||
-    !description ||
-    !url ||
-    !image ||
-    !date ||
-    !content
-  ) {
+  if (!email || !source || !title || !url || !image || !date || !content) {
     return res.status(400).json('Incorrect request!');
   }
 

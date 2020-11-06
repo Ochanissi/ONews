@@ -3,7 +3,7 @@ const redis = require('redis');
 
 // Setup Redis
 const redisClient = redis.createClient({
-  host: '127.0.0.1',
+  host: process.env.ONEWS_API_REDIS_HOST,
 });
 
 const handleSignIn = (req, res, db, bcrypt) => {
@@ -31,7 +31,7 @@ const handleSignIn = (req, res, db, bcrypt) => {
           })
           .catch((err) => {
             // res.status(400).json('Unable to connect!');
-            return Promise.reject('Unable to connect!');
+            return Promise.reject('Unable to log in!');
           });
       } else {
         // res.status(400).json('Wrong credentials!');

@@ -135,7 +135,8 @@ const handlePatchPassword = (req, res, db, bcrypt) => {
             })
             .catch((err) => res.status(400).json('Unable to update password!'));
         } else {
-          res.json('Incorrect old password!');
+          res.status(400).json('Incorrect old password!');
+          // res.json('Incorrect old password!');
         }
       } else {
         res.status(400).json('Error getting user!');

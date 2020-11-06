@@ -9,17 +9,24 @@ import weatherReducer from './weather/weather.reducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [],
+  whitelist: ['user'],
 };
 
-const authPersistConfig = {
-  key: 'auth',
-  storage,
-  whitelist: ['authorization'],
-};
+// const userPersistConfig = {
+//   key: 'user',
+//   storage,
+//   whitelist: [
+//     'authorization',
+//     'userCategory',
+//     'userCountry',
+//     'userCoords',
+//     'userUnits',
+//   ],
+// };
 
 const rootReducer = combineReducers({
-  user: persistReducer(authPersistConfig, userReducer),
+  // user: persistReducer(userPersistConfig, userReducer),
+  user: userReducer,
   news: newsReducer,
   weather: weatherReducer,
 });

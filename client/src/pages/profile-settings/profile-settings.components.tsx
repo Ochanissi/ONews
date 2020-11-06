@@ -22,9 +22,11 @@ import {
   updateUserPhotoStartAsync,
 } from '../../redux/user/user.actions';
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({ path: '../../.env' });
-}
+import Toast from 'light-toast';
+
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config({ path: '../../.env' });
+// }
 
 interface ProfileSettingsProps {}
 
@@ -277,8 +279,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
         newPassConfirm: '',
       });
     } else {
-      // make a notification here
-      console.log("Passwords don't match!");
+      Toast.fail("Passwords don't match!", 1000);
     }
   };
 
@@ -316,7 +317,9 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
   ): void => {
     const { photo } = this.state;
 
-    // event.target.src = `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`;
+    const elImg: any = event.target;
+
+    elImg.src = `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`;
   };
 
   render(): JSX.Element {
@@ -500,7 +503,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   handleChange={this.handleChange}
                   required
                   label='Phone Number'
-                  placeholder='0722 222 222'
+                  placeholder='07XX XXX XXX'
                   minLength={8}
                   profile
                 />

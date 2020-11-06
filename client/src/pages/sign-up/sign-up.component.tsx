@@ -12,6 +12,8 @@ import { signUpStartAsync } from '../../redux/user/user.actions';
 
 import './sign-up.styles.scss';
 
+import Toast from 'light-toast';
+
 interface SignUpState {
   name: string;
   email: string;
@@ -47,7 +49,7 @@ class SignUp extends React.Component<Props, SignUpState> {
     const { signUpStartAsync } = this.props;
 
     if (password !== confirmPassword) {
-      alert("Passwords don't match");
+      Toast.fail("Passwords don't match!", 1000);
       return;
     }
 

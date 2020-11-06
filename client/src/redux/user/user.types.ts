@@ -223,7 +223,7 @@ interface SignUpStart {
 
 interface SignUpSuccess {
   type: typeof SIGN_UP_SUCCESS;
-  payload: User;
+  payload: Authorization;
 }
 
 interface SignUpFailure {

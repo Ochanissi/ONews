@@ -25,9 +25,11 @@ import {
 } from '../../redux/user/user.actions';
 import WeatherContainer from '../weather/weather.component';
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({ path: '../../.env' });
-}
+import Toast from 'light-toast';
+
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config({ path: '../../.env' });
+// }
 
 interface NavbarProps extends RouteComponentProps {}
 interface NavbarState {
@@ -243,7 +245,7 @@ class Navbar extends React.Component<Props, NavbarState> {
     } = this.props;
 
     signOut();
-    // Toast.success(`See you soon, ${name}!`, 1500);
+    Toast.success(`See you soon, ${name}!`, 1500);
   };
 
   handleClear = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -277,9 +279,11 @@ class Navbar extends React.Component<Props, NavbarState> {
   ): void => {
     const { photo } = this.state;
 
-    console.log(event.target);
+    // console.log(event.target);
 
-    // event.target.src = `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`;
+    const elImg: any = event.target;
+
+    elImg.src = `${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`;
   };
 
   render(): JSX.Element {

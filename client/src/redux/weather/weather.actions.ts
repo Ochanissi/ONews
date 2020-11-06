@@ -9,21 +9,25 @@ import {
   WeatherActionTYPES,
 } from './weather.types';
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({ path: '../../.env' });
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config({ path: '../../.env' });
+// }
 
 // Weather
 export const fetchWeatherStart = (): WeatherActionTYPES => ({
   type: FETCH_WEATHER_START,
 });
 
-export const fetchWeatherSuccess = (weather: Weather[]): WeatherActionTYPES => ({
+export const fetchWeatherSuccess = (
+  weather: Weather[]
+): WeatherActionTYPES => ({
   type: FETCH_WEATHER_SUCCESS,
   payload: weather,
 });
 
-export const fetchWeatherFailure = (errorMessage: string): WeatherActionTYPES => ({
+export const fetchWeatherFailure = (
+  errorMessage: string
+): WeatherActionTYPES => ({
   type: FETCH_WEATHER_FAILURE,
   payload: errorMessage,
 });
@@ -42,7 +46,7 @@ export const fetchWeatherStartAsync = (
       data: {
         lat,
         lon,
-        units
+        units,
       },
     });
 
@@ -50,6 +54,6 @@ export const fetchWeatherStartAsync = (
       dispatch(fetchWeatherSuccess(res.data));
     }
   } catch (error) {
-    dispatch(fetchWeatherFailure(error.message));
+    dispatch(fetchWeatherFailure(error.response.data));
   }
 };

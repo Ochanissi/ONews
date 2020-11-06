@@ -10,9 +10,9 @@ import { User } from '../../redux/user/user.types';
 
 import './profile.styles.scss';
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({ path: '../../.env' });
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config({ path: '../../.env' });
+// }
 
 const Profile: React.FunctionComponent<LinkStateProps> = ({
   currentUser: { name, photo },

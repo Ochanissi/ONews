@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Dispatch } from 'react';
+import Toast from 'light-toast';
 
 import {
   User,
@@ -146,11 +147,11 @@ export const getCurrentUserStartAsync = (
       // console.log(res.data.email);
       // getUserSavedStartAsync;
 
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      // Toast.success('Welcome back!', 1000);
     }
   } catch (error) {
-    dispatch(getCurrentUserFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(getCurrentUserFailure(error.response.data));
+    // Toast.fail('Failed signing in!', 1000);
   }
 };
 
@@ -192,11 +193,11 @@ export const signInStartAsync = (email: string, password: string) => async (
       // console.log(res.data.email);
       // getUserSavedStartAsync;
 
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      Toast.success('Welcome back!', 1500);
     }
   } catch (error) {
-    dispatch(signInFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(signInFailure(error.response.data));
+    Toast.fail(error.response.data, 1500);
   }
 };
 
@@ -237,11 +238,11 @@ export const signUpStartAsync = (
 
     if (res.data.success) {
       dispatch(signUpSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      Toast.success(`Welcome, ${name}!`, 1500);
     }
   } catch (error) {
-    dispatch(signUpFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(signUpFailure(error.response.data));
+    Toast.fail(error.response.data, 1500);
   }
 };
 
@@ -284,11 +285,11 @@ export const getUserSavedStartAsync = (email: string, token: string) => async (
 
     if (res.status === 200) {
       dispatch(getUserSavedSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      // Toast.success(`Welcome back ${res.data.name}!`, 1000);
     }
   } catch (error) {
-    dispatch(getUserSavedFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(getUserSavedFailure(error.response.data));
+    // Toast.fail(`Failed signing in!`, 1000);
   }
 };
 
@@ -345,11 +346,11 @@ export const postUserSavedStartAsync = (
 
     if (res.status === 200) {
       dispatch(postUserSavedSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      Toast.success(`Saved for later!`, 1000);
     }
   } catch (error) {
-    dispatch(postUserSavedFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(postUserSavedFailure(error.response.data));
+    Toast.fail(`Failed to save!`, 1000);
   }
 };
 
@@ -392,11 +393,11 @@ export const deleteUserSavedStartAsync = (
 
     if (res.status === 200) {
       dispatch(deleteUserSavedSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      Toast.success(`Removed from saved stories!`, 1000);
     }
   } catch (error) {
-    dispatch(deleteUserSavedFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(deleteUserSavedFailure(error.response.data));
+    Toast.fail(`Failed to remove!`, 1000);
   }
 };
 
@@ -434,11 +435,11 @@ export const getUserLikedStartAsync = (email: string, token: string) => async (
 
     if (res.status === 200) {
       dispatch(getUserLikedSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      // Toast.success(`Welcome back ${res.data.name}!`, 1000);
     }
   } catch (error) {
-    dispatch(getUserLikedFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(getUserLikedFailure(error.response.data));
+    // Toast.fail(`Failed signing in!`, 1000);
   }
 };
 
@@ -495,11 +496,11 @@ export const postUserLikedStartAsync = (
 
     if (res.status === 200) {
       dispatch(postUserLikedSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      Toast.success('Story liked!', 1000);
     }
   } catch (error) {
-    dispatch(postUserLikedFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(postUserLikedFailure(error.response.data));
+    Toast.fail(`Failed to like!`, 1000);
   }
 };
 
@@ -542,11 +543,11 @@ export const deleteUserLikedStartAsync = (
 
     if (res.status === 200) {
       dispatch(deleteUserLikedSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      Toast.success('No longer liked!', 1000);
     }
   } catch (error) {
-    dispatch(deleteUserLikedFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(deleteUserLikedFailure(error.response.data));
+    Toast.fail(`Failed to like!`, 1000);
   }
 };
 
@@ -587,11 +588,11 @@ export const getUserDislikedStartAsync = (
 
     if (res.status === 200) {
       dispatch(getUserDislikedSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      // Toast.success(`Welcome back ${res.data.name}!`, 1000);
     }
   } catch (error) {
-    dispatch(getUserDislikedFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(getUserDislikedFailure(error.response.data));
+    // Toast.fail(`Failed signing in!`, 1000);
   }
 };
 
@@ -648,11 +649,11 @@ export const postUserDislikedStartAsync = (
 
     if (res.status === 200) {
       dispatch(postUserDislikedSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      Toast.success('Story disliked!', 1000);
     }
   } catch (error) {
-    dispatch(postUserDislikedFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(postUserDislikedFailure(error.response.data));
+    Toast.fail('Failed to dislike!', 1000);
   }
 };
 
@@ -697,11 +698,11 @@ export const deleteUserDislikedStartAsync = (
 
     if (res.status === 200) {
       dispatch(deleteUserDislikedSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      Toast.success('No longer disliked!', 1000);
     }
   } catch (error) {
-    dispatch(deleteUserDislikedFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(deleteUserDislikedFailure(error.response.data));
+    Toast.fail(`Failed to dislike!`, 1000);
   }
 };
 
@@ -741,11 +742,11 @@ export const getUserHiddenStartAsync = (email: string, token: string) => async (
 
     if (res.status === 200) {
       dispatch(getUserHiddenSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      // Toast.success(`Welcome back ${res.data.name}!`, 1000);
     }
   } catch (error) {
-    dispatch(getUserHiddenFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(getUserHiddenFailure(error.response.data));
+    // Toast.fail(`Failed signing in!`, 1000);
   }
 };
 
@@ -788,11 +789,11 @@ export const postUserHiddenStartAsync = (
 
     if (res.status === 200) {
       dispatch(postUserHiddenSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      Toast.success(`${sourceName} blacklisted!`, 1000);
     }
   } catch (error) {
-    dispatch(postUserHiddenFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(postUserHiddenFailure(error.response.data));
+    Toast.fail(`Failed to blacklist!`, 1000);
   }
 };
 
@@ -835,11 +836,11 @@ export const deleteUserHiddenStartAsync = (
 
     if (res.status === 200) {
       dispatch(deleteUserHiddenSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      Toast.success(`${sourceName} whitelisted!`, 1000);
     }
   } catch (error) {
-    dispatch(deleteUserHiddenFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(deleteUserHiddenFailure(error.response.data));
+    Toast.fail(`Failed to whitelist!`, 1000);
   }
 };
 
@@ -882,11 +883,11 @@ export const getUserSearchesStartAsync = (
 
     if (res.status === 200) {
       dispatch(getUserSearchesSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      // Toast.success(`Welcome back ${res.data.name}!`, 1000);
     }
   } catch (error) {
-    dispatch(getUserSearchesFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(getUserSearchesFailure(error.response.data));
+    // Toast.fail(`Failed signing in!`, 1000);
   }
 };
 
@@ -931,11 +932,11 @@ export const postUserSearchesStartAsync = (
 
     if (res.status === 200) {
       dispatch(postUserSearchesSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      // Toast.success(`Welcome back ${res.data.name}!`, 1000);
     }
   } catch (error) {
-    dispatch(postUserSearchesFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(postUserSearchesFailure(error.response.data));
+    // Toast.fail(`Failed signing in!`, 1000);
   }
 };
 
@@ -980,11 +981,11 @@ export const deleteUserSearchesStartAsync = (
 
     if (res.status === 200) {
       dispatch(deleteUserSearchesSuccess(res.data));
-      // Toast.success(`Welcome back ${res.data.name}!`, 1500);
+      Toast.success('Removed from history!', 1000);
     }
   } catch (error) {
-    dispatch(deleteUserSearchesFailure(error.message));
-    // Toast.fail(`Failed signing in!`, 1500);
+    dispatch(deleteUserSearchesFailure(error.response.data));
+    Toast.fail(`Failed to remove!`, 1000);
   }
 };
 
@@ -1027,11 +1028,11 @@ export const updateUserDataStartAsync = (
       // console.log(res.data.email);
       // getUserSavedStartAsync;
 
-      //   // Toast.success('Data successfully updated!', 1000);
+      Toast.success('Info successfully updated!', 1000);
     }
   } catch (error) {
-    dispatch(updateUserDataFailure(error.message));
-    // Toast.fail('Failed updating data!', 1000);
+    dispatch(updateUserDataFailure(error.response.data));
+    Toast.fail('Failed updating info!', 1000);
   }
 };
 
@@ -1078,13 +1079,13 @@ export const updateUserPasswordStartAsync = (
       // console.log(res.data.email);
       // getUserSavedStartAsync;
 
-      //   // Toast.success('Data successfully updated!', 1000);
+      Toast.success('Password successfully updated!', 1000);
     } else {
       dispatch(updateUserPasswordFailure(res.data));
     }
   } catch (error) {
-    dispatch(updateUserPasswordFailure(error.message));
-    // Toast.fail('Failed updating data!', 1000);
+    dispatch(updateUserPasswordFailure(error.response.data));
+    Toast.fail(error.response.data, 1000);
   }
 };
 
@@ -1124,12 +1125,12 @@ export const updateUserPhotoStartAsync = (
       // console.log(res.data.email);
       // getUserSavedStartAsync;
 
-      //   // Toast.success('Data successfully updated!', 1000);
+      Toast.success('Photo successfully updated!', 1000);
     } else {
       dispatch(updateUserPhotoFailure(res.data));
     }
   } catch (error) {
-    dispatch(updateUserPhotoFailure(error.message));
-    // Toast.fail('Failed updating data!', 1000);
+    dispatch(updateUserPhotoFailure(error.response.data));
+    Toast.fail('Failed updating photo!', 1000);
   }
 };

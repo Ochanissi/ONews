@@ -13,9 +13,9 @@ import {
   NewsActionTYPES,
 } from './news.types';
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({ path: '../../.env' });
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config({ path: '../../.env' });
+// }
 
 // News
 export const fetchNewsStart = (): NewsActionTYPES => ({
@@ -52,7 +52,7 @@ export const fetchNewsStartAsync = (
       dispatch(fetchNewsSuccess(res.data));
     }
   } catch (error) {
-    dispatch(fetchNewsFailure(error.message));
+    dispatch(fetchNewsFailure(error.response.data));
   }
 };
 
@@ -101,6 +101,6 @@ export const fetchNewsSearchStartAsync = ({
       dispatch(fetchNewsSearchSuccess(res.data));
     }
   } catch (error) {
-    dispatch(fetchNewsSearchFailure(error.message));
+    dispatch(fetchNewsSearchFailure(error.response.data));
   }
 };

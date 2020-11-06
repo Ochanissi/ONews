@@ -22,9 +22,11 @@ import {
   updateUserPhotoStartAsync,
 } from '../../redux/user/user.actions';
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({ path: '../../.env' });
-}
+import Toast from 'light-toast';
+
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config({ path: '../../.env' });
+// }
 
 interface ProfileSettingsProps {}
 
@@ -277,8 +279,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
         newPassConfirm: '',
       });
     } else {
-      // make a notification here
-      console.log("Passwords don't match!");
+      Toast.fail("Passwords don't match!", 1000);
     }
   };
 

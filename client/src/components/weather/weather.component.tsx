@@ -20,6 +20,8 @@ import {
 import { UserCoords } from '../../redux/user/user.types';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
+import Toast from 'light-toast';
+
 interface WeatherProps extends RouteComponentProps {}
 
 interface WeatherState {
@@ -88,17 +90,19 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
     const { setUserUnits } = this.props;
 
     setUserUnits(unit);
+
+    // Toast.info('Preference saved.', 1000);
   };
 
   handleLocation = () => {
     const { userUnits, setUserCoords } = this.props;
 
-    const unitFormatted =
-      userUnits === 'k'
-        ? 'standard'
-        : userUnits === 'f'
-        ? 'imperial'
-        : 'metric';
+    // const unitFormatted =
+    //   userUnits === 'k'
+    //     ? 'standard'
+    //     : userUnits === 'f'
+    //     ? 'imperial'
+    //     : 'metric';
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: Position) => {
@@ -110,8 +114,7 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
         setUserCoords({ lat, lng });
       });
     } else {
-      // Browser doesn't support Geolocation
-      // create toast / notification for this
+      Toast.fail('Failed to find location.', 1000);
     }
   };
 

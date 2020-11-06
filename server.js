@@ -38,10 +38,10 @@ if (process.env.NODE_ENV !== 'production') {
 const db = knex({
   client: 'pg',
   connection: {
-    host: process.env.ONEWS_DB_HOST,
-    user: process.env.ONEWS_DB_USER,
-    password: process.env.ONEWS_DB_PASSWORD,
-    database: process.env.ONEWS_DB_NAME,
+    host: process.env.ONEWS_POSTGRES_HOST,
+    user: process.env.ONEWS_POSTGRES_USER,
+    password: process.env.ONEWS_POSTGRES_PASSWORD,
+    database: process.env.ONEWS_POSTGRES_DB,
   },
 });
 

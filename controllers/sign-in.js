@@ -3,7 +3,7 @@ const redis = require('redis');
 
 // Setup Redis
 const redisClient = redis.createClient({
-  host: '127.0.0.1',
+  host: process.env.ONEWS_API_REDIS_HOST,
 });
 
 const handleSignIn = (req, res, db, bcrypt) => {

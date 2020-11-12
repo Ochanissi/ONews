@@ -1,19 +1,19 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { createStructuredSelector } from 'reselect';
-import { AppActions } from '../../redux/store';
+import React from "react";
+import { connect } from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
+import { createStructuredSelector } from "reselect";
+import { AppActions } from "../../redux/store";
 import {
   deleteUserHiddenStartAsync,
   deleteUserSearchesStartAsync,
-} from '../../redux/user/user.actions';
+} from "../../redux/user/user.actions";
 import {
   selectCurrentUser,
   selectUserAuthorization,
-} from '../../redux/user/user.selectors';
-import { Authorization, User } from '../../redux/user/user.types';
+} from "../../redux/user/user.selectors";
+import { Authorization, User } from "../../redux/user/user.types";
 
-import './article-small.styles.scss';
+import "./article-small.styles.scss";
 
 interface ArticleSmallProps {
   name: string;
@@ -40,12 +40,10 @@ class ArticleSmall extends React.Component<Props> {
     if (userAuthorization) {
       const { email, token } = userAuthorization;
 
-      if (type === 'past-searches') {
+      if (type === "past-searches") {
         deleteUserSearchesStartAsync(email, name, token);
-      } else if (type === 'hidden-sources') {
+      } else if (type === "hidden-sources") {
         deleteUserHiddenStartAsync(email, name, token);
-      } else {
-        // Notification - please log in
       }
     }
   };
@@ -55,14 +53,14 @@ class ArticleSmall extends React.Component<Props> {
 
     // console.log(this.props);
     return (
-      <div className='article-small'>
-        <div className='article-small__name'>{name}</div>
-        <div className='article-small__button'>
+      <div className="article-small">
+        <div className="article-small__name">{name}</div>
+        <div className="article-small__button">
           <button
-            className='article-small__button--btn'
+            className="article-small__button--btn"
             onClick={this.handleDelete}
           >
-            <ion-icon name='trash-sharp'></ion-icon>
+            <ion-icon name="trash-sharp"></ion-icon>
           </button>
         </div>
       </div>

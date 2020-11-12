@@ -1,31 +1,31 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import React from "react";
+import { connect } from "react-redux";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 
-import { createStructuredSelector } from 'reselect';
+import { createStructuredSelector } from "reselect";
 
 // import defaultLogo from '../../assets/default.png';
 
-import Sidebar from '../sidebar/sidebar.component';
+import Sidebar from "../sidebar/sidebar.component";
 
-import './navbar.styles.scss';
-import { Authorization, User } from '../../redux/user/user.types';
+import "./navbar.styles.scss";
+import { Authorization, User } from "../../redux/user/user.types";
 import {
   selectCurrentUser,
   selectUserAuthorization,
   selectUserCategory,
   selectUserCountry,
-} from '../../redux/user/user.selectors';
-import CustomButton from '../custom-button/custom-button.component';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppActions } from '../../redux/store';
+} from "../../redux/user/user.selectors";
+import CustomButton from "../custom-button/custom-button.component";
+import { ThunkDispatch } from "redux-thunk";
+import { AppActions } from "../../redux/store";
 import {
   postUserSearchesStartAsync,
   signOut,
-} from '../../redux/user/user.actions';
-import WeatherContainer from '../weather/weather.component';
+} from "../../redux/user/user.actions";
+import WeatherContainer from "../weather/weather.component";
 
-import Toast from 'light-toast';
+import Toast from "light-toast";
 
 // if (process.env.NODE_ENV !== 'production') {
 //   require('dotenv').config({ path: '../../.env' });
@@ -58,21 +58,21 @@ class Navbar extends React.Component<Props, NavbarState> {
       popupVisible: false,
       dropdownVisible: false,
 
-      searchValue: '',
+      searchValue: "",
       searchTitle: false,
       searchLocation: this.props.userCountry,
-      searchDate: 'anytime',
-      searchSortBy: 'publishedAt',
+      searchDate: "anytime",
+      searchSortBy: "publishedAt",
 
       photo: currentUser ? currentUser.photo : null,
     };
   }
 
   componentDidMount() {
-    document.addEventListener('click', this.handleClick);
+    document.addEventListener("click", this.handleClick);
   }
   componentWillUnmount() {
-    document.removeEventListener('click', this.handleClick);
+    document.removeEventListener("click", this.handleClick);
   }
 
   handleClick = (event: any): void => {
@@ -81,30 +81,30 @@ class Navbar extends React.Component<Props, NavbarState> {
 
     // console.log(event.target.className);
 
-    const defaultClick = event.target.className || '';
-    const defaultClickParent = event.target.parentNode.className || '';
+    const defaultClick = event.target.className || "";
+    const defaultClickParent = event.target.parentNode.className || "";
 
-    if (defaultClick === 'navbar__secondary--logo') {
+    if (defaultClick === "navbar__secondary--logo") {
       this.setState((prevState) => ({
         popupVisible: !prevState.popupVisible,
       }));
     } else if (
-      defaultClick === 'navbar__secondary--profile' ||
-      defaultClick === 'navbar__secondary--profile--x'
+      defaultClick === "navbar__secondary--profile" ||
+      defaultClick === "navbar__secondary--profile--x"
     ) {
       this.setState({ popupVisible: true });
     } else {
       this.setState({ popupVisible: false });
     }
 
-    if (defaultClickParent === 'navbar__main--dd-icon') {
+    if (defaultClickParent === "navbar__main--dd-icon") {
       this.setState((prevState) => ({
         dropdownVisible: !prevState.dropdownVisible,
       }));
     } else if (
-      defaultClick.startsWith('navbar__main--searchbar') ||
-      defaultClick.startsWith('navbar__main--dropdown') ||
-      defaultClickParent.startsWith('navbar__main--dropdown')
+      defaultClick.startsWith("navbar__main--searchbar") ||
+      defaultClick.startsWith("navbar__main--dropdown") ||
+      defaultClickParent.startsWith("navbar__main--dropdown")
     ) {
       this.setState({ dropdownVisible: true });
     } else {
@@ -122,31 +122,31 @@ class Navbar extends React.Component<Props, NavbarState> {
   // }
 
   handleSearch = (event: any): void => {
-    if (event.currentTarget.id === 'title') {
+    if (event.currentTarget.id === "title") {
       this.setState({
         searchTitle: !this.state.searchTitle,
       });
-    } else if (event.currentTarget.id === 'location') {
+    } else if (event.currentTarget.id === "location") {
       this.setState({
         searchLocation: event.currentTarget.value,
       });
-    } else if (event.currentTarget.id === 'date') {
+    } else if (event.currentTarget.id === "date") {
       let date: any;
 
-      if (event.currentTarget.value === 'hour') {
+      if (event.currentTarget.value === "hour") {
         date = new Date(new Date().getTime() - 1000 * 60 * 60).toISOString();
-      } else if (event.currentTarget.value === 'day') {
-        date = new Date().toISOString().split('T')[0];
-      } else if (event.currentTarget.value === 'week') {
+      } else if (event.currentTarget.value === "day") {
+        date = new Date().toISOString().split("T")[0];
+      } else if (event.currentTarget.value === "week") {
         date = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
           .toISOString()
-          .split('T')[0];
-      } else if (event.currentTarget.value === 'month') {
+          .split("T")[0];
+      } else if (event.currentTarget.value === "month") {
         date = date = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000)
           .toISOString()
-          .split('T')[0];
-      } else if (event.currentTarget.value === 'anytime') {
-        date = 'anytime';
+          .split("T")[0];
+      } else if (event.currentTarget.value === "anytime") {
+        date = "anytime";
       }
 
       // const date: any =
@@ -164,11 +164,11 @@ class Navbar extends React.Component<Props, NavbarState> {
       this.setState({
         searchDate: date,
       });
-    } else if (event.currentTarget.id === 'sort') {
+    } else if (event.currentTarget.id === "sort") {
       this.setState({
         searchSortBy: event.currentTarget.value,
       });
-    } else if (event.currentTarget.id === 'searchBar') {
+    } else if (event.currentTarget.id === "searchBar") {
       this.setState({
         searchValue: event.currentTarget.value,
       });
@@ -227,11 +227,11 @@ class Navbar extends React.Component<Props, NavbarState> {
 
     // console.log(this.state);
     this.setState({
-      searchValue: '',
+      searchValue: "",
       searchTitle: false,
       searchLocation: this.props.userCountry,
-      searchDate: 'anytime',
-      searchSortBy: 'publishedAt',
+      searchDate: "anytime",
+      searchSortBy: "publishedAt",
       dropdownVisible: false,
     });
   };
@@ -252,18 +252,18 @@ class Navbar extends React.Component<Props, NavbarState> {
     event.preventDefault();
 
     this.setState({
-      searchValue: '',
+      searchValue: "",
       searchTitle: false,
       searchLocation: this.props.userCountry,
-      searchDate: 'anytime',
-      searchSortBy: 'publishedAt',
+      searchDate: "anytime",
+      searchSortBy: "publishedAt",
     });
 
-    const elLocation: any = document.getElementById('location')!;
-    const elDate: any = document.getElementById('date')!;
-    const elSortBy: any = document.getElementById('sort')!;
+    const elLocation: any = document.getElementById("location")!;
+    const elDate: any = document.getElementById("date")!;
+    const elSortBy: any = document.getElementById("sort")!;
 
-    elLocation.selectedIndex = this.props.userCountry === 'ro' ? 0 : 1;
+    elLocation.selectedIndex = this.props.userCountry === "ro" ? 0 : 1;
     elDate.selectedIndex = 0;
     elSortBy.selectedIndex = 0;
   };
@@ -306,7 +306,7 @@ class Navbar extends React.Component<Props, NavbarState> {
     // console.log(this.props);
 
     return (
-      <nav role='navigation' className='navbar'>
+      <nav role="navigation" className="navbar">
         <Sidebar />
 
         {/* <input id='menu-toggle' type='checkbox' />
@@ -314,112 +314,112 @@ class Navbar extends React.Component<Props, NavbarState> {
           <div className='menu-button'></div>
         </label> */}
 
-        <div className='navbar__main'>
+        <div className="navbar__main">
           <div
             className={`navbar__main--container ${
-              dropdownVisible ? 'navbar__main--container--focused' : ''
+              dropdownVisible ? "navbar__main--container--focused" : ""
             }`}
           >
             <form onSubmit={this.handleSubmit}>
               <button
-                className='navbar__main--btn-search'
-                type='submit'
-                value='Submit'
+                className="navbar__main--btn-search"
+                type="submit"
+                value="Submit"
               >
-                <ion-icon name='search'></ion-icon>
+                <ion-icon name="search"></ion-icon>
               </button>
 
               <input
-                id='searchBar'
-                className='navbar__main--searchbar'
-                type='text'
-                placeholder='Search...'
-                autoComplete='off'
+                id="searchBar"
+                className="navbar__main--searchbar"
+                type="text"
+                placeholder="Search..."
+                autoComplete="off"
                 onChange={this.handleSearch}
                 value={searchValue}
               />
-              <div className='navbar__main--dd-icon'>
+              <div className="navbar__main--dd-icon">
                 <ion-icon
-                  name={`caret-${dropdownVisible ? 'up' : 'down'}-sharp`}
+                  name={`caret-${dropdownVisible ? "up" : "down"}-sharp`}
                 ></ion-icon>
               </div>
             </form>
 
             {dropdownVisible ? (
               <form
-                className='navbar__main--dropdown'
+                className="navbar__main--dropdown"
                 onSubmit={this.handleSubmit}
               >
-                <div className='navbar__main--dropdown--header'>
+                <div className="navbar__main--dropdown--header">
                   Narrow your search results
                 </div>
 
-                <div className='navbar__main--dropdown--row'>
-                  <label htmlFor='title'>Title search</label>
+                <div className="navbar__main--dropdown--row">
+                  <label htmlFor="title">Title search</label>
                   <input
-                    type='checkbox'
-                    id='title'
-                    name='title'
-                    value='title'
+                    type="checkbox"
+                    id="title"
+                    name="title"
+                    value="title"
                     onChange={this.handleSearch}
                     checked={searchTitle}
                   />
                 </div>
 
-                <div className='navbar__main--dropdown--row'>
-                  <label htmlFor='location'>Location</label>
+                <div className="navbar__main--dropdown--row">
+                  <label htmlFor="location">Location</label>
                   <select
-                    name='location'
-                    id='location'
+                    name="location"
+                    id="location"
                     onChange={this.handleSearch}
                     defaultValue={searchLocation}
                   >
-                    <option value='ro'>Romania</option>
-                    <option value='us'>World</option>
+                    <option value="ro">Romania</option>
+                    <option value="us">World</option>
                   </select>
                 </div>
 
-                <div className='navbar__main--dropdown--row'>
-                  <label htmlFor='date'>Date</label>
+                <div className="navbar__main--dropdown--row">
+                  <label htmlFor="date">Date</label>
                   <select
-                    name='date'
-                    id='date'
+                    name="date"
+                    id="date"
                     onChange={this.handleSearch}
                     defaultValue={searchDate}
                   >
-                    <option value='anytime'>Anytime</option>
-                    <option value='hour'>Past hour</option>
-                    <option value='day'>Past 24 hours</option>
-                    <option value='week'>Past week</option>
-                    <option value='month'>Past month</option>
+                    <option value="anytime">Anytime</option>
+                    <option value="hour">Past hour</option>
+                    <option value="day">Past 24 hours</option>
+                    <option value="week">Past week</option>
+                    <option value="month">Past month</option>
                   </select>
                 </div>
 
-                <div className='navbar__main--dropdown--row'>
-                  <label htmlFor='sort'>Sort by</label>
+                <div className="navbar__main--dropdown--row">
+                  <label htmlFor="sort">Sort by</label>
                   <select
-                    name='sort'
-                    id='sort'
+                    name="sort"
+                    id="sort"
                     onChange={this.handleSearch}
                     defaultValue={searchSortBy}
                   >
-                    <option value='publishedAt'>Published</option>
-                    <option value='popularity'>Popularity</option>
-                    <option value='relevancy'>Relevancy</option>
+                    <option value="publishedAt">Published</option>
+                    <option value="popularity">Popularity</option>
+                    <option value="relevancy">Relevancy</option>
                   </select>
                 </div>
 
-                <div className='navbar__main--dropdown--btns'>
+                <div className="navbar__main--dropdown--btns">
                   <button
-                    className='navbar__main--dropdown--btns--1'
+                    className="navbar__main--dropdown--btns--1"
                     onClick={this.handleClear}
                   >
                     Clear
                   </button>
                   <button
-                    className='navbar__main--dropdown--btns--2'
-                    type='submit'
-                    value='Submit'
+                    className="navbar__main--dropdown--btns--2"
+                    type="submit"
+                    value="Submit"
                     disabled={searchValue ? false : true}
                   >
                     Submit
@@ -430,10 +430,10 @@ class Navbar extends React.Component<Props, NavbarState> {
           </div>
         </div>
 
-        <ul className='navbar__secondary'>
+        <ul className="navbar__secondary">
           <li>
             <Link to={`/news/${userCountry}/${userCategory}`}>
-              <ion-icon name='home'></ion-icon>
+              <ion-icon name="home"></ion-icon>
             </Link>
           </li>
           <li>
@@ -444,62 +444,76 @@ class Navbar extends React.Component<Props, NavbarState> {
               <div>
                 <img
                   src={`${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${currentUser.photo}`}
-                  alt='User Profile'
-                  className='navbar__secondary--logo'
+                  alt="User Profile"
+                  className="navbar__secondary--logo"
                   onLoad={this.handleImageState}
                   onError={this.handleImageError}
                 />
                 {popupVisible ? (
-                  <div className='navbar__secondary--profile'>
+                  <div className="navbar__secondary--profile">
                     <Link
-                      to='/profile'
-                      className='navbar__secondary--profile--link-1'
+                      to="/profile"
+                      className="navbar__secondary--profile--link-1"
                     >
                       <img
                         src={`${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${currentUser.photo}`}
-                        alt='User Profile'
-                        className='navbar__secondary--logo'
+                        alt="User Profile"
+                        className="navbar__secondary--logo"
                         onLoad={this.handleImageState}
                         onError={this.handleImageError}
                       />
                     </Link>
 
-                    <h4 className='navbar__secondary--profile--x'>
+                    <h4 className="navbar__secondary--profile--x">
                       {currentUser.name}
                     </h4>
-                    <div className='navbar__secondary--profile--x'>
+                    <div className="navbar__secondary--profile--x">
                       {currentUser.email}
                     </div>
                     <Link
-                      to='/profile'
-                      className='navbar__secondary--profile--link-2'
+                      to="/profile"
+                      className="navbar__secondary--profile--link-2"
                     >
                       Manage your Onews Account
                     </Link>
-                    <hr className='navbar__secondary--profile--x'></hr>
-                    <div className='navbar__secondary--profile--placeholder'>
+                    <hr className="navbar__secondary--profile--x"></hr>
+                    <div className="navbar__secondary--profile--placeholder">
                       Add another account
                     </div>
-                    <hr className='navbar__secondary--profile--x'></hr>
+                    <hr className="navbar__secondary--profile--x"></hr>
                     <CustomButton profile onClick={this.handleSignOut}>
                       Sign Out
                     </CustomButton>
-                    <hr className='navbar__secondary--profile--x'></hr>
-                    <div className='navbar__secondary--profile--footer'>
-                      <span className='navbar__secondary--profile--x'>
-                        Privacy Policy
+                    <hr className="navbar__secondary--profile--x"></hr>
+                    <div className="navbar__secondary--profile--footer">
+                      <span className="navbar__secondary--profile--x">
+                        <a
+                          className=""
+                          href="https://github.com/Ochanissi/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Privacy Policy
+                        </a>
                       </span>
-                      <span className='navbar__secondary--profile--x'> | </span>
-                      <span className='navbar__secondary--profile--x'>
-                        Terms of Service
+                      <span className="navbar__secondary--profile--x"> | </span>
+                      <span className="navbar__secondary--profile--x">
+                        <a
+                          className=""
+                          href="https://github.com/Ochanissi/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Terms of Service
+                        </a>
                       </span>
                     </div>
                   </div>
                 ) : null}
               </div>
             ) : (
-              <Link to='/auth/sign-in'>
-                <ion-icon name='person-circle'></ion-icon>
+              <Link to="/auth/sign-in">
+                <ion-icon name="person-circle"></ion-icon>
               </Link>
             )}
           </li>

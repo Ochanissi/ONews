@@ -1,8 +1,8 @@
-import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
-import { createStructuredSelector } from 'reselect';
+import { createStructuredSelector } from "reselect";
 
 // import { createStructuredSelector } from 'reselect';
 // import { selectNewsArticles } from './redux/news/news.selectors';
@@ -13,25 +13,25 @@ import { createStructuredSelector } from 'reselect';
 // import { ThunkDispatch } from 'redux-thunk';
 // import { News } from './redux/news/news.types';
 
-import SignUp from './pages/sign-up/sign-up.component';
-import SignIn from './pages/sign-in/sign-in.component';
+import SignUp from "./pages/sign-up/sign-up.component";
+import SignIn from "./pages/sign-in/sign-in.component";
 
 import {
   selectUserCategory,
   selectUserCountry,
   selectCurrentUser,
   selectUserAuthorization,
-} from './redux/user/user.selectors';
+} from "./redux/user/user.selectors";
 
-import './App.scss';
+import "./App.scss";
 
-import HomePage from './pages/home-page/home-page.component';
-import SearchPage from './pages/search-page/search-page.component';
-import NavBar from './components/navbar/navbar.component';
-import Profile from './pages/profile/profile.component';
-import { Authorization, User } from './redux/user/user.types';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppActions } from './redux/store';
+import HomePage from "./pages/home-page/home-page.component";
+import SearchPage from "./pages/search-page/search-page.component";
+import NavBar from "./components/navbar/navbar.component";
+import Profile from "./pages/profile/profile.component";
+import { Authorization, User } from "./redux/user/user.types";
+import { ThunkDispatch } from "redux-thunk";
+import { AppActions } from "./redux/store";
 import {
   getCurrentUserStartAsync,
   getUserDislikedStartAsync,
@@ -39,18 +39,18 @@ import {
   getUserLikedStartAsync,
   getUserSavedStartAsync,
   getUserSearchesStartAsync,
-} from './redux/user/user.actions';
-import ProfileData from './pages/profile-data/profile-data.component';
+} from "./redux/user/user.actions";
+import ProfileData from "./pages/profile-data/profile-data.component";
 // import { render } from '@testing-library/react';
 // import { isJsxAttributes, JsxEmit } from 'typescript';
-import ProfileSettings from './pages/profile-settings/profile-settings.components';
-import BackToTop from './components/back-to-top/back-to-top.component';
-import ScrollToTop from './components/scroll-to-top/scroll-to-top.component';
+import ProfileSettings from "./pages/profile-settings/profile-settings.components";
+import BackToTop from "./components/back-to-top/back-to-top.component";
+import ScrollToTop from "./components/scroll-to-top/scroll-to-top.component";
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'ion-icon': { name: string };
+      "ion-icon": { name: string };
     }
   }
 }
@@ -112,59 +112,60 @@ class App extends React.Component<Props> {
     const { userCategory, userCountry, currentUser } = this.props;
 
     return (
-      <div className='App'>
+      <div className="App">
         <ScrollToTop>
           <BackToTop />
           <NavBar />
+
           <Switch>
             <Route
               exact
-              path='/'
+              path="/"
               render={() => (
                 <Redirect to={`/news/${userCountry}/${userCategory}`} />
               )}
             />
-            <Route exact path='/news/:country/:category' component={HomePage} />
+            <Route exact path="/news/:country/:category" component={HomePage} />
             <Route
               exact
-              path='/search/:query/:queryTitle/:date/:lang/:sortBy'
+              path="/search/:query/:queryTitle/:date/:lang/:sortBy"
               component={SearchPage}
             />
             <Route
               exact
-              path='/auth/sign-in'
-              render={() => (currentUser ? <Redirect to='/' /> : <SignIn />)}
+              path="/auth/sign-in"
+              render={() => (currentUser ? <Redirect to="/" /> : <SignIn />)}
             />
             <Route
               exact
-              path='/auth/sign-up'
-              render={() => (currentUser ? <Redirect to='/' /> : <SignUp />)}
+              path="/auth/sign-up"
+              render={() => (currentUser ? <Redirect to="/" /> : <SignUp />)}
             />
             <Route
               exact
-              path='/profile'
+              path="/profile"
               render={() =>
-                currentUser ? <Profile /> : <Redirect to='/auth/sign-in' />
+                currentUser ? <Profile /> : <Redirect to="/auth/sign-in" />
               }
             />
 
             <Route
               exact
-              path='/profile/settings'
+              path="/profile/settings"
               render={() =>
                 currentUser ? (
                   <ProfileSettings />
                 ) : (
-                  <Redirect to='/auth/sign-in' />
+                  <Redirect to="/auth/sign-in" />
                 )
               }
             />
 
             <Route
               exact
-              path='/profile/:type'
+              path="/profile/:type"
               render={() =>
-                currentUser ? <ProfileData /> : <Redirect to='/auth/sign-in' />
+                currentUser ? <ProfileData /> : <Redirect to="/auth/sign-in" />
               }
             />
           </Switch>

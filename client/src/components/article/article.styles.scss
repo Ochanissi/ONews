@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .article {
   border: 1px solid $color-grey-light-3;
@@ -11,6 +11,8 @@
   width: 70rem;
 
   // min-height: 17rem;
+
+  // position: relative;
 
   &:not(:last-child) {
     margin-bottom: 2rem;
@@ -84,7 +86,7 @@
 
           margin: 3px;
 
-          transition: 0.25 linear;
+          transition: all 0.25 linear;
 
           position: relative;
 
@@ -136,7 +138,7 @@
 
           margin: 3px;
 
-          transition: 0.25 linear;
+          transition: all 0.25 linear;
 
           position: relative;
 
@@ -180,7 +182,7 @@
 
           margin: 3px;
 
-          transition: 0.25 linear;
+          transition: all 0.25 linear;
 
           position: relative;
 
@@ -228,7 +230,7 @@
 
           margin: 3px;
 
-          transition: 0.25 linear;
+          transition: all 0.25 linear;
 
           position: relative;
 
@@ -276,7 +278,7 @@
 
           margin: 3px;
 
-          transition: 0.25 linear;
+          transition: all 0.25 linear;
 
           position: relative;
 

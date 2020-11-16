@@ -30,6 +30,7 @@ import {
 } from "../../redux/user/user.actions";
 
 import Toast from "light-toast";
+import ArticleShare from "../article-share/article-share.component";
 
 interface ArticleProps {
   id: string;
@@ -120,7 +121,7 @@ class Article extends React.Component<Props> {
         userDisliked.find((item) => item.title === title) || {};
 
       if (Object.keys(userDislikedDuplicate).length !== 0) {
-        deleteUserDislikedStartAsync(email, title, token);
+        deleteUserDislikedStartAsync(email, title, token, false);
       }
 
       Object.keys(userLikedDuplicate).length === 0
@@ -179,7 +180,7 @@ class Article extends React.Component<Props> {
         userLiked.find((item) => item.title === title) || {};
 
       if (Object.keys(userLikedDuplicate).length !== 0) {
-        deleteUserLikedStartAsync(email, title, token);
+        deleteUserLikedStartAsync(email, title, token, false);
       }
 
       Object.keys(userDislikedDuplicate).length === 0
@@ -295,6 +296,7 @@ class Article extends React.Component<Props> {
     if (Object.keys(userHiddenDuplicate).length === 0) {
       return (
         <article className="article">
+          <ArticleShare />
           <div className="article__content">
             <a
               className="article__content--title"
@@ -464,14 +466,16 @@ interface LinkDispatchProps {
   deleteUserLikedStartAsync: (
     email: string,
     title: string,
-    token: string
+    token: string,
+    bool?: boolean
   ) => void;
 
   postUserDislikedStartAsync: (userNews: UserNews, token: string) => void;
   deleteUserDislikedStartAsync: (
     email: string,
     title: string,
-    token: string
+    token: string,
+    bool?: boolean
   ) => void;
 
   postUserHiddenStartAsync: (
@@ -505,13 +509,13 @@ const mapDispatchToProps = (
 
   postUserLikedStartAsync: (userNews, token) =>
     dispatch(postUserLikedStartAsync(userNews, token)),
-  deleteUserLikedStartAsync: (email, title, token) =>
-    dispatch(deleteUserLikedStartAsync(email, title, token)),
+  deleteUserLikedStartAsync: (email, title, token, bool) =>
+    dispatch(deleteUserLikedStartAsync(email, title, token, bool)),
 
   postUserDislikedStartAsync: (userNews, token) =>
     dispatch(postUserDislikedStartAsync(userNews, token)),
-  deleteUserDislikedStartAsync: (email, title, token) =>
-    dispatch(deleteUserDislikedStartAsync(email, title, token)),
+  deleteUserDislikedStartAsync: (email, title, token, bool) =>
+    dispatch(deleteUserDislikedStartAsync(email, title, token, bool)),
 
   postUserHiddenStartAsync: (email, sourceName, token) =>
     dispatch(postUserHiddenStartAsync(email, sourceName, token)),

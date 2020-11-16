@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { Dispatch } from 'react';
-import Toast from 'light-toast';
+import axios from "axios";
+import { Dispatch } from "react";
+import Toast from "light-toast";
 
 import {
   User,
@@ -78,8 +78,8 @@ import {
   UserCoords,
   UserUpdate,
   Authorization,
-} from './user.types';
-import { News } from '../news/news.types';
+} from "./user.types";
+import { News } from "../news/news.types";
 
 // Set User News
 export const setUserCategory = (category: string): UserActionTYPES => ({
@@ -133,7 +133,7 @@ export const getCurrentUserStartAsync = (
     dispatch(getCurrentUserStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}profile`,
       data: {
         email,
@@ -179,7 +179,7 @@ export const signInStartAsync = (email: string, password: string) => async (
     dispatch(signInStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}sign-in`,
       data: {
         email,
@@ -193,7 +193,7 @@ export const signInStartAsync = (email: string, password: string) => async (
       // console.log(res.data.email);
       // getUserSavedStartAsync;
 
-      Toast.success('Welcome back!', 1500);
+      Toast.success("Welcome back!", 1500);
     }
   } catch (error) {
     dispatch(signInFailure(error.response.data));
@@ -227,7 +227,7 @@ export const signUpStartAsync = (
     dispatch(signInStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}sign-up`,
       data: {
         name,
@@ -273,7 +273,7 @@ export const getUserSavedStartAsync = (email: string, token: string) => async (
     dispatch(getUserSavedStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}get-saved/`,
       data: {
         email,
@@ -327,7 +327,7 @@ export const postUserSavedStartAsync = (
     dispatch(postUserSavedStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}post-saved/`,
       data: {
         email,
@@ -380,7 +380,7 @@ export const deleteUserSavedStartAsync = (
     dispatch(deleteUserSavedStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}delete-saved/`,
       data: {
         email,
@@ -423,7 +423,7 @@ export const getUserLikedStartAsync = (email: string, token: string) => async (
     dispatch(getUserLikedStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}get-liked/`,
       data: {
         email,
@@ -477,7 +477,7 @@ export const postUserLikedStartAsync = (
     dispatch(postUserLikedStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}post-liked/`,
       data: {
         email,
@@ -496,10 +496,11 @@ export const postUserLikedStartAsync = (
 
     if (res.status === 200) {
       dispatch(postUserLikedSuccess(res.data));
-      Toast.success('Story liked!', 1000);
+      Toast.success("Story liked!", 1000);
     }
   } catch (error) {
     dispatch(postUserLikedFailure(error.response.data));
+
     Toast.fail(`Failed to like!`, 1000);
   }
 };
@@ -524,13 +525,14 @@ export const deleteUserLikedFailure = (
 export const deleteUserLikedStartAsync = (
   email: string,
   title: string,
-  token: string
+  token: string,
+  bool: boolean = true
 ) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(deleteUserLikedStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}delete-liked/`,
       data: {
         email,
@@ -543,11 +545,15 @@ export const deleteUserLikedStartAsync = (
 
     if (res.status === 200) {
       dispatch(deleteUserLikedSuccess(res.data));
-      Toast.success('No longer liked!', 1000);
+      if (bool) {
+        Toast.success("No longer liked!", 1000);
+      }
     }
   } catch (error) {
     dispatch(deleteUserLikedFailure(error.response.data));
-    Toast.fail(`Failed to like!`, 1000);
+    if (bool) {
+      Toast.fail(`Failed to like!`, 1000);
+    }
   }
 };
 
@@ -576,7 +582,7 @@ export const getUserDislikedStartAsync = (
     dispatch(getUserDislikedStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}get-disliked/`,
       data: {
         email,
@@ -630,7 +636,7 @@ export const postUserDislikedStartAsync = (
     dispatch(postUserDislikedStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}post-disliked/`,
       data: {
         email,
@@ -649,11 +655,12 @@ export const postUserDislikedStartAsync = (
 
     if (res.status === 200) {
       dispatch(postUserDislikedSuccess(res.data));
-      Toast.success('Story disliked!', 1000);
+      Toast.success("Story disliked!", 1000);
     }
   } catch (error) {
     dispatch(postUserDislikedFailure(error.response.data));
-    Toast.fail('Failed to dislike!', 1000);
+
+    Toast.fail("Failed to dislike!", 1000);
   }
 };
 
@@ -679,13 +686,14 @@ export const deleteUserDislikedFailure = (
 export const deleteUserDislikedStartAsync = (
   email: string,
   title: string,
-  token: string
+  token: string,
+  bool: boolean = true
 ) => async (dispatch: Dispatch<UserActionTYPES>) => {
   try {
     dispatch(deleteUserDislikedStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}delete-disliked/`,
       data: {
         email,
@@ -698,11 +706,15 @@ export const deleteUserDislikedStartAsync = (
 
     if (res.status === 200) {
       dispatch(deleteUserDislikedSuccess(res.data));
-      Toast.success('No longer disliked!', 1000);
+      if (bool) {
+        Toast.success("No longer disliked!", 1000);
+      }
     }
   } catch (error) {
     dispatch(deleteUserDislikedFailure(error.response.data));
-    Toast.fail(`Failed to dislike!`, 1000);
+    if (bool) {
+      Toast.fail(`Failed to dislike!`, 1000);
+    }
   }
 };
 
@@ -730,7 +742,7 @@ export const getUserHiddenStartAsync = (email: string, token: string) => async (
     dispatch(getUserHiddenStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}get-hidden/`,
       data: {
         email,
@@ -776,7 +788,7 @@ export const postUserHiddenStartAsync = (
     dispatch(postUserHiddenStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}post-hidden/`,
       data: {
         email,
@@ -823,7 +835,7 @@ export const deleteUserHiddenStartAsync = (
     dispatch(deleteUserHiddenStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}delete-hidden/`,
       data: {
         email,
@@ -871,7 +883,7 @@ export const getUserSearchesStartAsync = (
     dispatch(getUserSearchesStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}get-searches/`,
       data: {
         email,
@@ -919,7 +931,7 @@ export const postUserSearchesStartAsync = (
     dispatch(postUserSearchesStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}post-searches/`,
       data: {
         email,
@@ -968,7 +980,7 @@ export const deleteUserSearchesStartAsync = (
     dispatch(deleteUserSearchesStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}delete-searches/`,
       data: {
         email,
@@ -981,7 +993,7 @@ export const deleteUserSearchesStartAsync = (
 
     if (res.status === 200) {
       dispatch(deleteUserSearchesSuccess(res.data));
-      Toast.success('Removed from history!', 1000);
+      Toast.success("Removed from history!", 1000);
     }
   } catch (error) {
     dispatch(deleteUserSearchesFailure(error.response.data));
@@ -1014,7 +1026,7 @@ export const updateUserDataStartAsync = (
     dispatch(updateUserDataStart());
 
     const res = await axios({
-      method: 'PATCH',
+      method: "PATCH",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}profile`,
       data: {
         ...user,
@@ -1028,11 +1040,11 @@ export const updateUserDataStartAsync = (
       // console.log(res.data.email);
       // getUserSavedStartAsync;
 
-      Toast.success('Info successfully updated!', 1000);
+      Toast.success("Info successfully updated!", 1000);
     }
   } catch (error) {
     dispatch(updateUserDataFailure(error.response.data));
-    Toast.fail('Failed updating info!', 1000);
+    Toast.fail("Failed updating info!", 1000);
   }
 };
 
@@ -1063,7 +1075,7 @@ export const updateUserPasswordStartAsync = (
     dispatch(updateUserPasswordStart());
 
     const res = await axios({
-      method: 'PATCH',
+      method: "PATCH",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}password`,
       data: {
         email,
@@ -1073,13 +1085,13 @@ export const updateUserPasswordStartAsync = (
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    if (res.data === 'Password updated!') {
+    if (res.data === "Password updated!") {
       dispatch(updateUserPasswordSuccess(res.data));
 
       // console.log(res.data.email);
       // getUserSavedStartAsync;
 
-      Toast.success('Password successfully updated!', 1000);
+      Toast.success("Password successfully updated!", 1000);
     } else {
       dispatch(updateUserPasswordFailure(res.data));
     }
@@ -1113,7 +1125,7 @@ export const updateUserPhotoStartAsync = (
   try {
     dispatch(updateUserPhotoStart());
     const res = await axios({
-      method: 'PATCH',
+      method: "PATCH",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}photo`,
       data: formData,
       headers: { Authorization: `Bearer ${token}` },
@@ -1125,12 +1137,12 @@ export const updateUserPhotoStartAsync = (
       // console.log(res.data.email);
       // getUserSavedStartAsync;
 
-      Toast.success('Photo successfully updated!', 1000);
+      Toast.success("Photo successfully updated!", 1000);
     } else {
       dispatch(updateUserPhotoFailure(res.data));
     }
   } catch (error) {
     dispatch(updateUserPhotoFailure(error.response.data));
-    Toast.fail('Failed updating photo!', 1000);
+    Toast.fail("Failed updating photo!", 1000);
   }
 };

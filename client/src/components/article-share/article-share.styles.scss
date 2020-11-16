@@ -1,0 +1,59 @@
+@import "../../variables.scss";
+
+.article-share {
+  position: fixed;
+
+  background-color: rgba($color-grey-dark-1, 0.025);
+  // position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: 99999;
+
+  &__content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border: 1px solid $color-grey-light-3;
+    border-radius: 8px;
+
+    padding: 2rem;
+
+    display: flex;
+
+    width: 70rem;
+
+    background-color: $color-white;
+
+    display: flex;
+    flex-direction: column;
+
+    &--source {
+      display: flex;
+      justify-content: space-between;
+
+      h5 {
+        font-weight: 500;
+      }
+
+      ion-icon {
+        align-self: center;
+
+        font-size: 2.5rem;
+        color: $color-grey-dark-2;
+
+        cursor: pointer;
+
+        transition: all 0.25 linear;
+
+        &:hover {
+          color: $color-grey-dark-3;
+        }
+      }
+    }
+  }
+}

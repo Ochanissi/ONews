@@ -32,6 +32,15 @@
     display: flex;
     flex-direction: column;
 
+    hr {
+      border-color: $color-grey-light-1;
+      opacity: 0.5;
+
+      width: 100%;
+
+      margin: 1.5rem 0;
+    }
+
     &--source {
       display: flex;
       justify-content: space-between;
@@ -52,6 +61,33 @@
 
         &:hover {
           color: $color-grey-dark-3;
+        }
+      }
+    }
+
+    &--title {
+      // font-weight: 700;
+    }
+
+    &--share {
+      &--title {
+        text-align: center;
+      }
+
+      &--links {
+        display: flex;
+        justify-content: space-around;
+
+        margin: 2rem 0;
+
+        &--block {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          ion-icon {
+            font-size: 3rem;
+          }
         }
       }
     }

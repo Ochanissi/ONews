@@ -15,11 +15,22 @@ const ArticleShare = () => {
         </h4>
         <hr />
         <div className="article-share__content--share">
-          <div className="article-share__content--share--title"></div>
+          <div className="article-share__content--share--title">
+            Share this via
+          </div>
           <div className="article-share__content--share--links">
-            <div>Copy Link</div>
-            <div>Facebook</div>
-            <div>Twitter</div>
+            <div className="article-share__content--share--links--block">
+              <ion-icon name="link"></ion-icon>
+              <p>Copy link</p>
+            </div>
+            <div className="article-share__content--share--links--block">
+              <ion-icon name="logo-facebook"></ion-icon>
+              <p>Facebook</p>
+            </div>
+            <div className="article-share__content--share--links--block">
+              <ion-icon name="logo-twitter"></ion-icon>
+              <p>Twitter</p>
+            </div>
           </div>
         </div>
       </div>

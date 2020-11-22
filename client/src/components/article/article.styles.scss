@@ -86,12 +86,13 @@
 
           margin: 3px;
 
-          transition: all 0.25 linear;
+          // transition: all 0.25s linear;
 
           position: relative;
 
           &--bool {
             color: $color-button-3;
+            border: 1px solid $color-white;
           }
 
           &:hover {
@@ -138,7 +139,7 @@
 
           margin: 3px;
 
-          transition: all 0.25 linear;
+          // transition: all 0.25s linear;
 
           position: relative;
 
@@ -182,7 +183,7 @@
 
           margin: 3px;
 
-          transition: all 0.25 linear;
+          // transition: all 0.25s linear;
 
           position: relative;
 
@@ -230,7 +231,7 @@
 
           margin: 3px;
 
-          transition: all 0.25 linear;
+          // transition: all 0.25s linear;
 
           position: relative;
 
@@ -278,7 +279,7 @@
 
           margin: 3px;
 
-          transition: all 0.25 linear;
+          // transition: all 0.25s linear;
 
           position: relative;
 

@@ -36,9 +36,48 @@ interface ArticleProps {
   id: string;
 }
 
+interface ArticleState {
+  shareToggle: boolean;
+}
+
 type Props = ArticleProps & News & LinkStateProps & LinkDispatchProps;
 
-class Article extends React.Component<Props> {
+class Article extends React.Component<Props, ArticleState> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      shareToggle: false,
+    };
+  }
+
+  componentDidMount() {
+    document.addEventListener("click", this.handleClick);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("click", this.handleClick);
+  }
+
+  handleClick = (event: any): void => {
+    // console.log(event.target.className);
+    // console.log(event.target.parentNode.className);
+
+    const defaultClick = event.target.className || "";
+    const defaultClickParent = event.target.parentNode
+      ? event.target.parentNode.className
+      : "";
+
+    if (
+      defaultClick === "article-share" ||
+      defaultClickParent === "article-share__close"
+    ) {
+      this.setState({ shareToggle: false });
+    }
+  };
+
+  handleShare = () => {
+    this.setState({ shareToggle: true });
+  };
+
   handleSaved = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
@@ -256,6 +295,8 @@ class Article extends React.Component<Props> {
       userHidden,
     } = this.props;
 
+    const { shareToggle } = this.state;
+
     const dateFormatMins = Math.round(
       (Date.now() - Date.parse(publishedAt)) / 60000
     );
@@ -296,7 +337,10 @@ class Article extends React.Component<Props> {
     if (Object.keys(userHiddenDuplicate).length === 0) {
       return (
         <article className="article">
-          <ArticleShare />
+          {shareToggle ? (
+            <ArticleShare title={title} source={sourceName} url={url} />
+          ) : null}
+
           <div className="article__content">
             <a
               className="article__content--title"
@@ -341,17 +385,15 @@ class Article extends React.Component<Props> {
                       : "Save for later"}
                   </span>
                 </button>
-                <a
+                <button
                   className="article__content--source--options--share"
-                  href="# "
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={this.handleShare}
                 >
                   <ion-icon name="share-social-outline"></ion-icon>
                   <span className="article__content--source--options--share--info">
                     Share
                   </span>
-                </a>
+                </button>
                 <button
                   className={`article__content--source--options--thumbs-up ${
                     userLikedBool

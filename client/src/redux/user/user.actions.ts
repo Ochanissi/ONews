@@ -152,6 +152,10 @@ export const getCurrentUserStartAsync = (
   } catch (error) {
     dispatch(getCurrentUserFailure(error.response.data));
     // Toast.fail('Failed signing in!', 1000);
+
+    if (error.response.data === "Unauthorized!") {
+      dispatch(signOut());
+    }
   }
 };
 

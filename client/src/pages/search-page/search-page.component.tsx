@@ -1,16 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
+import React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
 
-import Article from '../../components/article/article.component';
-import { News, NewsSearch } from '../../redux/news/news.types';
-import { selectNewsSearch } from '../../redux/news/news.selectors';
+import Article from "../../components/article/article.component";
+import { News, NewsSearch } from "../../redux/news/news.types";
+import { selectNewsSearch } from "../../redux/news/news.selectors";
 
-import './search-page.styles.scss';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppActions } from '../../redux/store';
-import { fetchNewsSearchStartAsync } from '../../redux/news/news.actions';
+import "./search-page.styles.scss";
+import { ThunkDispatch } from "redux-thunk";
+import { AppActions } from "../../redux/store";
+import { fetchNewsSearchStartAsync } from "../../redux/news/news.actions";
+import PageContainer from "../../components/page-container/page-container.component";
 
 interface SearchPageProps {
   match: {
@@ -35,10 +36,10 @@ class SearchPage extends React.Component<Props> {
       fetchNewsSearchStartAsync,
     } = this.props;
 
-    const queryFormatted = query.replace(/ /g, '%20');
-    const titleBool = queryTitle === 'true';
-    const dateFormatted = date === 'anytime' ? '' : date;
-    const langFormatted = lang === 'us' ? 'en' : 'ro';
+    const queryFormatted = query.replace(/ /g, "%20");
+    const titleBool = queryTitle === "true";
+    const dateFormatted = date === "anytime" ? "" : date;
+    const langFormatted = lang === "us" ? "en" : "ro";
 
     fetchNewsSearchStartAsync({
       query: queryFormatted,
@@ -65,10 +66,10 @@ class SearchPage extends React.Component<Props> {
       lang !== prevProps.match.params.lang ||
       sortBy !== prevProps.match.params.sortBy
     ) {
-      const queryFormatted = query.replace(/ /g, '%20');
-      const titleBool = queryTitle === 'true';
-      const dateFormatted = date === 'anytime' ? '' : date;
-      const langFormatted = lang === 'us' ? 'en' : 'ro';
+      const queryFormatted = query.replace(/ /g, "%20");
+      const titleBool = queryTitle === "true";
+      const dateFormatted = date === "anytime" ? "" : date;
+      const langFormatted = lang === "us" ? "en" : "ro";
 
       fetchNewsSearchStartAsync({
         query: queryFormatted,
@@ -106,29 +107,29 @@ class SearchPage extends React.Component<Props> {
     // console.log(newsSearch.length);
 
     return (
-      <div className='search-page'>
+      <PageContainer className="search-page">
         {newsSearch.length ? (
-          <div className='search-page__content'>
-            <h2 className='search-page__content--header'>
+          <React.Fragment>
+            <h2 className="search-page__content--header">
               Search results for:
             </h2>
-            <h4 className='search-page__content--sub-header'>"{query}"</h4>
+            <h4 className="search-page__content--sub-header">"{query}"</h4>
 
-            <div className='search-page__content--articles'>
+            <div className="search-page__content--articles">
               {newsSearch.map((x: News, i: number) => (
                 <Article key={`${i + query}`} {...x} id={`${i + query}`} />
               ))}
             </div>
-          </div>
+          </React.Fragment>
         ) : (
-          <div className='search-page__content'>
-            <h2 className='search-page__content--header search-page__content--header--none'>
+          <React.Fragment>
+            <h2 className="search-page__content--header search-page__content--header--none">
               No search results found for:
             </h2>
-            <h4 className='search-page__content--sub-header'>"{query}"</h4>
-          </div>
+            <h4 className="search-page__content--sub-header">"{query}"</h4>
+          </React.Fragment>
         )}
-      </div>
+      </PageContainer>
     );
   }
 }

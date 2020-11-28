@@ -1,28 +1,29 @@
-import React from 'react';
-import CustomButton from '../../components/custom-button/custom-button.component';
-import FormInput from '../../components/form-input/form-input.component';
+import React from "react";
+import CustomButton from "../../components/custom-button/custom-button.component";
+import FormInput from "../../components/form-input/form-input.component";
 
-import defaultLogo from '../../assets/default.png';
+import defaultLogo from "../../assets/default.png";
 
-import kk from '../../../../public/img/users/user-kek-1603815835070.jpeg';
+import kk from "../../../../public/img/users/user-kek-1603815835070.jpeg";
 
-import './profile-settings.styles.scss';
-import { connect } from 'react-redux';
+import "./profile-settings.styles.scss";
+import { connect } from "react-redux";
 import {
   selectCurrentUser,
   selectUserAuthorization,
-} from '../../redux/user/user.selectors';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppActions } from '../../redux/store';
-import { Authorization, User, UserUpdate } from '../../redux/user/user.types';
-import { createStructuredSelector } from 'reselect';
+} from "../../redux/user/user.selectors";
+import { ThunkDispatch } from "redux-thunk";
+import { AppActions } from "../../redux/store";
+import { Authorization, User, UserUpdate } from "../../redux/user/user.types";
+import { createStructuredSelector } from "reselect";
 import {
   updateUserDataStartAsync,
   updateUserPasswordStartAsync,
   updateUserPhotoStartAsync,
-} from '../../redux/user/user.actions';
+} from "../../redux/user/user.actions";
 
-import Toast from 'light-toast';
+import Toast from "light-toast";
+import PageContainer from "../../components/page-container/page-container.component";
 
 // if (process.env.NODE_ENV !== 'production') {
 //   require('dotenv').config({ path: '../../.env' });
@@ -78,9 +79,9 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       about,
       photo,
       joined,
-      oldPass: '',
-      newPass: '',
-      newPassConfirm: '',
+      oldPass: "",
+      newPass: "",
+      newPassConfirm: "",
       oldPassVisible: false,
       newPassVisible: false,
       newPassConfirmVisible: false,
@@ -101,7 +102,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
   ): void => {
     const { name, value } = event.target;
 
-    if (name === 'photo') {
+    if (name === "photo") {
       // Upload photo
       const {
         updateUserPhotoStartAsync,
@@ -116,8 +117,8 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
       const formData = new FormData();
 
-      formData.append('photo', files[0]);
-      formData.append('email', email);
+      formData.append("photo", files[0]);
+      formData.append("email", email);
 
       updateUserPhotoStartAsync(formData, token);
 
@@ -274,9 +275,9 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       updateUserPasswordStartAsync(email, oldPass, newPass, token);
 
       this.setState({
-        oldPass: '',
-        newPass: '',
-        newPassConfirm: '',
+        oldPass: "",
+        newPass: "",
+        newPassConfirm: "",
       });
     } else {
       Toast.fail("Passwords don't match!", 1000);
@@ -287,9 +288,9 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     event.preventDefault();
 
     this.setState({
-      oldPass: '',
-      newPass: '',
-      newPassConfirm: '',
+      oldPass: "",
+      newPass: "",
+      newPassConfirm: "",
     });
   };
 
@@ -301,7 +302,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
     this.setState<any>({
       [elem]: !this.state[
-        elem as 'oldPassVisible' | 'newPassVisible' | 'newPassConfirmVisible'
+        elem as "oldPassVisible" | "newPassVisible" | "newPassConfirmVisible"
       ],
     });
   };
@@ -349,264 +350,261 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     // console.log(this.props);
 
     return (
-      <div className='profile-settings'>
-        <div className='profile-settings__content'>
-          <h2 className='profile-settings__content--header'>Personal info</h2>
-          <h4 className='profile-settings__content--sub-header'>
-            Basic info, like your name and photo, that you use on ONews services
-          </h4>
+      <PageContainer className="profile-settings">
+        <h2 className="profile-settings__header">Personal info</h2>
+        <h4 className="profile-settings__sub-header">
+          Basic info, like your name and photo, that you use on ONews services
+        </h4>
 
-          <div className='profile-settings__content--blocks'>
-            <form
-              className='profile-settings-block'
-              onSubmit={this.handleSubmitPublic}
-            >
-              <h3 className='profile-settings-block__header'>Public info</h3>
-              <h4 className='profile-settings-block__sub-header'>
-                Some info may be visible to other people using ONews services.
-              </h4>
-              <div className='profile-settings-block__content'>
-                <div className='form-input__photo--container'>
-                  <label className='form-input__label--profile'>photo</label>
-                  <div className='form-input__photo'>
-                    <img
-                      className='form-input__photo--image'
-                      id='profile-image'
-                      src={`${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`}
-                      alt='Current User'
-                      onLoad={this.handleImageState}
-                      onError={this.handleImageError}
-                    />
+        <div className="profile-settings__blocks">
+          <form
+            className="profile-settings-block"
+            onSubmit={this.handleSubmitPublic}
+          >
+            <h3 className="profile-settings-block__header">Public info</h3>
+            <h4 className="profile-settings-block__sub-header">
+              Some info may be visible to other people using ONews services.
+            </h4>
+            <div className="profile-settings-block__content">
+              <div className="form-input__photo--container">
+                <label className="form-input__label--profile">photo</label>
+                <div className="form-input__photo">
+                  <img
+                    className="form-input__photo--image"
+                    id="profile-image"
+                    src={`${process.env.REACT_APP_ONEWS_BACKEND_URL}img/users/${photo}`}
+                    alt="Current User"
+                    onLoad={this.handleImageState}
+                    onError={this.handleImageError}
+                  />
 
-                    <input
-                      type='file'
-                      id='files'
-                      className='form-input__photo--text'
-                      name='photo'
-                      accept='image/*'
-                      placeholder='••••••••'
-                      onChange={this.handleChange}
-                    />
-                    <label
-                      htmlFor='files'
-                      className='custom-button custom-button__profile'
-                      id='form-input__photo--btn'
-                    >
-                      <ion-icon name='camera'></ion-icon>
-                    </label>
-                  </div>
-                </div>
-
-                <FormInput
-                  name='name'
-                  type='text'
-                  value={name || ''}
-                  handleChange={this.handleChange}
-                  required
-                  label='Your name'
-                  placeholder='John Doe'
-                  maxLength={50}
-                  profile
-                />
-                <FormInput
-                  name='age'
-                  type='number'
-                  value={age || ''}
-                  handleChange={this.handleChange}
-                  label='Age'
-                  placeholder='How old are you.'
-                  min={12}
-                  max={110}
-                  profile
-                />
-
-                <FormInput
-                  name='occupation'
-                  type='text'
-                  value={occupation || ''}
-                  handleChange={this.handleChange}
-                  label='Occupation'
-                  placeholder='What do you do for a living.'
-                  maxLength={50}
-                  profile
-                />
-                <FormInput
-                  name='country'
-                  type='text'
-                  value={country || ''}
-                  handleChange={this.handleChange}
-                  label='Country'
-                  placeholder='Which country you are from.'
-                  maxLength={50}
-                  profile
-                />
-
-                <div className='form__input form-input__profile'>
-                  <label className='form-input__label form-input__label--profile'>
-                    About yourself
-                  </label>
-                  <textarea
-                    className='form-input__input form-input__input--profile'
-                    name='about'
+                  <input
+                    type="file"
+                    id="files"
+                    className="form-input__photo--text"
+                    name="photo"
+                    accept="image/*"
+                    placeholder="••••••••"
                     onChange={this.handleChange}
-                    placeholder='Tell us about yourself.'
-                    maxLength={200}
-                    rows={3}
-                    value={about || ''}
-                  ></textarea>
-                </div>
-
-                <div className='profile-settings-block__content--btns'>
-                  <button
-                    className='profile-settings-block__content--btns--1'
-                    onClick={this.handleClearPublic}
+                  />
+                  <label
+                    htmlFor="files"
+                    className="custom-button custom-button__profile"
+                    id="form-input__photo--btn"
                   >
-                    Clear
-                  </button>
-
-                  <button
-                    className='profile-settings-block__content--btns--2'
-                    type='submit'
-                    value='Submit'
-                  >
-                    Submit
-                  </button>
+                    <ion-icon name="camera"></ion-icon>
+                  </label>
                 </div>
               </div>
-            </form>
 
-            <form
-              className='profile-settings-block'
-              onSubmit={this.handleSubmitContact}
-            >
-              <h3 className='profile-settings-block__header'>Contact info</h3>
-              <h4 className='profile-settings-block__sub-header'>
-                This info is not shared with other people.
-              </h4>
-              <div className='profile-settings-block__content'>
-                <FormInput
-                  name='email'
-                  type='email'
-                  value={email || ''}
-                  handleChange={this.handleChange}
-                  required
-                  label='Email Address'
-                  placeholder='example@google.com'
-                  disabled
-                  profile
-                />
+              <FormInput
+                name="name"
+                type="text"
+                value={name || ""}
+                handleChange={this.handleChange}
+                required
+                label="Your name"
+                placeholder="John Doe"
+                maxLength={50}
+                profile
+              />
+              <FormInput
+                name="age"
+                type="number"
+                value={age || ""}
+                handleChange={this.handleChange}
+                label="Age"
+                placeholder="How old are you."
+                min={12}
+                max={110}
+                profile
+              />
 
-                <FormInput
-                  name='phone'
-                  type='tel'
-                  value={phone || ''}
-                  handleChange={this.handleChange}
-                  required
-                  label='Phone Number'
-                  placeholder='07XX XXX XXX'
-                  minLength={8}
-                  profile
-                />
-                <div className='profile-settings-block__content--btns'>
-                  <button
-                    className='profile-settings-block__content--btns--1'
-                    onClick={this.handleClearContact}
-                  >
-                    Clear
-                  </button>
+              <FormInput
+                name="occupation"
+                type="text"
+                value={occupation || ""}
+                handleChange={this.handleChange}
+                label="Occupation"
+                placeholder="What do you do for a living."
+                maxLength={50}
+                profile
+              />
+              <FormInput
+                name="country"
+                type="text"
+                value={country || ""}
+                handleChange={this.handleChange}
+                label="Country"
+                placeholder="Which country you are from."
+                maxLength={50}
+                profile
+              />
 
-                  <button
-                    className='profile-settings-block__content--btns--2'
-                    type='submit'
-                    value='Submit'
-                  >
-                    Submit
-                  </button>
-                </div>
+              <div className="form__input form-input__profile">
+                <label className="form-input__label form-input__label--profile">
+                  About yourself
+                </label>
+                <textarea
+                  className="form-input__input form-input__input--profile"
+                  name="about"
+                  onChange={this.handleChange}
+                  placeholder="Tell us about yourself."
+                  maxLength={200}
+                  rows={3}
+                  value={about || ""}
+                ></textarea>
               </div>
-            </form>
 
-            <form
-              className='profile-settings-block'
-              onSubmit={this.handleSubmitSecurity}
-            >
-              <h3 className='profile-settings-block__header'>Security</h3>
-              <h4 className='profile-settings-block__sub-header'>
-                Settings and recommendations to help you keep your account
-                secure.
-              </h4>
-              <div className='profile-settings-block__content'>
-                <FormInput
-                  name='oldPass'
-                  type={oldPassVisible ? 'text' : 'password'}
-                  value={oldPass || ''}
-                  handleChange={this.handleChange}
-                  handlePasswordVisible={(event) =>
-                    this.handlePasswordVisible(event, 'oldPassVisible')
-                  }
-                  required
-                  label='Current Password'
-                  placeholder='••••••••'
-                  minLength={8}
-                  profile
-                  password
-                  passwordVisible={oldPassVisible}
-                />
+              <div className="profile-settings-block__content--btns">
+                <button
+                  className="profile-settings-block__content--btns--1"
+                  onClick={this.handleClearPublic}
+                >
+                  Clear
+                </button>
 
-                <FormInput
-                  name='newPass'
-                  type={newPassVisible ? 'text' : 'password'}
-                  value={newPass || ''}
-                  handleChange={this.handleChange}
-                  handlePasswordVisible={(event) =>
-                    this.handlePasswordVisible(event, 'newPassVisible')
-                  }
-                  required
-                  label='New Password'
-                  placeholder='••••••••'
-                  minLength={8}
-                  profile
-                  password
-                  passwordVisible={newPassVisible}
-                />
-
-                <FormInput
-                  name='newPassConfirm'
-                  type={newPassConfirmVisible ? 'text' : 'password'}
-                  value={newPassConfirm || ''}
-                  handleChange={this.handleChange}
-                  handlePasswordVisible={(event) =>
-                    this.handlePasswordVisible(event, 'newPassConfirmVisible')
-                  }
-                  required
-                  label='Confirm Password'
-                  placeholder='••••••••'
-                  minLength={8}
-                  profile
-                  password
-                  passwordVisible={newPassConfirmVisible}
-                />
-                <div className='profile-settings-block__content--btns'>
-                  <button
-                    className='profile-settings-block__content--btns--1'
-                    onClick={this.handleClearSecurity}
-                  >
-                    Clear
-                  </button>
-
-                  <button
-                    className='profile-settings-block__content--btns--2'
-                    type='submit'
-                    value='Submit'
-                  >
-                    Submit
-                  </button>
-                </div>
+                <button
+                  className="profile-settings-block__content--btns--2"
+                  type="submit"
+                  value="Submit"
+                >
+                  Submit
+                </button>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
+
+          <form
+            className="profile-settings-block"
+            onSubmit={this.handleSubmitContact}
+          >
+            <h3 className="profile-settings-block__header">Contact info</h3>
+            <h4 className="profile-settings-block__sub-header">
+              This info is not shared with other people.
+            </h4>
+            <div className="profile-settings-block__content">
+              <FormInput
+                name="email"
+                type="email"
+                value={email || ""}
+                handleChange={this.handleChange}
+                required
+                label="Email Address"
+                placeholder="example@google.com"
+                disabled
+                profile
+              />
+
+              <FormInput
+                name="phone"
+                type="tel"
+                value={phone || ""}
+                handleChange={this.handleChange}
+                required
+                label="Phone Number"
+                placeholder="07XX XXX XXX"
+                minLength={8}
+                profile
+              />
+              <div className="profile-settings-block__content--btns">
+                <button
+                  className="profile-settings-block__content--btns--1"
+                  onClick={this.handleClearContact}
+                >
+                  Clear
+                </button>
+
+                <button
+                  className="profile-settings-block__content--btns--2"
+                  type="submit"
+                  value="Submit"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <form
+            className="profile-settings-block"
+            onSubmit={this.handleSubmitSecurity}
+          >
+            <h3 className="profile-settings-block__header">Security</h3>
+            <h4 className="profile-settings-block__sub-header">
+              Settings and recommendations to help you keep your account secure.
+            </h4>
+            <div className="profile-settings-block__content">
+              <FormInput
+                name="oldPass"
+                type={oldPassVisible ? "text" : "password"}
+                value={oldPass || ""}
+                handleChange={this.handleChange}
+                handlePasswordVisible={(event) =>
+                  this.handlePasswordVisible(event, "oldPassVisible")
+                }
+                required
+                label="Current Password"
+                placeholder="••••••••"
+                minLength={8}
+                profile
+                password
+                passwordVisible={oldPassVisible}
+              />
+
+              <FormInput
+                name="newPass"
+                type={newPassVisible ? "text" : "password"}
+                value={newPass || ""}
+                handleChange={this.handleChange}
+                handlePasswordVisible={(event) =>
+                  this.handlePasswordVisible(event, "newPassVisible")
+                }
+                required
+                label="New Password"
+                placeholder="••••••••"
+                minLength={8}
+                profile
+                password
+                passwordVisible={newPassVisible}
+              />
+
+              <FormInput
+                name="newPassConfirm"
+                type={newPassConfirmVisible ? "text" : "password"}
+                value={newPassConfirm || ""}
+                handleChange={this.handleChange}
+                handlePasswordVisible={(event) =>
+                  this.handlePasswordVisible(event, "newPassConfirmVisible")
+                }
+                required
+                label="Confirm Password"
+                placeholder="••••••••"
+                minLength={8}
+                profile
+                password
+                passwordVisible={newPassConfirmVisible}
+              />
+              <div className="profile-settings-block__content--btns">
+                <button
+                  className="profile-settings-block__content--btns--1"
+                  onClick={this.handleClearSecurity}
+                >
+                  Clear
+                </button>
+
+                <button
+                  className="profile-settings-block__content--btns--2"
+                  type="submit"
+                  value="Submit"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
-      </div>
+      </PageContainer>
     );
   }
 }

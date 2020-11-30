@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .weather-small {
   &__header {
@@ -6,9 +6,12 @@
   }
 
   &__icon {
+    // max-width: 5rem;
+    // max-height: 5rem;
+
     img {
-      // width: 10rem;
-      // height: 10rem;
+      // max-width: 5rem;
+      // max-height: 5rem;
       filter: brightness(0.75);
     }
   }

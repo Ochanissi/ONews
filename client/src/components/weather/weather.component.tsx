@@ -265,7 +265,7 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
             </div>
           </div>
         ) : (
-          <div className="menuToggle-weather">
+          <div className="menu-weather">
             <button
               className="isWeatherChecked"
               onClick={this.handleChecked}

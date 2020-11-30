@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .weather {
   position: fixed;
@@ -7,7 +7,7 @@
 
   right: 0;
 
-  #menuToggle-weather {
+  .menu-weather {
     display: block;
     position: absolute;
     top: 7.5px;
@@ -16,39 +16,50 @@
     // -webkit-user-select: none;
     // user-select: none;
 
-    transition: all 0.25s linear;
+    // transition: all 0.25s linear;
+    // transition: none;
 
-    transform: scale(0.75);
+    // transform: scale(0.75);
 
-    & > ion-icon,
-    input {
+    .isWeatherChecked {
+      display: block;
+      width: 3rem;
+      height: 3rem;
+      position: absolute;
       font-size: 4rem;
       position: absolute;
 
-      top: -1rem;
+      top: -1.3rem;
       right: 0rem;
-    }
-
-    input {
-      display: block;
-      width: 4rem;
-      height: 4rem;
-      position: absolute;
-      // top: -7px;
-      // // right: -1px;
 
       cursor: pointer;
 
-      opacity: 0; /* hide this */
-      z-index: 2; /* and place it over the hamburger */
+      border: none;
+      background-color: transparent;
+
+      // opacity: 0; /* hide this */
+      // z-index: 2; /* and place it over the hamburger */
 
       -webkit-touch-callout: none;
+
+      // ion-icon {
+      //   width: 100%;
+      //   height: 100%;
+      // }
+    }
+
+    .isWeatherChecked {
+      &--checked {
+        ion-icon {
+          color: $color-primary-darker;
+        }
+      }
     }
   }
 
-  #menu-weather {
+  &__container {
     position: absolute;
-    margin: 23rem 0 0 0;
+    margin: 17.3rem 0 0 0;
     // margin-top: 23rem;
     right: -5rem;
 
@@ -63,28 +74,13 @@
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 
     background-color: $color-white;
-  }
 
-  #menuToggle-weather input:checked ~ ion-icon {
-    color: $color-primary-darker;
-  }
-
-  /*
-    * And let's fade it in from the left
-    */
-  #menuToggle-weather input:checked ~ div {
-    transform: scale(1);
-    // transform: translateX(-100%);
-    opacity: 1;
-  }
-
-  &__container {
-    border: 2px solid $color-grey-light-3;
+    border: 1px solid $color-grey-light-3;
     border-radius: 8px;
 
     padding: 2rem;
 
-    width: 40rem;
+    width: 30rem;
 
     hr {
       border-color: $color-grey-light-1;
@@ -93,8 +89,14 @@
       width: 100%;
     }
 
+    &--checked {
+      transform: scale(1);
+      // transform: translateX(-100%);
+      opacity: 1;
+    }
+
     &--header {
-      padding-bottom: 1rem;
+      padding-bottom: 0.5rem;
 
       color: $color-grey-dark-2;
 
@@ -103,7 +105,7 @@
       align-items: center;
 
       h3 {
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: 500;
       }
 
@@ -120,10 +122,10 @@
     }
 
     &--content {
-      margin: 2rem 0;
+      margin: 1rem 0;
 
       &--today {
-        margin-bottom: 3rem;
+        margin-bottom: 1rem;
 
         display: flex;
         justify-content: space-between;
@@ -132,18 +134,21 @@
         &--col {
           font-weight: 500;
 
+          max-height: 7.5rem;
+
           img {
-            // width: 10rem;
-            // height: 10rem;
+            width: 7.5rem;
+            height: 7.5rem;
             filter: brightness(0.75);
           }
 
           &--1 {
-            font-size: 2rem;
+            font-size: 1.5rem;
+            text-align: center;
           }
 
           &--2 {
-            font-size: 3rem;
+            font-size: 2rem;
           }
         }
       }
@@ -154,6 +159,8 @@
         align-items: center;
 
         text-align: center;
+
+        font-size: 1.25rem;
       }
     }
 
@@ -162,15 +169,22 @@
       justify-content: space-between;
       align-items: center;
 
-      margin-top: 1.5rem;
+      margin-top: 1rem;
+
+      font-size: 1.25rem;
 
       &--degrees {
+        letter-spacing: 2.5px;
+
         button {
           border: none;
           background-color: transparent;
           font-weight: 700;
+          // font-size: inherit;
 
           cursor: pointer;
+
+          font-size: 1.1rem;
 
           &:hover {
             color: $color-primary;

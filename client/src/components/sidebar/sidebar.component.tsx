@@ -1,20 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
-import mainLogo from '../../assets/logo.png';
+import mainLogo from "../../assets/logo.png";
 
-import './sidebar.styles.scss';
+import "./sidebar.styles.scss";
 import {
   selectUserCategory,
   selectUserCountry,
-} from '../../redux/user/user.selectors';
+} from "../../redux/user/user.selectors";
 
-import SidebarItem from './../sidebar-item/sidebar-item.component';
-import Footer from '../footer/footer.component';
+import SidebarItem from "./../sidebar-item/sidebar-item.component";
+import Footer from "../footer/footer.component";
 
 interface SidebarProps extends RouteComponentProps {}
 
@@ -36,7 +36,7 @@ class Sidebar extends React.Component<Props, SidebarState> {
   handleChecked = () => {
     const { isChecked } = this.state;
 
-    const ele = document.getElementById('isSidebarChecked') as HTMLInputElement;
+    const ele = document.querySelector(".menu-sidebar") as HTMLInputElement;
 
     ele.checked = !isChecked;
 
@@ -50,74 +50,75 @@ class Sidebar extends React.Component<Props, SidebarState> {
     const { isChecked } = this.state;
 
     return (
-      <nav role='navigation' className='sidebar'>
-        <div id='menuToggle'>
-          <input
-            type='checkbox'
-            id='isSidebarChecked'
-            defaultChecked={isChecked}
-            // checked={isChecked}
+      <nav role="navigation" className="sidebar">
+        <div className="menu-sidebar">
+          <button
+            className={`sidebar-bool ${
+              isChecked ? "sidebar-bool--checked" : ""
+            }`}
             onClick={this.handleChecked}
-          />
+          >
+            <ion-icon name="menu-sharp"></ion-icon>
+          </button>
 
           <Link to={`/news/${userCountry}/${userCategory}`}>
-            <img src={mainLogo} alt='App Logo' className='navbar__logo' />
+            <img src={mainLogo} alt="App Logo" className="navbar__logo" />
           </Link>
 
-          <span></span>
-          <span></span>
-          <span></span>
-
-          {location.pathname.startsWith('/profile') ? (
-            <ul id='menu'>
+          {location.pathname.startsWith("/profile") ? (
+            <ul
+              className={`menu-sidebar__menu ${
+                isChecked ? "menu-sidebar__menu--checked" : ""
+              }`}
+            >
               <SidebarItem
-                iconType='person-circle-outline'
-                itemLabel='Home'
-                profileLink='/profile'
+                iconType="person-circle-outline"
+                itemLabel="Home"
+                profileLink="/profile"
               />
 
               <SidebarItem
-                iconType='settings-sharp'
-                itemLabel='Settings'
-                profileLink='/profile/settings'
+                iconType="settings-sharp"
+                itemLabel="Settings"
+                profileLink="/profile/settings"
               />
 
               <SidebarItem
-                iconType='newspaper-outline'
-                itemLabel='Saved stories'
-                profileLink='/profile/saved-stories'
+                iconType="newspaper-outline"
+                itemLabel="Saved stories"
+                profileLink="/profile/saved-stories"
               />
 
               <SidebarItem
-                iconType='thumbs-up-sharp'
-                itemLabel='Liked stories'
-                profileLink='/profile/liked-stories'
+                iconType="thumbs-up-sharp"
+                itemLabel="Liked stories"
+                profileLink="/profile/liked-stories"
               />
 
               <SidebarItem
-                iconType='thumbs-down-sharp'
-                itemLabel='Disliked stories'
-                profileLink='/profile/disliked-stories'
+                iconType="thumbs-down-sharp"
+                itemLabel="Disliked stories"
+                profileLink="/profile/disliked-stories"
               />
 
               <SidebarItem
-                iconType='search'
-                itemLabel='Past searches'
-                profileLink='/profile/past-searches'
+                iconType="search"
+                itemLabel="Past searches"
+                profileLink="/profile/past-searches"
               />
 
               <SidebarItem
-                iconType='eye-off'
-                itemLabel='Hidden sources'
-                profileLink='/profile/hidden-sources'
+                iconType="eye-off"
+                itemLabel="Hidden sources"
+                profileLink="/profile/hidden-sources"
               />
 
               <hr></hr>
 
               <SidebarItem
-                iconType='information-circle-outline'
-                itemLabel='About'
-                profileLink='/profile/about'
+                iconType="information-circle-outline"
+                itemLabel="About"
+                profileLink="/profile/about"
               />
 
               <hr></hr>
@@ -125,26 +126,30 @@ class Sidebar extends React.Component<Props, SidebarState> {
               <Footer />
             </ul>
           ) : (
-            <ul id='menu'>
+            <ul
+              className={`menu-sidebar__menu ${
+                isChecked ? "menu-sidebar__menu--checked" : ""
+              }`}
+            >
               <SidebarItem
                 userCountry={userCountry}
                 userCategory={userCategory}
-                linkType='general'
+                linkType="general"
                 linkCountry={userCountry}
-                iconType='globe-outline'
-                itemLabel='Top stories'
+                iconType="globe-outline"
+                itemLabel="Top stories"
               />
 
               <SidebarItem
-                iconType='newspaper-outline'
-                itemLabel='Saved for later'
-                profileLink='/profile/saved-stories'
+                iconType="newspaper-outline"
+                itemLabel="Saved for later"
+                profileLink="/profile/saved-stories"
               />
 
               <SidebarItem
-                iconType='search'
-                itemLabel='Past searches'
-                profileLink='/profile/past-searches'
+                iconType="search"
+                itemLabel="Past searches"
+                profileLink="/profile/past-searches"
               />
 
               <hr></hr>
@@ -153,9 +158,9 @@ class Sidebar extends React.Component<Props, SidebarState> {
                 userCountry={userCountry}
                 userCategory={userCategory}
                 linkType={userCategory}
-                linkCountry='ro'
-                iconType='flag'
-                itemLabel='Romania'
+                linkCountry="ro"
+                iconType="flag"
+                itemLabel="Romania"
                 countryBool
               />
 
@@ -163,9 +168,9 @@ class Sidebar extends React.Component<Props, SidebarState> {
                 userCountry={userCountry}
                 userCategory={userCategory}
                 linkType={userCategory}
-                linkCountry='us'
-                iconType='earth'
-                itemLabel='World'
+                linkCountry="us"
+                iconType="earth"
+                itemLabel="World"
                 countryBool
               />
 
@@ -174,55 +179,55 @@ class Sidebar extends React.Component<Props, SidebarState> {
               <SidebarItem
                 userCountry={userCountry}
                 userCategory={userCategory}
-                linkType='business'
+                linkType="business"
                 linkCountry={userCountry}
-                iconType='business-outline'
-                itemLabel='Business'
+                iconType="business-outline"
+                itemLabel="Business"
               />
 
               <SidebarItem
                 userCountry={userCountry}
                 userCategory={userCategory}
-                linkType='technology'
+                linkType="technology"
                 linkCountry={userCountry}
-                iconType='rocket-outline'
-                itemLabel='Technology'
+                iconType="rocket-outline"
+                itemLabel="Technology"
               />
 
               <SidebarItem
                 userCountry={userCountry}
                 userCategory={userCategory}
-                linkType='entertainment'
+                linkType="entertainment"
                 linkCountry={userCountry}
-                iconType='game-controller-outline'
-                itemLabel='Entertainment'
+                iconType="game-controller-outline"
+                itemLabel="Entertainment"
               />
 
               <SidebarItem
                 userCountry={userCountry}
                 userCategory={userCategory}
-                linkType='science'
+                linkType="science"
                 linkCountry={userCountry}
-                iconType='flask-sharp'
-                itemLabel='Science'
+                iconType="flask-sharp"
+                itemLabel="Science"
               />
 
               <SidebarItem
                 userCountry={userCountry}
                 userCategory={userCategory}
-                linkType='sports'
+                linkType="sports"
                 linkCountry={userCountry}
-                iconType='bicycle'
-                itemLabel='Sports'
+                iconType="bicycle"
+                itemLabel="Sports"
               />
 
               <SidebarItem
                 userCountry={userCountry}
                 userCategory={userCategory}
-                linkType='health'
+                linkType="health"
                 linkCountry={userCountry}
-                iconType='barbell-sharp'
-                itemLabel='Health'
+                iconType="barbell-sharp"
+                itemLabel="Health"
               />
 
               <hr></hr>

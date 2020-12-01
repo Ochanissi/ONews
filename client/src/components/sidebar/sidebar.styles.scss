@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .sidebar {
   position: fixed;
@@ -25,154 +25,112 @@
   }
 
   hr {
-    margin: 1.5rem 3rem;
+    margin: 1.5rem 2rem;
+    opacity: 50%;
   }
 
-  #menuToggle {
+  .menu-sidebar {
     display: block;
     position: absolute;
-    top: 22.5px;
-    left: 30px;
+    top: 2.25rem;
+    left: 3rem;
 
     // -webkit-user-select: none;
     // user-select: none;
 
-    transition: all 0.25s linear;
+    // transition: all 0.25s linear;
 
-    transform: scale(0.75);
+    // transform: scale(0.75);
 
     &:hover {
       color: $color-primary;
     }
-  }
 
-  #menuToggle input {
-    display: block;
-    width: 40px;
-    height: 32px;
-    position: absolute;
-    top: -7px;
-    left: -5px;
+    .sidebar-bool {
+      display: block;
+      width: 3rem;
+      height: 3rem;
+      position: absolute;
+      top: -0.25rem;
+      left: -0.5rem;
 
-    z-index: 9999;
+      z-index: 9999;
 
-    cursor: pointer;
+      cursor: pointer;
 
-    opacity: 0; /* hide this */
-    // z-index: 2; /* and place it over the hamburger */
+      // opacity: 0; /* hide this */
+      // z-index: 2; /* and place it over the hamburger */
 
-    -webkit-touch-callout: none;
+      -webkit-touch-callout: none;
 
-    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
-      0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-  }
+      // box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+      //   0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 
-  /*
-    * Just a quick hamburger
-    */
-  #menuToggle span {
-    display: block;
-    width: 33px;
-    height: 4px;
-    margin-bottom: 5px;
-    position: relative;
+      // color: $color-grey-dark-2;
 
-    background: $color-grey-dark-4;
-    // border-radius: 3px;
+      &--checked {
+        ion-icon {
+          color: $color-primary-darker;
+        }
+      }
 
-    z-index: 1;
+      ion-icon {
+        width: 100%;
+        height: 100%;
+      }
 
-    transform-origin: 4px 0px;
-
-    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
-      background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
-  }
-
-  #menuToggle span:first-child {
-    transform-origin: 0% 0%;
-  }
-
-  #menuToggle span:nth-last-child(2) {
-    transform-origin: 0% 100%;
-  }
-
-  /* 
-    * Transform all the slices of hamburger
-    * into a crossmark.
-    */
-  #menuToggle input:checked ~ span {
-    opacity: 1;
-    transform: rotate(45deg) translate(-2px, -1px);
-    background: $color-grey-dark-4;
-  }
-
-  /*
-    * But let's hide the middle one.
-    */
-  #menuToggle input:checked ~ span:nth-last-child(3) {
-    opacity: 0;
-    transform: rotate(0deg) scale(0.2, 0.2);
-  }
-
-  /*
-    * Ohyeah and the last one should go the other direction
-    */
-  #menuToggle input:checked ~ span:nth-last-child(2) {
-    opacity: 1;
-    transform: rotate(-45deg) translate(0, -1px);
-  }
-
-  /*
-    * Make this absolute positioned
-    * at the top left of the screen
-    */
-  #menu {
-    position: absolute;
-    width: 30rem;
-    margin: 3.5rem 0 0 0;
-    padding: 5rem 0 2rem 0;
-    // padding-top: 15rem;
-    left: -5rem;
-
-    // background: #ededed;
-    list-style-type: none;
-    -webkit-font-smoothing: antialiased;
-    /* to stop flickering of text in safari */
-
-    transform-origin: 0% 0%;
-    transform: translate(-100%, 0);
-
-    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-
-    background-color: $color-white;
-    // background-color: red;
-  }
-
-  #menu li {
-    padding: 1rem 0;
-    font-size: 2rem;
-    font-weight: 400;
-
-    padding-left: 5rem;
-
-    p {
-      display: inline;
+      &--checked {
+        color: $color-primary;
+      }
     }
 
-    ion-icon {
-      vertical-align: middle;
-      margin-right: 2.5rem;
-      // font-size: 2.5;
-      transform: scale(1.25);
-    }
-  }
+    &__menu {
+      position: absolute;
+      width: 22.5rem;
+      margin: 5rem 0 0 0;
+      padding: 2rem 1rem 2rem 0;
+      // padding-top: 15rem;
+      left: -3rem;
 
-  /*
-    * And let's fade it in from the left
-    */
-  #menuToggle input:checked ~ ul {
-    transform: scale(1);
-    // transform: translateX(-100%);
-    opacity: 1;
+      font-size: 1.5rem;
+
+      // background: #ededed;
+      list-style-type: none;
+      -webkit-font-smoothing: antialiased;
+      /* to stop flickering of text in safari */
+
+      transform-origin: 0% 0%;
+      transform: translate(-100%, 0);
+
+      transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+      background-color: $color-white;
+      // background-color: red;
+
+      &--checked {
+        transform: scale(1);
+        // transform: translateX(-100%);
+        opacity: 1;
+      }
+
+      li {
+        padding: 0.75rem 0;
+        font-size: 1.5rem;
+        font-weight: 400;
+
+        padding-left: 3rem;
+
+        p {
+          display: inline;
+        }
+
+        ion-icon {
+          vertical-align: middle;
+          margin-right: 2.5rem;
+          // font-size: 2.5;
+          transform: scale(1.25);
+        }
+      }
+    }
   }
 }

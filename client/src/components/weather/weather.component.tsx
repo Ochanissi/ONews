@@ -121,10 +121,8 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
   handleChecked = () => {
     const { isChecked } = this.state;
 
-    if (document.querySelector(".isWeatherChecked")) {
-      const ele = document.querySelector(
-        ".isWeatherChecked"
-      ) as HTMLInputElement;
+    if (document.querySelector(".weather-bool")) {
+      const ele = document.querySelector(".weather-bool") as HTMLInputElement;
 
       ele.checked = !isChecked;
 
@@ -161,8 +159,8 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
         {weatherWeek.length ? (
           <div className="menu-weather">
             <button
-              className={`isWeatherChecked ${
-                isChecked ? "isWeatherChecked--checked" : ""
+              className={`weather-bool ${
+                isChecked ? "weather-bool--checked" : ""
               }`}
               onClick={this.handleChecked}
             >
@@ -267,7 +265,7 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
         ) : (
           <div className="menu-weather">
             <button
-              className="isWeatherChecked"
+              className="weather-bool"
               onClick={this.handleChecked}
               disabled
             >

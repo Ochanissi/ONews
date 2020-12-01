@@ -21,7 +21,7 @@
 
     // transform: scale(0.75);
 
-    .isWeatherChecked {
+    .weather-bool {
       display: block;
       width: 3rem;
       height: 3rem;
@@ -46,9 +46,7 @@
       //   width: 100%;
       //   height: 100%;
       // }
-    }
 
-    .isWeatherChecked {
       &--checked {
         ion-icon {
           color: $color-primary-darker;

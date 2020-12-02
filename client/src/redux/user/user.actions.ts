@@ -8,6 +8,8 @@ import {
   SET_USER_COUNTRY,
   SET_USER_UNITS,
   SET_USER_COORDS,
+  SET_USER_SIDEBAR_MENU,
+  SET_USER_WEATHER_MENU,
   SET_CURRENT_USER,
   GET_CURRENT_USER_START,
   GET_CURRENT_USER_SUCCESS,
@@ -93,6 +95,17 @@ export const setUserCountry = (country: string): UserActionTYPES => ({
 });
 
 // Set User Weather
+export const setUserSidebarMenu = (bool: boolean): UserActionTYPES => ({
+  type: SET_USER_SIDEBAR_MENU,
+  payload: bool,
+});
+
+export const setUserWeatherMenu = (bool: boolean): UserActionTYPES => ({
+  type: SET_USER_WEATHER_MENU,
+  payload: bool,
+});
+
+// Set User Menus
 export const setUserUnits = (unit: string): UserActionTYPES => ({
   type: SET_USER_UNITS,
   payload: unit,

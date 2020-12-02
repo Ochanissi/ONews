@@ -8,7 +8,7 @@
 
   display: flex;
 
-  width: 70rem;
+  max-width: 70rem;
 
   // min-height: 17rem;
 
@@ -28,12 +28,12 @@
 
     // margin-right: 5rem;
     margin-right: auto;
-    padding-right: 5rem;
+    padding-right: 2rem;
 
     display: flex;
     flex-direction: column;
 
-    width: 55.8rem;
+    max-width: 55.8rem;
 
     &--title {
       text-decoration: none;
@@ -53,6 +53,7 @@
       color: $color-grey-dark-2;
 
       display: flex;
+      align-items: center;
 
       &--url {
         text-decoration: none;
@@ -60,7 +61,7 @@
 
         // padding-top: 0.45rem;
 
-        margin: auto 0;
+        // margin: auto 0;
 
         &:hover {
           text-decoration: underline;
@@ -357,7 +358,7 @@
         height: 1.75rem;
 
         position: absolute;
-        right: -15rem;
+        right: -12rem;
         bottom: -4rem;
 
         text-decoration: none;

@@ -1,4 +1,4 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 *,
 *::before,
@@ -22,9 +22,9 @@ html {
 
   overflow-x: hidden;
 
-  // @media only screen and (max-width: $bp-largest) {
-  //   font-size: 50%;
-  // }
+  @media only screen and (max-width: $bp-largest) {
+    font-size: 50%;
+  }
 
   // @media only screen and (max-width: $bp-phone) {
   //   font-size: 40%;

@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 // import { AppState } from '../root-reducer';
 // import { LinkStateProps } from '../../App';
 
@@ -22,6 +22,16 @@ export const selectUserCountry = createSelector(
 export const selectUserUnits = createSelector(
   [selectUser],
   (user) => user.userUnits
+);
+
+export const selectUserSidebarMenu = createSelector(
+  [selectUser],
+  (user) => user.userSidebarMenu
+);
+
+export const selectUserWeatherMenu = createSelector(
+  [selectUser],
+  (user) => user.userWeatherMenu
 );
 
 export const selectUserCoords = createSelector(

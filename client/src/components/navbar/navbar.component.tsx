@@ -70,10 +70,21 @@ class Navbar extends React.Component<Props, NavbarState> {
 
   componentDidMount() {
     document.addEventListener("click", this.handleClick);
+    // window.addEventListener('resize', this.handleResize);
   }
   componentWillUnmount() {
     document.removeEventListener("click", this.handleClick);
+    // window.removeEventListener('resize', this.handleResize);
   }
+
+  handleResize = () => {
+    // console.log(window.innerWidth);
+    // let currentHideNav = window.innerWidth <= 800;
+    // if (currentHideNav !== true) {
+    //   console.log(currentHideNav);
+    //   // this.setState({hideNav: currentHideNav});
+    // }
+  };
 
   handleClick = (event: any): void => {
     // console.log(event.target.className);

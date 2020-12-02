@@ -360,8 +360,11 @@ class Article extends React.Component<Props, ArticleState> {
               >
                 {sourceName}
               </a>
-              <div className="article__content--source--options">
+              <span className="article__content--source--date">
                 &nbsp; &middot; {dateFormat} &nbsp; &middot;
+              </span>
+
+              <div className="article__content--source--options">
                 <button
                   className={`article__content--source--options--save ${
                     userSavedBool

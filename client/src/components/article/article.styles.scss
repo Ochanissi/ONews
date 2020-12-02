@@ -5,8 +5,9 @@
   border-radius: 8px;
 
   padding: 2rem;
+  padding-bottom: 1rem;
 
-  display: flex;
+  // display: flex;
 
   max-width: 70rem;
 
@@ -20,6 +21,10 @@
 
   &:last-child {
     margin-bottom: 5rem;
+  }
+
+  &__bulk {
+    display: flex;
   }
 
   &__content {
@@ -54,6 +59,13 @@
 
       display: flex;
       align-items: center;
+
+      @media only screen and (max-width: $bp-phonell) {
+        display: inline-block;
+      }
+
+      &--date {
+      }
 
       &--url {
         text-decoration: none;
@@ -325,8 +337,6 @@
     &--description {
       font-size: 1.5rem;
 
-      margin: 1.5rem 0;
-
       position: relative;
 
       &--state {
@@ -336,6 +346,8 @@
           opacity: 1;
           font-size: inherit;
           max-height: 999em;
+
+          margin-bottom: 1.5rem;
         }
 
         & ~ .article__content--description--toggle ion-icon {
@@ -344,6 +356,10 @@
 
         &:checked ~ .article__content--description--toggle ion-icon {
           transform: rotate(180deg);
+        }
+
+        &:checked ~ .article__content--description--toggle {
+          bottom: -3.5rem;
         }
       }
 
@@ -358,8 +374,8 @@
         height: 1.75rem;
 
         position: absolute;
-        right: -12rem;
-        bottom: -4rem;
+        right: 0rem;
+        bottom: -3rem;
 
         text-decoration: none;
         color: inherit;
@@ -390,11 +406,16 @@
 
       font-weight: 500;
 
-      margin-top: auto;
+      margin-top: 1rem;
+
+      display: flex;
+      align-items: center;
 
       ion-icon {
         margin-right: 0.5rem;
-        vertical-align: middle;
+        // align-self: center;
+
+        // vertical-align: middle;
       }
 
       &:hover {
@@ -406,6 +427,8 @@
   &__image-container {
     min-width: 10rem;
     min-height: 10rem;
+
+    display: inline-block;
 
     &--image {
       width: 10rem;

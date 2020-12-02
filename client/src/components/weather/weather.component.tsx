@@ -60,12 +60,14 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
 
     fetchWeatherStartAsync(lat, lng, unitFormatted);
 
+    // console.log(window.innerWidth);
+
+    const { setUserWeatherMenu } = this.props;
+
     if (window.innerWidth <= 800) {
-      // console.log(window.innerWidth);
-
-      const { setUserWeatherMenu } = this.props;
-
       setUserWeatherMenu(false);
+    } else {
+      setUserWeatherMenu(true);
     }
   }
 

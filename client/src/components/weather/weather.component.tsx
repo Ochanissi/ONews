@@ -12,10 +12,15 @@ import { fetchWeatherStartAsync } from "../../redux/weather/weather.actions";
 import "./weather.styles.scss";
 import { ThunkDispatch } from "redux-thunk";
 import { AppActions } from "../../redux/store";
-import { setUserCoords, setUserUnits } from "../../redux/user/user.actions";
+import {
+  setUserCoords,
+  setUserUnits,
+  setUserWeatherMenu,
+} from "../../redux/user/user.actions";
 import {
   selectUserCoords,
   selectUserUnits,
+  selectUserWeatherMenu,
 } from "../../redux/user/user.selectors";
 import { UserCoords } from "../../redux/user/user.types";
 import { RouteComponentProps, withRouter } from "react-router-dom";
@@ -25,19 +30,19 @@ import Toast from "light-toast";
 interface WeatherProps extends RouteComponentProps {}
 
 interface WeatherState {
-  isChecked: boolean;
+  // isChecked: boolean;
 }
 
 type Props = WeatherProps & LinkStateProps & LinkDispatchProps;
 
 class WeatherContainer extends React.Component<Props, WeatherState> {
-  constructor(props: Props) {
-    super(props);
+  // constructor(props: Props) {
+  //   super(props);
 
-    this.state = {
-      isChecked: true,
-    };
-  }
+  //   this.state = {
+  //     isChecked: true,
+  //   };
+  // }
 
   componentDidMount() {
     const {
@@ -54,6 +59,14 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
         : "metric";
 
     fetchWeatherStartAsync(lat, lng, unitFormatted);
+
+    if (window.innerWidth <= 800) {
+      // console.log(window.innerWidth);
+
+      const { setUserWeatherMenu } = this.props;
+
+      setUserWeatherMenu(false);
+    }
   }
 
   // Checks if the component received new props and refetches data
@@ -119,24 +132,23 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
   };
 
   handleChecked = () => {
-    const { isChecked } = this.state;
+    const { userWeatherMenu, setUserWeatherMenu } = this.props;
+    setUserWeatherMenu(!userWeatherMenu);
 
-    if (document.querySelector(".weather-bool")) {
-      const ele = document.querySelector(".weather-bool") as HTMLInputElement;
+    // if (document.querySelector('.weather-bool')) {
+    // const ele = document.querySelector('.weather-bool') as HTMLInputElement;
 
-      ele.checked = !isChecked;
+    // ele.checked = !isChecked;
 
-      this.setState({
-        isChecked: !isChecked,
-      });
-    }
-
-    console.log(isChecked);
+    // this.setState({
+    //   isChecked: !isChecked,
+    // });
+    // }
   };
 
   render(): JSX.Element {
     const { userUnits, weatherWeek } = this.props;
-    const { isChecked } = this.state;
+    const { userWeatherMenu } = this.props;
 
     let weatherTodayTemp,
       weatherTodayText = "";
@@ -160,7 +172,7 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
           <div className="menu-weather">
             <button
               className={`weather-bool ${
-                isChecked ? "weather-bool--checked" : ""
+                userWeatherMenu ? "weather-bool--checked" : ""
               }`}
               onClick={this.handleChecked}
             >
@@ -168,7 +180,7 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
             </button>
             <div
               className={`weather__container ${
-                isChecked ? "weather__container--checked" : ""
+                userWeatherMenu ? "weather__container--checked" : ""
               }`}
             >
               <div className="weather__container--header">
@@ -283,6 +295,8 @@ interface LinkStateProps {
   userCoords: UserCoords;
 
   weatherWeek: Weather[];
+
+  userWeatherMenu: boolean;
 }
 
 interface LinkDispatchProps {
@@ -290,6 +304,8 @@ interface LinkDispatchProps {
   setUserCoords: (coords: UserCoords) => void;
 
   fetchWeatherStartAsync: (lat: string, lon: string, units: string) => void;
+
+  setUserWeatherMenu: (bool: boolean) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -297,6 +313,8 @@ const mapStateToProps = createStructuredSelector({
   userCoords: selectUserCoords,
 
   weatherWeek: selectWeatherWeek,
+
+  userWeatherMenu: selectUserWeatherMenu,
 });
 
 const mapDispatchToProps = (
@@ -307,6 +325,8 @@ const mapDispatchToProps = (
 
   fetchWeatherStartAsync: (lat, lon, units) =>
     dispatch(fetchWeatherStartAsync(lat, lon, units)),
+
+  setUserWeatherMenu: (bool) => dispatch(setUserWeatherMenu(bool)),
 });
 
 export default withRouter(

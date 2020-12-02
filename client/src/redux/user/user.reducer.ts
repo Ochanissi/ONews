@@ -4,6 +4,8 @@ import {
   SET_USER_COUNTRY,
   SET_USER_UNITS,
   SET_USER_COORDS,
+  SET_USER_SIDEBAR_MENU,
+  SET_USER_WEATHER_MENU,
   SET_CURRENT_USER,
   // GET_CURRENT_USER_START,
   GET_CURRENT_USER_SUCCESS,
@@ -72,14 +74,16 @@ import {
   UserActionTYPES,
   UserCoords,
   Authorization,
-} from './user.types';
-import { News } from '../news/news.types';
+} from "./user.types";
+import { News } from "../news/news.types";
 
 interface UserState {
   userCategory: string;
   userCountry: string;
   userUnits: string;
   userCoords: UserCoords;
+  userSidebarMenu: boolean;
+  userWeatherMenu: boolean;
 
   currentUser: User | null;
 
@@ -95,14 +99,19 @@ interface UserState {
 }
 
 const INITIAL_STATE: UserState = {
-  userCategory: 'general',
-  userCountry: 'ro',
-  userUnits: 'c',
+  userCategory: "general",
+  userCountry: "ro",
+  userUnits: "c",
   userCoords: {
-    lat: '44.439663',
-    lng: '26.096306',
+    lat: "44.439663",
+    lng: "26.096306",
   },
+
+  userSidebarMenu: true,
+  userWeatherMenu: true,
+
   currentUser: null,
+
   userSaved: [],
   userLiked: [],
   userDisliked: [],
@@ -135,6 +144,19 @@ const userReducer = (
       return {
         ...state,
         userUnits: action.payload,
+      };
+
+    // User Menus
+    case SET_USER_SIDEBAR_MENU:
+      return {
+        ...state,
+        userSidebarMenu: action.payload,
+      };
+
+    case SET_USER_WEATHER_MENU:
+      return {
+        ...state,
+        userWeatherMenu: action.payload,
       };
 
     // User Coords

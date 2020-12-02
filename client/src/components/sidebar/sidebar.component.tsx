@@ -11,50 +11,66 @@ import "./sidebar.styles.scss";
 import {
   selectUserCategory,
   selectUserCountry,
+  selectUserSidebarMenu,
 } from "../../redux/user/user.selectors";
 
 import SidebarItem from "./../sidebar-item/sidebar-item.component";
 import Footer from "../footer/footer.component";
+import { ThunkDispatch } from "redux-thunk";
+import { AppActions } from "../../redux/store";
+import { setUserSidebarMenu } from "../../redux/user/user.actions";
 
 interface SidebarProps extends RouteComponentProps {}
 
 interface SidebarState {
-  isChecked: boolean;
+  // isChecked: boolean;
 }
 
-type Props = SidebarProps & LinkStateProps;
+type Props = SidebarProps & LinkStateProps & LinkDispatchProps;
 
 class Sidebar extends React.Component<Props, SidebarState> {
-  constructor(props: Props) {
-    super(props);
+  // constructor(props: Props) {
+  //   super(props);
 
-    this.state = {
-      isChecked: true,
-    };
+  //   this.state = {
+  //     isChecked: true,
+  //   };
+  // }
+
+  componentDidMount() {
+    if (window.innerWidth <= 1000) {
+      // console.log(window.innerWidth);
+
+      const { setUserSidebarMenu } = this.props;
+
+      setUserSidebarMenu(false);
+    }
   }
 
   handleChecked = () => {
-    const { isChecked } = this.state;
+    const { userSidebarMenu, setUserSidebarMenu } = this.props;
 
-    const ele = document.querySelector(".menu-sidebar") as HTMLInputElement;
+    setUserSidebarMenu(!userSidebarMenu);
 
-    ele.checked = !isChecked;
+    // const ele = document.querySelector('.menu-sidebar') as HTMLInputElement;
 
-    this.setState({
-      isChecked: !isChecked,
-    });
+    // ele.checked = !isChecked;
+
+    // this.setState({
+    //   isChecked: !isChecked,
+    // });
   };
 
   render() {
     const { userCategory, userCountry, location } = this.props;
-    const { isChecked } = this.state;
+    const { userSidebarMenu } = this.props;
 
     return (
       <nav role="navigation" className="sidebar">
         <div className="menu-sidebar">
           <button
             className={`sidebar-bool ${
-              isChecked ? "sidebar-bool--checked" : ""
+              userSidebarMenu ? "sidebar-bool--checked" : ""
             }`}
             onClick={this.handleChecked}
           >
@@ -68,7 +84,7 @@ class Sidebar extends React.Component<Props, SidebarState> {
           {location.pathname.startsWith("/profile") ? (
             <ul
               className={`menu-sidebar__menu ${
-                isChecked ? "menu-sidebar__menu--checked" : ""
+                userSidebarMenu ? "menu-sidebar__menu--checked" : ""
               }`}
             >
               <SidebarItem
@@ -128,7 +144,7 @@ class Sidebar extends React.Component<Props, SidebarState> {
           ) : (
             <ul
               className={`menu-sidebar__menu ${
-                isChecked ? "menu-sidebar__menu--checked" : ""
+                userSidebarMenu ? "menu-sidebar__menu--checked" : ""
               }`}
             >
               <SidebarItem
@@ -244,11 +260,25 @@ class Sidebar extends React.Component<Props, SidebarState> {
 interface LinkStateProps {
   userCategory: string;
   userCountry: string;
+  userSidebarMenu: boolean;
+}
+
+interface LinkDispatchProps {
+  setUserSidebarMenu: (bool: boolean) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
   userCategory: selectUserCategory,
   userCountry: selectUserCountry,
+  userSidebarMenu: selectUserSidebarMenu,
 });
 
-export default withRouter(connect(mapStateToProps)(Sidebar));
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<any, any, AppActions>
+): LinkDispatchProps => ({
+  setUserSidebarMenu: (bool) => dispatch(setUserSidebarMenu(bool)),
+});
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Sidebar)
+);

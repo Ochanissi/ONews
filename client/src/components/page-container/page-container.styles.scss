@@ -3,13 +3,83 @@
 .page-container {
   display: grid;
   grid-template-columns:
-    [full-start] minmax(6rem, 1fr) [center-start] repeat(
+    [full-start] minmax(25rem, 1fr) [center-start] repeat(
       8,
       [col-start] minmax(min-content, 14rem) [col-end]
     )
-    [center-end] minmax(6rem, 1fr) [full-end];
+    [center-end] minmax(35rem, 1fr) [full-end];
+
+  // grid-template-columns:
+  // [full-start] minmax(6rem, 1fr) [center-start] repeat(
+  //   8,
+  //   [col-start] minmax(min-content, 14rem) [col-end]
+  // )
+  // [center-end] minmax(6rem, 1fr) [full-end];
 
   position: relative;
+
+  @media only screen and (max-width: $bp-large) {
+    grid-template-columns:
+      [full-start] minmax(2rem, 1fr) [center-start] repeat(
+        8,
+        [col-start] minmax(min-content, 14rem) [col-end]
+      )
+      [center-end] minmax(35rem, 1fr) [full-end];
+  }
+
+  @media only screen and (max-width: $bp-medium) {
+    grid-template-columns:
+      [full-start] minmax(2rem, 1fr) [center-start] repeat(
+        8,
+        [col-start] minmax(min-content, 14rem) [col-end]
+      )
+      [center-end] minmax(2rem, 1fr) [full-end];
+  }
+
+  &--sidebar {
+    grid-template-columns:
+      [full-start] minmax(2rem, 1fr) [center-start] repeat(
+        8,
+        [col-start] minmax(min-content, 14rem) [col-end]
+      )
+      [center-end] minmax(35rem, 1fr) [full-end];
+
+    @media only screen and (max-width: $bp-medium) {
+      grid-template-columns:
+        [full-start] minmax(2rem, 1fr) [center-start] repeat(
+          8,
+          [col-start] minmax(min-content, 14rem) [col-end]
+        )
+        [center-end] minmax(2rem, 1fr) [full-end];
+    }
+  }
+
+  &--weather {
+    grid-template-columns:
+      [full-start] minmax(25rem, 1fr) [center-start] repeat(
+        8,
+        [col-start] minmax(min-content, 14rem) [col-end]
+      )
+      [center-end] minmax(2rem, 1fr) [full-end];
+
+    @media only screen and (max-width: $bp-medium) {
+      grid-template-columns:
+        [full-start] minmax(2rem, 1fr) [center-start] repeat(
+          8,
+          [col-start] minmax(min-content, 14rem) [col-end]
+        )
+        [center-end] minmax(2rem, 1fr) [full-end];
+    }
+  }
+
+  &--both {
+    grid-template-columns:
+      [full-start] minmax(2rem, 1fr) [center-start] repeat(
+        8,
+        [col-start] minmax(min-content, 14rem) [col-end]
+      )
+      [center-end] minmax(2rem, 1fr) [full-end];
+  }
 
   &__content {
     grid-column: center-start / center-end;

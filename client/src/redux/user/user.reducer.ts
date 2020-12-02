@@ -107,8 +107,8 @@ const INITIAL_STATE: UserState = {
     lng: "26.096306",
   },
 
-  userSidebarMenu: true,
-  userWeatherMenu: true,
+  userSidebarMenu: false,
+  userWeatherMenu: false,
 
   currentUser: null,
 

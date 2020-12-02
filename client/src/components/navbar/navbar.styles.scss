@@ -109,6 +109,10 @@
         background-color: $color-white;
         box-shadow: 0 1px 1px rgba(65, 69, 73, 0.3),
           0 1px 3px 1px rgba(65, 69, 73, 0.15);
+
+        @media only screen and (max-width: $bp-phone) {
+          width: 95vw;
+        }
       }
     }
 
@@ -126,13 +130,23 @@
       // border-bottom: $color-grey-dark-4 solid 2px;
       // transition: 0.3s;
 
-      // @media only screen and (max-width: $bp-small) {
-      //   width: 15rem;
-      // }
+      @media only screen and (max-width: $bp-small) {
+        width: 20rem;
+      }
 
-      // @media only screen and (max-width: $bp-smallest) {
-      //   width: 10rem;
-      // }
+      @media only screen and (max-width: $bp-smallest) {
+        width: 10rem;
+      }
+
+      @media only screen and (max-width: $bp-phone) {
+        width: 8rem;
+        // width: 80vw;
+      }
+
+      @media only screen and (max-width: $bp-phonest) {
+        width: 0rem;
+        // width: 80vw;
+      }
     }
 
     &--searchbar::placeholder {

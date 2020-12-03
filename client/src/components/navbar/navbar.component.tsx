@@ -108,11 +108,20 @@ class Navbar extends React.Component<Props, NavbarState> {
       this.setState({ popupVisible: false });
     }
 
-    if (defaultClickParent === "navbar__main--dd-icon") {
+    if (
+      defaultClickParent === "navbar__main--dd-icon" ||
+      defaultClick === "navbar__main--dd-icon"
+    ) {
       this.setState((prevState) => ({
         dropdownVisible: !prevState.dropdownVisible,
       }));
-    } else if (
+    }
+    // else if (
+    //   defaultClick.split(' ')[1] === 'navbar__main--searchbar--checked'
+    // ) {
+    //   this.setState({ dropdownVisible: false });
+    // }
+    else if (
       defaultClick.startsWith("navbar__main--searchbar") ||
       defaultClick.startsWith("navbar__main--dropdown") ||
       defaultClickParent.startsWith("navbar__main--dropdown")
@@ -206,6 +215,8 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchTitle,
       searchLocation,
     } = this.state;
+
+    if (!searchValue.length) return;
 
     const {
       currentUser,
@@ -332,17 +343,29 @@ class Navbar extends React.Component<Props, NavbarState> {
             }`}
           >
             <form onSubmit={this.handleSubmit}>
-              <button
-                className="navbar__main--btn-search"
-                type="submit"
-                value="Submit"
-              >
-                <ion-icon name="search"></ion-icon>
-              </button>
-
+              {searchValue.length > 0 ? (
+                <button
+                  className="navbar__main--btn-search"
+                  type="submit"
+                  value="Submit"
+                >
+                  <ion-icon name="search"></ion-icon>
+                </button>
+              ) : (
+                <button
+                  className="navbar__main--btn-search"
+                  type="submit"
+                  value="Submit"
+                  disabled
+                >
+                  <ion-icon name="search"></ion-icon>
+                </button>
+              )}
               <input
                 id="searchBar"
-                className="navbar__main--searchbar"
+                className={`navbar__main--searchbar ${
+                  dropdownVisible ? "navbar__main--searchbar--checked" : ""
+                }`}
                 type="text"
                 placeholder="Search..."
                 autoComplete="off"

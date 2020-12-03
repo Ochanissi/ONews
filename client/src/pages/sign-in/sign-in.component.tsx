@@ -1,18 +1,20 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
 import {
+  setUserSidebarMenu,
+  setUserWeatherMenu,
   signInStartAsync,
   // getUserSavedStartAsync,
-} from '../../redux/user/user.actions';
-import { AppActions } from '../../redux/store';
+} from "../../redux/user/user.actions";
+import { AppActions } from "../../redux/store";
 
-import { ThunkDispatch } from 'redux-thunk';
+import { ThunkDispatch } from "redux-thunk";
 
-import FormInput from '../../components/form-input/form-input.component';
-import CustomButton from '../../components/custom-button/custom-button.component';
+import FormInput from "../../components/form-input/form-input.component";
+import CustomButton from "../../components/custom-button/custom-button.component";
 
-import './sign-in.styles.scss';
+import "./sign-in.styles.scss";
 
 interface SignInState {
   email: string;
@@ -29,10 +31,17 @@ class SignIn extends React.Component<Props, SignInState> {
     super(props);
 
     this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       passwordVisible: false,
     };
+  }
+
+  componentDidMount() {
+    const { setUserSidebarMenu, setUserWeatherMenu } = this.props;
+
+    setUserSidebarMenu(false);
+    setUserWeatherMenu(false);
   }
 
   handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>): void => {
@@ -45,7 +54,7 @@ class SignIn extends React.Component<Props, SignInState> {
     signInStartAsync(email, password);
     // getUserSavedStartAsync(email);
 
-    this.setState({ email: '', password: '' });
+    this.setState({ email: "", password: "" });
   };
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -61,7 +70,7 @@ class SignIn extends React.Component<Props, SignInState> {
     event.preventDefault();
 
     this.setState<any>({
-      [elem]: !this.state[elem as 'passwordVisible'],
+      [elem]: !this.state[elem as "passwordVisible"],
     });
   };
 
@@ -69,39 +78,39 @@ class SignIn extends React.Component<Props, SignInState> {
     const { email, password, passwordVisible } = this.state;
 
     return (
-      <div className='sign-in'>
-        <span className='sign-in__background' />
-        <div className='sign-in__content'>
-          <form className='sign-in__content--form' onSubmit={this.handleSubmit}>
-            <h2 className='sign-in__content--form--header'>Sign In</h2>
+      <div className="sign-in">
+        <span className="sign-in__background" />
+        <div className="sign-in__content">
+          <form className="sign-in__content--form" onSubmit={this.handleSubmit}>
+            <h2 className="sign-in__content--form--header">Sign In</h2>
 
             <FormInput
-              name='email'
-              type='email'
+              name="email"
+              type="email"
               value={email}
               handleChange={this.handleChange}
               required
-              label='Email Address'
-              placeholder='example@google.com'
+              label="Email Address"
+              placeholder="example@google.com"
             />
             <FormInput
-              name='password'
-              type={passwordVisible ? 'text' : 'password'}
+              name="password"
+              type={passwordVisible ? "text" : "password"}
               value={password}
               handleChange={this.handleChange}
               handlePasswordVisible={(event) =>
-                this.handlePasswordVisible(event, 'passwordVisible')
+                this.handlePasswordVisible(event, "passwordVisible")
               }
               required
-              label='Password'
-              placeholder='••••••••'
+              label="Password"
+              placeholder="••••••••"
               password
               passwordVisible={passwordVisible}
             />
 
-            <div className='sign-in__content--form--btns'>
-              <CustomButton type='submit'>Sign In</CustomButton>
-              <CustomButton link='/auth/sign-up'>Sign up</CustomButton>
+            <div className="sign-in__content--form--btns">
+              <CustomButton type="submit">Sign In</CustomButton>
+              <CustomButton link="/auth/sign-up">Sign up</CustomButton>
             </div>
           </form>
         </div>
@@ -113,6 +122,8 @@ class SignIn extends React.Component<Props, SignInState> {
 interface LinkDispatchProps {
   signInStartAsync: (email: string, password: string) => void;
   // getUserSavedStartAsync: (email: string) => void;
+  setUserSidebarMenu: (bool: boolean) => void;
+  setUserWeatherMenu: (bool: boolean) => void;
 }
 
 const mapDispatchToProps = (
@@ -121,6 +132,8 @@ const mapDispatchToProps = (
   signInStartAsync: (email, password) =>
     dispatch(signInStartAsync(email, password)),
   // getUserSavedStartAsync: (email) => dispatch(getUserSavedStartAsync(email)),
+  setUserSidebarMenu: (bool) => dispatch(setUserSidebarMenu(bool)),
+  setUserWeatherMenu: (bool) => dispatch(setUserWeatherMenu(bool)),
 });
 
 export default connect(null, mapDispatchToProps)(SignIn);

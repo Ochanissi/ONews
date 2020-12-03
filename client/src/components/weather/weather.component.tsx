@@ -62,13 +62,13 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
 
     // console.log(window.innerWidth);
 
-    const { setUserWeatherMenu } = this.props;
+    // const { setUserWeatherMenu } = this.props;
 
-    if (window.innerWidth <= 800) {
-      setUserWeatherMenu(false);
-    } else {
-      setUserWeatherMenu(true);
-    }
+    // if (window.innerWidth <= 800) {
+    //   setUserWeatherMenu(false);
+    // } else {
+    //   setUserWeatherMenu(true);
+    // }
   }
 
   // Checks if the component received new props and refetches data
@@ -77,6 +77,7 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
       userUnits,
       userCoords: { lat, lng },
       fetchWeatherStartAsync,
+      location: { pathname },
     } = this.props;
 
     const unitFormatted =

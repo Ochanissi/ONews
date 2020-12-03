@@ -348,6 +348,13 @@
           max-height: 999em;
 
           margin-bottom: 1.5rem;
+
+          margin-right: 12rem;
+          // max-width: 55rem;
+
+          @media only screen and (max-width: $bp-smallest) {
+            margin-right: 0rem;
+          }
         }
 
         & ~ .article__content--description--toggle ion-icon {

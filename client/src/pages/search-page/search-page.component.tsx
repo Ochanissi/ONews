@@ -110,12 +110,10 @@ class SearchPage extends React.Component<Props> {
       <PageContainer className="search-page">
         {newsSearch.length ? (
           <React.Fragment>
-            <h2 className="search-page__content--header">
-              Search results for:
-            </h2>
-            <h4 className="search-page__content--sub-header">"{query}"</h4>
+            <h2 className="search-page__header">Search results for:</h2>
+            <h4 className="search-page__sub-header">"{query}"</h4>
 
-            <div className="search-page__content--articles">
+            <div className="search-page__articles">
               {newsSearch.map((x: News, i: number) => (
                 <Article key={`${i + query}`} {...x} id={`${i + query}`} />
               ))}
@@ -123,10 +121,10 @@ class SearchPage extends React.Component<Props> {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <h2 className="search-page__content--header search-page__content--header--none">
+            <h2 className="search-page__header search-page__header--none">
               No search results found for:
             </h2>
-            <h4 className="search-page__content--sub-header">"{query}"</h4>
+            <h4 className="search-page__sub-header">"{query}"</h4>
           </React.Fragment>
         )}
       </PageContainer>

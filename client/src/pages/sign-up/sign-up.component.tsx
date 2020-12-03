@@ -1,18 +1,22 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import { AppActions } from '../../redux/store';
+import { AppActions } from "../../redux/store";
 
-import { ThunkDispatch } from 'redux-thunk';
+import { ThunkDispatch } from "redux-thunk";
 
-import FormInput from '../../components/form-input/form-input.component';
-import CustomButton from '../../components/custom-button/custom-button.component';
+import FormInput from "../../components/form-input/form-input.component";
+import CustomButton from "../../components/custom-button/custom-button.component";
 
-import { signUpStartAsync } from '../../redux/user/user.actions';
+import {
+  setUserSidebarMenu,
+  setUserWeatherMenu,
+  signUpStartAsync,
+} from "../../redux/user/user.actions";
 
-import './sign-up.styles.scss';
+import "./sign-up.styles.scss";
 
-import Toast from 'light-toast';
+import Toast from "light-toast";
 
 interface SignUpState {
   name: string;
@@ -32,13 +36,20 @@ class SignUp extends React.Component<Props, SignUpState> {
     super(props);
 
     this.state = {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
       passwordVisible: false,
       confirmPasswordVisible: false,
     };
+  }
+
+  componentDidMount() {
+    const { setUserSidebarMenu, setUserWeatherMenu } = this.props;
+
+    setUserSidebarMenu(false);
+    setUserWeatherMenu(false);
   }
 
   handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>): void => {
@@ -69,7 +80,7 @@ class SignUp extends React.Component<Props, SignUpState> {
     event.preventDefault();
 
     this.setState<any>({
-      [elem]: !this.state[elem as 'passwordVisible' | 'confirmPasswordVisible'],
+      [elem]: !this.state[elem as "passwordVisible" | "confirmPasswordVisible"],
     });
   };
 
@@ -84,67 +95,67 @@ class SignUp extends React.Component<Props, SignUpState> {
     } = this.state;
 
     return (
-      <div className='sign-up'>
-        <span className='sign-up__background' />
-        <div className='sign-up__content'>
-          <form className='sign-up__content--form' onSubmit={this.handleSubmit}>
-            <h2 className='sign-up__content--form--header'>Sign Up</h2>
+      <div className="sign-up">
+        <span className="sign-up__background" />
+        <div className="sign-up__content">
+          <form className="sign-up__content--form" onSubmit={this.handleSubmit}>
+            <h2 className="sign-up__content--form--header">Sign Up</h2>
 
             <FormInput
-              name='name'
-              type='text'
+              name="name"
+              type="text"
               value={name}
               handleChange={this.handleChange}
               required
-              label='Display Name'
-              placeholder='John Doe'
+              label="Display Name"
+              placeholder="John Doe"
               maxLength={50}
             />
             <FormInput
-              name='email'
-              type='email'
+              name="email"
+              type="email"
               value={email}
               handleChange={this.handleChange}
               required
-              label='Email Address'
-              placeholder='example@google.com'
+              label="Email Address"
+              placeholder="example@google.com"
             />
 
             <FormInput
-              name='password'
-              type={passwordVisible ? 'text' : 'password'}
+              name="password"
+              type={passwordVisible ? "text" : "password"}
               value={password}
               handleChange={this.handleChange}
               handlePasswordVisible={(event) =>
-                this.handlePasswordVisible(event, 'passwordVisible')
+                this.handlePasswordVisible(event, "passwordVisible")
               }
               required
-              label='Password'
-              placeholder='••••••••'
+              label="Password"
+              placeholder="••••••••"
               minLength={8}
               password
               passwordVisible={passwordVisible}
             />
 
             <FormInput
-              name='confirmPassword'
-              type={confirmPasswordVisible ? 'text' : 'password'}
+              name="confirmPassword"
+              type={confirmPasswordVisible ? "text" : "password"}
               value={confirmPassword}
               handleChange={this.handleChange}
               handlePasswordVisible={(event) =>
-                this.handlePasswordVisible(event, 'confirmPasswordVisible')
+                this.handlePasswordVisible(event, "confirmPasswordVisible")
               }
               required
-              label='Confirm Password'
-              placeholder='••••••••'
+              label="Confirm Password"
+              placeholder="••••••••"
               minLength={8}
               password
               passwordVisible={confirmPasswordVisible}
             />
 
-            <div className='sign-up__content--form--btns'>
-              <CustomButton type='submit'>Sign Up</CustomButton>
-              <CustomButton link='/auth/sign-in'>Sign In</CustomButton>
+            <div className="sign-up__content--form--btns">
+              <CustomButton type="submit">Sign Up</CustomButton>
+              <CustomButton link="/auth/sign-in">Sign In</CustomButton>
             </div>
           </form>
         </div>
@@ -155,6 +166,9 @@ class SignUp extends React.Component<Props, SignUpState> {
 
 interface LinkDispatchProps {
   signUpStartAsync: (name: string, email: string, password: string) => void;
+
+  setUserSidebarMenu: (bool: boolean) => void;
+  setUserWeatherMenu: (bool: boolean) => void;
 }
 
 const mapDispatchToProps = (
@@ -162,6 +176,9 @@ const mapDispatchToProps = (
 ): LinkDispatchProps => ({
   signUpStartAsync: (name, email, password) =>
     dispatch(signUpStartAsync(name, email, password)),
+
+  setUserSidebarMenu: (bool) => dispatch(setUserSidebarMenu(bool)),
+  setUserWeatherMenu: (bool) => dispatch(setUserWeatherMenu(bool)),
 });
 
 export default connect(null, mapDispatchToProps)(SignUp);

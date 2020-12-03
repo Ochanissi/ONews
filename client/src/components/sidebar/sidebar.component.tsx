@@ -39,14 +39,12 @@ class Sidebar extends React.Component<Props, SidebarState> {
 
   componentDidMount() {
     // console.log(window.innerWidth);
-
-    const { setUserSidebarMenu } = this.props;
-
-    if (window.innerWidth <= 1000) {
-      setUserSidebarMenu(false);
-    } else {
-      setUserSidebarMenu(true);
-    }
+    // const { setUserSidebarMenu } = this.props;
+    // if (window.innerWidth <= 1000) {
+    //   setUserSidebarMenu(false);
+    // } else {
+    //   setUserSidebarMenu(true);
+    // }
   }
 
   handleChecked = () => {

@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .article-small {
   border: 1px solid #dadce0;
@@ -8,7 +8,7 @@
 
   display: flex;
 
-  width: 70rem;
+  max-width: 70rem;
 
   &:not(:last-child) {
     margin-bottom: 2rem;

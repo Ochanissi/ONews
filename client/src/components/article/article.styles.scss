@@ -136,6 +136,8 @@
             // display: none;
             visibility: hidden;
             opacity: 0;
+            z-index: 1;
+
             transition: all 0.25s linear;
 
             &--bool {
@@ -184,6 +186,8 @@
             // display: none;
             visibility: hidden;
             opacity: 0;
+            z-index: 1;
+
             transition: all 0.25s linear;
           }
         }
@@ -232,6 +236,8 @@
             // display: none;
             visibility: hidden;
             opacity: 0;
+            z-index: 1;
+
             transition: all 0.25s linear;
           }
         }
@@ -280,6 +286,8 @@
             // display: none;
             visibility: hidden;
             opacity: 0;
+            z-index: 1;
+
             transition: all 0.25s linear;
           }
         }
@@ -328,6 +336,8 @@
             // display: none;
             visibility: hidden;
             opacity: 0;
+            z-index: 1;
+
             transition: all 0.25s linear;
           }
         }

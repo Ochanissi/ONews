@@ -47,7 +47,9 @@ class Sidebar extends React.Component<Props, SidebarState> {
     // }
   }
 
-  handleChecked = () => {
+  handleChecked = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault();
+
     const { userSidebarMenu, setUserSidebarMenu } = this.props;
 
     setUserSidebarMenu(!userSidebarMenu);

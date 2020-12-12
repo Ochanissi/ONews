@@ -3,10 +3,8 @@ import { connect } from "react-redux";
 
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import { ThunkDispatch } from "redux-thunk";
-import { createStructuredSelector } from "reselect";
 import { AppActions } from "../../redux/store";
 import { setUserSidebarMenu } from "../../redux/user/user.actions";
-import { selectUserSidebarMenu } from "../../redux/user/user.selectors";
 
 import "./sidebar-item.styles.scss";
 
@@ -24,12 +22,12 @@ interface SidebarItemProps extends RouteComponentProps {
 type Props = SidebarItemProps & LinkDispatchProps;
 
 class SidebarItem extends React.Component<Props> {
-  handleClick = () => {
-    // console.log('lel');
+  handleClick = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ): void => {
+    event.preventDefault();
 
     const { setUserSidebarMenu } = this.props;
-
-    // setUserSidebarMenu;
 
     if (window.innerWidth <= 1000) {
       setUserSidebarMenu(false);

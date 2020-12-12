@@ -1,5 +1,6 @@
-import axios from 'axios';
-import { Dispatch } from 'react';
+import axios from "axios";
+import { Dispatch } from "react";
+import Toast from "light-toast";
 
 import {
   News,
@@ -11,7 +12,7 @@ import {
   FETCH_NEWS_SEARCH_SUCCESS,
   FETCH_NEWS_SEARCH_FAILURE,
   NewsActionTYPES,
-} from './news.types';
+} from "./news.types";
 
 // if (process.env.NODE_ENV !== 'production') {
 //   require('dotenv').config({ path: '../../.env' });
@@ -40,7 +41,7 @@ export const fetchNewsStartAsync = (
     dispatch(fetchNewsStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}news`,
       data: {
         country,
@@ -52,6 +53,9 @@ export const fetchNewsStartAsync = (
       dispatch(fetchNewsSuccess(res.data));
     }
   } catch (error) {
+    if (error.response.status === 429) {
+      Toast.fail(error.response.data, 1500);
+    }
     dispatch(fetchNewsFailure(error.response.data));
   }
 };
@@ -78,15 +82,15 @@ export const fetchNewsSearchFailure = (
 export const fetchNewsSearchStartAsync = ({
   query,
   queryTitle = false,
-  date = 'anytime',
-  lang = 'en',
-  sortBy = 'publishedAt',
+  date = "anytime",
+  lang = "en",
+  sortBy = "publishedAt",
 }: NewsSearch) => async (dispatch: Dispatch<NewsActionTYPES>) => {
   try {
     dispatch(fetchNewsSearchStart());
 
     const res = await axios({
-      method: 'POST',
+      method: "POST",
       url: `${process.env.REACT_APP_ONEWS_BACKEND_URL}search`,
       data: {
         query,

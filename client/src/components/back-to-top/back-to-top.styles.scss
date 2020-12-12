@@ -1,17 +1,15 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .back-to-top {
   display: inline-block;
   text-align: center;
   vertical-align: middle;
   user-select: none;
-  // padding: 0.175rem 0.55rem;
   // font-size: 4rem;
   // color: rgba($color-primary, 0.75);
   color: $color-grey-dark-2;
   // background-color: $color-grey-light-3;
   line-height: 1.1;
-  // border-radius: 50%;
   border-color: transparent;
   background-color: transparent;
   outline: none;

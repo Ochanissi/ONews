@@ -16,15 +16,13 @@ import { useMediaQuery } from "react-responsive";
 
 import "./page-container.styles.scss";
 
-const PageContainer = (props: any) => {
+const PageContainer = (props: any): JSX.Element => {
   const {
     userSidebarMenu,
     userWeatherMenu,
     setUserSidebarMenu,
     setUserWeatherMenu,
   } = props;
-
-  // console.log(userSidebarMenu, userWeatherMenu);
 
   const handleMediaLarge = (matches: any) => {
     // console.log(matches);
@@ -47,18 +45,10 @@ const PageContainer = (props: any) => {
   };
 
   // Handle SidebarMenu
-  const mediaLarge = useMediaQuery(
-    { maxWidth: 1001 },
-    undefined,
-    handleMediaLarge
-  );
+  useMediaQuery({ maxWidth: 1001 }, undefined, handleMediaLarge);
 
   // Handle WeatherMenu
-  const mediaMedium = useMediaQuery(
-    { maxWidth: 801 },
-    undefined,
-    handleMediaMedium
-  );
+  useMediaQuery({ maxWidth: 801 }, undefined, handleMediaMedium);
 
   return (
     <div

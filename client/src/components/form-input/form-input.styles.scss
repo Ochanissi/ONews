@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .form-input {
   color: $color-grey-dark-4;
@@ -20,13 +20,9 @@
     border-radius: 8px;
     width: 100%;
     background-color: $color-white;
-    // border-top: 3px solid transparent;
-    // border-bottom: 3px solid transparent;
+
     transition: all 0.3s;
-    // border-radius: 4px;
     box-sizing: border-box;
-    /* Pseudo element (a visible thing that isn't really in the DOM).
-    Also needs -ms- */
 
     position: relative;
 
@@ -88,10 +84,6 @@
 
   &__photo {
     margin-left: auto;
-    // display: flex;
-    // align-items: flex-end;
-
-    // margin-bottom: 5rem;
 
     position: relative;
 
@@ -106,7 +98,6 @@
       width: 6rem;
 
       border-radius: 50%;
-      // border: 1px solid $color-white;
     }
 
     &--text {
@@ -135,10 +126,6 @@
     &--visible {
       color: $color-primary;
     }
-
-    // ion-icon {
-    //   vertical-align: middle;
-    // }
   }
 }
 
@@ -167,8 +154,6 @@
   ion-icon {
     font-size: 3rem;
   }
-
-  // margin-left: 3rem;
 
   &:hover {
     opacity: 1;

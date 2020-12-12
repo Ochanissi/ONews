@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import './back-to-top.styles.scss';
+import "./back-to-top.styles.scss";
 
 interface BackToTopState {
   showBtn: boolean;
@@ -12,13 +12,13 @@ class BackToTop extends React.Component<{}, BackToTopState> {
   };
 
   componentDidMount() {
-    window.addEventListener('scroll', this.showHideScrollBtn);
-    window.addEventListener('load', this.showHideScrollBtn);
+    window.addEventListener("scroll", this.showHideScrollBtn);
+    window.addEventListener("load", this.showHideScrollBtn);
   }
 
   componentWillUnmount() {
     // remove the showHideScrollBtn method
-    window.removeEventListener('scroll', this.showHideScrollBtn);
+    window.removeEventListener("scroll", this.showHideScrollBtn);
   }
 
   showHideScrollBtn = () => {
@@ -29,10 +29,12 @@ class BackToTop extends React.Component<{}, BackToTopState> {
     // this.setState({ showBtn: true });
   };
 
-  handleScroll = () => {
+  handleScroll = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
 
@@ -41,10 +43,10 @@ class BackToTop extends React.Component<{}, BackToTopState> {
 
     return (
       <button
-        className={`back-to-top ${showBtn ? 'back-to-top__visible' : ''}`}
+        className={`back-to-top ${showBtn ? "back-to-top__visible" : ""}`}
         onClick={this.handleScroll}
       >
-        <ion-icon name='chevron-up-circle'></ion-icon>
+        <ion-icon name="chevron-up-circle"></ion-icon>
       </button>
     );
   }

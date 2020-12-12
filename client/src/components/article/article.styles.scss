@@ -7,13 +7,7 @@
   padding: 2rem;
   padding-bottom: 1rem;
 
-  // display: flex;
-
   max-width: 70rem;
-
-  // min-height: 17rem;
-
-  // position: relative;
 
   &:not(:last-child) {
     margin-bottom: 2rem;
@@ -64,16 +58,12 @@
         display: inline-block;
       }
 
-      &--date {
-      }
+      // &--date {
+      // }
 
       &--url {
         text-decoration: none;
         color: inherit;
-
-        // padding-top: 0.45rem;
-
-        // margin: auto 0;
 
         &:hover {
           text-decoration: underline;

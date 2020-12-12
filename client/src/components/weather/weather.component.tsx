@@ -29,21 +29,11 @@ import Toast from "light-toast";
 
 interface WeatherProps extends RouteComponentProps {}
 
-interface WeatherState {
-  // isChecked: boolean;
-}
+interface WeatherState {}
 
 type Props = WeatherProps & LinkStateProps & LinkDispatchProps;
 
 class WeatherContainer extends React.Component<Props, WeatherState> {
-  // constructor(props: Props) {
-  //   super(props);
-
-  //   this.state = {
-  //     isChecked: true,
-  //   };
-  // }
-
   componentDidMount() {
     const {
       userUnits,
@@ -59,16 +49,6 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
         : "metric";
 
     fetchWeatherStartAsync(lat, lng, unitFormatted);
-
-    // console.log(window.innerWidth);
-
-    // const { setUserWeatherMenu } = this.props;
-
-    // if (window.innerWidth <= 800) {
-    //   setUserWeatherMenu(false);
-    // } else {
-    //   setUserWeatherMenu(true);
-    // }
   }
 
   // Checks if the component received new props and refetches data
@@ -110,18 +90,13 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
     // Toast.info('Preference saved.', 1000);
   };
 
-  handleLocation = () => {
-    const { userUnits, setUserCoords } = this.props;
+  handleLocation = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
 
-    // const unitFormatted =
-    //   userUnits === 'k'
-    //     ? 'standard'
-    //     : userUnits === 'f'
-    //     ? 'imperial'
-    //     : 'metric';
+    const { setUserCoords } = this.props;
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position: Position) => {
+      navigator.geolocation.getCurrentPosition((position) => {
         const { lat, lng } = {
           lat: String(position.coords.latitude),
           lng: String(position.coords.longitude),
@@ -130,23 +105,15 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
         setUserCoords({ lat, lng });
       });
     } else {
-      Toast.fail("Failed to find location.", 1000);
+      Toast.fail("Failed to find location.", 1500);
     }
   };
 
-  handleChecked = () => {
+  handleChecked = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
     const { userWeatherMenu, setUserWeatherMenu } = this.props;
     setUserWeatherMenu(!userWeatherMenu);
-
-    // if (document.querySelector('.weather-bool')) {
-    // const ele = document.querySelector('.weather-bool') as HTMLInputElement;
-
-    // ele.checked = !isChecked;
-
-    // this.setState({
-    //   isChecked: !isChecked,
-    // });
-    // }
   };
 
   render(): JSX.Element {
@@ -162,12 +129,6 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
       weatherTodayText = weatherWeek[0].weather[0].main;
       weatherTodayIcon = weatherWeek[0].weather[0].icon;
     }
-
-    // console.log(weatherWeek.length)
-
-    // console.log(isChecked);
-
-    // console.log(this.props);
 
     return (
       <nav role="navigation" className="weather">
@@ -206,7 +167,6 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
                     </div>
                   </div>
                   <div className="weather__container--content--today--col">
-                    {/* <ion-icon name='rainy-outline'></ion-icon> */}
                     <img
                       src={`http://openweathermap.org/img/wn/${weatherTodayIcon}@2x.png`}
                       alt="Weather Icon"

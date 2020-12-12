@@ -1,23 +1,23 @@
-import React from 'react';
+import React from "react";
 
-import './footer.styles.scss';
+import "./footer.styles.scss";
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   return (
-    <li className='footer'>
-      <div className='footer__copyright'>
-        Copyright &copy; 2020{' '}
-        <div className='footer__copyright--name'>
+    <li className="footer">
+      <div className="footer__copyright">
+        Copyright &copy; 2020{" "}
+        <div className="footer__copyright--name">
           <a
-            href='https://github.com/Ochanissi/'
-            target='_blank'
-            rel='noopener noreferrer'
-            className='footer__copyright--link'
+            href="https://github.com/Ochanissi/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer__copyright--link"
           >
             Mirel Bițoi
           </a>
         </div>
-        . <div className='footer__copyright--rights'>All rights reserved.</div>
+        . <div className="footer__copyright--rights">All rights reserved.</div>
       </div>
     </li>
   );

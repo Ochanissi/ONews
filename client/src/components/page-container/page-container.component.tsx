@@ -48,14 +48,14 @@ const PageContainer = (props: any) => {
 
   // Handle SidebarMenu
   const mediaLarge = useMediaQuery(
-    { maxWidth: 1000 },
+    { maxWidth: 1001 },
     undefined,
     handleMediaLarge
   );
 
   // Handle WeatherMenu
   const mediaMedium = useMediaQuery(
-    { maxWidth: 800 },
+    { maxWidth: 801 },
     undefined,
     handleMediaMedium
   );

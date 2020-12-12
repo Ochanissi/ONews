@@ -1,8 +1,14 @@
-import React from 'react';
+import React from "react";
+import { connect } from "react-redux";
 
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
+import { ThunkDispatch } from "redux-thunk";
+import { createStructuredSelector } from "reselect";
+import { AppActions } from "../../redux/store";
+import { setUserSidebarMenu } from "../../redux/user/user.actions";
+import { selectUserSidebarMenu } from "../../redux/user/user.selectors";
 
-import './sidebar-item.styles.scss';
+import "./sidebar-item.styles.scss";
 
 interface SidebarItemProps extends RouteComponentProps {
   userCategory?: string;
@@ -15,37 +21,66 @@ interface SidebarItemProps extends RouteComponentProps {
   profileLink?: string;
 }
 
-const SidebarItem = ({
-  userCountry,
-  userCategory,
-  linkType,
-  linkCountry,
-  iconType,
-  itemLabel,
-  countryBool,
-  profileLink,
-  location,
-}: SidebarItemProps) => {
-  return (
-    <Link
-      to={profileLink ? `${profileLink}` : `/news/${linkCountry}/${linkType}`}
-    >
-      <li
-        className={
-          countryBool && userCountry === linkCountry && !profileLink
-            ? 'sidebar__selected--country'
-            : !countryBool && userCategory === linkType && !profileLink
-            ? 'sidebar__selected'
-            : location.pathname === profileLink
-            ? 'sidebar__selected'
-            : ''
-        }
-      >
-        <ion-icon name={iconType}></ion-icon>
-        <p>{itemLabel}</p>
-      </li>
-    </Link>
-  );
-};
+type Props = SidebarItemProps & LinkDispatchProps;
 
-export default withRouter(SidebarItem);
+class SidebarItem extends React.Component<Props> {
+  handleClick = () => {
+    // console.log('lel');
+
+    const { setUserSidebarMenu } = this.props;
+
+    // setUserSidebarMenu;
+
+    if (window.innerWidth <= 1000) {
+      setUserSidebarMenu(false);
+    }
+  };
+
+  render(): JSX.Element {
+    const {
+      userCountry,
+      userCategory,
+      linkType,
+      linkCountry,
+      iconType,
+      itemLabel,
+      countryBool,
+      profileLink,
+      location,
+    } = this.props;
+
+    return (
+      <Link
+        to={profileLink ? `${profileLink}` : `/news/${linkCountry}/${linkType}`}
+        onClick={this.handleClick}
+      >
+        <li
+          className={
+            countryBool && userCountry === linkCountry && !profileLink
+              ? "sidebar__selected--country"
+              : !countryBool && userCategory === linkType && !profileLink
+              ? "sidebar__selected"
+              : location.pathname === profileLink
+              ? "sidebar__selected"
+              : ""
+          }
+        >
+          <ion-icon name={iconType}></ion-icon>
+          <p>{itemLabel}</p>
+        </li>
+      </Link>
+    );
+  }
+}
+
+interface LinkDispatchProps {
+  setUserSidebarMenu: (bool: boolean) => void;
+}
+
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<any, any, AppActions>
+): LinkDispatchProps => ({
+  setUserSidebarMenu: (bool) => dispatch(setUserSidebarMenu(bool)),
+});
+
+export default withRouter(connect(null, mapDispatchToProps)(SidebarItem));

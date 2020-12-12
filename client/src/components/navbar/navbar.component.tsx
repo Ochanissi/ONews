@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 
@@ -27,10 +27,6 @@ import WeatherContainer from "../weather/weather.component";
 
 import Toast from "light-toast";
 
-// if (process.env.NODE_ENV !== 'production') {
-//   require('dotenv').config({ path: '../../.env' });
-// }
-
 interface NavbarProps extends RouteComponentProps {}
 interface NavbarState {
   searchValue: string;
@@ -49,8 +45,6 @@ type Props = NavbarProps & LinkStateProps & LinkDispatchProps;
 class Navbar extends React.Component<Props, NavbarState> {
   constructor(props: Props) {
     super(props);
-
-    // this.handleSubmit = this.handleSubmit.bind(this);
 
     const { currentUser } = this.props;
 
@@ -86,11 +80,12 @@ class Navbar extends React.Component<Props, NavbarState> {
     // }
   };
 
+  // Handles the opening / closing of the profile modal
   handleClick = (event: any): void => {
-    // console.log(event.target.className);
-    // console.log(event.target.parentNode.className);
+    event.preventDefault();
 
     // console.log(event.target.className);
+    // console.log(event.target.parentNode.className);
 
     const defaultClick = event.target.className || "";
     const defaultClickParent = event.target.parentNode.className || "";
@@ -115,13 +110,7 @@ class Navbar extends React.Component<Props, NavbarState> {
       this.setState((prevState) => ({
         dropdownVisible: !prevState.dropdownVisible,
       }));
-    }
-    // else if (
-    //   defaultClick.split(' ')[1] === 'navbar__main--searchbar--checked'
-    // ) {
-    //   this.setState({ dropdownVisible: false });
-    // }
-    else if (
+    } else if (
       defaultClick.startsWith("navbar__main--searchbar") ||
       defaultClick.startsWith("navbar__main--dropdown") ||
       defaultClickParent.startsWith("navbar__main--dropdown")
@@ -132,16 +121,10 @@ class Navbar extends React.Component<Props, NavbarState> {
     }
   };
 
-  // componentDidUpdate(prevProps: Props) {
-  //   const { pathname } = this.props.location;
-
-  //   if (pathname !== prevProps.location.pathname) {
-  //     this.forceUpdate();
-  //     console.log('lel');
-  //   }
-  // }
-
+  // Handles the searching & filtering of the results of the articles
   handleSearch = (event: any): void => {
+    event.preventDefault();
+
     if (event.currentTarget.id === "title") {
       this.setState({
         searchTitle: !this.state.searchTitle,
@@ -169,18 +152,6 @@ class Navbar extends React.Component<Props, NavbarState> {
         date = "anytime";
       }
 
-      // const date: any =
-      //   event.currentTarget.value === 'hour'
-      //     ? new Date(new Date().getTime() - 1000 * 60 * 60)
-      //     : event.currentTarget.value === 'day'
-      //     ? new Date()
-      //     : event.currentTarget.value === 'week'
-      //     ? new Date().setDate(new Date().getDate() - 7)
-      //     : '';
-
-      // console.log(date);
-      // console.log(new Date().toISOString());
-
       this.setState({
         searchDate: date,
       });
@@ -193,16 +164,6 @@ class Navbar extends React.Component<Props, NavbarState> {
         searchValue: event.currentTarget.value,
       });
     }
-
-    // this.setState({
-    //   searchValue: event.currentTarget.value,
-    //   searchTitle: !this.state.searchTitle,
-    // });
-
-    // console.log(event.currentTarget.value);
-    // console.log(event.currentTarget);
-    // console.log(new Date().toISOString());
-    // console.log(this.state.searchDate);
   };
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -224,19 +185,6 @@ class Navbar extends React.Component<Props, NavbarState> {
       postUserSearchesStartAsync,
     } = this.props;
 
-    // console.log(searchValue);
-
-    // this.props.history.push(
-    //   `/search/
-    // ${searchValue.replace(
-    //   / /g,
-    //   '%20'
-    // )}/${searchTitle}/${searchDate}/${searchLocation}/${searchSortBy}`.replace(
-    //     / /g,
-    //     ''
-    //   )
-    // );
-
     if (currentUser) {
       const { email, token } = userAuthorization;
 
@@ -247,7 +195,6 @@ class Navbar extends React.Component<Props, NavbarState> {
       `/search/${`${searchValue}/${searchTitle}/${searchDate}/${searchLocation}/${searchSortBy}`.trim()}`
     );
 
-    // console.log(this.state);
     this.setState({
       searchValue: "",
       searchTitle: false,
@@ -258,6 +205,7 @@ class Navbar extends React.Component<Props, NavbarState> {
     });
   };
 
+  // Handles the Sign Out
   handleSignOut = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
@@ -270,6 +218,7 @@ class Navbar extends React.Component<Props, NavbarState> {
     Toast.success(`See you soon, ${name}!`, 1500);
   };
 
+  // Handles the clearing of the input data from the fields
   handleClear = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
@@ -290,7 +239,9 @@ class Navbar extends React.Component<Props, NavbarState> {
     elSortBy.selectedIndex = 0;
   };
 
-  handleImageState = () => {
+  handleImageState = (event: SyntheticEvent<HTMLImageElement, Event>): void => {
+    event.preventDefault();
+
     this.setState<any>({
       photo: this.props.currentUser.photo,
     });
@@ -299,9 +250,9 @@ class Navbar extends React.Component<Props, NavbarState> {
   handleImageError = (
     event: React.SyntheticEvent<HTMLImageElement, Event>
   ): void => {
-    const { photo } = this.state;
+    event.preventDefault();
 
-    // console.log(event.target);
+    const { photo } = this.state;
 
     const elImg: any = event.target;
 
@@ -320,22 +271,9 @@ class Navbar extends React.Component<Props, NavbarState> {
       searchSortBy,
     } = this.state;
 
-    // console.log(popupVisible);
-    // console.log(dropdownVisible);
-
-    // console.log(searchTitle);
-
-    // console.log(this.props);
-
     return (
       <nav role="navigation" className="navbar">
         <Sidebar />
-
-        {/* <input id='menu-toggle' type='checkbox' />
-        <label className='menu-button-container' htmlFor='menu-toggle'>
-          <div className='menu-button'></div>
-        </label> */}
-
         <div className="navbar__main">
           <div
             className={`navbar__main--container ${

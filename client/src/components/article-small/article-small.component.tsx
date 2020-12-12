@@ -24,12 +24,13 @@ interface ArticleSmallProps {
 type Props = ArticleSmallProps & LinkStateProps & LinkDispatchProps;
 
 class ArticleSmall extends React.Component<Props> {
+  // Deletes the item from the past searches / hidden
   handleDelete = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
     const {
       name,
       type,
-
-      currentUser,
 
       userAuthorization,
 
@@ -51,7 +52,6 @@ class ArticleSmall extends React.Component<Props> {
   render(): JSX.Element {
     const { name } = this.props;
 
-    // console.log(this.props);
     return (
       <div className="article-small">
         <div className="article-small__name">{name}</div>

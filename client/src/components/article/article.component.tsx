@@ -51,16 +51,21 @@ class Article extends React.Component<Props, ArticleState> {
     };
   }
 
+  // Checks for mouse clicks
   componentDidMount() {
     document.addEventListener("click", this.handleClick);
   }
+
   componentWillUnmount() {
     document.removeEventListener("click", this.handleClick);
   }
 
+  // Handles the Article Share Modal - Opens / Closes
   handleClick = (event: any): void => {
     // console.log(event.target.className);
     // console.log(event.target.parentNode.className);
+
+    event.preventDefault();
 
     const defaultClick = event.target.className || "";
     const defaultClickParent = event.target.parentNode
@@ -75,10 +80,14 @@ class Article extends React.Component<Props, ArticleState> {
     }
   };
 
-  handleShare = () => {
+  // Handles the Article Share Modal - Opens / Closes
+  handleShare = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
     this.setState({ shareToggle: true });
   };
 
+  // Posts / Deletes the story to saved for later
   handleSaved = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
@@ -128,6 +137,7 @@ class Article extends React.Component<Props, ArticleState> {
     }
   };
 
+  // Posts / Deletes the story to liked
   handleLiked = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
@@ -187,6 +197,7 @@ class Article extends React.Component<Props, ArticleState> {
     }
   };
 
+  // Posts / Deletes the story to disliked
   handleDisliked = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
@@ -246,6 +257,7 @@ class Article extends React.Component<Props, ArticleState> {
     }
   };
 
+  // Posts / Deletes the story to hidden
   handleHidden = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
@@ -327,10 +339,6 @@ class Article extends React.Component<Props, ArticleState> {
       userDislikedBool = userDisliked.some((item) => item.title === title);
       userHiddenBool = userHidden.some((item) => item === sourceName);
     }
-
-    // console.log(userSavedBool);
-
-    // console.log(id);
 
     const userHiddenDuplicate =
       userHidden.find((item) => item === sourceName) || {};

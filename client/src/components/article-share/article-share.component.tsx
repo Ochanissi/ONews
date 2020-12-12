@@ -13,7 +13,10 @@ interface ArticleShareProps {
 }
 
 class ArticleShare extends React.Component<ArticleShareProps> {
-  handleCopy = () => {
+  // Copies the article url to clipboard
+  handleCopy = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+
     const { url } = this.props;
 
     navigator.clipboard.writeText(url);

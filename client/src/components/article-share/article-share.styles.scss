@@ -12,8 +12,6 @@
 
   z-index: 1000;
 
-  // background-color: red;
-
   &__content {
     position: fixed;
     top: 50%;
@@ -85,9 +83,9 @@
       }
     }
 
-    &--title {
-      // font-weight: 700;
-    }
+    // &--title {
+    //   // font-weight: 700;
+    // }
 
     &--share {
       &--title {
@@ -118,9 +116,6 @@
           font-size: inherit;
           color: inherit;
 
-          // transition: all 0.25s linear;
-
-          // -webkit-transition: all 2s ease;
           transition: all 0.25s linear;
 
           min-width: max-content;

@@ -22,45 +22,17 @@ import { setUserSidebarMenu } from "../../redux/user/user.actions";
 
 interface SidebarProps extends RouteComponentProps {}
 
-interface SidebarState {
-  // isChecked: boolean;
-}
+interface SidebarState {}
 
 type Props = SidebarProps & LinkStateProps & LinkDispatchProps;
 
 class Sidebar extends React.Component<Props, SidebarState> {
-  // constructor(props: Props) {
-  //   super(props);
-
-  //   this.state = {
-  //     isChecked: true,
-  //   };
-  // }
-
-  componentDidMount() {
-    // console.log(window.innerWidth);
-    // const { setUserSidebarMenu } = this.props;
-    // if (window.innerWidth <= 1000) {
-    //   setUserSidebarMenu(false);
-    // } else {
-    //   setUserSidebarMenu(true);
-    // }
-  }
-
-  handleChecked = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  handleChecked = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
     const { userSidebarMenu, setUserSidebarMenu } = this.props;
 
     setUserSidebarMenu(!userSidebarMenu);
-
-    // const ele = document.querySelector('.menu-sidebar') as HTMLInputElement;
-
-    // ele.checked = !isChecked;
-
-    // this.setState({
-    //   isChecked: !isChecked,
-    // });
   };
 
   render() {

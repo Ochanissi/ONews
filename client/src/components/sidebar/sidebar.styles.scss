@@ -24,11 +24,6 @@
     color: $color-primary;
   }
 
-  hr {
-    margin: 1.5rem 2rem;
-    opacity: 50%;
-  }
-
   .menu-sidebar {
     display: block;
     position: absolute;
@@ -93,6 +88,11 @@
         transform: scale(1);
         // transform: translateX(-100%);
         opacity: 1;
+      }
+
+      hr {
+        margin: 1.5rem 2rem;
+        opacity: 50%;
       }
 
       li {

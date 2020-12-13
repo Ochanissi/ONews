@@ -81,30 +81,13 @@ class SearchPage extends React.Component<Props> {
     }
   }
 
-  render() {
-    // console.log(query);
-
-    // console.log({ query, queryTitle, date, lang, sortBy });
-    // console.log(query.replace(/%20/g, ' '));
-
-    // const { fetchNewsSearchStartAsync } = this.props;
-
-    // fetchNewsSearchStartAsync({
-    //   query,
-    //   queryTitle,
-    //   date,
-    //   lang,
-    //   sortBy,
-    // });
-
+  render(): JSX.Element {
     const {
       match: {
         params: { query },
       },
       newsSearch,
     } = this.props;
-
-    // console.log(newsSearch.length);
 
     return (
       <PageContainer className="search-page">

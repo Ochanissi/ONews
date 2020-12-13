@@ -78,8 +78,6 @@
           bottom: 0;
           left: 10rem;
 
-          // z-index: 999;
-
           @media only screen and (max-width: $bp-smallest) {
             left: 8rem;
             width: 14rem;
@@ -99,8 +97,6 @@
 
         @media only screen and (max-width: $bp-smallest) {
           flex-direction: column;
-
-          // margin: 0 10rem;
 
           // align-items: center;
 

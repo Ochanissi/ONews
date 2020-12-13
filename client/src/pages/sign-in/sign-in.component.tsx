@@ -52,12 +52,13 @@ class SignIn extends React.Component<Props, SignInState> {
     const { signInStartAsync } = this.props;
 
     signInStartAsync(email, password);
-    // getUserSavedStartAsync(email);
 
     this.setState({ email: "", password: "" });
   };
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault();
+
     const { value, name } = event.target;
 
     this.setState<any>({ [name]: value });
@@ -121,7 +122,6 @@ class SignIn extends React.Component<Props, SignInState> {
 
 interface LinkDispatchProps {
   signInStartAsync: (email: string, password: string) => void;
-  // getUserSavedStartAsync: (email: string) => void;
   setUserSidebarMenu: (bool: boolean) => void;
   setUserWeatherMenu: (bool: boolean) => void;
 }
@@ -131,7 +131,6 @@ const mapDispatchToProps = (
 ): LinkDispatchProps => ({
   signInStartAsync: (email, password) =>
     dispatch(signInStartAsync(email, password)),
-  // getUserSavedStartAsync: (email) => dispatch(getUserSavedStartAsync(email)),
   setUserSidebarMenu: (bool) => dispatch(setUserSidebarMenu(bool)),
   setUserWeatherMenu: (bool) => dispatch(setUserWeatherMenu(bool)),
 });

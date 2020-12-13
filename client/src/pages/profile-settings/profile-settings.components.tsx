@@ -25,10 +25,6 @@ import {
 import Toast from "light-toast";
 import PageContainer from "../../components/page-container/page-container.component";
 
-// if (process.env.NODE_ENV !== 'production') {
-//   require('dotenv').config({ path: '../../.env' });
-// }
-
 interface ProfileSettingsProps {}
 
 interface ProfileSettingsState {
@@ -100,6 +96,8 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
   handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
+    event.preventDefault();
+
     const { name, value } = event.target;
 
     if (name === "photo") {
@@ -121,73 +119,9 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       formData.append("email", email);
 
       updateUserPhotoStartAsync(formData, token);
-
-      // this.setState<any>({
-      //   [name]: `user-${email.replace(/[^\w\d]/g, '')}-${Date.now()}.jpeg`,
-      // });
-
-      // console.log(formData);
-
-      // axios({
-      //   method: 'patch',
-      //   url: 'http://localhost:5008/profile',
-      //   data: {
-      //     kek: 'kek',
-      //   },
-      //   headers: { 'Content-Type': 'multipart/form-data' },
-      // })
-      //   .then(function (response) {
-      //     //handle success
-      //     console.log(response);
-      //   })
-      //   .catch(function (response) {
-      //     //handle error
-      //     console.log(response);
-      //   });
-
-      // updateUserDataStartAsync({ email, formData });
-
-      // for (var key of formData.entries()) {
-      //   console.log(key[0] + ', ' + key[1]);
-      // }
-
-      // if (formData) {
-      //   fetch(`http://localhost:5008/profile`, {
-      //     method: 'PATCH',
-      //     body: formData,
-      //   });
-      // }
-
-      // .then(images => {
-      //   this.setState({
-      //     uploading: false,
-      //     images
-      //   })
-      // })
-      // }
-
-      // profile
-
-      // updateUserDataStartAsync(formData as any);
-
-      // console.log(files[0]);
-
-      // this.setState<any>({ photo: event.target.files[0] });
     } else {
       this.setState<any>({ [name]: value });
     }
-
-    // console.log(event.target.files[0]);
-
-    // const { files } = event.target;
-    // const localImageUrl = window.URL.createObjectURL(files[0]);
-
-    // this.props.onFileLoaded(localImageUrl);
-
-    // console.log(localImageUrl);
-
-    // console.log(this.state);
-    // console.log({ name, value });
   };
 
   handleSubmitPublic = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -270,8 +204,6 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     } = this.props;
 
     if (newPass === newPassConfirm) {
-      // const newPass
-
       updateUserPasswordStartAsync(email, oldPass, newPass, token);
 
       this.setState({
@@ -307,7 +239,11 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     });
   };
 
-  handleImageState = () => {
+  handleImageState = (
+    event: React.SyntheticEvent<HTMLImageElement, Event>
+  ): void => {
+    event.preventDefault();
+
     this.setState<any>({
       photo: this.props.currentUser.photo,
     });
@@ -316,6 +252,8 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
   handleImageError = (
     event: React.SyntheticEvent<HTMLImageElement, Event>
   ): void => {
+    event.preventDefault();
+
     const { photo } = this.state;
 
     const elImg: any = event.target;
@@ -332,7 +270,6 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       country,
       phone,
       about,
-      joined,
       oldPass,
       newPass,
       newPassConfirm,
@@ -344,10 +281,6 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     const {
       currentUser: { photo },
     } = this.props;
-
-    // console.log(this.props);
-
-    // console.log(this.props);
 
     return (
       <PageContainer className="profile-settings">

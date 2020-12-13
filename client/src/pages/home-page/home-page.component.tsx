@@ -86,6 +86,7 @@ class HomePage extends React.Component<Props> {
     }
   }
 
+  // Handles the subheader text for all the news categories
   handleSubheader = (category: string) => {
     switch (category) {
       case "general":

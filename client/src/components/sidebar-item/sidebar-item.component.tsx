@@ -25,7 +25,7 @@ class SidebarItem extends React.Component<Props> {
   handleClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ): void => {
-    event.preventDefault();
+    // event.preventDefault();
 
     const { setUserSidebarMenu } = this.props;
 

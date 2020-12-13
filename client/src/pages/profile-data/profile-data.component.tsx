@@ -71,11 +71,6 @@ const ProfileData: React.FunctionComponent<Props> = ({
 
   const { joined } = currentUser;
 
-  // console.log(type);
-  // console.log(newsArticles);
-  // console.log(userHidden);
-  // console.log(newsItems);
-
   return (
     <PageContainer className="profile-data">
       <h2 className="profile-data__header">{`${

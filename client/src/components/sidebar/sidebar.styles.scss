@@ -88,15 +88,11 @@
         transform: scale(1);
         // transform: translateX(-100%);
         opacity: 1;
-
-        hr {
-          opacity: 0.5;
-        }
       }
 
       hr {
         margin: 1.5rem 2rem;
-        opacity: 50%;
+        opacity: 0.5;
       }
 
       li {

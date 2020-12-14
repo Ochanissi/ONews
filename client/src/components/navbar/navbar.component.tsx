@@ -82,7 +82,7 @@ class Navbar extends React.Component<Props, NavbarState> {
 
   // Handles the opening / closing of the profile modal
   handleClick = (event: any): void => {
-    event.preventDefault();
+    // event.preventDefault();
 
     // console.log(event.target.className);
     // console.log(event.target.parentNode.className);
@@ -281,24 +281,14 @@ class Navbar extends React.Component<Props, NavbarState> {
             }`}
           >
             <form onSubmit={this.handleSubmit}>
-              {searchValue.length > 0 ? (
-                <button
-                  className="navbar__main--btn-search"
-                  type="submit"
-                  value="Submit"
-                >
-                  <ion-icon name="search"></ion-icon>
-                </button>
-              ) : (
-                <button
-                  className="navbar__main--btn-search"
-                  type="submit"
-                  value="Submit"
-                  disabled
-                >
-                  <ion-icon name="search"></ion-icon>
-                </button>
-              )}
+              <button
+                className="navbar__main--btn-search"
+                type="submit"
+                value="Submit"
+                disabled={searchValue.length > 0 ? false : true}
+              >
+                <ion-icon name="search"></ion-icon>
+              </button>
               <input
                 id="searchBar"
                 className={`navbar__main--searchbar ${
@@ -392,7 +382,7 @@ class Navbar extends React.Component<Props, NavbarState> {
                     className="navbar__main--dropdown--btns--2"
                     type="submit"
                     value="Submit"
-                    disabled={searchValue ? false : true}
+                    disabled={searchValue.length > 0 ? false : true}
                   >
                     Submit
                   </button>

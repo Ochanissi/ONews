@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import './custom-button.styles.scss';
+import "./custom-button.styles.scss";
 
 interface CustomButtonProps {
   children: JSX.Element | string;
@@ -21,7 +21,7 @@ const CustomButton: React.FunctionComponent<CustomButtonProps> = ({
     <Link
       to={link}
       className={`custom-button custom-button__inverted ${
-        profile ? 'custom-button__profile' : null
+        profile ? "custom-button__profile" : ""
       }`}
       {...otherProps}
     >
@@ -29,7 +29,7 @@ const CustomButton: React.FunctionComponent<CustomButtonProps> = ({
     </Link>
   ) : (
     <button
-      className={`custom-button ${profile ? 'custom-button__profile' : null}`}
+      className={`custom-button ${profile ? "custom-button__profile" : ""}`}
       {...otherProps}
     >
       {children}

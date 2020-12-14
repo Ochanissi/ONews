@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
-import defaultLogo from "../../assets/default.png";
 import PageContainer from "../../components/page-container/page-container.component";
 
 import ProfileItem from "../../components/profile-item/profile-item.component";

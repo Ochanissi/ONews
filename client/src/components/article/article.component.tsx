@@ -62,10 +62,10 @@ class Article extends React.Component<Props, ArticleState> {
 
   // Handles the Article Share Modal - Opens / Closes
   handleClick = (event: any): void => {
+    // event.preventDefault();
+
     // console.log(event.target.className);
     // console.log(event.target.parentNode.className);
-
-    event.preventDefault();
 
     const defaultClick = event.target.className || "";
     const defaultClickParent = event.target.parentNode

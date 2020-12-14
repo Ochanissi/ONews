@@ -1,10 +1,5 @@
 import React from "react";
-import CustomButton from "../../components/custom-button/custom-button.component";
 import FormInput from "../../components/form-input/form-input.component";
-
-import defaultLogo from "../../assets/default.png";
-
-import kk from "../../../../public/img/users/user-kek-1603815835070.jpeg";
 
 import "./profile-settings.styles.scss";
 import { connect } from "react-redux";

@@ -5,7 +5,6 @@ import {
   setUserSidebarMenu,
   setUserWeatherMenu,
   signInStartAsync,
-  // getUserSavedStartAsync,
 } from "../../redux/user/user.actions";
 import { AppActions } from "../../redux/store";
 

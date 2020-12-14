@@ -57,7 +57,6 @@ class WeatherContainer extends React.Component<Props, WeatherState> {
       userUnits,
       userCoords: { lat, lng },
       fetchWeatherStartAsync,
-      location: { pathname },
     } = this.props;
 
     const unitFormatted =

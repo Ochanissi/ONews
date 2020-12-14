@@ -11,7 +11,7 @@ node_modules
 # production
 /build
 /client/build
-/public/img/users
+/public
 
 # misc
 .DS_Store

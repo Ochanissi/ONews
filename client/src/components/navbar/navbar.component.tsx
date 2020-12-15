@@ -125,6 +125,8 @@ class Navbar extends React.Component<Props, NavbarState> {
   handleSearch = (event: any): void => {
     event.preventDefault();
 
+    console.log("clicked");
+
     if (event.currentTarget.id === "title") {
       this.setState({
         searchTitle: !this.state.searchTitle,

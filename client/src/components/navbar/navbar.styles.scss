@@ -202,7 +202,13 @@
 
         input {
           margin-right: 3.5rem;
+          // transform: scale(1.2);
         }
+
+        // &--input {
+        //   transform: scale(2);
+        //   zoom: 2;
+        // }
       }
 
       &--btns {

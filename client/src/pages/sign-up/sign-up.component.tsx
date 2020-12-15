@@ -68,6 +68,8 @@ class SignUp extends React.Component<Props, SignUpState> {
   };
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    // event.preventDefault();
+
     const { name, value } = event.target;
 
     this.setState<any>({ [name]: value });
@@ -77,7 +79,7 @@ class SignUp extends React.Component<Props, SignUpState> {
     event: React.MouseEvent<HTMLButtonElement>,
     elem: string
   ): void => {
-    event.preventDefault();
+    // event.preventDefault();
 
     this.setState<any>({
       [elem]: !this.state[elem as "passwordVisible" | "confirmPasswordVisible"],

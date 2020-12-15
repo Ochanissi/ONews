@@ -77,7 +77,7 @@ import {
 } from "./user.types";
 import { News } from "../news/news.types";
 
-interface UserState {
+export interface UserState {
   userCategory: string;
   userCountry: string;
   userUnits: string;

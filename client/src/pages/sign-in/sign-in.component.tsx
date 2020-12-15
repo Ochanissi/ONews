@@ -56,7 +56,7 @@ class SignIn extends React.Component<Props, SignInState> {
   };
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    event.preventDefault();
+    // event.preventDefault();
 
     const { value, name } = event.target;
 
@@ -67,7 +67,7 @@ class SignIn extends React.Component<Props, SignInState> {
     event: React.MouseEvent<HTMLButtonElement>,
     elem: string
   ): void => {
-    event.preventDefault();
+    // event.preventDefault();
 
     this.setState<any>({
       [elem]: !this.state[elem as "passwordVisible"],

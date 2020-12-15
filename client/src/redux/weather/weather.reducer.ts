@@ -4,9 +4,9 @@ import {
   FETCH_WEATHER_SUCCESS,
   FETCH_WEATHER_FAILURE,
   WeatherActionTYPES,
-} from './weather.types';
+} from "./weather.types";
 
-interface WeatherState {
+export interface WeatherState {
   isWeatherFetching: boolean;
   weather: Weather[];
   errorMessage?: string;

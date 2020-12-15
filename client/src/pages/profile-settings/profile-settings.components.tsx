@@ -91,7 +91,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
   handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
-    event.preventDefault();
+    // event.preventDefault();
 
     const { name, value } = event.target;
 
@@ -225,7 +225,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     event: React.MouseEvent<HTMLButtonElement>,
     elem: string
   ): void => {
-    event.preventDefault();
+    // event.preventDefault();
 
     this.setState<any>({
       [elem]: !this.state[
@@ -237,7 +237,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
   handleImageState = (
     event: React.SyntheticEvent<HTMLImageElement, Event>
   ): void => {
-    event.preventDefault();
+    // event.preventDefault();
 
     this.setState<any>({
       photo: this.props.currentUser.photo,
@@ -247,7 +247,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
   handleImageError = (
     event: React.SyntheticEvent<HTMLImageElement, Event>
   ): void => {
-    event.preventDefault();
+    // event.preventDefault();
 
     const { photo } = this.state;
 

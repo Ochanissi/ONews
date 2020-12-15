@@ -1,14 +1,14 @@
-const sharp = require('sharp');
+const sharp = require("sharp");
 
 const handleGetProfile = (req, res, db) => {
   const { email } = req.body;
 
   if (!email) {
-    return res.status(400).json('Incorrect request!');
+    return res.status(400).json("Incorrect request!");
   }
 
-  db.select('*')
-    .from('users')
+  db.select("*")
+    .from("users")
     .where({
       email: email,
     })
@@ -16,7 +16,7 @@ const handleGetProfile = (req, res, db) => {
       if (user.length) {
         res.json(user[0]);
       } else {
-        res.status(400).json('Error getting user!');
+        res.status(400).json("Error getting user!");
       }
     });
 };
@@ -25,10 +25,10 @@ const handlePatchProfile = (req, res, db) => {
   const { name, email, age, occupation, country, phone, about } = req.body;
 
   if (!email) {
-    return res.status(400).json('Incorrect request!');
+    return res.status(400).json("Incorrect request!");
   }
 
-  db('users')
+  db("users")
     .where({ email: email })
     .update({
       name: name,
@@ -38,7 +38,7 @@ const handlePatchProfile = (req, res, db) => {
       phone: phone,
       about: about,
     })
-    .returning('*')
+    .returning("*")
     .then((user) => {
       if (user.length) {
         res.json(user[0]);
@@ -49,7 +49,7 @@ const handlePatchProfile = (req, res, db) => {
     .catch((err) => res.status(400).json("Unable to update user's data!"));
 };
 
-const handleUploadPhoto = (upload) => upload.single('photo');
+const handleUploadPhoto = (upload) => upload.single("photo");
 
 const handleResizePhoto = async (req, res, next) => {
   const { email } = req.body;
@@ -58,16 +58,16 @@ const handleResizePhoto = async (req, res, next) => {
 
   req.file.filename = `user-${email.replace(
     /[^\w\d]/g,
-    ''
+    ""
   )}-${Date.now()}.jpeg`;
-  req.body.photo = `user-${email.replace(/[^\w\d]/g, '')}-${Date.now()}.jpeg`;
+  req.body.photo = `user-${email.replace(/[^\w\d]/g, "")}-${Date.now()}.jpeg`;
 
   // console.log(req.file.filename);
 
   try {
     await sharp(req.file.buffer)
       .resize(500, 500)
-      .toFormat('jpeg')
+      .toFormat("jpeg")
       .jpeg({ quality: 90 })
       .toFile(`public/img/users/${req.file.filename}`);
   } catch (err) {
@@ -81,35 +81,39 @@ const handlePatchPhoto = (req, res, db) => {
   const { email } = req.body;
 
   if (!req.file || !email) {
-    return res.status(400).json('Incorrect request!');
+    return res.status(400).json("Incorrect request!");
   }
 
-  db('users')
+  db("users")
     .where({ email: email })
     .update({
       photo: req.file.filename,
     })
-    .returning('*')
+    .returning("*")
     .then((user) => {
       if (user.length) {
         return res.json(user[0]);
       } else {
+        console.log("1. " + user);
         res.status(400).json("Error updating user's photo!");
       }
     })
-    .catch((err) => res.status(400).json("Error updating user's photo!"));
+    .catch((err) => {
+      console.log("2. " + err);
+      res.status(400).json("Error updating user's photo!");
+    });
 };
 
 const handlePatchPassword = (req, res, db, bcrypt) => {
   const { email, oldPass, newPass } = req.body;
 
   if (!email || !oldPass || !newPass) {
-    return res.status(400).json('Incorrect request!');
+    return res.status(400).json("Incorrect request!");
   }
 
   // Compare the sent password with the one saved
-  db.select('*')
-    .from('login')
+  db.select("*")
+    .from("login")
     .where({
       email: email,
     })
@@ -119,27 +123,27 @@ const handlePatchPassword = (req, res, db, bcrypt) => {
           // Update the password with the one sent
           const hash = bcrypt.hashSync(newPass, 10);
 
-          db('login')
+          db("login")
             .where({ email: email })
             .update({
               hash: hash,
             })
-            .returning('*')
+            .returning("*")
             .then((user) => {
               if (user.length) {
-                res.json('Password updated!');
+                res.json("Password updated!");
                 // res.json(user[0]);
               } else {
-                res.status(400).json('Error updating password!');
+                res.status(400).json("Error updating password!");
               }
             })
-            .catch((err) => res.status(400).json('Unable to update password!'));
+            .catch((err) => res.status(400).json("Unable to update password!"));
         } else {
-          res.status(400).json('Incorrect old password!');
+          res.status(400).json("Incorrect old password!");
           // res.json('Incorrect old password!');
         }
       } else {
-        res.status(400).json('Error getting user!');
+        res.status(400).json("Error getting user!");
       }
     });
 };

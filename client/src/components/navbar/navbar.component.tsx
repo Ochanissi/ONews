@@ -123,9 +123,7 @@ class Navbar extends React.Component<Props, NavbarState> {
 
   // Handles the searching & filtering of the results of the articles
   handleSearch = (event: any): void => {
-    event.preventDefault();
-
-    console.log("clicked");
+    // event.preventDefault();
 
     if (event.currentTarget.id === "title") {
       this.setState({
@@ -242,7 +240,7 @@ class Navbar extends React.Component<Props, NavbarState> {
   };
 
   handleImageState = (event: SyntheticEvent<HTMLImageElement, Event>): void => {
-    event.preventDefault();
+    // event.preventDefault();
 
     this.setState<any>({
       photo: this.props.currentUser.photo,
@@ -252,7 +250,7 @@ class Navbar extends React.Component<Props, NavbarState> {
   handleImageError = (
     event: React.SyntheticEvent<HTMLImageElement, Event>
   ): void => {
-    event.preventDefault();
+    // event.preventDefault();
 
     const { photo } = this.state;
 

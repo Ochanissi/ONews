@@ -7,9 +7,9 @@ import {
   FETCH_NEWS_SEARCH_SUCCESS,
   FETCH_NEWS_SEARCH_FAILURE,
   NewsActionTYPES,
-} from './news.types';
+} from "./news.types";
 
-interface NewsState {
+export interface NewsState {
   isNewsFetching: boolean;
   news: News[];
   newsSearch: News[];

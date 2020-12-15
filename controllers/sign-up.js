@@ -1,11 +1,11 @@
-const jwt = require('jsonwebtoken');
-const redisClient = require('./sign-in').redisClient;
+const jwt = require("jsonwebtoken");
+const redisClient = require("./sign-in").redisClient;
 
 const handleSignUp = (req, res, db, bcrypt) => {
   const { email, name, password } = req.body;
 
   if (!email || !name || !password) {
-    return Promise.reject('Incorrect form submission!');
+    return Promise.reject("Incorrect form submission!");
   }
 
   const hash = bcrypt.hashSync(password, 10);
@@ -16,18 +16,18 @@ const handleSignUp = (req, res, db, bcrypt) => {
           hash: hash,
           email: email,
         })
-        .into('login')
-        .returning('email')
+        .into("login")
+        .returning("email")
         .catch((err) => {
           // console.log(err);
           // return Promise.reject(err);
           return Promise.reject(
-            'Email address already in use! Please sign in.'
+            "Email address already in use! Please sign in."
           );
         })
         .then((loginEmail) => {
-          return trx('users')
-            .returning('*')
+          return trx("users")
+            .returning("*")
             .insert({
               email: loginEmail[0],
               name: name,
@@ -42,11 +42,11 @@ const handleSignUp = (req, res, db, bcrypt) => {
         .catch(trx.rollback);
     })
     .catch((err) => {
-      if (err === 'Email address already in use! Please sign in.') {
+      if (err === "Email address already in use! Please sign in.") {
         // console.log(err);
         return Promise.reject(err);
       } else {
-        return Promise.reject('Unable to register!');
+        return Promise.reject("Unable to register!");
       }
     });
 };
@@ -56,7 +56,7 @@ const getAuthTokenId = (req, res) => {
 
   return redisClient.get(authorization, (err, reply) => {
     if (err || !reply) {
-      return res.status(400).json('Unauthorized!');
+      return res.status(400).json("Unauthorized!");
     }
     return res.json({ email: reply });
   });
@@ -66,7 +66,7 @@ const signToken = (email) => {
   const jwtPayload = { email };
 
   return jwt.sign(jwtPayload, process.env.ONEWS_JWT_SECRET, {
-    expiresIn: '7 days',
+    expiresIn: "7 days",
   });
 };
 
@@ -82,7 +82,7 @@ const createSessions = (user) => {
 
   return setToken(token, email)
     .then(() => {
-      return { success: 'true', email, token };
+      return { success: "true", email, token };
     })
     .catch(console.log);
 };
@@ -90,15 +90,13 @@ const createSessions = (user) => {
 const handleSignUpAuth = (req, res, db, bcrypt) => {
   const { authorization } = req.headers;
 
-  // console.log(authorization);
-
   return authorization
     ? getAuthTokenId(req, res)
     : handleSignUp(req, res, db, bcrypt)
         .then((data) => {
           return data.id && data.email
             ? createSessions(data)
-            : Promise.reject('Unable to connect!');
+            : Promise.reject("Unable to connect!");
         })
         .then((session) => res.json(session))
         .catch((err) => res.status(400).json(err));

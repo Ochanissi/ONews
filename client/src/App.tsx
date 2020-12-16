@@ -39,6 +39,8 @@ import {
   getUserLikedStartAsync,
   getUserSavedStartAsync,
   getUserSearchesStartAsync,
+  setUserSidebarMenu,
+  setUserWeatherMenu,
 } from "./redux/user/user.actions";
 import ProfileData from "./pages/profile-data/profile-data.component";
 // import { render } from '@testing-library/react';
@@ -80,6 +82,20 @@ class App extends React.Component<Props> {
       getUserDislikedStartAsync(email, token);
       getUserHiddenStartAsync(email, token);
       getUserSearchesStartAsync(email, token);
+    }
+
+    const { setUserSidebarMenu, setUserWeatherMenu } = this.props;
+
+    if (window.innerWidth <= 1000) {
+      setUserSidebarMenu(false);
+    } else {
+      setUserSidebarMenu(true);
+    }
+
+    if (window.innerWidth <= 800) {
+      setUserWeatherMenu(false);
+    } else {
+      setUserWeatherMenu(true);
     }
   }
 
@@ -182,6 +198,9 @@ interface LinkDispatchProps {
   getUserHiddenStartAsync: (email: string, token: string) => void;
   getUserSearchesStartAsync: (email: string, token: string) => void;
   getCurrentUserStartAsync: (email: string, token: string) => void;
+
+  setUserSidebarMenu: (bool: boolean) => void;
+  setUserWeatherMenu: (bool: boolean) => void;
 }
 
 interface LinkStateProps {
@@ -213,6 +232,9 @@ const mapDispatchToProps = (
     dispatch(getUserSearchesStartAsync(email, token)),
   getCurrentUserStartAsync: (email, token) =>
     dispatch(getCurrentUserStartAsync(email, token)),
+
+  setUserSidebarMenu: (bool) => dispatch(setUserSidebarMenu(bool)),
+  setUserWeatherMenu: (bool) => dispatch(setUserWeatherMenu(bool)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

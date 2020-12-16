@@ -5,12 +5,7 @@ import { createStructuredSelector } from "reselect";
 import { selectNewsArticles } from "../../redux/news/news.selectors";
 
 import { fetchNewsStartAsync } from "../../redux/news/news.actions";
-import {
-  setUserCategory,
-  setUserCountry,
-  setUserSidebarMenu,
-  setUserWeatherMenu,
-} from "../../redux/user/user.actions";
+import { setUserCategory, setUserCountry } from "../../redux/user/user.actions";
 import { AppActions } from "../../redux/store";
 
 import { ThunkDispatch } from "redux-thunk";
@@ -45,20 +40,6 @@ class HomePage extends React.Component<Props> {
     fetchNewsStartAsync(newsCountry, newsCategory);
     setUserCategory(newsCategory);
     setUserCountry(newsCountry);
-
-    const { setUserSidebarMenu, setUserWeatherMenu } = this.props;
-
-    if (window.innerWidth <= 1000) {
-      setUserSidebarMenu(false);
-    } else {
-      setUserSidebarMenu(true);
-    }
-
-    if (window.innerWidth <= 800) {
-      setUserWeatherMenu(false);
-    } else {
-      setUserWeatherMenu(true);
-    }
   }
 
   // Checks if the component received new props and refetches data
@@ -151,9 +132,6 @@ interface LinkDispatchProps {
   fetchNewsStartAsync: (country: string, category: string) => void;
   setUserCategory: (category: string) => void;
   setUserCountry: (country: string) => void;
-
-  setUserSidebarMenu: (bool: boolean) => void;
-  setUserWeatherMenu: (bool: boolean) => void;
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -168,9 +146,6 @@ const mapDispatchToProps = (
 
   setUserCategory: (category) => dispatch(setUserCategory(category)),
   setUserCountry: (country) => dispatch(setUserCountry(country)),
-
-  setUserSidebarMenu: (bool) => dispatch(setUserSidebarMenu(bool)),
-  setUserWeatherMenu: (bool) => dispatch(setUserWeatherMenu(bool)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

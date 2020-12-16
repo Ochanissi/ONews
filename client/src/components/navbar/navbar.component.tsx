@@ -1,31 +1,31 @@
-import React, { SyntheticEvent } from "react";
-import { connect } from "react-redux";
-import { Link, withRouter, RouteComponentProps } from "react-router-dom";
+import React, { SyntheticEvent } from 'react';
+import { connect } from 'react-redux';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { createStructuredSelector } from "reselect";
+import { createStructuredSelector } from 'reselect';
 
 // import defaultLogo from '../../assets/default.png';
 
-import Sidebar from "../sidebar/sidebar.component";
+import Sidebar from '../sidebar/sidebar.component';
 
-import "./navbar.styles.scss";
-import { Authorization, User } from "../../redux/user/user.types";
+import './navbar.styles.scss';
+import { Authorization, User } from '../../redux/user/user.types';
 import {
   selectCurrentUser,
   selectUserAuthorization,
   selectUserCategory,
   selectUserCountry,
-} from "../../redux/user/user.selectors";
-import CustomButton from "../custom-button/custom-button.component";
-import { ThunkDispatch } from "redux-thunk";
-import { AppActions } from "../../redux/store";
+} from '../../redux/user/user.selectors';
+import CustomButton from '../custom-button/custom-button.component';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppActions } from '../../redux/store';
 import {
   postUserSearchesStartAsync,
   signOut,
-} from "../../redux/user/user.actions";
-import WeatherContainer from "../weather/weather.component";
+} from '../../redux/user/user.actions';
+import WeatherContainer from '../weather/weather.component';
 
-import Toast from "light-toast";
+import Toast from 'light-toast';
 
 interface NavbarProps extends RouteComponentProps {}
 interface NavbarState {
@@ -52,22 +52,22 @@ class Navbar extends React.Component<Props, NavbarState> {
       popupVisible: false,
       dropdownVisible: false,
 
-      searchValue: "",
+      searchValue: '',
       searchTitle: false,
       searchLocation: this.props.userCountry,
-      searchDate: "anytime",
-      searchSortBy: "publishedAt",
+      searchDate: 'anytime',
+      searchSortBy: 'publishedAt',
 
       photo: currentUser ? currentUser.photo : null,
     };
   }
 
   componentDidMount() {
-    document.addEventListener("click", this.handleClick);
+    document.addEventListener('click', this.handleClick);
     // window.addEventListener('resize', this.handleResize);
   }
   componentWillUnmount() {
-    document.removeEventListener("click", this.handleClick);
+    document.removeEventListener('click', this.handleClick);
     // window.removeEventListener('resize', this.handleResize);
   }
 
@@ -87,16 +87,16 @@ class Navbar extends React.Component<Props, NavbarState> {
     // console.log(event.target.className);
     // console.log(event.target.parentNode.className);
 
-    const defaultClick = event.target.className || "";
-    const defaultClickParent = event.target.parentNode.className || "";
+    const defaultClick = event.target.className || '';
+    const defaultClickParent = event.target.parentNode.className || '';
 
-    if (defaultClick === "navbar__secondary--logo") {
+    if (defaultClick === 'navbar__secondary--logo') {
       this.setState((prevState) => ({
         popupVisible: !prevState.popupVisible,
       }));
     } else if (
-      defaultClick === "navbar__secondary--profile" ||
-      defaultClick === "navbar__secondary--profile--x"
+      defaultClick === 'navbar__secondary--profile' ||
+      defaultClick === 'navbar__secondary--profile--x'
     ) {
       this.setState({ popupVisible: true });
     } else {
@@ -104,16 +104,16 @@ class Navbar extends React.Component<Props, NavbarState> {
     }
 
     if (
-      defaultClickParent === "navbar__main--dd-icon" ||
-      defaultClick === "navbar__main--dd-icon"
+      defaultClickParent === 'navbar__main--dd-icon' ||
+      defaultClick === 'navbar__main--dd-icon'
     ) {
       this.setState((prevState) => ({
         dropdownVisible: !prevState.dropdownVisible,
       }));
     } else if (
-      defaultClick.startsWith("navbar__main--searchbar") ||
-      defaultClick.startsWith("navbar__main--dropdown") ||
-      defaultClickParent.startsWith("navbar__main--dropdown")
+      defaultClick.startsWith('navbar__main--searchbar') ||
+      defaultClick.startsWith('navbar__main--dropdown') ||
+      defaultClickParent.startsWith('navbar__main--dropdown')
     ) {
       this.setState({ dropdownVisible: true });
     } else {
@@ -125,41 +125,41 @@ class Navbar extends React.Component<Props, NavbarState> {
   handleSearch = (event: any): void => {
     // event.preventDefault();
 
-    if (event.currentTarget.id === "title") {
+    if (event.currentTarget.id === 'title') {
       this.setState({
         searchTitle: !this.state.searchTitle,
       });
-    } else if (event.currentTarget.id === "location") {
+    } else if (event.currentTarget.id === 'location') {
       this.setState({
         searchLocation: event.currentTarget.value,
       });
-    } else if (event.currentTarget.id === "date") {
+    } else if (event.currentTarget.id === 'date') {
       let date: any;
 
-      if (event.currentTarget.value === "hour") {
+      if (event.currentTarget.value === 'hour') {
         date = new Date(new Date().getTime() - 1000 * 60 * 60).toISOString();
-      } else if (event.currentTarget.value === "day") {
-        date = new Date().toISOString().split("T")[0];
-      } else if (event.currentTarget.value === "week") {
+      } else if (event.currentTarget.value === 'day') {
+        date = new Date().toISOString().split('T')[0];
+      } else if (event.currentTarget.value === 'week') {
         date = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
           .toISOString()
-          .split("T")[0];
-      } else if (event.currentTarget.value === "month") {
+          .split('T')[0];
+      } else if (event.currentTarget.value === 'month') {
         date = date = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000)
           .toISOString()
-          .split("T")[0];
-      } else if (event.currentTarget.value === "anytime") {
-        date = "anytime";
+          .split('T')[0];
+      } else if (event.currentTarget.value === 'anytime') {
+        date = 'anytime';
       }
 
       this.setState({
         searchDate: date,
       });
-    } else if (event.currentTarget.id === "sort") {
+    } else if (event.currentTarget.id === 'sort') {
       this.setState({
         searchSortBy: event.currentTarget.value,
       });
-    } else if (event.currentTarget.id === "searchBar") {
+    } else if (event.currentTarget.id === 'searchBar') {
       this.setState({
         searchValue: event.currentTarget.value,
       });
@@ -196,11 +196,11 @@ class Navbar extends React.Component<Props, NavbarState> {
     );
 
     this.setState({
-      searchValue: "",
+      searchValue: '',
       searchTitle: false,
       searchLocation: this.props.userCountry,
-      searchDate: "anytime",
-      searchSortBy: "publishedAt",
+      searchDate: 'anytime',
+      searchSortBy: 'publishedAt',
       dropdownVisible: false,
     });
   };
@@ -228,18 +228,18 @@ class Navbar extends React.Component<Props, NavbarState> {
     event.preventDefault();
 
     this.setState({
-      searchValue: "",
+      searchValue: '',
       searchTitle: false,
       searchLocation: this.props.userCountry,
-      searchDate: "anytime",
-      searchSortBy: "publishedAt",
+      searchDate: 'anytime',
+      searchSortBy: 'publishedAt',
     });
 
-    const elLocation: any = document.getElementById("location")!;
-    const elDate: any = document.getElementById("date")!;
-    const elSortBy: any = document.getElementById("sort")!;
+    const elLocation: any = document.getElementById('location')!;
+    const elDate: any = document.getElementById('date')!;
+    const elSortBy: any = document.getElementById('sort')!;
 
-    elLocation.selectedIndex = this.props.userCountry === "ro" ? 0 : 1;
+    elLocation.selectedIndex = this.props.userCountry === 'ro' ? 0 : 1;
     elDate.selectedIndex = 0;
     elSortBy.selectedIndex = 0;
   };
@@ -282,7 +282,7 @@ class Navbar extends React.Component<Props, NavbarState> {
         <div className="navbar__main">
           <div
             className={`navbar__main--container ${
-              dropdownVisible ? "navbar__main--container--focused" : ""
+              dropdownVisible ? 'navbar__main--container--focused' : ''
             }`}
           >
             <form onSubmit={this.handleSubmit}>
@@ -297,7 +297,7 @@ class Navbar extends React.Component<Props, NavbarState> {
               <input
                 id="searchBar"
                 className={`navbar__main--searchbar ${
-                  dropdownVisible ? "navbar__main--searchbar--checked" : ""
+                  dropdownVisible ? 'navbar__main--searchbar--checked' : ''
                 }`}
                 type="text"
                 placeholder="Search..."
@@ -307,7 +307,7 @@ class Navbar extends React.Component<Props, NavbarState> {
               />
               <div className="navbar__main--dd-icon">
                 <ion-icon
-                  name={`caret-${dropdownVisible ? "up" : "down"}-sharp`}
+                  name={`caret-${dropdownVisible ? 'up' : 'down'}-sharp`}
                 ></ion-icon>
               </div>
             </form>

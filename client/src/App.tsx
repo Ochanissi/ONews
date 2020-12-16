@@ -1,21 +1,21 @@
-import React, { lazy, Suspense } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { lazy, Suspense } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import { createStructuredSelector } from "reselect";
+import { createStructuredSelector } from 'reselect';
 
 import {
   selectUserCategory,
   selectUserCountry,
   selectCurrentUser,
   selectUserAuthorization,
-} from "./redux/user/user.selectors";
+} from './redux/user/user.selectors';
 
-import "./App.scss";
+import './App.scss';
 
-import { Authorization, User } from "./redux/user/user.types";
-import { ThunkDispatch } from "redux-thunk";
-import { AppActions } from "./redux/store";
+import { Authorization, User } from './redux/user/user.types';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppActions } from './redux/store';
 import {
   getCurrentUserStartAsync,
   getUserDislikedStartAsync,
@@ -25,7 +25,7 @@ import {
   getUserSearchesStartAsync,
   setUserSidebarMenu,
   setUserWeatherMenu,
-} from "./redux/user/user.actions";
+} from './redux/user/user.actions';
 
 // Pages
 // import HomePage from './pages/home-page/home-page.component';
@@ -37,29 +37,30 @@ import {
 // import ProfileSettings from './pages/profile-settings/profile-settings.components';
 
 // Components
-import NavBar from "./components/navbar/navbar.component";
-import BackToTop from "./components/back-to-top/back-to-top.component";
-import ScrollToTop from "./components/scroll-to-top/scroll-to-top.component";
+import NavBar from './components/navbar/navbar.component';
+import BackToTop from './components/back-to-top/back-to-top.component';
+import ScrollToTop from './components/scroll-to-top/scroll-to-top.component';
+import Spinner from './components/spinner/spinner.component';
 
 // Lazy loaded pages
-const HomePage = lazy(() => import("./pages/home-page/home-page.component"));
+const HomePage = lazy(() => import('./pages/home-page/home-page.component'));
 const SearchPage = lazy(
-  () => import("./pages/search-page/search-page.component")
+  () => import('./pages/search-page/search-page.component')
 );
-const SignUp = lazy(() => import("./pages/sign-up/sign-up.component"));
-const SignIn = lazy(() => import("./pages/sign-in/sign-in.component"));
-const Profile = lazy(() => import("./pages/profile/profile.component"));
+const SignUp = lazy(() => import('./pages/sign-up/sign-up.component'));
+const SignIn = lazy(() => import('./pages/sign-in/sign-in.component'));
+const Profile = lazy(() => import('./pages/profile/profile.component'));
 const ProfileData = lazy(
-  () => import("./pages/profile-data/profile-data.component")
+  () => import('./pages/profile-data/profile-data.component')
 );
 const ProfileSettings = lazy(
-  () => import("./pages/profile-settings/profile-settings.components")
+  () => import('./pages/profile-settings/profile-settings.components')
 );
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "ion-icon": { name: string };
+      'ion-icon': { name: string };
     }
   }
 }
@@ -141,7 +142,7 @@ class App extends React.Component<Props> {
           <NavBar />
 
           <Switch>
-            <Suspense fallback={<div>kek</div>}>
+            <Suspense fallback={<Spinner />}>
               <Route
                 exact
                 path="/"

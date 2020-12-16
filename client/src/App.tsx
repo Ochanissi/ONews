@@ -1,20 +1,8 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { createStructuredSelector } from "reselect";
-
-// import { createStructuredSelector } from 'reselect';
-// import { selectNewsArticles } from './redux/news/news.selectors';
-
-// import { fetchNewsStartAsync } from './redux/news/news.actions';
-// import { AppActions } from './redux/store';
-
-// import { ThunkDispatch } from 'redux-thunk';
-// import { News } from './redux/news/news.types';
-
-import SignUp from "./pages/sign-up/sign-up.component";
-import SignIn from "./pages/sign-in/sign-in.component";
 
 import {
   selectUserCategory,
@@ -25,10 +13,6 @@ import {
 
 import "./App.scss";
 
-import HomePage from "./pages/home-page/home-page.component";
-import SearchPage from "./pages/search-page/search-page.component";
-import NavBar from "./components/navbar/navbar.component";
-import Profile from "./pages/profile/profile.component";
 import { Authorization, User } from "./redux/user/user.types";
 import { ThunkDispatch } from "redux-thunk";
 import { AppActions } from "./redux/store";
@@ -42,12 +26,35 @@ import {
   setUserSidebarMenu,
   setUserWeatherMenu,
 } from "./redux/user/user.actions";
-import ProfileData from "./pages/profile-data/profile-data.component";
-// import { render } from '@testing-library/react';
-// import { isJsxAttributes, JsxEmit } from 'typescript';
-import ProfileSettings from "./pages/profile-settings/profile-settings.components";
+
+// Pages
+// import HomePage from './pages/home-page/home-page.component';
+// import SearchPage from './pages/search-page/search-page.component';
+// import SignUp from './pages/sign-up/sign-up.component';
+// import SignIn from './pages/sign-in/sign-in.component';
+// import Profile from './pages/profile/profile.component';
+// import ProfileData from './pages/profile-data/profile-data.component';
+// import ProfileSettings from './pages/profile-settings/profile-settings.components';
+
+// Components
+import NavBar from "./components/navbar/navbar.component";
 import BackToTop from "./components/back-to-top/back-to-top.component";
 import ScrollToTop from "./components/scroll-to-top/scroll-to-top.component";
+
+// Lazy loaded pages
+const HomePage = lazy(() => import("./pages/home-page/home-page.component"));
+const SearchPage = lazy(
+  () => import("./pages/search-page/search-page.component")
+);
+const SignUp = lazy(() => import("./pages/sign-up/sign-up.component"));
+const SignIn = lazy(() => import("./pages/sign-in/sign-in.component"));
+const Profile = lazy(() => import("./pages/profile/profile.component"));
+const ProfileData = lazy(
+  () => import("./pages/profile-data/profile-data.component")
+);
+const ProfileSettings = lazy(
+  () => import("./pages/profile-settings/profile-settings.components")
+);
 
 declare global {
   namespace JSX {
@@ -134,56 +141,64 @@ class App extends React.Component<Props> {
           <NavBar />
 
           <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <Redirect to={`/news/${userCountry}/${userCategory}`} />
-              )}
-            />
-            <Route exact path="/news/:country/:category" component={HomePage} />
-            <Route
-              exact
-              path="/search/:query/:queryTitle/:date/:lang/:sortBy"
-              component={SearchPage}
-            />
-            <Route
-              exact
-              path="/auth/sign-in"
-              render={() => (currentUser ? <Redirect to="/" /> : <SignIn />)}
-            />
-            <Route
-              exact
-              path="/auth/sign-up"
-              render={() => (currentUser ? <Redirect to="/" /> : <SignUp />)}
-            />
-            <Route
-              exact
-              path="/profile"
-              render={() =>
-                currentUser ? <Profile /> : <Redirect to="/auth/sign-in" />
-              }
-            />
-
-            <Route
-              exact
-              path="/profile/settings"
-              render={() =>
-                currentUser ? (
-                  <ProfileSettings />
-                ) : (
-                  <Redirect to="/auth/sign-in" />
-                )
-              }
-            />
-
-            <Route
-              exact
-              path="/profile/:type"
-              render={() =>
-                currentUser ? <ProfileData /> : <Redirect to="/auth/sign-in" />
-              }
-            />
+            <Suspense fallback={<div>kek</div>}>
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <Redirect to={`/news/${userCountry}/${userCategory}`} />
+                )}
+              />
+              <Route
+                exact
+                path="/news/:country/:category"
+                component={HomePage}
+              />
+              <Route
+                exact
+                path="/search/:query/:queryTitle/:date/:lang/:sortBy"
+                component={SearchPage}
+              />
+              <Route
+                exact
+                path="/auth/sign-in"
+                render={() => (currentUser ? <Redirect to="/" /> : <SignIn />)}
+              />
+              <Route
+                exact
+                path="/auth/sign-up"
+                render={() => (currentUser ? <Redirect to="/" /> : <SignUp />)}
+              />
+              <Route
+                exact
+                path="/profile"
+                render={() =>
+                  currentUser ? <Profile /> : <Redirect to="/auth/sign-in" />
+                }
+              />
+              <Route
+                exact
+                path="/profile/settings"
+                render={() =>
+                  currentUser ? (
+                    <ProfileSettings />
+                  ) : (
+                    <Redirect to="/auth/sign-in" />
+                  )
+                }
+              />
+              <Route
+                exact
+                path="/profile/:type"
+                render={() =>
+                  currentUser ? (
+                    <ProfileData />
+                  ) : (
+                    <Redirect to="/auth/sign-in" />
+                  )
+                }
+              />
+            </Suspense>
           </Switch>
         </ScrollToTop>
       </div>

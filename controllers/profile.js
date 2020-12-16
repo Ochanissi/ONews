@@ -94,12 +94,10 @@ const handlePatchPhoto = (req, res, db) => {
       if (user.length) {
         return res.json(user[0]);
       } else {
-        console.log("1. " + user);
         res.status(400).json("Error updating user's photo!");
       }
     })
     .catch((err) => {
-      console.log("2. " + err);
       res.status(400).json("Error updating user's photo!");
     });
 };

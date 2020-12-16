@@ -10,8 +10,8 @@ const handlePostDisliked = (req, res, db) => {
     content,
   } = req.body;
 
-  if (!email || !source || !title || !url || !image || !date || !content) {
-    return res.status(400).json('Incorrect request!');
+  if (!email || !source || !title || !url || !date) {
+    return res.status(400).json("Incorrect request!");
   }
 
   db.transaction((trx) => {
@@ -26,12 +26,12 @@ const handlePostDisliked = (req, res, db) => {
         date: date,
         content: content,
       })
-      .into('disliked')
-      .returning('*')
+      .into("disliked")
+      .returning("*")
       .then((data) => {
-        return trx('disliked')
-          .where('email', '=', email)
-          .returning('*')
+        return trx("disliked")
+          .where("email", "=", email)
+          .returning("*")
           .then((data) => {
             const dataFiltered = data.map((x) => {
               return {
@@ -52,19 +52,19 @@ const handlePostDisliked = (req, res, db) => {
       })
       .then(trx.commit)
       .catch(trx.rollback);
-  }).catch((err) => res.status(400).json('Unable to submit disliked!'));
+  }).catch((err) => res.status(400).json("Unable to submit disliked!"));
 };
 
 const handleGetDisliked = (req, res, db) => {
   const { email } = req.body;
 
   if (!email) {
-    return res.status(400).json('Incorrect request!');
+    return res.status(400).json("Incorrect request!");
   }
 
-  db.select('*')
-    .from('disliked')
-    .where('email', '=', email)
+  db.select("*")
+    .from("disliked")
+    .where("email", "=", email)
     .then((data) => {
       const dataFiltered = data.map((x) => {
         return {
@@ -82,25 +82,25 @@ const handleGetDisliked = (req, res, db) => {
 
       res.json(dataFiltered);
     })
-    .catch((err) => res.status(400).json('Unable to get disliked!'));
+    .catch((err) => res.status(400).json("Unable to get disliked!"));
 };
 
 const handleDeleteDisliked = (req, res, db) => {
   const { email, title } = req.body;
 
   if (!email || !title) {
-    return res.status(400).json('Incorrect request!');
+    return res.status(400).json("Incorrect request!");
   }
 
   db.transaction((trx) => {
-    trx('disliked')
-      .where('title', '=', title)
+    trx("disliked")
+      .where("title", "=", title)
       .del()
-      .returning('*')
+      .returning("*")
       .then((data) => {
-        return trx('disliked')
-          .where('email', '=', email)
-          .returning('*')
+        return trx("disliked")
+          .where("email", "=", email)
+          .returning("*")
           .then((data) => {
             const dataFiltered = data.map((x) => {
               return {
@@ -121,7 +121,7 @@ const handleDeleteDisliked = (req, res, db) => {
       })
       .then(trx.commit)
       .catch(trx.rollback);
-  }).catch((err) => res.status(400).json('Unable to submit disliked!'));
+  }).catch((err) => res.status(400).json("Unable to submit disliked!"));
 };
 
 module.exports = {

@@ -10,8 +10,8 @@ const handlePostSaved = (req, res, db) => {
     content,
   } = req.body;
 
-  if (!email || !source || !title || !url || !image || !date || !content) {
-    return res.status(400).json('Incorrect request!');
+  if (!email || !source || !title || !url || !date) {
+    return res.status(400).json("Incorrect request!");
   }
 
   db.transaction((trx) => {
@@ -26,12 +26,12 @@ const handlePostSaved = (req, res, db) => {
         date: date,
         content: content,
       })
-      .into('saved')
-      .returning('*')
+      .into("saved")
+      .returning("*")
       .then((data) => {
-        return trx('saved')
-          .where('email', '=', email)
-          .returning('*')
+        return trx("saved")
+          .where("email", "=", email)
+          .returning("*")
           .then((data) => {
             const dataFiltered = data.map((x) => {
               return {
@@ -52,19 +52,19 @@ const handlePostSaved = (req, res, db) => {
       })
       .then(trx.commit)
       .catch(trx.rollback);
-  }).catch((err) => res.status(400).json('Unable to submit saved!'));
+  }).catch((err) => res.status(400).json("Unable to submit saved!"));
 };
 
 const handleGetSaved = (req, res, db) => {
   const { email } = req.body;
 
   if (!email) {
-    return res.status(400).json('Incorrect request!');
+    return res.status(400).json("Incorrect request!");
   }
 
-  db.select('*')
-    .from('saved')
-    .where('email', '=', email)
+  db.select("*")
+    .from("saved")
+    .where("email", "=", email)
     .then((data) => {
       const dataFiltered = data.map((x) => {
         return {
@@ -82,25 +82,25 @@ const handleGetSaved = (req, res, db) => {
 
       res.json(dataFiltered);
     })
-    .catch((err) => res.status(400).json('Unable to get saved!'));
+    .catch((err) => res.status(400).json("Unable to get saved!"));
 };
 
 const handleDeleteSaved = (req, res, db) => {
   const { email, title } = req.body;
 
   if (!email || !title) {
-    return res.status(400).json('Incorrect request!');
+    return res.status(400).json("Incorrect request!");
   }
 
   db.transaction((trx) => {
-    trx('saved')
-      .where('title', '=', title)
+    trx("saved")
+      .where("title", "=", title)
       .del()
-      .returning('*')
+      .returning("*")
       .then((data) => {
-        return trx('saved')
-          .where('email', '=', email)
-          .returning('*')
+        return trx("saved")
+          .where("email", "=", email)
+          .returning("*")
           .then((data) => {
             const dataFiltered = data.map((x) => {
               return {
@@ -121,7 +121,7 @@ const handleDeleteSaved = (req, res, db) => {
       })
       .then(trx.commit)
       .catch(trx.rollback);
-  }).catch((err) => res.status(400).json('Unable to submit saved!'));
+  }).catch((err) => res.status(400).json("Unable to submit saved!"));
 };
 
 module.exports = {

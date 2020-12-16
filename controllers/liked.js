@@ -10,8 +10,8 @@ const handlePostLiked = (req, res, db) => {
     content,
   } = req.body;
 
-  if (!email || !source || !title || !url || !image || !date || !content) {
-    return res.status(400).json('Incorrect request!');
+  if (!email || !source || !title || !url || !date) {
+    return res.status(400).json("Incorrect request!");
   }
 
   db.transaction((trx) => {
@@ -26,12 +26,12 @@ const handlePostLiked = (req, res, db) => {
         date: date,
         content: content,
       })
-      .into('liked')
-      .returning('*')
+      .into("liked")
+      .returning("*")
       .then((data) => {
-        return trx('liked')
-          .where('email', '=', email)
-          .returning('*')
+        return trx("liked")
+          .where("email", "=", email)
+          .returning("*")
           .then((data) => {
             const dataFiltered = data.map((x) => {
               return {
@@ -52,19 +52,19 @@ const handlePostLiked = (req, res, db) => {
       })
       .then(trx.commit)
       .catch(trx.rollback);
-  }).catch((err) => res.status(400).json('Unable to submit liked!'));
+  }).catch((err) => res.status(400).json("Unable to submit liked!"));
 };
 
 const handleGetLiked = (req, res, db) => {
   const { email } = req.body;
 
   if (!email) {
-    return res.status(400).json('Incorrect request!');
+    return res.status(400).json("Incorrect request!");
   }
 
-  db.select('*')
-    .from('liked')
-    .where('email', '=', email)
+  db.select("*")
+    .from("liked")
+    .where("email", "=", email)
     .then((data) => {
       const dataFiltered = data.map((x) => {
         return {
@@ -82,25 +82,25 @@ const handleGetLiked = (req, res, db) => {
 
       res.json(dataFiltered);
     })
-    .catch((err) => res.status(400).json('Unable to get liked!'));
+    .catch((err) => res.status(400).json("Unable to get liked!"));
 };
 
 const handleDeleteLiked = (req, res, db) => {
   const { email, title } = req.body;
 
   if (!email || !title) {
-    return res.status(400).json('Incorrect request!');
+    return res.status(400).json("Incorrect request!");
   }
 
   db.transaction((trx) => {
-    trx('liked')
-      .where('title', '=', title)
+    trx("liked")
+      .where("title", "=", title)
       .del()
-      .returning('*')
+      .returning("*")
       .then((data) => {
-        return trx('liked')
-          .where('email', '=', email)
-          .returning('*')
+        return trx("liked")
+          .where("email", "=", email)
+          .returning("*")
           .then((data) => {
             const dataFiltered = data.map((x) => {
               return {
@@ -121,7 +121,7 @@ const handleDeleteLiked = (req, res, db) => {
       })
       .then(trx.commit)
       .catch(trx.rollback);
-  }).catch((err) => res.status(400).json('Unable to submit liked!'));
+  }).catch((err) => res.status(400).json("Unable to submit liked!"));
 };
 
 module.exports = {

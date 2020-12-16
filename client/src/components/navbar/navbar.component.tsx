@@ -212,7 +212,12 @@ class Navbar extends React.Component<Props, NavbarState> {
     const {
       signOut,
       currentUser: { name },
+
+      userCountry,
+      userCategory,
     } = this.props;
+
+    this.props.history.push(`/news/${userCountry}/${userCategory}`);
 
     signOut();
     Toast.success(`See you soon, ${name}!`, 1500);

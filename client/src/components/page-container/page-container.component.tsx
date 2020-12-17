@@ -1,20 +1,20 @@
-import React from "react";
-import { connect } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
-import { createStructuredSelector } from "reselect";
-import { AppActions } from "../../redux/store";
+import React from 'react';
+import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { createStructuredSelector } from 'reselect';
+import { AppActions } from '../../redux/store';
 import {
   setUserSidebarMenu,
   setUserWeatherMenu,
-} from "../../redux/user/user.actions";
+} from '../../redux/user/user.actions';
 import {
   selectUserSidebarMenu,
   selectUserWeatherMenu,
-} from "../../redux/user/user.selectors";
+} from '../../redux/user/user.selectors';
 
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from 'react-responsive';
 
-import "./page-container.styles.scss";
+import './page-container.styles.scss';
 
 const PageContainer = (props: any): JSX.Element => {
   const {
@@ -54,12 +54,12 @@ const PageContainer = (props: any): JSX.Element => {
     <div
       className={`page-container ${
         !userSidebarMenu && !userWeatherMenu
-          ? "page-container--both"
+          ? 'page-container--both'
           : !userSidebarMenu
-          ? "page-container--sidebar"
+          ? 'page-container--sidebar'
           : !userWeatherMenu
-          ? "page-container--weather"
-          : ""
+          ? 'page-container--weather'
+          : ''
       }`}
     >
       <div className="page-container__content">{props.children}</div>

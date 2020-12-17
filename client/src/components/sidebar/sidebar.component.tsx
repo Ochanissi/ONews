@@ -103,7 +103,7 @@ class Sidebar extends React.Component<Props, SidebarState> {
                 profileLink="/profile/hidden-sources"
               />
 
-              <hr></hr>
+              <hr className="menu-sidebar__menu--x"></hr>
 
               <SidebarItem
                 iconType="information-circle-outline"
@@ -111,7 +111,7 @@ class Sidebar extends React.Component<Props, SidebarState> {
                 profileLink="/profile/about"
               />
 
-              <hr></hr>
+              <hr className="menu-sidebar__menu--x"></hr>
 
               <Footer />
             </ul>
@@ -142,7 +142,7 @@ class Sidebar extends React.Component<Props, SidebarState> {
                 profileLink="/profile/past-searches"
               />
 
-              <hr></hr>
+              <hr className="menu-sidebar__menu--x"></hr>
 
               <SidebarItem
                 userCountry={userCountry}
@@ -164,7 +164,7 @@ class Sidebar extends React.Component<Props, SidebarState> {
                 countryBool
               />
 
-              <hr></hr>
+              <hr className="menu-sidebar__menu--x"></hr>
 
               <SidebarItem
                 userCountry={userCountry}
@@ -220,7 +220,7 @@ class Sidebar extends React.Component<Props, SidebarState> {
                 itemLabel="Health"
               />
 
-              <hr></hr>
+              <hr className="menu-sidebar__menu--x"></hr>
 
               <Footer />
             </ul>

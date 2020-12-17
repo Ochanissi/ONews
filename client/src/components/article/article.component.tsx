@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 
-import defaultArticle from "../../assets/article-default.png";
+import defaultArticle from '../../assets/article-default.png';
 
-import { News } from "../../redux/news/news.types";
+import { News } from '../../redux/news/news.types';
 
-import "./article.styles.scss";
-import { createStructuredSelector } from "reselect";
-import { ThunkDispatch } from "redux-thunk";
-import { AppActions } from "../../redux/store";
-import { connect } from "react-redux";
+import './article.styles.scss';
+import { createStructuredSelector } from 'reselect';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppActions } from '../../redux/store';
+import { connect } from 'react-redux';
 import {
   selectUserSaved,
   selectCurrentUser,
@@ -16,8 +16,8 @@ import {
   selectUserDisliked,
   selectUserHidden,
   selectUserAuthorization,
-} from "../../redux/user/user.selectors";
-import { Authorization, User, UserNews } from "../../redux/user/user.types";
+} from '../../redux/user/user.selectors';
+import { Authorization, User, UserNews } from '../../redux/user/user.types';
 import {
   postUserSavedStartAsync,
   deleteUserSavedStartAsync,
@@ -27,11 +27,11 @@ import {
   deleteUserDislikedStartAsync,
   postUserHiddenStartAsync,
   deleteUserHiddenStartAsync,
-} from "../../redux/user/user.actions";
+} from '../../redux/user/user.actions';
 
-import Toast from "light-toast";
-import ArticleShare from "../article-share/article-share.component";
-import MediaQuery from "react-responsive";
+import Toast from 'light-toast';
+import ArticleShare from '../article-share/article-share.component';
+import MediaQuery from 'react-responsive';
 
 interface ArticleProps {
   id: string;
@@ -53,11 +53,11 @@ class Article extends React.Component<Props, ArticleState> {
 
   // Checks for mouse clicks
   componentDidMount() {
-    document.addEventListener("click", this.handleClick);
+    document.addEventListener('click', this.handleClick);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("click", this.handleClick);
+    document.removeEventListener('click', this.handleClick);
   }
 
   // Handles the Article Share Modal - Opens / Closes
@@ -67,14 +67,14 @@ class Article extends React.Component<Props, ArticleState> {
     // console.log(event.target.className);
     // console.log(event.target.parentNode.className);
 
-    const defaultClick = event.target.className || "";
+    const defaultClick = event.target.className || '';
     const defaultClickParent = event.target.parentNode
       ? event.target.parentNode.className
-      : "";
+      : '';
 
     if (
-      defaultClick === "article-share" ||
-      defaultClickParent === "article-share__close"
+      defaultClick === 'article-share' ||
+      defaultClickParent === 'article-share__close'
     ) {
       this.setState({ shareToggle: false });
     }
@@ -131,7 +131,7 @@ class Article extends React.Component<Props, ArticleState> {
         : deleteUserSavedStartAsync(email, title, token);
     } else {
       Toast.fail(
-        "You need to be signed in to save for later! \n Please sign in!",
+        'You need to be signed in to save for later! \n Please sign in!',
         1000
       );
     }
@@ -191,7 +191,7 @@ class Article extends React.Component<Props, ArticleState> {
         : deleteUserLikedStartAsync(email, title, token);
     } else {
       Toast.fail(
-        "You need to be signed in to like stories! \n Please sign in!",
+        'You need to be signed in to like stories! \n Please sign in!',
         1000
       );
     }
@@ -251,7 +251,7 @@ class Article extends React.Component<Props, ArticleState> {
         : deleteUserDislikedStartAsync(email, title, token);
     } else {
       Toast.fail(
-        "You need to be signed in to dislike stories! \n Please sign in!",
+        'You need to be signed in to dislike stories! \n Please sign in!',
         1000
       );
     }
@@ -283,7 +283,7 @@ class Article extends React.Component<Props, ArticleState> {
         : deleteUserHiddenStartAsync(email, sourceName, token);
     } else {
       Toast.fail(
-        "You need to be signed in to hide stories! \n Please sign in!",
+        'You need to be signed in to hide stories! \n Please sign in!',
         1000
       );
     }
@@ -322,14 +322,14 @@ class Article extends React.Component<Props, ArticleState> {
 
     const dateFormat =
       dateFormatMins < 60
-        ? `${dateFormatMins} minute${dateFormatMins > 1 ? "s" : ""} ago`
+        ? `${dateFormatMins} minute${dateFormatMins > 1 ? 's' : ''} ago`
         : dateFormatHours < 24
-        ? `${dateFormatHours} hour${dateFormatHours > 1 ? "s" : ""} ago`
-        : `${dateFormatDays} day${dateFormatDays > 1 ? "s" : ""} ago`;
+        ? `${dateFormatHours} hour${dateFormatHours > 1 ? 's' : ''} ago`
+        : `${dateFormatDays} day${dateFormatDays > 1 ? 's' : ''} ago`;
 
     const contentFiltered = content
-      ? content.replace(/↵|<ul>|<li>|<\/li>|<\/ul>/g, "")
-      : "";
+      ? content.replace(/↵|<ul>|<li>|<\/li>|<\/ul>/g, '')
+      : '';
 
     let userSavedBool, userLikedBool, userDislikedBool, userHiddenBool;
 
@@ -379,24 +379,24 @@ class Article extends React.Component<Props, ArticleState> {
                   <button
                     className={`article__content--source--options--save ${
                       userSavedBool
-                        ? "article__content--source--options--save--bool"
-                        : ""
+                        ? 'article__content--source--options--save--bool'
+                        : ''
                     }`}
                     onClick={this.handleSaved}
                   >
                     <ion-icon
-                      name={`bookmark${userSavedBool ? "" : "-outline"}`}
+                      name={`bookmark${userSavedBool ? '' : '-outline'}`}
                     ></ion-icon>
                     <span
                       className={`article__content--source--options--save--info ${
                         userSavedBool
-                          ? "article__content--source--options--save--info--bool"
-                          : ""
+                          ? 'article__content--source--options--save--info--bool'
+                          : ''
                       }`}
                     >
                       {userSavedBool
-                        ? "Remove from saved stories"
-                        : "Save for later"}
+                        ? 'Remove from saved stories'
+                        : 'Save for later'}
                     </span>
                   </button>
                   <button
@@ -411,43 +411,43 @@ class Article extends React.Component<Props, ArticleState> {
                   <button
                     className={`article__content--source--options--thumbs-up ${
                       userLikedBool
-                        ? "article__content--source--options--thumbs-up--bool"
-                        : ""
+                        ? 'article__content--source--options--thumbs-up--bool'
+                        : ''
                     }`}
                     onClick={this.handleLiked}
                   >
                     <ion-icon name="thumbs-up-sharp"></ion-icon>
                     <span className="article__content--source--options--thumbs-up--info">
-                      {`${userLikedBool ? "Less" : "More"} stories like this`}
+                      {`${userLikedBool ? 'Less' : 'More'} stories like this`}
                     </span>
                   </button>
                   <button
                     className={`article__content--source--options--thumbs-down ${
                       userDislikedBool
-                        ? "article__content--source--options--thumbs-down--bool"
-                        : ""
+                        ? 'article__content--source--options--thumbs-down--bool'
+                        : ''
                     }`}
                     onClick={this.handleDisliked}
                   >
                     <ion-icon name="thumbs-down-sharp"></ion-icon>
                     <span className="article__content--source--options--thumbs-down--info">
                       {`${
-                        userDislikedBool ? "More" : "Less"
+                        userDislikedBool ? 'More' : 'Less'
                       } stories like this`}
                     </span>
                   </button>
                   <button
                     className={`article__content--source--options--hide ${
                       userHiddenBool
-                        ? "article__content--source--options--hide--bool"
-                        : ""
+                        ? 'article__content--source--options--hide--bool'
+                        : ''
                     }`}
                     onClick={this.handleHidden}
                   >
                     <ion-icon name="eye-off"></ion-icon>
                     <span className="article__content--source--options--hide--info">
                       {`${
-                        userHiddenBool ? "Show" : "Hide"
+                        userHiddenBool ? 'Show' : 'Hide'
                       } all stories from ${sourceName}`}
                     </span>
                   </button>
@@ -475,7 +475,7 @@ class Article extends React.Component<Props, ArticleState> {
                 id={`article-dropdown-${id}`}
               />
               <p className="article__content--description--content">
-                {description ? description : contentFiltered.split("[+")[0]}
+                {description ? description : contentFiltered.split('[+')[0]}
               </p>
 
               <label

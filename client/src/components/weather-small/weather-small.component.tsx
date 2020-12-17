@@ -18,19 +18,19 @@ const WeatherSmall: React.FunctionComponent<WeatherSmallProps> = ({
   unit,
 }): JSX.Element => {
   return (
-    <div className='weather-small'>
-      <div className='weather-small__header'>{day}</div>
-      <div className='weather-small__icon'>
+    <div className="weather-small">
+      <div className="weather-small__header">{day}</div>
+      <div className="weather-small__icon">
         <img
-          src={`http://openweathermap.org/img/wn/${icon}.png`}
-          alt='Weather Icon'
-          className='weather__animation'
+          src={`https://openweathermap.org/img/wn/${icon}.png`}
+          alt="Weather Icon"
+          className="weather__animation"
         ></img>
       </div>
-      <div className='weather-small__max'>
+      <div className="weather-small__max">
         {max}&#176;{unit}
       </div>
-      <div className='weather-small__min'>
+      <div className="weather-small__min">
         {min}&#176;{unit}
       </div>
     </div>

@@ -15,12 +15,16 @@ import {
   selectUserAuthorization,
   selectUserCategory,
   selectUserCountry,
+  selectUserSidebarMenu,
+  selectUserWeatherMenu,
 } from '../../redux/user/user.selectors';
 import CustomButton from '../custom-button/custom-button.component';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../../redux/store';
 import {
   postUserSearchesStartAsync,
+  setUserSidebarMenu,
+  setUserWeatherMenu,
   signOut,
 } from '../../redux/user/user.actions';
 import WeatherContainer from '../weather/weather.component';
@@ -90,19 +94,22 @@ class Navbar extends React.Component<Props, NavbarState> {
     const defaultClick = event.target.className || '';
     const defaultClickParent = event.target.parentNode.className || '';
 
+    // Handles Profile Modal
     if (defaultClick === 'navbar__secondary--logo') {
       this.setState((prevState) => ({
         popupVisible: !prevState.popupVisible,
       }));
     } else if (
       defaultClick === 'navbar__secondary--profile' ||
-      defaultClick === 'navbar__secondary--profile--x'
+      defaultClick === 'navbar__secondary--profile--x' ||
+      defaultClickParent === 'navbar__secondary--profile'
     ) {
       this.setState({ popupVisible: true });
     } else {
       this.setState({ popupVisible: false });
     }
 
+    // Handles Search Modal
     if (
       defaultClickParent === 'navbar__main--dd-icon' ||
       defaultClick === 'navbar__main--dd-icon'
@@ -118,6 +125,32 @@ class Navbar extends React.Component<Props, NavbarState> {
       this.setState({ dropdownVisible: true });
     } else {
       this.setState({ dropdownVisible: false });
+    }
+
+    // Handles Sidebar Modal
+    const { userSidebarMenu, setUserSidebarMenu } = this.props;
+
+    if (
+      userSidebarMenu &&
+      window.innerWidth <= 1000 &&
+      !defaultClickParent.startsWith('sidebar-bool') &&
+      !defaultClick.startsWith('menu-sidebar__menu') &&
+      !defaultClick.startsWith('footer')
+    ) {
+      setUserSidebarMenu(false);
+    }
+
+    // Handles Weather Modal
+    const { userWeatherMenu, setUserWeatherMenu } = this.props;
+
+    if (
+      userWeatherMenu &&
+      window.innerWidth <= 800 &&
+      !defaultClickParent.startsWith('weather-bool') &&
+      !defaultClick.startsWith('weather') &&
+      !defaultClickParent.startsWith('weather')
+    ) {
+      setUserWeatherMenu(false);
     }
   };
 
@@ -490,13 +523,6 @@ class Navbar extends React.Component<Props, NavbarState> {
   }
 }
 
-interface LinkStateProps {
-  userAuthorization: Authorization;
-  currentUser: User;
-  userCountry: string;
-  userCategory: string;
-}
-
 interface LinkDispatchProps {
   signOut: () => void;
   postUserSearchesStartAsync: (
@@ -504,6 +530,19 @@ interface LinkDispatchProps {
     query: string,
     token: string
   ) => void;
+
+  setUserSidebarMenu: (bool: boolean) => void;
+  setUserWeatherMenu: (bool: boolean) => void;
+}
+
+interface LinkStateProps {
+  userAuthorization: Authorization;
+  currentUser: User;
+  userCountry: string;
+  userCategory: string;
+
+  userSidebarMenu: boolean;
+  userWeatherMenu: boolean;
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -511,6 +550,9 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   userCountry: selectUserCountry,
   userCategory: selectUserCategory,
+
+  userSidebarMenu: selectUserSidebarMenu,
+  userWeatherMenu: selectUserWeatherMenu,
 });
 
 const mapDispatchToProps = (
@@ -519,6 +561,9 @@ const mapDispatchToProps = (
   signOut: () => dispatch(signOut()),
   postUserSearchesStartAsync: (email, query, token) =>
     dispatch(postUserSearchesStartAsync(email, query, token)),
+
+  setUserSidebarMenu: (bool) => dispatch(setUserSidebarMenu(bool)),
+  setUserWeatherMenu: (bool) => dispatch(setUserWeatherMenu(bool)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

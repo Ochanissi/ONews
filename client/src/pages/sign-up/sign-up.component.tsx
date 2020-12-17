@@ -1,22 +1,22 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 
-import { AppActions } from "../../redux/store";
+import { AppActions } from '../../redux/store';
 
-import { ThunkDispatch } from "redux-thunk";
+import { ThunkDispatch } from 'redux-thunk';
 
-import FormInput from "../../components/form-input/form-input.component";
-import CustomButton from "../../components/custom-button/custom-button.component";
+import FormInput from '../../components/form-input/form-input.component';
+import CustomButton from '../../components/custom-button/custom-button.component';
 
 import {
   setUserSidebarMenu,
   setUserWeatherMenu,
   signUpStartAsync,
-} from "../../redux/user/user.actions";
+} from '../../redux/user/user.actions';
 
-import "./sign-up.styles.scss";
+import './sign-up.styles.scss';
 
-import Toast from "light-toast";
+import Toast from 'light-toast';
 
 interface SignUpState {
   name: string;
@@ -36,10 +36,10 @@ class SignUp extends React.Component<Props, SignUpState> {
     super(props);
 
     this.state = {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
       passwordVisible: false,
       confirmPasswordVisible: false,
     };
@@ -79,10 +79,10 @@ class SignUp extends React.Component<Props, SignUpState> {
     event: React.MouseEvent<HTMLButtonElement>,
     elem: string
   ): void => {
-    // event.preventDefault();
+    event.preventDefault();
 
     this.setState<any>({
-      [elem]: !this.state[elem as "passwordVisible" | "confirmPasswordVisible"],
+      [elem]: !this.state[elem as 'passwordVisible' | 'confirmPasswordVisible'],
     });
   };
 
@@ -125,11 +125,11 @@ class SignUp extends React.Component<Props, SignUpState> {
 
             <FormInput
               name="password"
-              type={passwordVisible ? "text" : "password"}
+              type={passwordVisible ? 'text' : 'password'}
               value={password}
               handleChange={this.handleChange}
               handlePasswordVisible={(event) =>
-                this.handlePasswordVisible(event, "passwordVisible")
+                this.handlePasswordVisible(event, 'passwordVisible')
               }
               required
               label="Password"
@@ -141,11 +141,11 @@ class SignUp extends React.Component<Props, SignUpState> {
 
             <FormInput
               name="confirmPassword"
-              type={confirmPasswordVisible ? "text" : "password"}
+              type={confirmPasswordVisible ? 'text' : 'password'}
               value={confirmPassword}
               handleChange={this.handleChange}
               handlePasswordVisible={(event) =>
-                this.handlePasswordVisible(event, "confirmPasswordVisible")
+                this.handlePasswordVisible(event, 'confirmPasswordVisible')
               }
               required
               label="Confirm Password"

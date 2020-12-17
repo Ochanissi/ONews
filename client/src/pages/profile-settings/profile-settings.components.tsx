@@ -1,24 +1,24 @@
-import React from "react";
-import FormInput from "../../components/form-input/form-input.component";
+import React from 'react';
+import FormInput from '../../components/form-input/form-input.component';
 
-import "./profile-settings.styles.scss";
-import { connect } from "react-redux";
+import './profile-settings.styles.scss';
+import { connect } from 'react-redux';
 import {
   selectCurrentUser,
   selectUserAuthorization,
-} from "../../redux/user/user.selectors";
-import { ThunkDispatch } from "redux-thunk";
-import { AppActions } from "../../redux/store";
-import { Authorization, User, UserUpdate } from "../../redux/user/user.types";
-import { createStructuredSelector } from "reselect";
+} from '../../redux/user/user.selectors';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppActions } from '../../redux/store';
+import { Authorization, User, UserUpdate } from '../../redux/user/user.types';
+import { createStructuredSelector } from 'reselect';
 import {
   updateUserDataStartAsync,
   updateUserPasswordStartAsync,
   updateUserPhotoStartAsync,
-} from "../../redux/user/user.actions";
+} from '../../redux/user/user.actions';
 
-import Toast from "light-toast";
-import PageContainer from "../../components/page-container/page-container.component";
+import Toast from 'light-toast';
+import PageContainer from '../../components/page-container/page-container.component';
 
 interface ProfileSettingsProps {}
 
@@ -70,9 +70,9 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       about,
       photo,
       joined,
-      oldPass: "",
-      newPass: "",
-      newPassConfirm: "",
+      oldPass: '',
+      newPass: '',
+      newPassConfirm: '',
       oldPassVisible: false,
       newPassVisible: false,
       newPassConfirmVisible: false,
@@ -95,7 +95,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
     const { name, value } = event.target;
 
-    if (name === "photo") {
+    if (name === 'photo') {
       // Upload photo
       const {
         updateUserPhotoStartAsync,
@@ -110,8 +110,8 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
       const formData = new FormData();
 
-      formData.append("photo", files[0]);
-      formData.append("email", email);
+      formData.append('photo', files[0]);
+      formData.append('email', email);
 
       updateUserPhotoStartAsync(formData, token);
     } else {
@@ -202,9 +202,9 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
       updateUserPasswordStartAsync(email, oldPass, newPass, token);
 
       this.setState({
-        oldPass: "",
-        newPass: "",
-        newPassConfirm: "",
+        oldPass: '',
+        newPass: '',
+        newPassConfirm: '',
       });
     } else {
       Toast.fail("Passwords don't match!", 1000);
@@ -215,9 +215,9 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     event.preventDefault();
 
     this.setState({
-      oldPass: "",
-      newPass: "",
-      newPassConfirm: "",
+      oldPass: '',
+      newPass: '',
+      newPassConfirm: '',
     });
   };
 
@@ -225,11 +225,11 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
     event: React.MouseEvent<HTMLButtonElement>,
     elem: string
   ): void => {
-    // event.preventDefault();
+    event.preventDefault();
 
     this.setState<any>({
       [elem]: !this.state[
-        elem as "oldPassVisible" | "newPassVisible" | "newPassConfirmVisible"
+        elem as 'oldPassVisible' | 'newPassVisible' | 'newPassConfirmVisible'
       ],
     });
   };
@@ -328,7 +328,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
               <FormInput
                 name="name"
                 type="text"
-                value={name || ""}
+                value={name || ''}
                 handleChange={this.handleChange}
                 required
                 label="Your name"
@@ -339,7 +339,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
               <FormInput
                 name="age"
                 type="number"
-                value={age || ""}
+                value={age || ''}
                 handleChange={this.handleChange}
                 label="Age"
                 placeholder="How old are you."
@@ -351,7 +351,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
               <FormInput
                 name="occupation"
                 type="text"
-                value={occupation || ""}
+                value={occupation || ''}
                 handleChange={this.handleChange}
                 label="Occupation"
                 placeholder="What do you do for a living."
@@ -361,7 +361,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
               <FormInput
                 name="country"
                 type="text"
-                value={country || ""}
+                value={country || ''}
                 handleChange={this.handleChange}
                 label="Country"
                 placeholder="Which country you are from."
@@ -380,7 +380,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
                   placeholder="Tell us about yourself."
                   maxLength={200}
                   rows={3}
-                  value={about || ""}
+                  value={about || ''}
                 ></textarea>
               </div>
 
@@ -415,7 +415,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
               <FormInput
                 name="email"
                 type="email"
-                value={email || ""}
+                value={email || ''}
                 handleChange={this.handleChange}
                 required
                 label="Email Address"
@@ -427,7 +427,7 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
               <FormInput
                 name="phone"
                 type="tel"
-                value={phone || ""}
+                value={phone || ''}
                 handleChange={this.handleChange}
                 required
                 label="Phone Number"
@@ -465,11 +465,11 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
             <div className="profile-settings-block__content">
               <FormInput
                 name="oldPass"
-                type={oldPassVisible ? "text" : "password"}
-                value={oldPass || ""}
+                type={oldPassVisible ? 'text' : 'password'}
+                value={oldPass || ''}
                 handleChange={this.handleChange}
                 handlePasswordVisible={(event) =>
-                  this.handlePasswordVisible(event, "oldPassVisible")
+                  this.handlePasswordVisible(event, 'oldPassVisible')
                 }
                 required
                 label="Current Password"
@@ -482,11 +482,11 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
               <FormInput
                 name="newPass"
-                type={newPassVisible ? "text" : "password"}
-                value={newPass || ""}
+                type={newPassVisible ? 'text' : 'password'}
+                value={newPass || ''}
                 handleChange={this.handleChange}
                 handlePasswordVisible={(event) =>
-                  this.handlePasswordVisible(event, "newPassVisible")
+                  this.handlePasswordVisible(event, 'newPassVisible')
                 }
                 required
                 label="New Password"
@@ -499,11 +499,11 @@ class ProfileSettings extends React.Component<Props, ProfileSettingsState> {
 
               <FormInput
                 name="newPassConfirm"
-                type={newPassConfirmVisible ? "text" : "password"}
-                value={newPassConfirm || ""}
+                type={newPassConfirmVisible ? 'text' : 'password'}
+                value={newPassConfirm || ''}
                 handleChange={this.handleChange}
                 handlePasswordVisible={(event) =>
-                  this.handlePasswordVisible(event, "newPassConfirmVisible")
+                  this.handlePasswordVisible(event, 'newPassConfirmVisible')
                 }
                 required
                 label="Confirm Password"

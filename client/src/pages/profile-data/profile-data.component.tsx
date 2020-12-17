@@ -1,12 +1,12 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { createStructuredSelector } from "reselect";
-import ArticleSmall from "../../components/article-small/article-small.component";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import ArticleSmall from '../../components/article-small/article-small.component';
 
-import Article from "../../components/article/article.component";
-import PageContainer from "../../components/page-container/page-container.component";
-import { News } from "../../redux/news/news.types";
+import Article from '../../components/article/article.component';
+import PageContainer from '../../components/page-container/page-container.component';
+import { News } from '../../redux/news/news.types';
 import {
   selectCurrentUser,
   selectUserDisliked,
@@ -14,10 +14,10 @@ import {
   selectUserLiked,
   selectUserSaved,
   selectUserSearches,
-} from "../../redux/user/user.selectors";
-import { User } from "../../redux/user/user.types";
+} from '../../redux/user/user.selectors';
+import { User } from '../../redux/user/user.types';
 
-import "./profile-data.styles.scss";
+import './profile-data.styles.scss';
 
 interface ProfileDataProps {
   match: {
@@ -41,33 +41,33 @@ const ProfileData: React.FunctionComponent<Props> = ({
   userSearches,
 }): JSX.Element => {
   let newsArticles =
-    type === "saved-stories"
+    type === 'saved-stories'
       ? userSaved
-      : type === "liked-stories"
+      : type === 'liked-stories'
       ? userLiked
-      : type === "disliked-stories"
+      : type === 'disliked-stories'
       ? userDisliked
       : [];
 
   let newsItems: [string] | [] =
-    type === "past-searches"
+    type === 'past-searches'
       ? userSearches
-      : type === "hidden-sources"
+      : type === 'hidden-sources'
       ? userHidden
       : [];
 
   const subHeader =
-    type === "saved-stories" ||
-    type === "liked-stories" ||
-    type === "disliked-stories"
+    type === 'saved-stories' ||
+    type === 'liked-stories' ||
+    type === 'disliked-stories'
       ? `You can find here all the stories that you ${
-          type.toLowerCase().split("-")[0]
+          type.toLowerCase().split('-')[0]
         } in the past.`
-      : type === "past-searches"
-      ? "You can find here all your past news searches."
-      : type === "hidden-sources"
-      ? "You can find here all the news sources that you hidden in the past."
-      : "";
+      : type === 'past-searches'
+      ? 'You can find here all your past news searches.'
+      : type === 'hidden-sources'
+      ? 'You can find here all the news sources that you hidden in the past.'
+      : '';
 
   const { joined } = currentUser;
 
@@ -75,7 +75,7 @@ const ProfileData: React.FunctionComponent<Props> = ({
     <PageContainer className="profile-data">
       <h2 className="profile-data__header">{`${
         type.slice(0, 1).toUpperCase() +
-        type.slice(1).toLowerCase().replace("-", " ")
+        type.slice(1).toLowerCase().replace('-', ' ')
       }`}</h2>
       <h4 className="profile-data__sub-header">{subHeader}</h4>
 
@@ -100,20 +100,20 @@ const ProfileData: React.FunctionComponent<Props> = ({
         </div>
       ) : null}
 
-      {type === "about" ? (
+      {type === 'about' ? (
         <div className="article-small profile-data__about">
           <span className="profile-data__about--1">Joined ONews on</span>
           <span className="profile-data__about--2">
-            {joined.split("T")[0].split("-").reverse().join("/")}
+            {joined.split('T')[0].split('-').reverse().join('/')}
           </span>
           <span className="profile-data__about--3">!</span>
         </div>
       ) : null}
 
-      {!newsArticles.length && !newsItems.length && type !== "about" ? (
+      {!newsArticles.length && !newsItems.length && type !== 'about' ? (
         <div className="profile-data__placeholder">{`You have no ${type
           .toLowerCase()
-          .replace("-", " ")}!`}</div>
+          .replace('-', ' ')}!`}</div>
       ) : null}
     </PageContainer>
   );

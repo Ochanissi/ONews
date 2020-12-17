@@ -1,24 +1,24 @@
-import React from "react";
+import React from 'react';
 
-import { Link, withRouter, RouteComponentProps } from "react-router-dom";
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
-import mainLogo from "../../assets/logo.png";
+import mainLogo from '../../assets/logo.png';
 
-import "./sidebar.styles.scss";
+import './sidebar.styles.scss';
 import {
   selectUserCategory,
   selectUserCountry,
   selectUserSidebarMenu,
-} from "../../redux/user/user.selectors";
+} from '../../redux/user/user.selectors';
 
-import SidebarItem from "./../sidebar-item/sidebar-item.component";
-import Footer from "../footer/footer.component";
-import { ThunkDispatch } from "redux-thunk";
-import { AppActions } from "../../redux/store";
-import { setUserSidebarMenu } from "../../redux/user/user.actions";
+import SidebarItem from './../sidebar-item/sidebar-item.component';
+import Footer from '../footer/footer.component';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppActions } from '../../redux/store';
+import { setUserSidebarMenu } from '../../redux/user/user.actions';
 
 interface SidebarProps extends RouteComponentProps {}
 
@@ -44,7 +44,7 @@ class Sidebar extends React.Component<Props, SidebarState> {
         <div className="menu-sidebar">
           <button
             className={`sidebar-bool ${
-              userSidebarMenu ? "sidebar-bool--checked" : ""
+              userSidebarMenu ? 'sidebar-bool--checked' : ''
             }`}
             onClick={this.handleChecked}
           >
@@ -55,10 +55,10 @@ class Sidebar extends React.Component<Props, SidebarState> {
             <img src={mainLogo} alt="App Logo" className="navbar__logo" />
           </Link>
 
-          {location.pathname.startsWith("/profile") ? (
+          {location.pathname.startsWith('/profile') ? (
             <ul
               className={`menu-sidebar__menu ${
-                userSidebarMenu ? "menu-sidebar__menu--checked" : ""
+                userSidebarMenu ? 'menu-sidebar__menu--checked' : ''
               }`}
             >
               <SidebarItem
@@ -118,7 +118,7 @@ class Sidebar extends React.Component<Props, SidebarState> {
           ) : (
             <ul
               className={`menu-sidebar__menu ${
-                userSidebarMenu ? "menu-sidebar__menu--checked" : ""
+                userSidebarMenu ? 'menu-sidebar__menu--checked' : ''
               }`}
             >
               <SidebarItem

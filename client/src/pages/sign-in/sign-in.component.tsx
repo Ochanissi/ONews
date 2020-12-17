@@ -1,19 +1,19 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 
 import {
   setUserSidebarMenu,
   setUserWeatherMenu,
   signInStartAsync,
-} from "../../redux/user/user.actions";
-import { AppActions } from "../../redux/store";
+} from '../../redux/user/user.actions';
+import { AppActions } from '../../redux/store';
 
-import { ThunkDispatch } from "redux-thunk";
+import { ThunkDispatch } from 'redux-thunk';
 
-import FormInput from "../../components/form-input/form-input.component";
-import CustomButton from "../../components/custom-button/custom-button.component";
+import FormInput from '../../components/form-input/form-input.component';
+import CustomButton from '../../components/custom-button/custom-button.component';
 
-import "./sign-in.styles.scss";
+import './sign-in.styles.scss';
 
 interface SignInState {
   email: string;
@@ -30,8 +30,8 @@ class SignIn extends React.Component<Props, SignInState> {
     super(props);
 
     this.state = {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       passwordVisible: false,
     };
   }
@@ -52,7 +52,7 @@ class SignIn extends React.Component<Props, SignInState> {
 
     signInStartAsync(email, password);
 
-    this.setState({ email: "", password: "" });
+    this.setState({ email: '', password: '' });
   };
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -67,10 +67,10 @@ class SignIn extends React.Component<Props, SignInState> {
     event: React.MouseEvent<HTMLButtonElement>,
     elem: string
   ): void => {
-    // event.preventDefault();
+    event.preventDefault();
 
     this.setState<any>({
-      [elem]: !this.state[elem as "passwordVisible"],
+      [elem]: !this.state[elem as 'passwordVisible'],
     });
   };
 
@@ -95,11 +95,11 @@ class SignIn extends React.Component<Props, SignInState> {
             />
             <FormInput
               name="password"
-              type={passwordVisible ? "text" : "password"}
+              type={passwordVisible ? 'text' : 'password'}
               value={password}
               handleChange={this.handleChange}
               handlePasswordVisible={(event) =>
-                this.handlePasswordVisible(event, "passwordVisible")
+                this.handlePasswordVisible(event, 'passwordVisible')
               }
               required
               label="Password"

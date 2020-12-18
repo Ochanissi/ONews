@@ -456,13 +456,16 @@ class Article extends React.Component<Props, ArticleState> {
             </div>
             <a
               className="article__image-container"
-              href={url}
+              href={url.replace(/^http:\/\//i, 'https://')}
               target="_blank"
               rel="noopener noreferrer"
             >
               <img
                 className="article__image-container--image"
-                src={urlToImage || defaultArticle}
+                src={
+                  urlToImage.replace(/^http:\/\//i, 'https://') ||
+                  defaultArticle
+                }
                 alt="Article"
               ></img>
             </a>

@@ -354,7 +354,7 @@ class Article extends React.Component<Props, ArticleState> {
             <div className="article__content">
               <a
                 className="article__content--title"
-                href={url}
+                href={url.replace(/^http:\/\//i, 'https://')}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -364,7 +364,7 @@ class Article extends React.Component<Props, ArticleState> {
               <div className="article__content--source">
                 <a
                   className="article__content--source--url"
-                  href={url}
+                  href={url.replace(/^http:\/\//i, 'https://')}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -492,7 +492,7 @@ class Article extends React.Component<Props, ArticleState> {
 
           <a
             className="article__content--coverage"
-            href={url}
+            href={url.replace(/^http:\/\//i, 'https://')}
             target="_blank"
             rel="noopener noreferrer"
           >

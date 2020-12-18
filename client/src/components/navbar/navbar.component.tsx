@@ -102,7 +102,8 @@ class Navbar extends React.Component<Props, NavbarState> {
     } else if (
       defaultClick === 'navbar__secondary--profile' ||
       defaultClick === 'navbar__secondary--profile--x' ||
-      defaultClickParent === 'navbar__secondary--profile'
+      (defaultClickParent === 'navbar__secondary--profile' &&
+        defaultClick !== 'navbar__secondary--profile--link-2')
     ) {
       this.setState({ popupVisible: true });
     } else {

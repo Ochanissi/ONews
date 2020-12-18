@@ -350,7 +350,7 @@ class Article extends React.Component<Props, ArticleState> {
             <ArticleShare
               title={title}
               source={sourceName}
-              url={url.replace(/^http:\/\//i, 'https://')}
+              url={url ? url.replace(/^http:\/\//i, 'https://') : ''}
             />
           ) : null}
 
@@ -358,7 +358,7 @@ class Article extends React.Component<Props, ArticleState> {
             <div className="article__content">
               <a
                 className="article__content--title"
-                href={url.replace(/^http:\/\//i, 'https://')}
+                href={url ? url.replace(/^http:\/\//i, 'https://') : ''}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -368,7 +368,7 @@ class Article extends React.Component<Props, ArticleState> {
               <div className="article__content--source">
                 <a
                   className="article__content--source--url"
-                  href={url.replace(/^http:\/\//i, 'https://')}
+                  href={url ? url.replace(/^http:\/\//i, 'https://') : ''}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -460,15 +460,16 @@ class Article extends React.Component<Props, ArticleState> {
             </div>
             <a
               className="article__image-container"
-              href={url.replace(/^http:\/\//i, 'https://')}
+              href={url ? url.replace(/^http:\/\//i, 'https://') : ''}
               target="_blank"
               rel="noopener noreferrer"
             >
               <img
                 className="article__image-container--image"
                 src={
-                  urlToImage.replace(/^http:\/\//i, 'https://') ||
-                  defaultArticle
+                  urlToImage
+                    ? urlToImage.replace(/^http:\/\//i, 'https://')
+                    : defaultArticle
                 }
                 alt="Article"
               ></img>
@@ -496,7 +497,7 @@ class Article extends React.Component<Props, ArticleState> {
 
           <a
             className="article__content--coverage"
-            href={url.replace(/^http:\/\//i, 'https://')}
+            href={url ? url.replace(/^http:\/\//i, 'https://') : ''}
             target="_blank"
             rel="noopener noreferrer"
           >

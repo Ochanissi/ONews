@@ -107,9 +107,18 @@
 
             margin: 2px;
 
+            @media (hover: none) {
+              border: none;
+              margin: 3px;
+            }
+
             .article__content--source--options--save--info {
               visibility: visible;
               opacity: 1;
+
+              @media (hover: none) {
+                display: none;
+              }
             }
           }
 
@@ -157,9 +166,18 @@
 
             margin: 2px;
 
+            @media (hover: none) {
+              border: none;
+              margin: 3px;
+            }
+
             .article__content--source--options--share--info {
               visibility: visible;
               opacity: 1;
+
+              @media (hover: none) {
+                display: none;
+              }
             }
           }
 
@@ -207,9 +225,18 @@
 
             margin: 2px;
 
+            @media (hover: none) {
+              border: none;
+              margin: 3px;
+            }
+
             .article__content--source--options--thumbs-up--info {
               visibility: visible;
               opacity: 1;
+
+              @media (hover: none) {
+                display: none;
+              }
             }
           }
 
@@ -257,9 +284,18 @@
 
             margin: 2px;
 
+            @media (hover: none) {
+              border: none;
+              margin: 3px;
+            }
+
             .article__content--source--options--thumbs-down--info {
               visibility: visible;
               opacity: 1;
+
+              @media (hover: none) {
+                display: none;
+              }
             }
           }
 
@@ -307,9 +343,18 @@
 
             margin: 2px;
 
+            @media (hover: none) {
+              border: none;
+              margin: 3px;
+            }
+
             .article__content--source--options--hide--info {
               visibility: visible;
               opacity: 1;
+
+              @media (hover: none) {
+                display: none;
+              }
             }
           }
 

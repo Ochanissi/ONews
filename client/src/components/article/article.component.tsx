@@ -347,7 +347,11 @@ class Article extends React.Component<Props, ArticleState> {
       return (
         <article className="article">
           {shareToggle ? (
-            <ArticleShare title={title} source={sourceName} url={url} />
+            <ArticleShare
+              title={title}
+              source={sourceName}
+              url={url.replace(/^http:\/\//i, 'https://')}
+            />
           ) : null}
 
           <div className="article__bulk">
